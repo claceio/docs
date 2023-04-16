@@ -1,3 +1,7 @@
+---
+permalink: /index.html
+---
+
 # Clace Documentation
 
 Documentation content for [Clace](https://clace.io).
