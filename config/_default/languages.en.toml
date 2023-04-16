@@ -1,0 +1,24 @@
+languageCode = "en"
+languageName = "English"
+displayName = "EN"
+isoCode = "en"
+weight = 1
+rtl = false
+
+title = "Clace"
+description = "Securely develop and deploy internal applications"
+copyright = "Copyright © 2023 Clace Inc"
+
+dateFormat = "2 January 2006"
+
+[params]
+  mainSections = ["Docs", "About"]
+
+[author]
+  name = "Clace"
+  headline = "Securely develop and deploy internal applications"
+  links = [
+     { email = "mailto:contact@clace.io" },
+     { github = "https://github.com/claceio" },
+     { twitter = "https://twitter.com/clace_io" },
+  ]
