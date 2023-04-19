@@ -16,8 +16,8 @@ enableCodeCopy = true
 
 [header]
   layout = "basic" # valid options: basic, hamburger, hybrid, custom
-  logo = "clace.jpg"
-  showTitle = true
+  logo = "clace.png"
+  showTitle = false
 
 [footer]
   showCopyright = true
