@@ -20,5 +20,5 @@ dateFormat = "2 January 2006"
   links = [
      { email = "mailto:contact@clace.io" },
      { github = "https://github.com/claceio" },
-     { twitter = "https://twitter.com/clace_io" },
+     { twitter = "https://twitter.com/claceio" },
   ]
