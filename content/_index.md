@@ -46,3 +46,13 @@ Clace is an open-source project aimed at enabling a secure and easy way to devel
     </form>
   </div>
 <!--End mc_embed_signup-->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TKDPZGGPL1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TKDPZGGPL1');
+</script>
