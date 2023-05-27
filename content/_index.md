@@ -4,24 +4,23 @@ description: "Securely develop and deploy internal applications"
 ---
 
 <br>
-Clace is an open-source project aimed at enabling a secure and easy way to develop and deploy internal applications for enterprise usecase. Clace provides:
+Clace is an open-source project which aims to make it easy for individuals and teams to develop and manage lightweight full stack applications in a secure manner. The applications can have an auto generated form interface or a fully customized UI. Clace provides integrations to enable SSO/SAML based authentication and authorization controls, audit logs and integration with secrets manager for managing credentials.
 
 <br>
 <br>
 
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: center;  align-content: center; gap: 5px;">
 
 <span style="font-size:150%;"> {{< icon "shield-lock" >}} </span> **Secure platform with application sandboxing**
 
-<span style="font-size:150%;"> {{< icon "brand-docker" >}} </span> **Docker integration**
 <span style="font-size:150%;"> {{< icon "brand-html5" >}} </span> **HTML template driven UI interface**
+
+<span style="font-size:150%;"> {{< icon "brand-python" >}} </span> **Starlark based application configuration (Python like)**
+
+<span style="font-size:150%;"> {{< icon "brand-golang" >}} </span> **Golang based backend for simplifying deployments**
 
 <span style="font-size:150%;"> {{< icon "brand-github" >}} </span> **Github integration**
 
-
-<span style="font-size:150%;"> {{< icon "brand-python" >}} </span> **[Starlark](https://github.com/google/starlark-go) for application configuration (Python like)**
-
-<span style="font-size:200%;"> {{< icon "brand-golang" >}} </span> **Golang based backend for simplifying deployments**
 
 </div>
 

@@ -61,7 +61,7 @@ enableCodeCopy = true
   excludedKinds = ["taxonomy", "term"]
 
 [taxonomy]
-  showTermCount = true
+  showTermCount = false
 
 [fathomAnalytics]
   # site = "ABC12345"
