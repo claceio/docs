@@ -6,7 +6,7 @@ weight = 1
 rtl = false
 
 title = "Clace"
-description = "Securely develop and deploy internal applications"
+description = "Securely develop and deploy internal web applications"
 copyright = "Copyright © 2023 ClaceIO, LLC"
 
 dateFormat = "2 January 2006"
@@ -16,7 +16,7 @@ dateFormat = "2 January 2006"
 
 [author]
   name = "Clace"
-  headline = "Securely develop and deploy internal applications"
+  headline = "Securely develop and deploy internal web applications"
   links = [
      { email = "mailto:contact@clace.io" },
      { github = "https://github.com/claceio" },
