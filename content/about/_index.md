@@ -3,7 +3,7 @@ title: "About Clace"
 description: "Securely develop and deploy internal applications"
 ---
 
-Clace is an open-source project (Apache-2.0 Licensed) aimed at enabling a simple and secure approach to develop and deploy internal applications.
+Clace is an open-source project (Apache-2.0 Licensed) aimed at enabling a simple and secure approach to develop and deploy internal web applications.
 
 ### Goal
 The goal of this project is to make it easy for individuals and teams to develop and manage lightweight full stack applications in a secure manner. The applications can have an auto generated form interface or a fully customizable UI. The platform should provide easy integrations to enable SSO/SAML based authentication and authorization controls, audit logs and integration with secrets manager for managing credentials.
@@ -15,30 +15,36 @@ A single developer should be able to manage the full stack, frontend and backend
 Clace aims to give a dynamic development environment for applications (like Python), with automatic reload of code changes, while providing a performant and scalable platform which is operationally simple to manage.
 
 ### What is Clace
-Clace is a platform which provides an web application server focused on running securely multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints. The frontend can be auto generate forms or fully customizable web applications.
+Clace is a platform which provides a web application server focused on running securely multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints. The frontend can be auto generated forms or fully customizable web applications.
 
 ### Terminology
-- **Internal applications**: Applications built or downloaded for use by an individual or teams. For users, this could be app to manage their machine, like monitor disk usage across folders. For teams, applications could automate common operations like setting resource limits, provisioning account etc.
+- **Internal applications**: Web applications built or downloaded for use by an individual or teams. For users, this could be apps to manage their machine, like monitor disk usage across folders. For teams, apps could automate common operations like setting resource limits, provisioning accounts etc.
 - **Sandboxing**: Sandboxing is a security mechanism to ensure that an application stays within the rules set by the admin. If an application is configured to perform GET requests, trying to do a POST request from the application will fail until the admin authorizes the application to perform POST requests.
 
 ### What's with the name
 The name Clace was the end-result of an intense process trying to come up with a short and easy to remember name which is not already taken. Clace is a play on **C**ommand **L**ine **Ace**, since an UI for command line applications is an initial target usecase. The name is pronounced like *Place*, with a *C*.
 
 ### Why is there a need for such a platform
-There are tools like Rundeck and Jenkins which allow automating operational scripts. These have very limited customizability for the UI. At the other extreme, SaaS services like Retool which focus on internal tools development allow developing a customizable UI using no-code generators. These speed up the initial development experience to some extent but at the cost of operational complexity. Ongoing maintenance and updates for such low-code applications  does not play well with the software development lifecycle. Some Retool competitors support self-hosting, but most of them still follow the React component based UI.
+There are tools like Rundeck and Jenkins which allow automating operational scripts. These have very limited customizability for the UI. At the other extreme, SaaS services like Retool which focus on internal tools development allow developing a customizable UI using no-code generators. These speed up the initial development experience to some extent but at the cost of operational complexity. Ongoing maintenance and updates for such low-code applications does not work well with general software development lifecycle practices. Some Retool competitors support self-hosting, but most of them still follow the React component based UI, making the UI less easily maintained.
 
 Clace aims for a middle ground, aiming for self hosting and operational simplicity while allowing fully customizable lightweight applications, with a focus on security. Configurable secure internal applications with minimal code is the goal.
+
+### What will success look like
+For the Clace project, success will mean:
+- Users can easily develop web applications for common use-cases
+- Users can download and install such applications from the internet, without security being a concern
+- Applications can be shared with teams and easily distributed and secured
 
 ### How is Clace implemented
 The way Clace tries to achieve these goals are:
 
 - Single binary web application server (in golang), with a set of plugins built in (also in golang) which allow access to external endpoints. The server is statically configured using a TOML file.
-- Multiple applications can be dynamically installed, a embedded SQLite database is used to store application metadata (Postgres support is in the roadmap).
-- Path based routing, each app identified by an unique path. Also, domain based routing, which allows multiple domains to point to the same Clace instance, with path based routing being done independently for each domain.
+- Multiple applications can be dynamically installed, an embedded SQLite database is used to store application metadata (Postgres support is in the roadmap).
+- Path based routing, each app identified by a unique path. Also, domain based routing, which allows multiple domains to point to the same Clace instance, with path based routing being done independently for each domain.
 - Automatic TLS certificate management for each domain to simplify deployments.
 - Applications are configured using [Starlark](https://github.com/google/starlark-go), which is Python dialect. Python is an ideal glue language, Starlark is a simpler subset of Python
-- A sandboxing layer is implemented at the Python to Golang boundary, allowing the implementation of security and access control policies. Go code is trusted, Starlark code is untrusted.
-- The application UI is implemented using Go HTML templates, with [HTMX](https://htmx.org/) for interactivity. Go templates are simpler than some other templating system and it supports [context aware templating](https://pkg.go.dev/html/template#hdr-Contexts) which prevents encoding related security issues. They also work well with the HTML fragment required for HTMX.
+- A sandboxing layer is implemented at the Starlark(python) to Golang boundary, allowing the implementation of security and access control policies. Go code is trusted, Starlark code is untrusted.
+- The application UI is implemented using Go HTML templates, with [HTMX](https://htmx.org/) for interactivity. Go templates support [context aware templating](https://pkg.go.dev/html/template#hdr-Contexts) which prevents encoding related security issues. They also work well with the HTML fragment required for HTMX.
 - No need to install any additional components like Python or NodeJS. Integration with [tailwindcss-cli](https://tailwindcss.com/blog/standalone-cli) and [esbuild](https://esbuild.github.io/) (using the esbuild go library) is planned, but there are no plans to implement support for the full Javascript build tool ecosystem.
 
 ### What applications are suited for Clace
@@ -48,11 +54,11 @@ Claces aims to provide a set of plugins which allow for features like
 
 The plugins are implemented in Go and are exposed to the application developer through a Starlark interface. The initial plugins which will be implemented are HTTP client, command line application (CLI) runner, Slack, Github etc.
 
-The plugins will limit which kinds of applications are suited for Clace. If there is an existing application which exposes a REST API, Clace will make it possible to develop a web UI for that. Same applies for a web UI which allows interacting with one or more SaaS applications through their REST API. For command line applications or scripts, Clace will make it possible to expose a web UI for the CLI. For workflows requiring an approval or notification step, the Slack plugin will allow developing such an applications.
+The plugins will limit which kinds of applications are suited for Clace. If there is an existing application which exposes a REST API, Clace will make it possible to develop a web UI for that. Same applies for a web UI which allows interacting with one or more SaaS applications through their REST API. For command line applications or scripts, Clace will make it possible to expose a web UI for the CLI. For workflows requiring an approval or notification step, the Slack plugin will allow developing such applications.
 
 ### What applications are NOT suited for Clace
 
-The plugin support will decide what applications are not suited for Clace. If the application is a CRUD application with a complex database model, those would be better handled with Django/Rails/Spring Boot like frameworks.
+The types of applications that are suited for Clace will be limited by the plugins. If the application is a CRUD application with a complex database model, those would be better handled with Django/Rails/Spring Boot like frameworks.
 
 Since the Javascript build tooling support will be limited, Clace is not a backend to use when the intent is to develop a React/Angular/Vue SPA frontend. Clace is intended as platform to use when the UI can be a HTML template based one.
 
@@ -69,9 +75,9 @@ The development of Clace was started in April 2023. As of today (May 26 2023), C
 The next steps are to polish the application development and related configuration, add sandboxing rules, add support for SSO and RBAC etc. The aim is to do a beta release by September 2023 and an 1.0 release later this year.
 
 ### Who is behind this project
-The project has been started by [Ajay Kidave](https://www.linkedin.com/in/ajayvk/). Ajay's background has been in database systems and enterprise integration tools. Clace is a independent passion project, while continuing to work as a part-time consultant.
+The project has been started by [Ajay Kidave](https://www.linkedin.com/in/ajayvk/). Ajay's background has been in database systems and enterprise integration tools. Clace is an independent passion project, while continuing to work as a part-time consultant.
 
 ### What is future plan for Clace
 The plan currently is to build out the open source project and make it a great platform for managing internal applications. The service can currently scale up vertically, support for metadata storage in Postgres will be added which will enable horizontal scaling also.
 
-For workload isolation and security reasons, some use cases might require a more distributed backend approach. An worker/agent mode is planned in the longer-term. This will mean the Clace server will not actually run the application code, the application code will run on agents which are distributed on other nodes. The agent mode, when/if added, might use a different licensing model. Most regular usecases should not require the agent mode, vertical and horizontal scaling should cover normal workloads.
+For workload isolation and security reasons, some use cases might require a more distributed backend approach. An worker/agent mode is planned in the longer-term. This will mean the Clace server will not actually run the application code, the application code will run on agents which are distributed on other nodes. The agent mode, when/if added, might use a different licensing model. Most regular usecases should not require the agent mode; vertical and horizontal scaling should cover normal workloads.
