@@ -35,7 +35,7 @@ To use the clace service, you need an initial config file with the service passw
 
 To start the service, the CL_HOME environment variable has to point to the work directory location and the CL_CONFIG_FILE env variable should point to the config file.
 
-    CL_CONFIG_FILE=$HOME/clhome/clace.toml $HOME/clace2 server start
+    CL_CONFIG_FILE=$HOME/clhome/clace.toml $HOME/clace server start
 
 
 Adding `export CL_HOME=$HOME/clhome` and `export CL_CONFIG_FILE=$CL_HOME/clace.toml` to your shell RC file will remove the need to always set these env variables.
