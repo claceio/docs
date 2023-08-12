@@ -57,9 +57,9 @@ To load an app, run
 CL_CONFIG_FILE=$HOME/clhome/clace.toml $HOME/clace app create --is_dev /disk_usage $HOME/clace_source/examples/disk_usage/
 ```
 
-This will create an app at /disk_usage with the example dis_usage app. The disk_usage app provides a web interface for the [du command](https://man7.org/linux/man-pages/man1/du.1.html), allowing the user to explore the subfolders which are consuming maximum disk space.
+This will create an app at /disk_usage with the example disk_usage app. The disk_usage app provides a web interface for the [du command](https://man7.org/linux/man-pages/man1/du.1.html), allowing the user to explore the subfolders which are consuming most disk space.
 
-To access the app, go to [http://127.0.0.1:25223/disk_usage](http://127.0.0.1:25223/disk_usage). Use `admin` as the username and use the admin_password which was previously added to the $HOME/clhome/clace.toml file.
+To access the app, go to [http://127.0.0.1:25223/disk_usage](http://127.0.0.1:25223/disk_usage). Use `admin` as the username and use the admin_password which was previously added to the $HOME/clhome/clace.toml config file.
 
 The code for the example app is [here](https://github.com/claceio/clace/tree/main/examples/disk_usage). app.star is the starlark config and app.go.html is the html template. The other files are generated files and are created by the system on app initialization.
 
