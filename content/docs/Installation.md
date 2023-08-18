@@ -48,18 +48,23 @@ The service logs will be going to $CL_HOME/logs. To get the logs on the console 
 The service will be started on [http://localhost:25223](http://127.0.0.1:25223) by default.
 
 ## Running the client
-The client can be used to install and manage applications. To run the client, the CL_CONFIG_FILE environment variable should be set pointing to the config file `export CL_CONFIG_FILE=$HOME/clhome/clace.toml` 
+The client can be used to install and manage applications. To run the client, the CL_CONFIG_FILE environment variable should be set pointing to the config file `export CL_CONFIG_FILE=$HOME/clhome/clace.toml`. 
 
 ## Load an App
-To load an app, run
+To create an app, run
 
 ```shell
-CL_CONFIG_FILE=$HOME/clhome/clace.toml $HOME/clace app create --is_dev /disk_usage $HOME/clace_source/examples/disk_usage/
+$HOME/clace app create --is_dev /disk_usage $HOME/clace_source/examples/disk_usage/
+```
+
+To audit and approve the app's security policies, run
+```shell
+$HOME/clace app audit --approve /disk_usage 
 ```
 
 This will create an app at /disk_usage with the example disk_usage app. The disk_usage app provides a web interface for the [du command](https://man7.org/linux/man-pages/man1/du.1.html), allowing the user to explore the subfolders which are consuming most disk space.
 
-To access the app, go to [http://127.0.0.1:25223/disk_usage](http://127.0.0.1:25223/disk_usage). Use `admin` as the username and use the admin_password which was previously added to the $HOME/clhome/clace.toml config file.
+To access the app, go to [http://127.0.0.1:25223/disk_usage](http://127.0.0.1:25223/disk_usage). Use `admin` as the username and use the admin_password previously added to the $HOME/clhome/clace.toml config file.
 
 The code for the example app is [here](https://github.com/claceio/clace/tree/main/examples/disk_usage). app.star is the starlark config and app.go.html is the html template. The other files are generated files and are created by the system on app initialization.
 
