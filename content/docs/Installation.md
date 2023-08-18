@@ -8,7 +8,7 @@ Clace can currently be installed from source. Other installation options will be
 
 ## Install from Source
 To install from source
-- Ensure that a recent version of [Go](https://go.dev/doc/install) is available, version 1.19 or newer
+- Ensure that a recent version of [Go](https://go.dev/doc/install) is available, version 1.21.0 or newer
 - Checkout the Clace repo, cd to the checked out folder
 - Build the clace binary and place in desired location, like $HOME
 
