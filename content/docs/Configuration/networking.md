@@ -1,12 +1,11 @@
 ---
 title: "Networking: Ports and Certificates"
-stub: 
 description: "Securely develop and deploy internal web applications"
 weight: 200
 ---
 
 ## HTTP
-For HTTP requests, by default the Clace service listens on port 25223, on the localhost(127.0.0.1) interface. This means the HTTP port can be accessed from the same machine, it cannot be accessed remotely. To change this, update the config file
+For HTTP requests, by default the Clace service listens on port 25223, on the localhost(127.0.0.1) interface. This means the HTTP port can be accessed from the same machine, it cannot be accessed remotely. To configure this, update the config file
 
 ```toml
 [http]
@@ -14,7 +13,7 @@ host = "127.0.0.1" # bind to localhost by default for HTTP
 port = 25223 # default port for HTTP
 ```
 
-to desired values. Port 0 means bind to any available port. Port -1 means disable HTTP access.
+to desired values. Port 0 means bind to any available port. Port -1 means disable HTTP access. Use host as `0.0.0.0` to bind to all available interfaces.
 
 
 ## HTTPS
@@ -37,21 +36,21 @@ Port 0 means bind to any available port. Port -1 means disable HTTPS access.
 
 ## TLS Certificates
 The default configuration is:
-* During the first HTTPS request, `$CL_HOME/config/certificates` is looked up for a PEM file and CRT file matching the domain name as passed to the server. If a matching certificate is found, that is used.
+* During the first HTTPS request, `$CL_HOME/config/certificates` is looked up for a crt and key file in the PEM format matching the domain name as passed to the server. If a matching certificate is found, that is used.
 * If no domain specific certificate is found, then the default certificate `default.crt` and `default.key` are looked up. If found, that is used.
 * If default certificate is not found, and Lets Encrypt based certificate creation is disabled (the default), then a self-signed certificate is auto created in the certificates folder.
 
-The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used.
+The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For if a file example.crt and example.key are found in te certificates folder, those are used for example.com domain.
 
 
-## Enabling automatic certificate creation
-Clace uses the [certmagic](https://github.com/caddyserver/certmagic) library for fully-managed TLS certificate issuance and renewal. certmagic is disabled by default. To enable certmagic, the pre-requisites are:
+## Enable Automatic Signed Certificate
+Clace uses the [certmagic](https://github.com/caddyserver/certmagic) library for fully-managed TLS certificate issuance and renewal. Certmagic is disabled by default. To enable, the pre-requisites are:
 
 * The https config is using 443 as the port number. Running on privileged ports requires additional [setup](#privileged-ports)
 * There is an DNS entry created pointing your host name or domain wildcard to the IP address of the host running the Clace server. This has to be done in your DNS provider config.
 * Port 443 is reachable from the public internet. This has to be done in your infrastructure provider network settings.
 
-Once the pre-requisites are met, set the `service_email` config parameter to your email address. This enables magiccert based certificate creation. The config will look like:
+Once the pre-requisites are met, set the `service_email` config parameter to your email address. This enables certmagic based certificate creation. The config will look like:
 
 ```toml
 # HTTPS port binding related Config
@@ -74,13 +73,13 @@ With this config, the certificates folder is looked up for any custom certificat
 On Linux, binding to low ports is disabled for non-root users. To enable binding to port 80 for HTTP and 443 for HTTPS, run the command
 
 ```shell
-sudo setcap cap_net_bind_service=+ep /path/to/your/clace_binary
+sudo setcap cap_net_bind_service=+ep /path/to/clace_binary
 ```
 
-This would be required for any new build or update of the Clace binary.
+This would be required after any new build or update of the Clace binary.
 
 ## Notes
-* Please provide a valid email address, this allows you to receive expiration emails if your certificates are expiring, and also allows the CA's engineers to contact you if required.
-* Start the configuration with staging `use_staging = true`, move to production `use_staging = false` after ensuring that DNS and networking is working fine.
+* Please provide a valid email address in service_email. This allows you to receive expiration emails and also allows the CA to contact you if required.
+* Start the configuration with staging `use_staging = true`, change to production config `use_staging = false` after ensuring that DNS and networking is working fine.
 * If port 0 is used, the service will bind to any available port. Look at the stdout or logs to find the port used. Clients would have to be updated after every server restarted to point to the new port.
 * Only the [TLS-ALPN](https://github.com/caddyserver/certmagic#tls-alpn-challenge) challenge is enabled in Clace. The HTTP and DNS based challenges are not supported currently.

@@ -1,9 +1,6 @@
 ---
-title: "Configuration Overview"
-stub: 
+title: "Overview"
 description: "Securely develop and deploy internal web applications"
-cascade:
-    showBreadcrumbs: true
 weight: 100
 ---
 
@@ -36,10 +33,18 @@ GLOBAL OPTIONS:
 
 All the parameters have default values, specified in the code at [clace.default.toml](https://github.com/claceio/clace/blob/main/internal/utils/clace.default.toml).
 
-A user-specified config file is required. The location of this file can be set using the command line arg `--config_file`. If CLI arg is not specified, the environment variable `CL_CONFIG_FILE` is used to locate the config file..
+A user-specified config file is required. The location of this file can be set using the command line arg `--config_file`. If CLI arg is not specified, the environment variable `CL_CONFIG_FILE` is used to locate the config file. There is no default location for this file, if no CLI argument and env value are specified, then no configuration file is loaded.
 
 All arguments are read from the user specified configuration file. Some arguments are further configurable in the CLI or env. For example, set `--http.host=7777` or env `CL_HTTP_PORT` to set the http port. The precedence order, from highest priority to lowest is:
 * CLI argument
 * ENV variable
 * User specified config
 * Default config in the source code for the Clace build version
+
+## Home Directory
+
+The `CL_HOME` environment variable used to locate the home directory for the Clace server. If no value is set, this defaults to the directory from which the Clace server was started. This location is used to store:
+* The sqlite database containing the metadata information, default is `$CL_HOME/clace.db`
+* The logs for the service, under the logs folder.
+* The config folder contains the certificates to be use for TLS.
+* The run folder contains app specific temporary files.
