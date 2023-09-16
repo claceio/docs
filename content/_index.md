@@ -1,6 +1,8 @@
 ---
 title: "Clace"
 description: "Securely develop and deploy internal web applications"
+cascade:
+    showBreadcrumbs: true
 ---
 
 <br>
