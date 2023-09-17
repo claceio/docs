@@ -4,6 +4,7 @@ description: "Securely develop and deploy internal web applications"
 weight: 100
 ---
 
+## Clace Server
 The Clace server picks up its configuration from the config file specified at startup.
 
 ```bash
@@ -48,3 +49,16 @@ The `CL_HOME` environment variable used to locate the home directory for the Cla
 * The logs for the service, under the logs folder.
 * The config folder contains the certificates to be use for TLS.
 * The run folder contains app specific temporary files.
+
+
+## Clace Client CLI
+
+If running the Clace client from a remote machine, the config options required for the client are:
+
+```toml
+server_url = "http://127.0.0.1:25223"
+admin_user = "admin"
+admin_password = "" # Change to actual password
+```
+
+These can be specified in a client config file or can be set in the CLI command line. All other config entries are ignored by the Clace client. Note that to connect to a Clace server over HTTP remotely, the server needs to be bound to the all interface(0.0.0.0), see [here]({{< ref "networking" >}}).

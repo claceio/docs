@@ -40,7 +40,7 @@ The default configuration is:
 * If no domain specific certificate is found, then the default certificate `default.crt` and `default.key` are looked up. If found, that is used.
 * If default certificate is not found, and Lets Encrypt based certificate creation is disabled (the default), then a self-signed certificate is auto created in the certificates folder.
 
-The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For if a file example.crt and example.key are found in te certificates folder, those are used for example.com domain.
+The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For example, if a file example.crt and example.key are found in te certificates folder, those are used for example.com domain.
 
 
 ## Enable Automatic Signed Certificate
@@ -83,3 +83,4 @@ This would be required after any new build or update of the Clace binary.
 * Start the configuration with staging `use_staging = true`, change to production config `use_staging = false` after ensuring that DNS and networking is working fine.
 * If port 0 is used, the service will bind to any available port. Look at the stdout or logs to find the port used. Clients would have to be updated after every server restarted to point to the new port.
 * Only the [TLS-ALPN](https://github.com/caddyserver/certmagic#tls-alpn-challenge) challenge is enabled in Clace. The HTTP and DNS based challenges are not supported currently.
+* If Clace is running behind a load balancer, ensure that the load balancer is doing TLS pass-through. If TLS termination is done in the load balancer, then the automatic certificate management done by Clace through certmagic wil not work.
