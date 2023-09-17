@@ -43,7 +43,6 @@ All arguments are read from the user specified configuration file. Some argument
 * Default config in the source code for the Clace build version
 
 ## Home Directory
-
 The `CL_HOME` environment variable used to locate the home directory for the Clace server. If no value is set, this defaults to the directory from which the Clace server was started. This location is used to store:
 * The sqlite database containing the metadata information, default is `$CL_HOME/clace.db`
 * The logs for the service, under the logs folder.
@@ -52,13 +51,15 @@ The `CL_HOME` environment variable used to locate the home directory for the Cla
 
 
 ## Clace Client CLI
-
 If running the Clace client from a remote machine, the config options required for the client are:
 
 ```toml
 server_url = "http://127.0.0.1:25223"
 admin_user = "admin"
 admin_password = "" # Change to actual password
+skip_cert_check = false # Change to true if using self-signed certs
 ```
 
 These can be specified in a client config file or can be set in the CLI command line. All other config entries are ignored by the Clace client. Note that to connect to a Clace server over HTTP remotely, the server needs to be bound to the all interface(0.0.0.0), see [here]({{< ref "networking" >}}).
+
+If server_url is set to the https endpoint and the Clace server is running with a self-signed certificate, set `skip_cert_check = true` in config or pass `--skip_cert_check=true` in client commands to disable the TLS certificate check.
