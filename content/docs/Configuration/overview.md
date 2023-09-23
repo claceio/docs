@@ -16,16 +16,16 @@ USAGE:
    clace server start [command options] [arguments...]
 
 OPTIONS:
-   --server_url value, -s value      The server connection url (default: "http://127.0.0.1:25223") [$CL_SERVER_URL]
+   --server_uri value, -s value      The server connection uri (default: "$CL_HOME/run/clace.sock") [$CL_SERVER_URI]
    --admin_user value, -u value      The admin user name (default: "admin") [$CL_ADMIN_USER]
    --admin_password value, -w value  The admin user password [$CL_ADMIN_PASSWORD]
    --http.host value, -i value       The interface to bind on for HTTP (default: "127.0.0.1") [$CL_HTTP_HOST]
-   --http.port value, -p value       The port to listen on for HTTP (default: 25223) [$CL_HTTP_PORT]
+   --http.port value, -p value       The port to listen on for HTTP (default: 25222) [$CL_HTTP_PORT]
    --https.host value                The interface to bind on for HTTPS (default: "0.0.0.0") [$CL_HTTPS_HOST]
-   --https.port value                The port to listen on for HTTPS (default: 25224) [$CL_HTTPS_PORT]
+   --https.port value                The port to listen on for HTTPS (default: 25223) [$CL_HTTPS_PORT]
    --logging.level value, -l value   The logging level to use (default: "INFO") [$CL_LOGGING_LEVEL]
    --logging.console, -c             Enable console logging (default: false) [$CL_LOGGING_CONSOLE]
-   --help, -h                        show help
+   --help, -h
 
 GLOBAL OPTIONS:
    --config_file value, -c value  TOML configuration file [$CL_CONFIG_FILE]
@@ -51,15 +51,21 @@ The `CL_HOME` environment variable used to locate the home directory for the Cla
 
 
 ## Clace Client CLI
+By default, the Clace client uses Unix domain sockets to connect to the Clace server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. To enable remote API calls, the server needs to be changed to add the following
+
+```toml
+[security]
+admin_over_tcp = true 
+```
+
 If running the Clace client from a remote machine, the config options required for the client are:
 
 ```toml
-server_url = "http://127.0.0.1:25223"
+server_url = "https://127.0.0.1:25223"
 admin_user = "admin"
 admin_password = "" # Change to actual password
 skip_cert_check = false # Change to true if using self-signed certs
 ```
-
 These can be specified in a client config file or can be set in the CLI command line. All other config entries are ignored by the Clace client. Note that to connect to a Clace server over HTTP remotely, the server needs to be bound to the all interface(0.0.0.0), see [here]({{< ref "networking" >}}).
 
 If server_url is set to the https endpoint and the Clace server is running with a self-signed certificate, set `skip_cert_check = true` in config or pass `--skip_cert_check=true` in client commands to disable the TLS certificate check.
