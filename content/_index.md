@@ -1,8 +1,9 @@
 ---
 title: "Clace"
 description: "Securely develop and deploy internal web applications"
+date: 2023-10-05
 cascade:
-    showBreadcrumbs: true
+  showBreadcrumbs: true
 ---
 
 <br>
@@ -25,12 +26,10 @@ Clace applications can have an auto generated interface or a fully customized UI
 
 <span style="font-size:150%;"> {{< icon "brand-github" >}} </span> **Github integration, for gitops workflow**
 
-
 </div>
 
 <br>
 <br>
-
 
 <!-- Begin Mailchimp Signup Form -->
 <!--link href="//cdn-images.mailchimp.com/embedcode/classic-071822.css" rel="stylesheet" type="text/css"-->

@@ -2,6 +2,8 @@
 title: "Overview"
 description: "Securely develop and deploy internal web applications"
 weight: 100
+date: 2023-10-05
+summary: "Overview of Clace configuration, at the server level and client level and the $CL_HOME location for files"
 ---
 
 ## Clace Server
@@ -45,7 +47,7 @@ All arguments are read from the user specified configuration file. Some argument
 
 ## Home Directory
 
-The `CL_HOME` environment variable used to locate the home directory for the Clace server. If no value is set, this defaults to the directory from which the Clace server was started. This location is used to store:
+The `CL_HOME` environment variable is used to locate the home directory for the Clace server. If no value is set, this defaults to the directory from which the Clace server was started. This location is used to store:
 
 - The sqlite database containing the metadata information, default is `$CL_HOME/clace.db`
 - The logs for the service, under the logs folder.
@@ -54,7 +56,9 @@ The `CL_HOME` environment variable used to locate the home directory for the Cla
 
 ## Clace Client CLI
 
-By default, the Clace client uses Unix domain sockets to connect to the Clace server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. To enable remote API calls, the server needs to be changed to add the following:
+By default, the Clace client uses Unix domain sockets to connect to the Clace server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. Unix sockets work when the client is on the same machine as the server, the client does not need to pass any credentials to connect over unix sockets.
+
+To enable remote API calls, where the client is on a different machine from the server, the server needs to be changed to add the following:
 
 ```toml
 [security]

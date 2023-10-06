@@ -2,6 +2,8 @@
 title: "Managing Applications"
 description: "Manage applications using Clace"
 weight: 300
+date: 2023-10-05
+summary: "Installing and managing request routing across Clace applications"
 ---
 
 ## Request Routing

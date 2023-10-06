@@ -1,6 +1,8 @@
 ---
 title: "About Clace"
 description: "Securely develop and deploy internal web applications"
+summary: "Information about the use-cases for which Clace was built"
+date: 2023-10-05
 ---
 
 ### What is Clace?
