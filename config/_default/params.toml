@@ -8,9 +8,11 @@
 colorScheme = "ocean"
 defaultAppearance = "light" # valid options: light or dark
 autoSwitchAppearance = false
+enableImageLazyLoading = true
 
 enableSearch = true
 enableCodeCopy = true
+fingerprintAlgorithm = "sha256"
 
 # robots = ""
 
@@ -41,7 +43,7 @@ enableCodeCopy = true
   editAppendPath = true
   showHeadingAnchors = true
   showPagination = true
-  invertPagination = true
+  invertPagination = false
   showReadingTime = false
   showTableOfContents = true
   showTaxonomies = false
