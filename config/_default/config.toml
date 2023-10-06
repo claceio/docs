@@ -6,7 +6,7 @@ baseURL = "https://clace.io/"
 defaultContentLanguage = "en"
 
 enableRobotsTXT = true
-paginate = 10
+paginate = 15
 summaryLength = 0
 
 [outputs]
