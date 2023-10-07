@@ -4,3 +4,4 @@ dist/
 .sw*
 .DS_Store
 *.lock
+resources/*
