@@ -1,8 +1,8 @@
 ---
-title: "Managing Applications"
+title: "Application Routing"
 weight: 100
 date: 2023-10-05
-summary: "Installing and managing request routing across Clace applications"
+summary: "Installing apps and managing request routing across Clace applications, using path and domain"
 ---
 
 ## Request Routing
@@ -42,5 +42,5 @@ When an app is being created, a path and an optional domain need to be specified
 ## Notes
 
 - The domain specified for the app is used only for routing requests. The user has to ensure that the actual DNS routing is done properly outside of Clace for the API calls to land on the Clace server.
-- Using wildcard DNS entries will reduce the work required in the DNS service. So if \*.example.com points to the IP address of the Clace service, any domain based routing done in Clace will work with no further DNS configuration being required. Let's Encrypt requires DNS based challenges for wildcard certificates, [TLS-ALPN]({{< ref "networking#notes" >}}) is not supported.
+- Using wildcard DNS entries will reduce the work required in the DNS service. So if \*.example.com points to the IP address of the Clace service, any domain based routing done in Clace will work with no further DNS configuration being required. The automated certificates created by Clace will be domain level certificates, wildcard certificates are not currently created.
 - `/_clace/` at the root level and `/_clace_app/` within an app path are reserved paths, they are used by the Clace server, requests will not reach the app. This applies for all domains.
