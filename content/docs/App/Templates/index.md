@@ -2,7 +2,7 @@
 title: "Templates"
 weight: 500
 date: 2023-10-06
-summary: "The HTML templates for converting the handler response data to API response"
+summary: "HTML templates functions, static file handling and customizations"
 ---
 
 Clace uses [Go HTML templates](https://pkg.go.dev/html/template@go1.21.2) for returning data to the client. See [here](https://pkg.go.dev/text/template@go1.21.2) for an overview of the template syntax.
