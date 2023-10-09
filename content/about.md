@@ -82,11 +82,11 @@ The development of Clace was started in April 2023. As of Sept 2023, basic funct
 - Admin functionality using unix domain sockets for security
 - Application sandboxing checks to ensure only audited operations are allowed
 
-The next steps are to polish the application development and related configuration, add support for SSO and RBAC etc. The aim is to do a beta release by October 2023 and a 1.0 release after that.
+The next steps are to polish the application development interface, add support for loading eternal plugins, add support for SSO and RBAC etc. The aim is to do a beta release by October 2023 and a 1.0 release after that.
 
 ### Who is behind this project?
 
-The project has been started by [Ajay Kidave](https://www.linkedin.com/in/ajayvk/). Ajay's background has been in database systems and enterprise integration tools. Clace is an independent project that Ajay started while continuing to work as a part-time consultant.
+The project was started by [Ajay Kidave](https://www.linkedin.com/in/ajayvk/). Ajay's background has been in database systems and enterprise integration tools. Clace is an independent project that Ajay started while continuing to work as a consultant.
 
 ### What is the longer-term plan for Clace?
 

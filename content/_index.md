@@ -7,25 +7,35 @@ cascade:
   invertPagination: true
 ---
 
-<br>
-Clace® is an open-source project which makes it easy to develop and manage secure web applications for internal uses.
+<h2>What is Clace</h2>
+Clace is an Apache-2.0 licensed open-source project building a secure platform to develop and deploy internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Clace apps are <a href="https://htmx.org/essays/spa-alternative/">Hypermedia driven</a> full stack web applications.
 
-Clace applications can have an auto generated interface or a fully customized UI. Clace provides integrations to enable SSO/SAML based authentication and authorization controls, audit logs and integration with secrets manager for managing credentials. Applications run in a security sandbox, enabling admins to control what actions can be performed by each app.
+<br>
+<h2>Who is it for</h2>
+Clace can be used by individuals to host web applications for personal use. Clace can also be used by teams to securely share applications across teams. Using basic python and HTML, users can develop and share interactive applications. There are no python or Javascript dependencies to worry about, application changes can be done with no build step required.
+
+<br>
+<h2>How does it work</h2>
+Clace allows applications to be configured in Starlark (subset of Python syntax). The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox, access to plugins has to be explicitly allowed.
+
+<br>
+<h2>Examples</h2>
+See <a href="/docs/app/overview/#examples">here</a> for documentation about creating simple apps. See <a href="https://github.com/claceio/clace/tree/main/examples">here</a> for the code for sample applications.
 
 <br>
 <br>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center;  align-content: center; gap: 5px;">
 
-<span style="font-size:150%;"> {{< icon "shield-lock" >}} </span> **Secure platform with application sandboxing**
+<span style="font-size:200%;"> {{< icon "shield-lock" >}} </span> **Secure platform with application sandboxing**
 
-<span style="font-size:150%;"> {{< icon "brand-html5" >}} </span> **HTML template driven UI interface**
+<span style="font-size:200%;"> {{< icon "brand-html5" >}} </span> **Hypermedia first UI approach**
 
-<span style="font-size:150%;"> {{< icon "brand-python" >}} </span> **Simple application configuration (using Python syntax with Starlark)**
+<span style="font-size:200%;"> {{< icon "brand-python" >}} </span> **Applications configured using Python(Starlark)**
 
-<span style="font-size:150%;"> {{< icon "brand-golang" >}} </span> **Single binary deployment for easy installation**
+<span style="font-size:250%;"> {{< icon "brand-golang" >}} </span> **Single binary deployment for easy installation**
 
-<span style="font-size:150%;"> {{< icon "brand-github" >}} </span> **Github integration, for gitops workflow**
+<!-- <span style="font-size:200%;"> {{< icon "brand-github" >}} </span> **Github integration, for gitops workflow** !-->
 
 </div>
 
