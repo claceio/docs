@@ -1,13 +1,12 @@
 ---
 title: "About Clace"
-description: "Securely develop and deploy internal web applications"
 summary: "Information about the use-cases for which Clace was built"
 date: 2023-10-05
 ---
 
 ### What is Clace?
 
-Clace is an open-source project (Apache-2.0 Licensed) aimed at enabling a simple and secure platform to develop and deploy internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints, the frontend can be auto generated forms or fully customizable web applications.
+Clace is an open-source project (Apache-2.0 Licensed) building a secure platform to develop and deploy internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints, the frontend can be auto generated forms or fully customizable web applications.
 
 ### Project Goals
 
@@ -28,9 +27,9 @@ The name Clace is a play on **C**ommand **L**ine **Ace**, since an UI for comman
 
 ### Why is there a need for such a platform?
 
-There are tools like Rundeck and Jenkins which allow automating operational scripts. These have very limited customizability for the UI. At the other extreme, SaaS services like Retool which focus on internal tools development allow developing a customizable UI using no-code generators. These speed up the initial development experience to some extent but at the cost of operational complexity. Ongoing maintenance and updates for such low-code applications does not work well with general software development lifecycle practices. Some Retool competitors support self-hosting, but most of them use the single page application (SPA) based UI model, making ongoing maintenance and updates more difficult.
+There are tools like Rundeck and Jenkins which allow automating operational scripts. These have very limited UI customizability. At the other extreme, SaaS services like Retool which focus on internal tools development allow developing a customizable UI using no-code generators. These speed up the initial development experience to some extent but at the cost of operational complexity. Ongoing maintenance and updates for such low-code applications does not work well with general software development lifecycle practices. Most such tools use a heavy-weight single page application (SPA) based UI model.
 
-Clace aims for a middle ground, aiming for easy self-hosting and operational simplicity while allowing fully customizable lightweight applications, with a focus on security.
+Clace aims for a middle ground, aiming for easy self-hosting and operational simplicity while allowing fully customizable lightweight hypermedia driven applications, with a focus on security.
 
 ### What will success look like?
 
@@ -55,12 +54,12 @@ The way Clace tries to achieve these goals are:
 
 ### What applications are suited for Clace?
 
-Clace aims to provide a set of plugins which allow for features like Sandboxing for security and auto generation of test. The plugins are implemented in Go and are exposed to the application developer through a Starlark interface. The initial plugins which will be implemented are HTTP client, command line application (CLI) runner, Slack, Github etc. The plugins will limit which kinds of applications are suited for Clace.
+Clace aims to provide a set of plugins which allow for features like Sandboxing for security and auto generation of tests. The plugins are implemented in Go and are exposed to the application through a Starlark interface. The initial plugins which will be implemented are HTTP client, command line application (CLI) runner, Slack, Github etc. The availability of plugins will limit which kinds of applications are suited for Clace.
 
-Applications suited for Clace would include:
+Applications suited for Clace currently would include:
 
 - Exposing a UI for a command line application
-- Exposing a UI for a existing REST service
+- Exposing a UI for a existing REST service (backend for frontend model)
 
 ### What applications are NOT suited for Clace?
 

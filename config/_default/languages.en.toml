@@ -12,7 +12,7 @@ copyright = "Copyright © 2023 ClaceIO, LLC"
 dateFormat = "2 January 2006"
 
 [params]
-  mainSections = ["Docs", "About"]
+  mainSections = ["Features", "Docs", "About"]
 
 [author]
   name = "Clace"

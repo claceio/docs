@@ -1,0 +1,48 @@
+---
+title: "Features"
+summary: "Features supported by Clace"
+date: 2023-10-08
+---
+
+## Goals
+
+The goals Clace is being built to support are:
+
+- Enable development and deployment of secure internal web applications
+- Simplify ongoing maintenance of such apps by removing build and dependency related issues
+- Enable uses cases where developing custom web applications would have been too cumbersome before Clace
+
+## App Development Features
+
+The dev time features supported currently by Clace are:
+
+- Hypermedia driven backend [API design]({{< ref "app/routing" >}}), simplifying UI development
+- Dynamic reload using SSE (Server Sent Events) for all application changes, backend and frontend
+- Automatic creation of ECMAScript modules using esbuild
+- Automatic download for regular JavaScript dependencies
+- Support for TailwindCSS and DaisyUI watcher integration, auto-download for classless CSS libraries
+- [Template caching]({{< ref "app/templates/#template-file-location" >}}) and automatic reload on changes
+
+## App Deployment Features
+
+The deployment features supported currently by Clace are:
+
+- Backend app code run in a [security sandbox]({{< ref "applications/appsecurity/#security-model" >}}), with allowlist based permissions
+- [No build step]({{< ref "app/overview/#app-lifecycle" >}}), the development artifacts are ready for production use
+- Support for domain based and path based [routing]({{< ref "applications/routing/#request-routing" >}}) at the app level
+- Virtual filesystem with [content hash based file names]({{< ref "app/templates/#static-function" >}}), enabling aggressive static content caching
+- [Automatic SSL]({{< ref "configuration/networking/#enable-automatic-signed-certificate" >}}) certificate creation based on [certmagic](https://github.com/caddyserver/certmagic)
+
+## Roadmap
+
+Clace is very early in its development. The feature roadmap for Clace is:
+
+- Support for OAuth2 based login
+- Support for SSO with SAML
+- All plugins are internal (built into Clace binary) currently. The plan is to move to an external plugin model, plugins being loaded dynamically using [go-plugin](https://github.com/hashicorp/go-plugin)
+- Support for github integration, app's being deployed from artifacts directly loaded from github
+- SQLite is used as the metadata storage currently. Support for postgres and other systems is planned
+- Preview mode for app updates, to check whether changes work before making them live
+- Support for application data persistance
+- Record replay based automatic integration test creation. Record all responses at the plugin boundary and use that the replay integration test scenarios. This is speculative currently, depending on the how the external plugin model is implemented
+- Distributed agent model, where the Clace server does the initial routing but the actual application execution happens on remote worker nodes. This feature, if and when added, might use a different licensing model. This is also speculative currently.

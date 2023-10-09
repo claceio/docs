@@ -42,7 +42,7 @@ checks if the "css/style.css" file is present and not empty. If so, it is linked
 
 ## Template File Location
 
-By default, the app source home directory is searched for template files. This can be changed by adding this directive in the `ace.app` config.
+Templates are loaded once on app initialization. In dev mode, they are automatically reload on file updates. By default, the app source home directory is searched for template files. This can be changed by adding this directive in the `ace.app` config.
 
 ```json
 settings={
@@ -50,4 +50,4 @@ settings={
 }
 ```
 
-the default is `["*.go.html"]`. If additional directories are added, `"*.go.html"` still needs to present in the list since generated files are created in the app home directory. Also, all folders in the list need to contains at least one template file. File names have to be unique across folders, and files are referenced by their name, without the folder name.
+the default is `["*.go.html"]`. If additional directories are added, `"*.go.html"` still needs to present in the list since generated files are created in the app home directory. Also, all folders in the list need to contains at least one template file. File names have to be unique across folders. Files are referenced by their name, without the folder name, when used in template import directives.

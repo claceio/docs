@@ -27,7 +27,7 @@ The Clace app development lifecycle is:
 
 - Create a folder for the app, with the app.star file and templates.
 - Start the Clace server. Create an app using `clace app create --is_dev`. This runs the app in dev mode.
-- In dev mode, some additional files are generated, with `_gen` in the file name. CSS dependenccies and JavaScript modules are downloaded into the `static` folder.
+- In dev mode, some additional files are generated, with `_gen` in the file name. CSS dependencies and JavaScript modules are downloaded into the `static` folder.
 - After the app development is done, the whole app folder can be checked into source control. There is no build step.
 - Create a production app, `clace app create`, without the `--is_dev`. The app is now live. The Clace server can host multiple applications, each application has a dedicated path and optionally a dedicated domain.
 
@@ -90,6 +90,10 @@ and an `index.go.html` file with
 ```html
 <!doctype html>
 <html>
+  <head>
+    <title>File List</title>
+    {{ template "clace_gen_import" . }}
+  </head>
   <body>
     {{ range .Data.Lines }}
        {{.}}

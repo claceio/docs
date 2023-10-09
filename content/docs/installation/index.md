@@ -60,7 +60,7 @@ The client can be used to install and manage applications. To run the client, th
 To create an app, run
 
 ```shell
-$HOME/clace app create --is_dev /disk_usage $HOME/clace_source/examples/disk_usage/
+$HOME/clace app create --is_dev /disk_usage $HOME/clace_source/clace/examples/disk_usage/
 ```
 
 To audit and approve the app's security policies, run

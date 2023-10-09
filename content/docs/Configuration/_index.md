@@ -5,4 +5,4 @@ weight: 200
 date: 2023-10-05
 ---
 
-Most configuration options specified in the following sections are for the Clace server. The Clace client CLI, which talks with the Clace server over a REST API uses a small subset of the config properties. If the Clace client runs on the same machine as the server, then the same config file can be used for both. See [here]({{< ref "overview#clace-client-cli" >}}) for details.
+Most configuration options specified in the following sections are for the Clace server. The Clace client CLI, which talks with the Clace server using unix domain sockets, uses a small subset of the config properties. If the Clace client runs on the same machine as the server, then the same config file can be used for both. See [here]({{< ref "security/#admin-api-access" >}}) for details.
