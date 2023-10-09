@@ -4,7 +4,7 @@ description: "Securely develop and deploy internal web applications"
 date: 2023-10-05
 cascade:
   showBreadcrumbs: true
-  invertPagination: true
+  invertPagination: false
 ---
 
 <h2>What is Clace</h2>

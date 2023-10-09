@@ -16,24 +16,24 @@ The goals Clace is being built to support are:
 
 The dev time features supported currently by Clace are:
 
-- Hypermedia driven backend [API design]({{< ref "app/routing" >}}), simplifying UI development
+- Hypermedia driven backend [API design]({{< ref "docs/app/routing" >}}), simplifying UI development
 - Dynamic reload using SSE (Server Sent Events) for all application changes, backend and frontend
 - Automatic creation of ECMAScript modules using esbuild
 - Automatic download for JavaScript and CSS dependencies
 - Support for TailwindCSS and DaisyUI watcher integration
-- [Template caching]({{< ref "app/templates/#template-file-location" >}}) and automatic reload on changes
+- [Template caching]({{< ref "docs/app/templates/#template-file-location" >}}) and automatic reload on changes
 
 ## App Deployment Features
 
 The deployment features supported currently by Clace are:
 
-- Backend app code run in a [security sandbox]({{< ref "applications/appsecurity/#security-model" >}}), with allowlist based permissions
-- [No build step]({{< ref "app/overview/#app-lifecycle" >}}), the development artifacts are ready for production use
+- Backend app code run in a [security sandbox]({{< ref "docs/applications/appsecurity/#security-model" >}}), with allowlist based permissions
+- [No build step]({{< ref "docs/app/overview/#app-lifecycle" >}}), the development artifacts are ready for production use
 - Zero downtime application updates
 - Scalable backend, all performance critical code is in Go, only application handler code is in Starlark
-- Support for domain based and path based [routing]({{< ref "applications/routing/#request-routing" >}}) at the app level
-- Virtual filesystem with [content hash based file names]({{< ref "app/templates/#static-function" >}}), enabling aggressive static content caching
-- [Automatic SSL]({{< ref "configuration/networking/#enable-automatic-signed-certificate" >}}) certificate creation based on [certmagic](https://github.com/caddyserver/certmagic)
+- Support for domain based and path based [routing]({{< ref "docs/applications/routing/#request-routing" >}}) at the app level
+- Virtual filesystem with [content hash based file names]({{< ref "docs/app/templates/#static-function" >}}), enabling aggressive static content caching
+- [Automatic SSL]({{< ref "docs/configuration/networking/#enable-automatic-signed-certificate" >}}) certificate creation based on [certmagic](https://github.com/caddyserver/certmagic)
 
 ## Roadmap
 

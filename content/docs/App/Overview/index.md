@@ -52,7 +52,7 @@ and an `app.go.html` file containing
 
 <!-- prettier-ignore-end -->
 
-Create an app in dev mode with this code and vising the app url will show
+Create an app in dev mode with this code and visiting the app url will show
 ![Example Output](example1.png "Example Output")
 
 The name of the app is hello1. There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
@@ -68,7 +68,7 @@ app = ace.app(name="hello1",
 
 ### App with Custom Layout
 
-To create a app with a custom HTML page which shows a listing of files in your root directory, create an `app.star` file with
+To create an app with a custom HTML page which shows a listing of files in your root directory, create an `app.star` file with
 
 ```python
 load("exec.in", "exec")
