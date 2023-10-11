@@ -11,10 +11,10 @@ Clace applications run in a sandbox environment with no direct access to the sys
 
 The security model used by Clace is:
 
-- The application code, in Starlark(python) and HTML templates, is untrusted
-- The Clace service and plugin code (in Go) are trusted
-- The admin can audit and approve the access required by the untrusted application code when the app is being installed
-- After installation, further application code updates do not require any further audit, as long as no new permissions are required. If the updated app code requires a new permission, the new plugin call will fail at runtime with a permission error.
+- The application code written in Starlark(python) and HTML templates is untrusted.
+- The Clace service and plugin code (in Go) are trusted.
+- The admin can audit and approve the access required by the untrusted application code when the app is being installed.
+- After installation, further application code updates do not require any further audit, as long as no new permissions are required. If the updated app code requires any new permission, the new plugin call will fail at runtime with a permission error.
 
 The trust boundary is about what the application can do in the backend. The frontend code is sandboxed by the browser, there is no additional auditing implemented for the frontend code.
 
@@ -22,8 +22,8 @@ The trust boundary is about what the application can do in the backend. The fron
 
 This security model allows for the following:
 
-- Users can download applications and run on their machine, without worrying about what operations the app can do on their system outside the audited permissions
-- Operations teams can install and approve applications. Further application updates can be handled by the development team, without requiring the operational admins to verify the updated code. As long as the application works within the originally defined permission boundary, application updates will continue to work
+- Users can download applications and run on their machine, without worrying about what operations the app can do on their system outside the audited permissions.
+- Operations teams can install and approve applications. Further application updates can be handled by the development team, without requiring the operational admins to verify the updated code. As long as the application works within the originally defined permission boundary, application updates will continue to work.
 - Application developers can use LLM powered automated code generation tools without worrying about the side-effects of the code. If the generated code tries to perform any operation not previously approved, it will fail.
 
 ## Sample Application
