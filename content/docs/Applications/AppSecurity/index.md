@@ -14,7 +14,7 @@ The security model used by Clace is:
 - The application code, in Starlark(python) and HTML templates, is untrusted
 - The Clace service and plugin code (in Go) are trusted
 - The admin can audit and approve the access required by the untrusted application code when the app is being installed
-- After installation, further application code updates do not require any further audit, as long as no new permissions are required. If the update app requests a new permission, the application will fail at runtime with a permission error when trying to perform the plugin operation.
+- After installation, further application code updates do not require any further audit, as long as no new permissions are required. If the updated app code requires a new permission, the new plugin call will fail at runtime with a permission error.
 
 The trust boundary is about what the application can do in the backend. The frontend code is sandboxed by the browser, there is no additional auditing implemented for the frontend code.
 
