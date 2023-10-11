@@ -42,7 +42,7 @@ Clace is early in its development. The feature roadmap for Clace is:
 - Support for OAuth2 based login
 - Support for SSO with SAML
 - All plugins are internal (built into Clace binary) currently. The plan is to move to an external plugin model, plugins being loaded dynamically using [go-plugin](https://github.com/hashicorp/go-plugin)
-- Support for github integration, app's being deployed from artifacts directly loaded from github
+- Support for github integration, apps being deployed from artifacts directly loaded from github
 - SQLite is used as the metadata storage currently. Support for postgres and other systems is planned
 - Preview mode for app updates, to check whether changes work before making them live
 - Support for workflow jobs, which would have a form based interface with limited customizability, but with support for triggered and scheduled execution
