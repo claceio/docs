@@ -1,6 +1,6 @@
 ---
 title: "Clace"
-description: "Securely develop and deploy internal web applications"
+description: "Develop and deploy secure internal web applications"
 date: 2023-10-05
 cascade:
   showBreadcrumbs: true
@@ -8,19 +8,19 @@ cascade:
 ---
 
 <h2>What is Clace</h2>
-Clace is an Apache-2.0 licensed open-source project building a secure platform to develop and deploy internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Clace apps are <a href="https://htmx.org/essays/spa-alternative/">Hypermedia driven</a> full stack web applications.
+Clace is an Apache-2.0 licensed open-source project building a secure platform to develop and deploy internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Clace apps are <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> full stack web applications.
 
 <br>
 <h2>Who is it for</h2>
-Clace can be used by individuals to host web applications for personal use. Clace can also be used by teams to securely share applications across teams. Using basic python and HTML, users can develop and share interactive applications. There are no python or Javascript dependencies to worry about, application changes can be done with no build step required.
+Clace can be used by individuals to host web applications for personal use. Clace can also be used by teams to securely share applications across teams. Using simple python like syntax to configure the backend and HTML with hypermedia extensions for frontend, users can develop and share interactive applications. There are no python or Javascript dependencies to worry about, application changes can be done with no build step required.
 
 <br>
 <h2>How does it work</h2>
-Clace allows applications to be configured in Starlark (subset of Python syntax). The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox, access to plugins has to be explicitly allowed.
+Clace allows applications to be configured in <a href="https://github.com/google/starlark-go">Starlark</a> (subset of Python syntax). The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox, access to plugins has to be explicitly allowed.
 
 <br>
 <h2>Examples</h2>
-See <a href="/docs/app/overview/#examples">here</a> for documentation about creating simple apps. See <a href="https://github.com/claceio/clace/tree/main/examples">here</a> for the code for sample applications.
+See <a href="/docs/app/overview/#examples">docs</a> for documentation about creating basic apps. See <a href="https://github.com/claceio/clace/tree/main/examples">github</a> for sample application code.
 
 <br>
 <br>
