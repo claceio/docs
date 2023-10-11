@@ -5,7 +5,7 @@ date: 2023-10-05
 summary: "Application Security and sandboxing model for Clace"
 ---
 
-Clace application run in a sandbox environment, they have no direct access to the system or Clace service. All access is through plugins. When an application is installed, the admin can audit the application for what access is being requested. Only the permissions which are approved are allowed at runtime.
+Clace applications run in a sandbox environment with no direct access to the system or Clace service. All access is through plugins. When an application is installed, the admin can audit the application for what access is being requested. Only the permissions which are approved are allowed at runtime.
 
 ## Security Model
 
