@@ -1,6 +1,5 @@
 ---
 title: "Clace"
-description: "Develop and deploy secure internal web applications"
 date: 2023-10-05
 cascade:
   showBreadcrumbs: true
@@ -8,19 +7,19 @@ cascade:
 ---
 
 <h2>What is Clace</h2>
-Clace is an Apache-2.0 licensed open-source project building a secure platform to develop and deploy internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Clace apps are <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> full stack web applications.
+Clace is an open-source Apache-2.0 licensed project building a platform to develop and deploy secure internal web applications. Clace provides a web application server focussed on securely running multiple applications on a single installation. Clace apps are <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> full stack web applications.
 
 <br>
 <h2>Who is it for</h2>
-Clace can be used by individuals to host web applications for personal use. Clace can also be used by teams to securely share applications across teams. Using simple python like syntax to configure the backend and HTML with hypermedia extensions for frontend, users can develop and share interactive applications. There are no python or Javascript dependencies to worry about, application changes can be done with no build step required.
+Clace can be used by individuals to host web applications for personal use. Clace can also be used by companies to securely share applications across teams. Using simple python like syntax to configure the backend and HTML with hypermedia extensions for frontend, users can develop and share interactive applications. There are no python or Javascript dependencies to install, application changes can be done with no build step required.
 
 <br>
 <h2>How does it work</h2>
 Clace allows applications to be configured in <a href="https://github.com/google/starlark-go">Starlark</a> (subset of Python syntax). The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox, access to plugins has to be explicitly allowed.
 
 <br>
-<h2>Examples</h2>
-See <a href="/docs/app/overview/#examples">docs</a> for documentation about creating basic apps. See <a href="https://github.com/claceio/clace/tree/main/examples">github</a> for sample application code.
+<h2>Samples</h2>
+See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">GitHub</a> for sample application code. <a href="https://demo.clace.io/">Demo Apps</a> is an online hosted demo.
 
 <br>
 <br>
@@ -59,13 +58,3 @@ See <a href="/docs/app/overview/#examples">docs</a> for documentation about crea
     </form>
   </div>
 <!--End mc_embed_signup-->
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TKDPZGGPL1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TKDPZGGPL1');
-</script>

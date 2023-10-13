@@ -6,7 +6,7 @@ date: 2023-10-05
 
 ### What is Clace?
 
-Clace is an open-source project (Apache-2.0 Licensed) building a secure platform to develop and deploy internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints, the frontend can be auto generated forms or fully customizable web applications.
+Clace is an open-source (Apache-2.0 Licensed) project building a platform to develop and deploy secure internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints, the frontend can be auto generated forms or fully customizable web applications.
 
 ### Project Goals
 

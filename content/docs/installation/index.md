@@ -1,6 +1,5 @@
 ---
 title: "Installation"
-description: "Securely develop and deploy internal web applications"
 weight: 100
 summary: "How to install Clace and do initial setup"
 date: 2023-10-05
