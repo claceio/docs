@@ -5,7 +5,7 @@
 
 set -e -o pipefail
 
-LATEST_VERSION="v0.1.11"
+LATEST_VERSION="v0.1.14"
 
 main() {
 	os=$(uname -s | tr '[:upper:]' '[:lower:]')
