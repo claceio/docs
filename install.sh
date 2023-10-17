@@ -27,7 +27,7 @@ main() {
 	mkdir -p "$bin_dir"
 	mkdir -p "$tmp_dir"
 
-	curl -q --fail --location --output "$tmp_dir/clace.tar.gz" "$clace_uri" || (echo "Error downloading $clace_uri"; exit 1)
+	curl -q --fail --location --progress-bar --output "$tmp_dir/clace.tar.gz" "$clace_uri" || (echo "Error downloading $clace_uri"; exit 1)
 	# extract to tmp dir so we don't open existing executable file for writing:
 	tar -C "$tmp_dir" -xzf "$tmp_dir/clace.tar.gz"
 	chmod +x "$tmp_dir/${target}/clace"
