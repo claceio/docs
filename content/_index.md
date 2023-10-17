@@ -3,26 +3,8 @@ title: "Clace"
 date: 2023-10-05
 cascade:
   showBreadcrumbs: true
-  invertPagination: false
+  invertPagination: true
 ---
-
-<h2>What is Clace</h2>
-Clace is an open-source Apache-2.0 licensed project building a platform to develop and deploy secure internal web applications. Clace provides a web application server focussed on securely running multiple applications on a single installation. Clace apps are <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> full stack web applications.
-
-<br>
-<h2>Who is it for</h2>
-Clace can be used by individuals to host web applications for personal use. Clace can also be used by companies to securely share applications across teams. Using simple python like syntax to configure the backend and HTML with hypermedia extensions for frontend, users can develop and share interactive applications. There are no python or Javascript dependencies to install, application changes can be done with no build step required.
-
-<br>
-<h2>How does it work</h2>
-Clace allows applications to be configured in <a href="https://github.com/google/starlark-go">Starlark</a> (subset of Python syntax). The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox, access to plugins has to be explicitly allowed.
-
-<br>
-<h2>Samples</h2>
-See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">GitHub</a> for sample application code. <a href="https://demo.clace.io/">Demo Apps</a> is an online hosted demo.
-
-<br>
-<br>
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center;  align-content: center; gap: 5px;">
 
@@ -38,6 +20,32 @@ See <a href="/docs/app/overview/#examples">documentation</a> for steps to create
 
 </div>
 
+<h2>What is Clace?</h2>
+Clace is an Apache-2.0 licensed project building a platform to develop and deploy secure internal web applications. Clace provides a web application server focussed on securely running multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single installation.
+
+<br>
+<h2>Who is it for?</h2>
+<p>
+Clace can be used by individuals to host web applications for use on their personal machines. Clace can also be used by teams to securely access applications on a shared server. Clace can also host publicly accessible web applications.
+
+<br>
+<h2>What can/cannot it do?</h2>
+<p>
+Clace can be used to securely develop the UI and backend APIs for internal applications. If you have an existing JSON based API, Clace supports building a hypermedia driven interface exposing that API. Developing a web UI for command line applications is another use-case. Clace does not have a persistence layer currently, so Clace works when there are existing APIs or applications which you want to expose as a web application. Clace is not a general purpose backend framework. It is for limited use-cases, limited by the Clace plugins available.
+<br>
+<h2>How does it work?</h2>
+Clace allows applications to be configured in <a href="https://github.com/google/starlark-go">Starlark</a> (subset of Python syntax). The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox and access to plugins need to be explicitly permitted.  There are no python or Javascript dependencies to install. No containers to create, no yaml files to manage. Application updates can be done with no build step required. Clace integrates with TailwindCSS/DaisyUI for styling and has <a href="https://esbuild.github.io/">esbuild</a> built-in for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">ESM</a> support.
+<br>
+
+<br>
+<h2>Installation</h2>
+To install Clace, run <code>curl -L https://clace.io/install.sh | sh</code>. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for next steps.
+<br>
+
+<h2>Samples</h2>
+See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">GitHub</a> for sample application code. <a href="https://demo.clace.io/">Demo Apps</a> is an online hosted demo.
+
+<br>
 <br>
 <br>
 

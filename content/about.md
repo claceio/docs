@@ -12,14 +12,14 @@ Clace is an open-source (Apache-2.0 Licensed) project building a platform to dev
 
 The goal of this project is to make it easy for individuals and teams to develop and manage lightweight full stack applications in a secure manner. Fully configurable and secure internal web applications with minimal code is the goal. Easy integrations to enable SSO/SAML based authentication and authorization controls, audit logs and integration with secrets manager for managing credentials are goals.
 
-A single developer should be able to manage the full application lifecycle, frontend and backend development, test automation and production deployment. Deployments should support a gitops like approach, with automatic preview environment to verify changes before making them live.
+A single developer should be able to manage the full application lifecycle, frontend and backend development, test automation and production deployment. Deployments should support a gitops like approach, with automatic preview environment to verify changes before making them live. It should be easy, for the original developer or a new developer, to make application code changes - after six months or after six years.
 
 Clace aims to give a dynamic development environment for applications with automatic reload of code changes, while providing a performant and scalable platform which is operationally simple to manage.
 
 ### Terminology
 
-- **Internal applications**: Web applications built or downloaded for use by an individual or teams. For users, this could be apps to manage their machine, like monitor disk usage across folders. For teams, apps could automate common operations like setting resource limits, provisioning accounts etc.
-- **Sandboxing**: Sandboxing is a security mechanism to ensure that an application stays within the rules set by the admin. If an application is configured to perform GET requests, trying to do a POST request from the application will fail until the admin authorizes the application to perform POST requests.
+- **Internal applications**: Web applications built or downloaded for use by an individual or teams. For users, this could be apps to manage their machine, like monitor disk usage across folders. For teams, apps could automate common operations like managing resource limits, provisioning accounts etc.
+- **Sandboxing**: Sandboxing is a security mechanism to ensure that an application stays within the rules set by the admin. If an application is configured to perform GET requests, trying to do a POST request from the application will fail until the admin authorizes the application to perform POST requests. Sandboxing is different from containers/jails. Those allow you to control at the network layer. Sandboxing allow more fine grained controls at the application API layer. Sandboxing allows usecases like allow GET but not POST, allow access to one database table but not to others etc.
 
 ### What's with the name
 
