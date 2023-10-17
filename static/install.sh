@@ -27,7 +27,7 @@ main() {
 	mkdir -p "$bin_dir"
 	mkdir -p "$tmp_dir"
 
-	curl -q --fail --location --progress-bar --output "$tmp_dir/clace.tar.gz" "$clace_uri" || (echo "Error downloading $clace_uri"; exit 1)
+	curl -q --fail --location --output "$tmp_dir/clace.tar.gz" "$clace_uri" || (echo "Error downloading $clace_uri"; exit 1)
 	# extract to tmp dir so we don't open existing executable file for writing:
 	tar -C "$tmp_dir" -xzf "$tmp_dir/clace.tar.gz"
 	chmod +x "$tmp_dir/${target}/clace"
@@ -35,23 +35,27 @@ main() {
 	rm "$tmp_dir/clace.tar.gz"
 
 
-	echo "\nclace was installed successfully to $exe"
+        echo ""
+	echo "clace was installed successfully to $exe"
 
-        if [[ ! -f $clace_install/clace.toml ]]; then
+        if [[ ! -s $clace_install/clace.toml ]]; then
                 $exe password > $clace_install/clace.toml 
-                echo "\nPassword config has been setup, save the above password for app access with admin account"
+                echo ""
+                echo "Password config has been setup, save the above password for app access with admin account"
         fi
 
         case $SHELL in
         /bin/zsh) shell_profile=".zshrc" ;;
         *) shell_profile=".bash_profile" ;;
         esac
-        echo "Manually add the directory to your \$HOME/$shell_profile (or similar)\n"
+        echo "Manually add the following to your \$HOME/$shell_profile (or similar)"
+        echo ""
         echo "  export CL_CONFIG_FILE=\"$clace_install/clace.toml\""
         echo "  export CL_HOME=\"$clace_install\""
-        echo "  export PATH=\"\$CL_HOME/bin:\$PATH\"\n"
+        echo "  export PATH=\"\$CL_HOME/bin:\$PATH\""
+        echo ""
 
-        echo "See https://clace.io/docs/installation/#start-the-service for steps to start the service and install apps"
+        echo "See https://clace.io/docs/installation/#start-the-service for steps to start the service and install apps."
 }
 
 main "$1"

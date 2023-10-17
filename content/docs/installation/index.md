@@ -79,4 +79,4 @@ This will create an app at /disk_usage with the example disk_usage app. The disk
 
 To access the app, go to [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage). Use `admin` as the username and use the password previously generated. Allow the browser to connect to the self-signed certificate page. Or connect to [http://127.0.0.1:25222/disk_usage](http://127.0.0.1:25222/disk_usage) to avoid the certificate related warning.
 
-The code for the example app is [here](https://github.com/claceio/clace/tree/main/examples/disk_usage/app.star). app.star is the starlark config and app.go.html is the html template. The other files are generated files and are created by Clace during app development.
+The code for the disk usage app is in [GitHub](https://github.com/claceio/clace/tree/main/examples/disk_usage/app.star). app.star is the starlark config and app.go.html is the html template. The other files are generated files and are created by Clace during app development.
