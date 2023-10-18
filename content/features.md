@@ -10,14 +10,14 @@ The goals Clace is being built to support are:
 
 - Enable development and deployment of secure internal web applications.
 - Simplify ongoing maintenance of such apps by removing build and dependency related issues.
-- Enable uses cases where developing custom web applications would have been too cumbersome before Clace.
+- Flexible deployment options, allowing use on personal machine and also shared across teams.
 
 ## App Development Features
 
 The dev time features supported currently by Clace are:
 
 - Hypermedia driven backend [API design]({{< ref "docs/app/routing" >}}), simplifying UI development.
-- Dynamic reload using SSE (Server Sent Events) for all application changes, backend and frontend.
+- Live reload using SSE (Server Sent Events) with HTTP/2 for all application changes, backend and frontend.
 - Automatic creation of ECMAScript modules using esbuild.
 - Automatic download for JavaScript and CSS dependencies.
 - Support for TailwindCSS and DaisyUI watcher integration.
