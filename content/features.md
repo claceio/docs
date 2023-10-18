@@ -27,7 +27,7 @@ The dev time features supported currently by Clace are:
 
 The deployment features supported currently by Clace are:
 
-- Backend app code run in a [security sandbox]({{< ref "docs/applications/appsecurity/#security-model" >}}), with allowlist based permissions.
+- Backend app code runs in a [security sandbox]({{< ref "docs/applications/appsecurity/#security-model" >}}), with allowlist based permissions.
 - [No build step]({{< ref "docs/app/overview/#app-lifecycle" >}}), the development artifacts are ready for production use.
 - Zero downtime application updates.
 - Scalable backend, all performance critical code is in Go, only application handler code is in Starlark.
