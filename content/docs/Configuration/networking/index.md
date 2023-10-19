@@ -26,7 +26,7 @@ For HTTPS requests, the Clace service listens on port 25223 by default, on the a
 [https]
 host = "0.0.0.0" # bind to all interfaces (if port is >= 0)
 port = 25223 # port for HTTPS
-enable_cert_lookup = true # enable looking for certificate files on disk before using Let's Encrypt
+enable_cert_lookup = true # enable looking for domain specific certificate files on disk
 service_email = "" # email address for registering with Let's Encrypt. Set a value to enable automatic certs
 use_staging = true # use Let's Encrypt staging server
 cert_location = "$CL_HOME/config/certificates" # where to look for existing certificate files
@@ -38,13 +38,13 @@ Port 0 means bind to any available port. Port -1 means disable HTTPS access.
 
 ## TLS Certificates
 
-The default configuration is:
+In the default configuration, where service_email is empty, certmagic integration is disabled. The certificate handling behavior is:
 
-- During the first HTTPS request, `$CL_HOME/config/certificates` is looked up for a crt and key file in the PEM format matching the domain name as passed to the server. If a matching certificate is found, that is used.
+- `$CL_HOME/config/certificates` is looked up for a crt and key file in the PEM format matching the domain name as passed to the server. If a matching certificate is found, that is used.
 - If no domain specific certificate is found, then the default certificate `default.crt` and `default.key` are looked up. If found, that is used.
-- If default certificate is not found, and Lets Encrypt based certificate creation is disabled (the default), then a self-signed certificate is auto created in the certificates folder.
+- If default certificate is not found, then a self-signed default certificate is auto created in the certificates folder.
 
-The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For example, if a file example.crt and example.key are found in te certificates folder, those are used for example.com domain.
+The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For example, if files example.com.crt and example.com.key are found in the certificates folder, those are used for example.com domain.
 
 ## Enable Automatic Signed Certificate
 
@@ -61,7 +61,7 @@ Once the pre-requisites are met, set the `service_email` config parameter to you
 [https]
 host = "0.0.0.0"
 port = 443
-enable_cert_lookup = true
+enable_cert_lookup = true # enable looking for domain specific certificate files on disk
 service_email = "MY_EMAIL@example.com" # CHANGE to your email address
 use_staging = true # CHANGE to false for production
 cert_location = "$CL_HOME/config/certificates"
@@ -70,7 +70,7 @@ storage_location = "$CL_HOME/run/certmagic"
 
 Test out the certificate creation. If the certificate is getting created, change `use_staging` to false. Let's Encrypt has strict rate limits, use the staging config to ensure that the pre-requisites are met before using the production config.
 
-With this config, the certificates folder is looked up for any custom certificates for the domain. If not found, certmagic is used to create the certificate. Change `enable_cert_lookup` to `false` to disable local certificate lookup. If enable_cert_lookup is false, and service_email also is unset (certmagic is disabled), then the `default.crt` certificate is used for all requests.
+With this config, certmagic is used to create certificates for all HTTPS requests. Self signed certificates and enable_cert_lookup property are not used when certmagic is enabled.
 
 ## Privileged Ports
 
