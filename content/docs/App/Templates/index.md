@@ -51,3 +51,26 @@ settings={
 ```
 
 the default is `["*.go.html"]`. If additional directories are added, `"*.go.html"` still needs to present in the list since generated files are created in the app home directory. Also, all folders in the list need to contains at least one template file. File names have to be unique across folders. Files are referenced by their name, without the folder name, when used in template import directives.
+
+## File Contents
+
+When using custom layout, the app developer has to create the `index.go.html` file. Adding a directive like:
+
+```html
+{{ template "clace_gen_import" . }}
+```
+
+in the head section ensures that the auto generated `clace_gen_import` directives are loaded. This will include the style files, HTMX library and the live reload functionality will be enabled in dev mode.
+
+In Clace layout mode (the default), the auto generated `index_gen.go.html` file is used. The app developer has to provide a `clace_body` block. It can be in any file, the convention is to use `app.go.html`. For example:
+
+<!-- prettier-ignore -->
+```html
+{{block "clace_body" .}}
+   Data is {{.Data}}
+{{end}}
+```
+
+<!-- prettier-ignore-end -->
+
+The `.Data` binding has the response as returned by the handler function for the route.
