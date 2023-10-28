@@ -9,11 +9,18 @@ date: 2023-10-05
 
 To install the latest release build, run
 
-```
+```shell
 curl -L https://clace.io/install.sh | sh
 ```
 
-Add the env variables as prompted and then [start the service]({{< ref "#start-the-service" >}}).
+Add the env variables as prompted and then
+
+```shell
+clace server start &
+clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/
+```
+
+The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage). `admin` is the username and use the password printed by the install script. See [start the service]({{< ref "#start-the-service" >}}) for details.
 
 ## Install from Source
 

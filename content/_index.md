@@ -39,7 +39,7 @@ Clace allows applications to be configured in <a href="https://github.com/google
 
 <br>
 <h2>Installation</h2>
-To install Clace, run <code>curl -L https://clace.io/install.sh | sh</code>. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for next steps.
+To install Clace, run <code>curl -L https://clace.io/install.sh | sh</code>. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
 <br>
 
 <h2>Samples</h2>
