@@ -34,27 +34,31 @@ main() {
 	rm "$tmp_dir/clace.tar.gz"
 
 
-        echo ""
+    echo ""
 	echo "clace was installed successfully to $exe"
 
-        if [[ ! -s $clace_install/clace.toml ]]; then
-                $exe password > $clace_install/clace.toml 
-                echo ""
-                echo "Password config has been setup, save the above password for app access with admin account"
-        fi
-
-        case $SHELL in
-        /bin/zsh) shell_profile=".zshrc" ;;
-        *) shell_profile=".bash_profile" ;;
-        esac
-        echo "Manually add the following to your \$HOME/$shell_profile (or similar)"
+    if [[ ! -s $clace_install/clace.toml ]]; then
         echo ""
-        echo "  export CL_CONFIG_FILE=\"$clace_install/clace.toml\""
-        echo "  export CL_HOME=\"$clace_install\""
-        echo "  export PATH=\"\$CL_HOME/bin:\$PATH\""
-        echo ""
+        $exe password > $clace_install/clace.toml 
+            echo ""
+            echo "Password config has been setup, save the above password for app access with admin account"
+    fi
 
-        echo "See https://clace.io/docs/installation/#start-the-service for steps to start the service and install apps."
+    case $SHELL in
+    /bin/zsh) shell_profile=".zshrc" ;;
+    *) shell_profile=".bash_profile" ;;
+    esac
+
+    echo "export CL_CONFIG_FILE=\"$clace_install/clace.toml\"" > $bin_dir/clace.env
+    echo "export CL_HOME=\"$clace_install\"" >> $bin_dir/clace.env
+    echo "export PATH=\"\$CL_HOME/bin:\$PATH\"" >> $bin_dir/clace.env
+
+    echo "Manually add the following to your \$HOME/$shell_profile (or similar). Also run it now for this session:"
+    echo ""
+    echo "  source \"$bin_dir/clace.env\""
+    echo ""
+
+    echo "See https://clace.io/docs/installation/#start-the-service for steps to start the service and install apps."
 }
 
 main "$1"
