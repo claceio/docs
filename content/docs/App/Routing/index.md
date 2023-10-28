@@ -29,8 +29,8 @@ defines two routes. `/` routes to the default index page, `/help` routes to the 
 | Property  | Optional |      Type      |                        Default                         |                     Notes                     |
 | :-------: | :------: | :------------: | :----------------------------------------------------: | :-------------------------------------------: |
 |   path    |  False   |     string     |                                                        |       The route, should start with a /        |
-|   html    |   True   |     string     | index.go.html if custom layout, else index_gen.go.html |  The template to use for full page requests   |
-|   block   |   True   |     string     |                          None                          | The template to use for partial page requests |
+|   full    |   True   |     string     | index.go.html if custom layout, else index_gen.go.html |  The template to use for full page requests   |
+|  partial  |   True   |     string     |                          None                          | The template to use for partial page requests |
 |  handler  |   True   |    function    |                  handler (if defined)                  |   The handler function to use for the route   |
 | fragments |   True   | ace.fragment[] |                           []                           |              The fragment array               |
 |  method   |   True   |     string     |                          GET                           | The HTTP method type: GET,POST,PUT,DELETE etc |
@@ -43,7 +43,7 @@ The fragments array in the page definition defines the API interactions within t
 | Property | Optional |   Type   |       Default       |                     Notes                     |
 | :------: | :------: | :------: | :-----------------: | :-------------------------------------------: |
 |   path   |  False   |  string  |                     |     The route, should not start with a /      |
-|  block   |   True   |  string  | Inherited from page |   The template to use for partial requests    |
+| partial  |   True   |  string  | Inherited from page |   The template to use for partial requests    |
 | handler  |   True   | function | Inherited from page |   The handler function to use for the route   |
 |  method  |   True   | function |         GET         | The HTTP method type: GET,POST,PUT,DELETE etc |
 |   type   |   True   |  string  |        html         |        The response type, html or json        |
@@ -55,21 +55,21 @@ The fragments array in the page definition defines the API interactions within t
 For example, in this page definition
 
 ```python
-ace.page("/game/{game_id}", "game.go.html", "game_info_tmpl", handler=game_handler,
+ace.page("/game/{game_id}", full="game.go.html", partial="game_info_tmpl", handler=game_handler,
     fragments=[
         ace.fragment(
             "submit", method="POST", handler=lambda req: post_game_update(req, "submit")),
         ace.fragment(
-            "refresh", block="refresh_tmpl")
+            "refresh", partial="refresh_tmpl")
     ]
 )
 ```
 
 there are three API's defined:
 
-- GET /game/{game_id} : game_handler is the handler function, full page request returns game.go.html, partial HTMX request returns game_info_tmpl template
-- POST /game/{game_id}/submit : The handler is a lambda function. The game_info_tmpl template is inherited from page as the response for the POST.
-- GET /game/{game_id}/refresh : game_handler is inherited from the page. For full page, it returns the game.go.html response, since this is a fragment for that page. For partial HTMX requests, refresh_tmpl template is returned
+- GET /game/{game_id} : game_handler is the handler function, full page request returns game.go.html, partial HTMX request returns game_info_tmpl template.
+- POST /game/{game_id}/submit : The handler is a lambda function. The game_info_tmpl template partial is inherited from the page as the response for the POST.
+- GET /game/{game_id}/refresh : game_handler is inherited from the page. For full page, it returns the game.go.html response. For partial HTMX requests, refresh_tmpl template is returned.
 
 ## API Flow
 

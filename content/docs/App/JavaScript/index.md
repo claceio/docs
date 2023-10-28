@@ -21,9 +21,17 @@ in the app definition. The fields in the `ace.library` structure are:
 
 The args array uses the [esbuild cli syntax](https://pkg.go.dev/github.com/evanw/esbuild/pkg/cli). For example, passing args as `["--minify"]` will enable minification for the imported module.
 
+To directly download a library from a CDN to the static folder, add the url directly. For example,
+
+```python
+    libraries=["https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"]
+```
+
+The HTMX library and its SSE extension are automatically downloaded.
+
 ## JavaScript Modules
 
-JavaScript modules (also called ESM or ECMAScript Modules) are a way to import Javascript libraries dynamically, providing a unique namespace for all functions. Modules, once imported, can be used in the client code without requiring any build steps. See [jvns.ca](https://jvns.ca/blog/2023/02/16/writing-javascript-without-a-build-system/) and [https://simonwillison.net](https://simonwillison.net/2023/May/2/download-esm/) for notes about this approach. Clace tries to provide an easy interface to modules, converting npm packages to module format so that subsequent code changes do not require any build steps.
+JavaScript modules (also called ESM or ECMAScript Modules) are a way to import Javascript libraries dynamically, providing a unique namespace for all functions. Modules, once imported, can be used in the client code without requiring any build steps. See [jvns.ca](https://jvns.ca/blog/2023/02/16/writing-javascript-without-a-build-system/) and [simonwillison.net](https://simonwillison.net/2023/May/2/download-esm/) for notes about this approach. Clace tries to provide an easy interface to modules, converting npm packages to module format so that subsequent code changes do not require any build steps.
 
 ## Workflow
 
@@ -71,3 +79,5 @@ If you do not want esbuild to create modules, set the node_path property in the 
 
 - The version number specified in the `ace.library` is used to create the file name under `static/gen/esm`. The actual package version depends on what was install using npm. Ensure that the same version is installed by npm as specified in the library config.
 - Only the `minify` option for esbuild has been tested with Clace. Other options like chunking the files might not work currently.
+- The JavaScript support is for running JS on the browser. There is no support for running JavaScript on the Clace server, the server runs only Go code and starlark applications.
+- If an library url is specified, that is downloaded directly. There is no need for npm package in that case.

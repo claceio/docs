@@ -53,7 +53,7 @@ file_watcher_debounce_millis = 300
 
 `tailwindcss_command` is the command use to start the watcher. If the standalone version is being used change to
 
-```
+```toml
 [system]
 tailwindcss_command = "/path/to/tailwindcss"
 ```

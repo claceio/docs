@@ -28,11 +28,11 @@ This security model allows for the following:
 
 ## Sample Application
 
-As an example, the disk usage analysis app requires [two permissions](https://github.com/claceio/clace/blob/1f2ca6b09a73112dc8c97cb0575942dba4d75f89/examples/disk_usage/app.star#L44)
+As an example, the disk usage analysis app requires [two permissions](https://github.com/claceio/clace/blob/8b8975cea2d650c9f80dab6eb70cc5b2ddbe5c40/examples/disk_usage/app.star#L42)
 
 ```python
 app = ace.app("Disk Usage",
-              pages=[ace.page("/", block="du_table_block")],
+              pages=[ace.page("/", partial="du_table_block")],
               permissions=[
                   ace.permission("exec.in", "run", ["du"]),
                   ace.permission("exec.in", "run", ["readlink"])
@@ -83,7 +83,7 @@ $ ./clace app delete /utils/disk_usage
 App deleted /utils/disk_usage
 ```
 
-Once the app is created, if the application code is updated to change this [line](https://github.com/claceio/clace/blob/1f2ca6b09a73112dc8c97cb0575942dba4d75f89/examples/disk_usage/app.star#L9) from
+Once the app is created, if the application code is updated to change [the line](https://github.com/claceio/clace/blob/8b8975cea2d650c9f80dab6eb70cc5b2ddbe5c40/examples/disk_usage/app.star#L9) from
 
 ```python
     ret = exec.run("readlink", ["-f", current], process_partial=True)
