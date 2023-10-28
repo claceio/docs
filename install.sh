@@ -5,9 +5,8 @@
 
 set -e -o pipefail
 
-LATEST_VERSION="v0.1.14"
-
 main() {
+    LATEST_VERSION=$(curl -s https://api.github.com/repos/claceio/clace/releases/latest | grep tag_name | cut -d '"' -f 4)
 	os=$(uname -s | tr '[:upper:]' '[:lower:]')
 	arch=$(uname -m)
 
