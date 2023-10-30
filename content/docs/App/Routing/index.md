@@ -49,7 +49,7 @@ The fragments array in the page definition defines the API interactions within t
 |   type   |   True   |  string  |        html         |        The response type, html or json        |
 
 {{< alert >}}
-**Note:** block and handler are inherited from the page level, unless overridden for the fragment.
+**Note:** `partial` and `handler` are inherited from the page level, unless overridden for the fragment.
 {{< /alert >}}
 
 For example, in this page definition
@@ -83,6 +83,6 @@ The API flow is
 
 ## Notes
 
-- For HTMX partial requests, the block template is used. For regular requests, the page level template is used
+- For HTMX requests, the `partial` template is used. For regular requests, the page level `full` template is used
 - If there is a function called `handler` defined, that is the default handler function for all API's
 - For non-HTMX update requests (POST/PUT/DELETE), the [Post-Redirect-Get](https://en.wikipedia.org/wiki/Post/Redirect/Get) pattern is automatically implemented by redirecting to the location pointed to by the `Referer` header.
