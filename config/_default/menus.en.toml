@@ -27,6 +27,11 @@
   weight = 20
 
 [[main]]
+  name = "Blog"
+  pageRef = "blog"
+  weight = 30
+
+[[main]]
   identifier = "search"
   weight = 99
   [main.params]
