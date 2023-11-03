@@ -3,14 +3,14 @@
 # Copyright (c) ClaceIO, LLC
 # SPDX-License-Identifier: Apache-2.0
 
-set -e -o pipefail
+set -e
 
 main() {
     LATEST_VERSION=$(curl -s https://api.github.com/repos/claceio/clace/releases/latest | grep tag_name | cut -d '"' -f 4)
 	os=$(uname -s | tr '[:upper:]' '[:lower:]')
 	arch=$(uname -m)
 
-        if [[ $arch = "x86_64" ]]; then
+        if test $arch = "x86_64"; then
                 arch="amd64"
         fi
 
@@ -37,7 +37,7 @@ main() {
     echo ""
 	echo "clace was installed successfully to $exe"
 
-    if [[ ! -s $clace_install/clace.toml ]]; then
+    if test ! -s $clace_install/clace.toml; then
         echo ""
         $exe password > $clace_install/clace.toml 
             echo ""
