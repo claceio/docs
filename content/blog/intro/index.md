@@ -55,8 +55,10 @@ The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.
 
 You can keep in touch by these means:
 
-- Star the repo on [GitHub](https://github.com/claceio/clace)
-- Sign up for [Email updates](https://clace.io/)
+- Star the repo at [github.com/claceio/clace](https://github.com/claceio/clace)
+- Sign up for [Email updates](https://clace.io/#:~:text=Sign%20up%20for%20email%20updates)
 - Follow on [Twitter](https://twitter.com/claceio)
-- RSS feed at [Clace blog](https://clace.io/blog/index.xml)
-- Follow on [LinkedIn](https://www.linkedin.com/company/claceio)
+- Subscribe to the blog [RSS feed](https://clace.io/blog/index.xml)
+- Follow ClaceIO on [LinkedIn](https://www.linkedin.com/company/claceio)
+
+Use [discussions](https://github.com/claceio/clace/discussions) feature in Github or raise [issues](https://github.com/claceio/clace/issues) to provide feedback.
