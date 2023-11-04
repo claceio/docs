@@ -103,7 +103,7 @@ and an `index.go.html` file with
 </html>
 ```
 
-This app uses the exec plugin to run a ls command. The output of the command is shown when th app is accessed. To allow the app to run the plugin command, use the `clace app audit --approve` command.
+This app uses the exec plugin to run a ls command. The output of the command is shown when the app is accessed. To allow the app to run the plugin command, use the `clace app audit --approve` command.
 
 <!-- prettier-ignore-end -->
 
