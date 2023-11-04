@@ -64,24 +64,31 @@ href="https://clace.io/docs/installation/"
 &lt;h2 id="follow-along" class="relative group">Follow Along &lt;span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100">&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#follow-along" aria-label="Anchor">#&lt;/a>&lt;/span>&lt;/h2>
 &lt;p>You can keep in touch by these means:&lt;/p>
 &lt;ul>
-&lt;li>Star the repo on &lt;a
+&lt;li>Star the repo at &lt;a
 href="https://github.com/claceio/clace"
 target="_blank" rel="noreferrer noopener"
->GitHub&lt;/a>&lt;/li>
+>github.com/claceio/clace&lt;/a>&lt;/li>
 &lt;li>Sign up for &lt;a
-href="https://clace.io/"
+href="https://clace.io/#:~:text=Sign%20up%20for%20email%20updates"
 target="_blank" rel="noreferrer noopener"
 >Email updates&lt;/a>&lt;/li>
 &lt;li>Follow on &lt;a
 href="https://twitter.com/claceio"
 target="_blank" rel="noreferrer noopener"
 >Twitter&lt;/a>&lt;/li>
-&lt;li>RSS feed at &lt;a
+&lt;li>Subscribe to the blog &lt;a
 href="https://clace.io/blog/index.xml"
 target="_blank" rel="noreferrer noopener"
->Clace blog&lt;/a>&lt;/li>
-&lt;li>Follow on &lt;a
+>RSS feed&lt;/a>&lt;/li>
+&lt;li>Follow ClaceIO on &lt;a
 href="https://www.linkedin.com/company/claceio"
 target="_blank" rel="noreferrer noopener"
 >LinkedIn&lt;/a>&lt;/li>
-&lt;/ul></description></item></channel></rss>
+&lt;/ul>
+&lt;p>Use &lt;a
+href="https://github.com/claceio/clace/discussions"
+target="_blank" rel="noreferrer noopener"
+>discussions&lt;/a> feature in Github or raise &lt;a
+href="https://github.com/claceio/clace/issues"
+target="_blank" rel="noreferrer noopener"
+>issues&lt;/a> to provide feedback.&lt;/p></description></item></channel></rss>
