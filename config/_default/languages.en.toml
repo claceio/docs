@@ -21,4 +21,5 @@ dateFormat = "2 January 2006"
      { email = "mailto:contact@clace.io" },
      { github = "https://github.com/claceio" },
      { twitter = "https://twitter.com/claceio" },
+     { linkedin = "https://www.linkedin.com/company/claceio"},
   ]
