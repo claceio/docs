@@ -31,20 +31,31 @@
   pageRef = "blog"
   weight = 30
 
+
+
+[[main]]
+  name = "Feed"
+  url = "https://clace.io/blog/index.xml"
+  weight = 40
+  [main.params]
+    icon = "rss"
+    showName = false
+    target = "_blank"
+
+[[main]]
+  name = "GitHub"
+  url = "https://github.com/claceio/clace"
+  weight = 50
+  [main.params]
+    icon = "github"
+    showName = false
+    target = "_blank"
+
 [[main]]
   identifier = "search"
   weight = 99
   [main.params]
     action = "search"
-
-[[main]]
-  name = "GitHub"
-  url = "https://github.com/claceio/clace"
-  weight = 40
-  [main.params]
-    icon = "github"
-    showName = false
-    target = "_blank"
 
 # -- Footer Menu --
 # The footer menu is displayed at the bottom of the page, just before
