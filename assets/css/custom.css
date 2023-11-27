@@ -1,0 +1,24 @@
+
+/* Change the default font */
+html {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.index-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Media query for larger screens */
+@media (min-width: 600px) {
+    .index-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .index-item {
+        width: 50%; /* Each item takes up 50% of the container width */
+        margin-bottom: 0; /* Adjust as needed */
+    }
+}
+

@@ -6,17 +6,17 @@ cascade:
   invertPagination: true
 ---
 
-<div style="display: flex; flex-wrap: wrap; justify-content: center;  align-content: center; gap: 5px;">
+<div class="index-container">
 
-<span style="font-size:200%;"> {{< icon "shield-lock" >}} </span> **Secure platform with application sandboxing**
+<div class="index-item"><span style="font-size:250%;"> {{< icon "shield-lock" >}} </span> App sandboxing for security</div>
 
-<span style="font-size:200%;"> {{< icon "brand-html5" >}} </span> **Hypermedia first UI approach**
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-html5" >}} </span> Hypermedia first UI approach</div>
 
-<span style="font-size:200%;"> {{< icon "brand-python" >}} </span> **Applications configured using Python(Starlark)**
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-python" >}} </span> App config using Starlark</div>
 
-<span style="font-size:250%;"> {{< icon "brand-golang" >}} </span> **Single binary deployment for easy installation**
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-golang" >}} </span> Single binary deployment</div>
 
-<!-- <span style="font-size:200%;"> {{< icon "brand-github" >}} </span> **Github integration, for gitops workflow** !-->
+<!--div class="index-item"><span style="font-size:200%;"> {{< icon "brand-github" >}} </span> Github integration, for gitops workflow</div-->
 
 </div>
 
