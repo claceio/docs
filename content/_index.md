@@ -10,7 +10,7 @@ cascade:
 
 <div class="index-item"><span style="font-size:250%;"> {{< icon "shield-lock" >}} </span> App sandboxing for security</div>
 
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-html5" >}} </span> Hypermedia first UI approach</div>
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-html5" >}} </span> Hypermedia driven web apps</div>
 
 <div class="index-item"><span style="font-size:250%;"> {{< icon "brand-python" >}} </span> App config using Starlark</div>
 
