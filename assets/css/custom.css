@@ -23,7 +23,7 @@ html {
 }
 
 .index-pre {
-    max-width: 100%;    /* Ensures the pre tag fits in its container */
+    max-width: 95%;    /* Ensures the pre tag fits in its container */
     overflow-x: auto;   /* Adds horizontal scrolling for overflow */
     white-space: pre-wrap; /* Allows long lines to wrap */
     word-wrap: break-word; /* Breaks long words if necessary */
