@@ -22,3 +22,26 @@ html {
     }
 }
 
+.index-pre {
+    max-width: 100%;    /* Ensures the pre tag fits in its container */
+    overflow-x: auto;   /* Adds horizontal scrolling for overflow */
+    white-space: pre-wrap; /* Allows long lines to wrap */
+    word-wrap: break-word; /* Breaks long words if necessary */
+    padding: 5px;
+}
+
+@media (max-width: 600px) {
+    .index-pre {
+        font-size: smaller; /* Smaller font for small screens */
+    }
+}
+
+.index-code {
+    border-radius: 5px;       /* Rounded corners */
+    font-family: 'Courier New', monospace; /* Monospaced font */
+}
+
+.index-no-copy {
+    user-select: none; /* Prevents text from being selected */
+    color: #00C200;
+}

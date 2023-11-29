@@ -21,7 +21,7 @@ cascade:
 </div>
 
 <h2>What is Clace?</h2>
-Clace is an Apache-2.0 licensed project building a platform to develop and deploy secure internal web applications. Clace provides a web application server focussed on securely running multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single installation.
+Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace provides a web application server focussed on securely running multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single installation.
 
 <br>
 <h2>Who is it for?</h2>
@@ -39,7 +39,21 @@ Clace allows applications to be configured in <a href="https://github.com/google
 
 <br>
 <h2>Installation</h2>
-To install Clace, run <code>curl -L https://clace.io/install.sh | sh</code>. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
+To install Clace, start the service and install an app, run:
+<br>
+
+<div class="index-code" style="text-align: left;">
+<pre class="index-pre"><code><span class="index-no-copy">$</span> curl -L https://clace.io/install.sh | sh
+# Note down the generated password
+<span class="index-no-copy">$</span> source $HOME/clhome/bin/clace.env
+<span class="index-no-copy">$</span> clace server start & <br>
+# Any new app can be installed by running
+<span class="index-no-copy">$</span> clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/ </code>
+</pre>
+</div>
+<br>
+
+The app should be available at https://localhost:25223/disk_usage. `admin` is the username, use the password printed by the install script. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
 <br>
 
 <h2>Samples</h2>

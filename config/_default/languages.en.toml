@@ -6,7 +6,7 @@ weight = 1
 rtl = false
 
 title = "Clace"
-description = "Secure internal web application platform"
+description = "Web App Self-Hosting Made Easy"
 copyright = "Copyright © 2023 ClaceIO, LLC"
 
 dateFormat = "2 January 2006"
@@ -15,8 +15,8 @@ dateFormat = "2 January 2006"
   mainSections = ["Features", "Docs", "Blog", "About"]
 
 [author]
-  name = "Clace"
-  headline = "Secure internal web application platform"
+  name = "CLACE"
+  headline = "Web App Self-Hosting Made Easy"
   links = [
      { email = "mailto:contact@clace.io" },
      { github = "https://github.com/claceio" },

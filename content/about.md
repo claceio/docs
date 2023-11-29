@@ -6,11 +6,11 @@ date: 2023-10-05
 
 ### What is Clace?
 
-Clace is an open-source (Apache-2.0 Licensed) project building a platform to develop and deploy secure internal web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints, the frontend can be auto generated forms or fully customizable web applications.
+Clace is an open-source (Apache-2.0 Licensed) project building a platform to easily develop and deploy self-hosted web applications. Clace provides a web application server focused on securely running multiple applications on a single installation. Applications are full stack, with a backend which can talk to external endpoints, the frontend can be auto generated forms or fully customizable web applications.
 
 ### Project Goals
 
-The goal of this project is to make it easy for individuals and teams to develop and manage lightweight full stack applications in a secure manner. Fully configurable and secure internal web applications with minimal code is the goal. Easy integrations to enable SSO/SAML based authentication and authorization controls, audit logs and integration with secrets manager for managing credentials are goals.
+The goal of this project is to make it easy for individuals and teams to develop and manage lightweight full stack applications in a secure manner. Fully configurable and secure self-hosted web applications with minimal code is the goal. Easy integrations to enable SSO/SAML based authentication and authorization controls, audit logs and integration with secrets manager for managing credentials are goals.
 
 A single developer should be able to manage the full application lifecycle, frontend and backend development, test automation and production deployment. Deployments should support a gitops like approach, with automatic preview environment to verify changes before making them live. It should be easy, for the original developer or a new developer, to make application code changes - after six months or after six years.
 

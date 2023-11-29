@@ -1,13 +1,13 @@
 ---
 title: "Introducing Clace"
-summary: "Introducing the Clace project: A Platform for Secure Internal Web Applications"
+summary: "Introducing the Clace project: A Platform for Breezy Self-Hosted Web Apps"
 date: 2023-11-01
 draft: false
 ---
 
-# Clace: Platform for Secure Internal Web Applications
+# Clace: Platform for Easy Self-Hosted Web Applications
 
-Clace is an [open-source](https://github.com/claceio/clace) platform to enable the creation and deployment of secure internal web applications. The goals for the Clace project are:
+Clace is an [open-source](https://github.com/claceio/clace) platform to enable easy development and deployment of self-hosted web applications. The goals for the Clace project are:
 
 - Enable development and deployment of secure internal web applications.
 - Simplify ongoing maintenance of such apps by removing build and dependency related issues. Updating an app after six months or six years should just work.

@@ -8,7 +8,7 @@ date: 2023-10-08
 
 The goals Clace is being built to support are:
 
-- Enable development and deployment of secure internal web applications.
+- Enable easy development and deployment of self-hosted web applications.
 - Simplify ongoing maintenance of such apps by removing build and dependency related issues.
 - Flexible deployment options, allowing use on personal machine and also shared across teams.
 
