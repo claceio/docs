@@ -39,7 +39,7 @@ Clace allows applications to be configured in <a href="https://github.com/google
 
 <br>
 <h2>Installation</h2>
-To install, start the service and install an app, run:
+To install, start the service and create an app, run:
 <br>
 
 <div class="index-code" style="text-align: left;">
