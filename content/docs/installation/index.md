@@ -69,7 +69,7 @@ The service logs will be going to $CL_HOME/logs. To get the logs on the console 
 To create an app, run the Clace client
 
 ```shell
-clace app create --is_dev /disk_usage $HOME/clace_source/clace/examples/disk_usage/
+clace app create --dev /disk_usage $HOME/clace_source/clace/examples/disk_usage/
 ```
 
 To audit and approve the app's security policies, run

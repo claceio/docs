@@ -18,8 +18,8 @@ USAGE:
    clace server start [command options] [arguments...]
 
 OPTIONS:
-   --server_uri value, -s value     The server connection uri (default: "$CL_HOME/run/clace.sock") [$CL_SERVER_URI]
-   --admin_user value, -u value     The admin user name (default: "admin") [$CL_ADMIN_USER]
+   --server-uri value, -s value     The server connection uri (default: "$CL_HOME/run/clace.sock") [$CL_SERVER_URI]
+   --admin-user value, -u value     The admin user name (default: "admin") [$CL_ADMIN_USER]
    --http.host value, -i value      The interface to bind on for HTTP (default: "127.0.0.1") [$CL_HTTP_HOST]
    --http.port value, -p value      The port to listen on for HTTP (default: 25222) [$CL_HTTP_PORT]
    --https.host value               The interface to bind on for HTTPS (default: "0.0.0.0") [$CL_HTTPS_HOST]
@@ -29,7 +29,7 @@ OPTIONS:
    --help, -h                       show help
 
 GLOBAL OPTIONS:
-   --config_file value, -c value  TOML configuration file [$CL_CONFIG_FILE]
+   --config-file value, -c value  TOML configuration file [$CL_CONFIG_FILE]
    --help, -h                     show help
 ```
 

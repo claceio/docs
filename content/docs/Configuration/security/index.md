@@ -64,7 +64,7 @@ skip_cert_check = false # Change to true if using self-signed certs
 
 These can be specified in a client config file or can be set in the CLI command line. All other config entries are ignored by the Clace client. Note that to connect to a Clace server over HTTP remotely, the server needs to be bound to the all interface(0.0.0.0), see [here]({{< ref "networking" >}}).
 
-If server_uri is set to the https endpoint and the Clace server is running with a self-signed certificate, set `skip_cert_check = true` in config or pass `--skip_cert_check=true` in client commands to disable the TLS certificate check.
+If server_uri is set to the https endpoint and the Clace server is running with a self-signed certificate, set `skip_cert_check = true` in config or pass `--skip-cert-check=true` in client commands to disable the TLS certificate check.
 
 ## Application Security
 
