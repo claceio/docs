@@ -34,8 +34,11 @@ The deployment features supported currently by Clace are:
 - Zero downtime application updates.
 - Scalable backend, all performance critical code is in Go, only application handler code is in Starlark.
 - Support for domain based and path based [routing]({{< ref "docs/applications/routing/#request-routing" >}}) at the app level.
-- Virtual filesystem with [content hash based file names]({{< ref "docs/app/templates/#static-function" >}}), enabling aggressive static content caching.
+- Virtual filesystem with [content hash based file names]({{< ref "docs/app/templates/#static-function" >}}) backed by SQLite database, enabling aggressive static content caching.
+- Brotli compression for static artifacts, HTTP early hints support for performance.
 - [Automatic SSL]({{< ref "docs/configuration/networking/#enable-automatic-signed-certificate" >}}) certificate creation based on [certmagic](https://github.com/caddyserver/certmagic).
+- Staging mode for app updates, to verify whether code and config changes work on prod before making them live.
+- Preview app creation support, for reviewing code changes.
 
 ## Roadmap
 
@@ -45,7 +48,6 @@ Clace is early in its development. The feature roadmap for Clace is:
 - Support for SSO with SAML.
 - All plugins are internal (built into Clace binary) currently. The plan is to move to an external plugin model, plugins being loaded dynamically using [go-plugin](https://github.com/hashicorp/go-plugin).
 - SQLite is used as the metadata storage currently. Support for postgres and other systems is planned.
-- Staging mode for app updates, to verify whether changes work before making them live.
 - Support for workflow jobs, which would have a form based interface with limited customizability, but with support for triggered and scheduled execution.
 - Support for application data persistance.
 - UI interface for Clace admin operations.
