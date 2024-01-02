@@ -37,8 +37,8 @@ The deployment features supported currently by Clace are:
 - Virtual filesystem with [content hash based file names]({{< ref "docs/app/templates/#static-function" >}}) backed by SQLite database, enabling aggressive static content caching.
 - Brotli compression for static artifacts, HTTP early hints support for performance.
 - [Automatic SSL]({{< ref "docs/configuration/networking/#enable-automatic-signed-certificate" >}}) certificate creation based on [certmagic](https://github.com/caddyserver/certmagic).
-- Staging mode for app updates, to verify whether code and config changes work on prod before making them live.
-- Preview app creation support, for reviewing code changes.
+- [Staging mode]({{< ref "docs/applications/lifecycle/#staging-apps" >}}) for app updates, to verify whether code and config changes work on prod before making them live.
+- [Preview app]({{< ref "docs/applications/lifecycle/#preview-apps" >}}) creation support, for trying out code changes.
 
 ## Roadmap
 

@@ -15,9 +15,9 @@ Consider this scenario:
 
 - App A is installed at /utils/appA
 - App B is installed at /appB
-- App C is installed at the root level / for domain example.com
-- App D is installed at /test for test.mydomain.com
-- App E is installed at /test2 for test.mydomain.com
+- App C is installed at the root level / for domain example.com, example.com:/
+- App D is installed at /test for test.mydomain.com, test.mydomain.com:/test
+- App E is installed at /test2 for test.mydomain.com, test.mydomain.com:/test2
 
 For every API call, the Clace server first checks whether the API call is against a domain namespace which is currently configured in Clace. If so, applications matching that domain are looked up. If no matching domain is located, then the default namespace (with no domain) is looked up.
 
@@ -42,5 +42,5 @@ When an app is being created, a path and an optional domain need to be specified
 ## Notes
 
 - The domain specified for the app is used only for routing requests. The user has to ensure that the actual DNS routing is done properly outside of Clace for the API calls to land on the Clace server.
-- Using wildcard DNS entries will reduce the work required in the DNS service. So if \*.example.com points to the IP address of the Clace service, any domain based routing done in Clace will work with no further DNS configuration being required. The automated certificates created by Clace will be domain level certificates, wildcard certificates are not currently created.
-- `/_clace/` at the root level and `/_clace_app/` within an app path are reserved paths, they are used by the Clace server, requests will not reach the app. This applies for all domains.
+- Using wildcard DNS entries will reduce the configuration required in the DNS service. So if \*.example.com points to the IP address of the Clace service, any domain based routing done in Clace will work with no further DNS configuration being required. The automated certificates created by Clace will be domain level certificates, wildcard certificates are not currently created.
+- `/_clace/` API path at the root level and `/_clace_app/` within an app path are reserved paths, they are used by the Clace internal APIs, requests will not reach the app. This applies for all domains. `_cl_` is reserved for use for internal apps, so app path last component cannot have `_cl_`.
