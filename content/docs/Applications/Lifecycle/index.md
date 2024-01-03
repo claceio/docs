@@ -111,12 +111,12 @@ Use the `--dry-run` option with any update CLI call to verify if the options spe
 Preview allows the creation of any number of linked preview apps for a main app. This is supported for apps created from GitHub source. A commit id to use needs to be specified. For example,
 
 ```sh
-clace app preview /myapp 49182d4ca1cacbd8e3463a77c2174a6da1fb66c9
+clace preview create /myapp 49182d4ca1cacbd8e3463a77c2174a6da1fb66c9
 ```
 
 creates an app accessible at `/myapp_cl_preview_49182d4ca1cacbd8e3463a77c2174a6da1fb66c9` which runs the app code in the specified commit id.
 
-Preview apps cannot be changed once they are created. If preview app requires new permissions, add the `--approve` option to the `app preview` command.
+Preview apps cannot be changed once they are created. If preview app requires new permissions, add the `--approve` option to the `preview create` command.
 
 ## Write Mode Access
 
