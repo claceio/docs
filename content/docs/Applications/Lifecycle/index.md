@@ -24,17 +24,17 @@ clace app create --dev --approve /myapp /home/user/mycode
 
 ## Production Apps
 
-Without the `--dev` options, apps are created as production apps by default. Production apps can be created from source on GitHub or from local disk. In either case, the source code for the app is uploaded to the Clace metadata database. After app creation, the original source location is not read, until a `app reload` operation is performance to update the sources. For example:
+Without the `--dev` options, apps are created as production apps by default. Production apps can be created from source on GitHub or from local disk. In either case, the source code for the app is uploaded to the Clace metadata database. For example:
 
 ```sh
 clace app create --approve example.com:/ /home/user/mycode
 ```
 
-creates an production app. After the app is created, the source folder `/home/user/mycode` can be deleted, since the sources are present in the Clace metadata database. Every production app automatically has one staging app associated with it.
+creates an production app. After app creation, the original source location is not read, until a `app reload` operation is done to update the sources. The source folder `/home/user/mycode` can be deleted if reload is not required, since the sources are present in the Clace metadata database. Every production app automatically has one staging app associated with it.
 
 ## Staging Apps
 
-Staging apps are created for each production app, in order to be able to verify config and code changes before they are made live. For example, after the previous `app create` command, a call to `app list` with the `--internal` option will show two apps:
+Staging apps are created for each production app. The purpose of staging app is to be able to verify config and code changes before they are made live in the prod app. For example, after the previous `app create` command, a call to `app list` with the `--internal` option will show two apps:
 
 ```sh
 clace app list --internal
@@ -45,6 +45,8 @@ app_stg_2aMvX3fc9fH18n6i2Jew0tNxnky STG  1                                      
 ```
 
 The second app is the staging app for the first. `app list` shows only the main apps by default, the `--internal` option makes it show the linked apps.
+
+The staging app url is available by suffixing `_cl_stage` at the end of the app path. So for an app at `https://example.com/`, the staging url is `https://example.com/cl_stage`. For an app at `https://example.com/utils/app1`, the staging app url is `https://example.com/utils/app1_cl_stage`.
 
 ## Promoting Changes
 
@@ -91,10 +93,10 @@ To do the reload, approval and promotion is one step, do `clace app reload --app
 The rules for fetching source code from local disk and GitHub are:
 
 - If the source url starts with `http://`, `https://` or `github.com`, the source is assumed to be from a github API endpoint. Otherwise the source is assumed to be local disk on the Clace server.
-- If Clace client and server are on different machine and local disk is being used, the copy needs to be copied to the server node first.
+- If Clace client and server are on different machines and local disk is being used, the code needs to be copied to the server node first.
 - For GitHub source, the format is https://domain_name/org_name/repo_name/sub/folder, like `github.com/claceio/clace/examples/disk_usage`. The sub_folder should contain the `app.star` config file.
 - During `app create` and `app reload`, the commit id takes precedence over the branch name if both are specified.
-- During `app reload`, if no branch and commit are specified, then code is checked out from the current branch. `main` branch is used if no branch was previously specified. If a branch was previously specified, the code is checked out from that branch.
+- During `app reload`, if no branch and commit are specified, the newest code is checked out from the current branch. `main` is used as current branch if no branch was previously specified for the app.
 
 ## Glob Pattern
 
@@ -104,11 +106,11 @@ The default for list command is to list all apps. All other command require an g
 
 When multiple apps are being updated, if any one app fails, the whole operation is rolled back. This allows for atomic updates across multiple applications.
 
-Use the `--dry-run` option with any update CLI call to verify if the options specified are correct.
+Use the `--dry-run` option with any write CLI call to verify if the options specified are correct before the actual run. No changes are committed during dry-run.
 
 ## Preview Apps
 
-Preview allows the creation of any number of linked preview apps for a main app. This is supported for apps created from GitHub source. A commit id to use needs to be specified. For example,
+Preview allows the creation of any number of linked preview apps for a main app. This is supported for apps created from GitHub source. The commit id to use needs to be specified when creating the preview. For example,
 
 ```sh
 clace preview create /myapp 49182d4ca1cacbd8e3463a77c2174a6da1fb66c9
