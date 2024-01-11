@@ -75,7 +75,7 @@ clace app create --dev /disk_usage $HOME/clace_source/clace/examples/disk_usage/
 To audit and approve the app's security policies, run
 
 ```shell
-clace app audit --approve /disk_usage
+clace app approve /disk_usage
 ```
 
 This will create an app at /disk_usage with the example disk_usage app. The disk_usage app provides a web interface for the [du command](https://man7.org/linux/man-pages/man1/du.1.html), allowing the user to explore the subfolders which are consuming most disk space.

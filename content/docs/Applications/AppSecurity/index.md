@@ -57,7 +57,7 @@ App created. Permissions need to be approved
 an audit report is shown with these requests. To approve the requested permissions, the admin can do
 
 ```bash
-$ ./clace app audit --approve /utils/disk_usage
+$ ./clace app approve /utils/disk_usage
 App audit: /utils/disk_usage
   Plugins :
     exec.in
