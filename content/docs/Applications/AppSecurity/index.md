@@ -1,6 +1,6 @@
 ---
 title: "Application Security"
-weight: 200
+weight: 300
 date: 2023-10-05
 summary: "Application Security and sandboxing model for Clace"
 ---
