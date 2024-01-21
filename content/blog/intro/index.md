@@ -1,6 +1,6 @@
 ---
 title: "Introducing Clace"
-summary: "Introducing the Clace project: A Platform for Breezy Self-Hosted Web Apps"
+summary: "Introducing the Clace project: A Platform for Easy Self-Hosted Web Apps"
 date: 2023-11-01
 draft: false
 ---
