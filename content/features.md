@@ -32,6 +32,7 @@ The deployment features supported currently by Clace are:
 - Support for github integration, apps being directly deployed from github code.
 - Database backed application file system, for atomic version updates and rollbacks.
 - Zero downtime application updates.
+- Support for application data persistance to sqlite with full database schema management.
 - Scalable backend, all performance critical code is in Go, only application handler code is in Starlark.
 - Support for domain based and path based [routing]({{< ref "docs/applications/routing/#request-routing" >}}) at the app level.
 - Virtual filesystem with [content hash based file names]({{< ref "docs/app/templates/#static-function" >}}) backed by SQLite database, enabling aggressive static content caching.
@@ -49,7 +50,6 @@ Clace is early in its development. The feature roadmap for Clace is:
 - All plugins are internal (built into Clace binary) currently. The plan is to move to an external plugin model, plugins being loaded dynamically using [go-plugin](https://github.com/hashicorp/go-plugin).
 - SQLite is used as the metadata storage currently. Support for postgres and other systems is planned.
 - Support for workflow jobs, which would have a form based interface with limited customizability, but with support for triggered and scheduled execution.
-- Support for application data persistance.
 - UI interface for Clace admin operations.
 - Record replay based automatic integration test creation. Record all responses at the plugin boundary and use that to replay integration test scenarios. This is speculative currently, depending on the how the external plugin model is implemented.
 - Distributed agent model, where the Clace server does the initial routing but the actual application execution happens on remote worker nodes. This feature, when added, might use a different licensing model. This is also speculative currently.
