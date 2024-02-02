@@ -51,5 +51,5 @@ Clace is early in its development. The feature roadmap for Clace is:
 - SQLite is used as the metadata storage currently. Support for postgres and other systems is planned.
 - Support for workflow jobs, which would have a form based interface with limited customizability, but with support for triggered and scheduled execution.
 - UI interface for Clace admin operations.
-- Record replay based automatic integration test creation. Record all responses at the plugin boundary and use that to replay integration test scenarios. This is speculative currently, depending on the how the external plugin model is implemented.
-- Distributed agent model, where the Clace server does the initial routing but the actual application execution happens on remote worker nodes. This feature, when added, might use a different licensing model. This is also speculative currently.
+- Record replay based automatic integration test creation. Record all responses at the plugin boundary and use that to replay integration test scenarios.
+- Distributed agent model, where the Clace server does the initial routing but the actual application execution happens on remote worker nodes.
