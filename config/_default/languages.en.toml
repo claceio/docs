@@ -15,7 +15,7 @@ dateFormat = "2 January 2006"
   mainSections = ["Features", "Docs", "Blog", "About"]
 
 [author]
-  name = "CLACE"
+  name = "Clace"
   headline = "Web App Self-Hosting Made Easy"
   links = [
      { email = "mailto:contact@clace.io" },
