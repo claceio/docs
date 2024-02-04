@@ -33,13 +33,12 @@ To install, start the service and create an app, run:
 <br>
 
 <div class="index-code" style="text-align: left;">
-<pre class="index-pre"><code><span class="index-no-copy">       $</span> curl -L https://clace.io/install.sh | sh
-       # Note down the generated password
-<span class="index-no-copy">       $</span> source $HOME/clhome/bin/clace.env
-<span class="index-no-copy">       $</span> clace server start & <br>
-       # Any new app can be installed by running
-<span class="index-no-copy">       $</span> clace app create --approve /disk_usage \
-         github.com/claceio/clace/examples/disk_usage/ </code>
+<pre class="index-pre"><code><span class="index-no-copy">$</span> curl -L https://clace.io/install.sh | sh
+# Note down the generated password
+<span class="index-no-copy">$</span> source $HOME/clhome/bin/clace.env
+<span class="index-no-copy">$</span> clace server start & <br>
+# Any new app can be installed by running
+<span class="index-no-copy">$</span> clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/ </code>
 </pre>
 </div>
 
