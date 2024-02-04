@@ -7,7 +7,7 @@ date: 2023-10-05
 
 ## Install Release Build
 
-To install the latest release build, run the install script. Note down the password printed. Add the env variables as prompted and then start the service.
+To install the latest release build on Linux, OSX or Windows with WSL, run the install script. Note down the password printed. Add the env variables as prompted and then start the service.
 
 ```shell
 curl -L https://clace.io/install.sh | sh
@@ -17,6 +17,8 @@ clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_us
 ```
 
 The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username and use the password printed by the install script. See [start the service]({{< ref "#start-the-service" >}}) for details.
+
+On Windows without WSL, download the release binary zip from [releases](https://github.com/claceio/clace/releases) or [install from source]({{< ref "installation/#install-from-source" >}}) if you have go installed.
 
 ## Install from Source
 
