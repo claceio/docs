@@ -15,20 +15,20 @@ cascade:
 <div class="index-item"><span style="font-size:250%;"> {{< icon "database" >}} </span>SQLite data persistence</div>
 </div>
 
-<h2 style="color: #00C200;">What is Clace?</h2>
+<h2>What is Clace?</h2>
 Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace securely runs multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single Clace server installation.
 
 <br>
-<h2 style="color:#00C200;">Who is it for?</h2>
+<h2>Who is it for?</h2>
 <p>
 Clace can be used to easily develop and deploy hypermedia driven web applications. Clace can run web applications for use on personal machines and also host applications for access over the public internet. Clace can be used by teams to develop and deploy the UI and backend for internal applications. If you have an existing JSON based API, Clace supports building a hypermedia driven interface exposing that API. Developing a web UI for command line applications is another use-case. CRUD applications and applications which glue together APIs are good candidates for Clace applications.
 <br>
 
-<h2 style="color: #00C200;">How does it work?</h2>
+<h2>How does it work?</h2>
 Clace and its plugins are implemented in go. User applications are developed and configured in <a href="https://github.com/google/starlark-go">Starlark</a>, which uses Python syntax. Users of Clace do not write go code, only Starlark and HTML templates. The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox and access to plugins need to be explicitly permitted.  There are no python or Javascript dependencies to install, no containers to create, no yaml files to manage. Application updates are done with a gitops workflow, with no-build step. Staging and preview environments are available for all apps. Clace integrates with TailwindCSS/DaisyUI for styling and has <a href="https://esbuild.github.io/">esbuild</a> built-in for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">ESM</a> support. Data persistence is supported to sqlite.
 
 <br>
-<h2 style="color: #00C200;">Installation</h2>
+<h2>Installation</h2>
 To install, start the service and create an app, run:
 <br>
 
@@ -45,7 +45,7 @@ To install, start the service and create an app, run:
 The app should be available at https://localhost:25223/disk_usage. `admin` is the username, use the password printed by the install script. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
 <br>
 
-<h2 style="color: #00C200;">Samples</h2>
+<h2>Samples</h2>
 See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">GitHub</a> for sample application code. <a href="https://demo.clace.io/">Demo Apps</a> is an online hosted demo.
 
 <br>
