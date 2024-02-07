@@ -7,10 +7,10 @@ cascade:
 ---
 
 <div class="index-container">
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-html5" >}} </span>Hypermedia-driven web apps</div>
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-golang" >}} </span>Go binary, Starlark config </div>
 <div class="index-item"><span style="font-size:250%;"> {{< icon "brand-github" >}} </span>GitOps flow, staged deployments</div>
 <div class="index-item"><span style="font-size:250%;"> {{< icon "binary-off" >}} </span>No build step required</div>
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-html5" >}} </span>Hypermedia-driven web apps</div>
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-golang" >}} </span>Go binary, Starlark config </div>
 <div class="index-item"><span style="font-size:250%;"> {{< icon "shield-lock" >}} </span>Secure app sandboxing</div>
 <div class="index-item"><span style="font-size:250%;"> {{< icon "database" >}} </span>SQLite data persistence</div>
 </div>

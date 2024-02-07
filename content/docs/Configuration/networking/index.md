@@ -36,6 +36,10 @@ storage_location = "$CL_HOME/run/certmagic" # where to cache dynamically created
 
 Port 0 means bind to any available port. Port -1 means disable HTTPS access.
 
+{{< alert >}}
+Using the HTTPS port is recommended even for the local environment. HTTP/2 works with HTTPS only. Server Sent Events (SSE) are used by Clace for live reload of dev apps, [SSE works best with HTTP/2](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#listening_for_custom_events). Without HTTP/2, there can be connection limit issues with HTTP causing connections from browser to Clace server to hang.
+{{< /alert >}}
+
 ## TLS Certificates
 
 In the default configuration, where service_email is empty, certmagic integration is disabled. The certificate handling behavior is:
@@ -46,9 +50,25 @@ In the default configuration, where service_email is empty, certmagic integratio
 
 The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For example, if files example.com.crt and example.com.key are found in the certificates folder, those are used for example.com domain.
 
+## Dev Env Certificates
+
+For local dev environment, using the auto generated certs will result in browser warnings when connecting to the HTTPS port. To avoid this, use a tool like [mkcert](https://github.com/FiloSottile/mkcert) to generate root CA for local env. Install `mkcert` and then run
+
+```sh
+mkcert -install
+mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
+
+cp ./example.com+5.pem $CL_HOME/config/certificates/default.crt
+cp ./example.com+5-key.pem $CL_HOME/config/certificates/default.key
+```
+
+The mkcert generated certificates signed with the local CA will be used after the next Clace server restart.
+
+For local env, wildcard DNS will not work without tools like `dnsmasq`. An easier alternative is to add `/etc/hosts` entries as required mapping to `127.0.0.1`. Using url path routing instead of domain based routing for local env is a convenient option.
+
 ## Enable Automatic Signed Certificate
 
-Clace uses the [certmagic](https://github.com/caddyserver/certmagic) library for fully-managed TLS certificate issuance and renewal. Certmagic is disabled by default. To enable, the pre-requisites are:
+Clace uses the [certmagic](https://github.com/caddyserver/certmagic) library for fully-managed TLS certificate issuance and renewal for production deployment. Certmagic is disabled by default. To enable, the pre-requisites are:
 
 - The https config is using 443 as the port number. Running on privileged ports requires additional [setup](#privileged-ports)
 - There is an DNS entry created pointing your host name or domain wildcard to the IP address of the host running the Clace server. This has to be done in your DNS provider config.
