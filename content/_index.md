@@ -21,13 +21,14 @@ Clace is an Apache-2.0 licensed project building a platform to easily develop an
 <br>
 <h2>Who is it for?</h2>
 <p>
-Clace can be used to easily develop and deploy hypermedia driven web applications. Clace can run web applications for use on personal machines and also host applications for access over the public internet. Clace can be used by teams to develop and deploy the UI and backend for internal applications. If you have an existing JSON based API, Clace supports building a hypermedia driven interface exposing that API. Developing a web UI for command line applications is another use-case. CRUD applications and applications which glue together APIs are good candidates for Clace applications.
+Clace can be used to easily develop and deploy hypermedia driven web applications. Clace can run web apps on personal machines and also host applications for access over the public internet. Clace can be used by teams to host internal applications. Clace supports building a hypermedia driven interface for an existing JSON API, a backend-for-frontend type pattern. Developing a web UI for command line applications is another use-case. CRUD applications and applications which glue together backend APIs are good candidates for Clace apps.
 <br>
 
 <h2>How does it work?</h2>
-Clace and its plugins are implemented in go. User applications are developed and configured in <a href="https://github.com/google/starlark-go">Starlark</a>, which uses Python syntax. Users of Clace do not write go code, only Starlark and HTML templates. The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. HTMX is used for server interactions. The backend code runs in a security sandbox and access to plugins need to be explicitly permitted.  There are no python or Javascript dependencies to install, no containers to create, no yaml files to manage. Application updates are done with a gitops workflow, with no-build step. Staging and preview environments are available for all apps. Clace integrates with TailwindCSS/DaisyUI for styling and has <a href="https://esbuild.github.io/">esbuild</a> built-in for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">ESM</a> support. Data persistence is supported to sqlite.
+Clace and its plugins are implemented in go. User applications are developed and configured in <a href="https://github.com/google/starlark-go">Starlark</a>, which uses a python inspired syntax. Users of Clace write only Starlark and HTML templates. The backend code runs in a security sandbox and access to plugins need to be explicitly permitted. The API routes are defined to be Hypermedia first, using templates partials to drive the UI interactions. <a href="https://htmx.org/">HTMX</a> is used for server interactions from the UI.
 
-<br>
+There are no Python or Javascript dependencies to install, no containers to create, no yaml files to manage. Application updates are done with a gitops workflow, with no-build step. Staging and preview environments are available for all apps. Clace integrates with TailwindCSS/DaisyUI for styling and has <a href="https://esbuild.github.io/">esbuild</a> built-in for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">ESM</a> support. Data persistence to sqlite is supported using a document store interface. Clace manages request routing and SSL certificates creation and renewal, so a separate web server is not required.
+
 <h2>Installation</h2>
 To install, start the service and create an app, run:
 <br>
@@ -42,11 +43,11 @@ To install, start the service and create an app, run:
 </pre>
 </div>
 
-The app should be available at https://localhost:25223/disk_usage. `admin` is the username, use the password printed by the install script. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
+The app is available at https://localhost:25223/disk_usage. `admin` is the username, use the password printed by the install script. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
 <br>
 
 <h2>Samples</h2>
-See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">GitHub</a> for sample application code. <a href="https://demo.clace.io/">Demo Apps</a> is an online hosted demo.
+See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">examples</a> and <a href="https://github.com/claceio/apps">apps repo</a> for sample applications. <a href="https://demo.clace.io/">Demo</a> is a Clace hosted demo page.
 
 <br>
 <br>
