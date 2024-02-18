@@ -24,7 +24,7 @@ defines two routes. `/` routes to the default index page, `/help` routes to the 
 
 ## Page
 
-`ace.Page` is used to define the properties for a single page. The parameters for `ace.page` are:
+`ace.page` is used to define the properties for a single page. The parameters for `ace.page` are:
 
 | Property  | Optional |      Type      |                        Default                         |                     Notes                     |
 | :-------: | :------: | :------------: | :----------------------------------------------------: | :-------------------------------------------: |
