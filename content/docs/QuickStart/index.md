@@ -126,12 +126,12 @@ If using git, a workflow would be:
 
 ## App Listing
 
-Use `clace app list` to get list of installed app. By default, all apps are listed. Use a glob pattern like `example.com:**` to list on specific apps. Pass the `--internal` or `-i` option to `list` to include the internal apps in the app listing. The pattern matches the main apps, and if the internal option is specified, the internal apps linked apps are also listed.
+Use `clace app list` to get list of installed app. By default, all apps are listed. Use a glob pattern like `example.com:**` to list specific apps. Pass the `--internal` or `-i` option to `list` to include the internal apps in the app listing. The pattern matches the main apps, and if the internal option is specified, the matched app's linked apps are also listed.
 
 Use `clace version list` to get list of versions for an app. `clace version switch` allows switching between versions. The version command can be run separately on the staging app and prod app, like `clace version list /myapp_cl_stage` and `clace version list /myapp`. The current version is indicated in the output.
 
 ```shell
-$ clace version list /dugit8
+$ clace version list /dugit
 Active  Version Previous CreateTime                     GitCommit            GitMessage
               1        0 2024-02-16 19:39:05 +0000 UTC  03ccaa35927667977646 Added version file listing support
 
@@ -139,7 +139,7 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 =====>        3        2 2024-02-16 21:18:16 +0000 UTC  c00d7b1e99712de13745 Added version switching support
 
-$ clace version list /dugit8_cl_stage
+$ clace version list /dugit_cl_stage
 Active  Version Previous CreateTime                     GitCommit            GitMessage
               1        0 2024-02-16 19:39:05 +0000 UTC  03ccaa35927667977646 Added version file listing support
 
@@ -149,10 +149,14 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 =====>        4        3 2024-02-16 21:18:42 +0000 UTC  c00d7b1e99712de13745 Added version switching support
 
-$ clace app list -i /dugit8
+$ clace app list -i /dugit
 Id                                  Type  Version Auth GitInfo                        Domain:Path                                                  SourceUrl
-app_prd_2cSkPeHiATfH46pcUX8EdZqdWQb PROD*       3 SYST main:c00d7b1e99712de13745      /dugit8                                                      github.com/claceio/clace/examples/disk_usage
-app_stg_2cSkPeHiATfH46pcUX8EdZqdWQb STG         4 SYST main:c00d7b1e99712de13745      /dugit8_cl_stage                                             github.com/claceio/clace/examples/disk_usage
+app_prd_2cSkPeHiATfH46pcUX8EdZqdWQb PROD*       3 SYST main:c00d7b1e99712de13745      /dugit                                                      github.com/claceio/clace/examples/disk_usage
+app_stg_2cSkPeHiATfH46pcUX8EdZqdWQb STG         4 SYST main:c00d7b1e99712de13745      /dugit_cl_stage                                             github.com/claceio/clace/examples/disk_usage
 ```
 
-In the above listing, the staging version is on version 4, prod version version 3. The "\*" in the `app list` output indicates that the prod app has staged changes waiting to be promoted. Running `clace app promote /dugit8` will update prod with the staged changes.
+In the above listing, the staging app is on version 4, prod app on version 3. The "\*" in the `app list` output indicates that the prod app has staged changes waiting to be promoted. Running `clace app promote /dugit` will update prod with the staged changes.
+
+## Developing Apps
+
+Clace apps are written using Starlark and Go HTML templates. Starlark is a subset of Python, it is easy to pick up even if you are not familiar with Python. Go HTML templates are used by tools like Hugo and Helm,
