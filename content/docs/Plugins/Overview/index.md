@@ -40,7 +40,7 @@ At runtime, Clace will check if the `get` call is authorized. If so, the call to
 
 ## Response Handling
 
-All plugin API calls return a `response` structure. The fields in this are
+All plugin API calls return a `plugin_response` structure. The fields in this are
 
 - `error` The error message string, empty string if no error
 - `error_code` The error code integer, zero if no error

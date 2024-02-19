@@ -75,7 +75,9 @@ load("exec.in", "exec")
 
 def handler(req):
    ret = exec.run("ls", ["-l", "/"])
-   return {"Lines": ret.lines}
+   if ret.error:
+       return {"Error": ret.error, "Lines": []}
+   return {"Lines": ret.value}
 
 app = ace.app("hello1",
               custom_layout=True,
