@@ -9,13 +9,13 @@ The page lists the available plugins and their API details.
 
 ## Database Storage
 
-The `store.in` plugin supports a document store interface for writing data to SQLite and PostgreSQL (coming soon). See [store]({{< ref "store" >}}) for details.
+The `store.in` plugin supports a document store interface for writing data to SQLite (PostgreSQL support is coming soon). See [store]({{< ref "store" >}}) for details.
 
 ## HTTP Plugin
 
 The `http.in` plugin supports making HTTP API calls. The API's available are:
 
-|   Method    | Type  |        Notes         |
+|     API     | Type  |        Notes         |
 | :---------: | :---: | :------------------: |
 |   **get**   | Read  |   HTTP Get request   |
 |  **head**   | Read  |  HTTP Head request   |
@@ -45,7 +45,7 @@ The response for all API's (`value` within `plugin_response`) contains following
 - **body** (string) : the response body as a string
 - **json** (object) : the response body un-marshalled as a json
 
-If the API calls fails to go through then the plugin response `error` will be set. If the APi goes through, then the response `error` will not be set. The `status_code` will indicate whether the API succeeded on the server. To handle all possible error conditions, do
+If the API calls fails to go through then the plugin response `error` property will be set. If the APi goes through, then the response `error` will not be set, even if API call fails with an HTPP error. The `status_code` will indicate whether the API succeeded on the server. To handle all possible error conditions, do (change to handle all 2xx codes if required)
 
 ```python
 ret = http.get("http://localhost:9999/test")
@@ -60,7 +60,7 @@ val = ret.value.json()
 
 The `exec.in` plugin allows running external commands, starting a new process for the specified command. The API's available are:
 
-| Method  |    Type    |               Notes               |
+|   API   |    Type    |               Notes               |
 | :-----: | :--------: | :-------------------------------: |
 | **run** | Read/Write | Runs the command as a new process |
 
@@ -83,5 +83,5 @@ The response for the API (`value` within `plugin_response`) is of type list of s
 ```
 
 {{< alert >}}
-**Note:** Only 100MB of the command stdout output is scanned currently, the rest is discarded.
+**Note:** Only first 100MB of the command stdout output is scanned currently, the rest is discarded.
 {{< /alert >}}
