@@ -84,7 +84,6 @@ $Path = [Environment]::GetEnvironmentVariable('Path', $User)
 if (!(";$Path;".ToLower() -like "*;$BinDir;*".ToLower())) {
   [Environment]::SetEnvironmentVariable('Path', "$Path;$BinDir", $User)
   $Env:Path += ";$BinDir"
-  Write-Output "$Env:Path"
 }
 
 [Environment]::SetEnvironmentVariable('CL_CONFIG_FILE', "$ClaceConfig", $User)
