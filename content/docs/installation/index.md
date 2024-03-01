@@ -16,9 +16,29 @@ clace server start &
 clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/
 ```
 
-The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username and use the password printed by the install script. See [start the service]({{< ref "#start-the-service" >}}) for details.
+The app is installed under `$HOME/clhome` by default. The disk usage app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username and use the password printed by the install script.
 
-On Windows without WSL, download the release binary zip from [releases](https://github.com/claceio/clace/releases) or [install from source]({{< ref "installation/#install-from-source" >}}) if you have go installed.
+On Windows, to install the Clace application, run
+
+```shell
+pwsh -Command "iwr https://clace.io/install.ps1 -useb | iex"
+```
+
+Use `powershell` if `pwsh` in not available. The app is installed under `$HOME\clhome` by default. Note down the generated password for the admin user. Open a new command window (to get the updated ENV values) and run
+
+```shell
+clace server start
+```
+
+to start the server. In another window, apps can be install using same command as Linux/OSX. To install a bookmark manager app, run
+
+```shell
+clace app create --approve /book github.com/claceio/apps/utils/bookmarks/
+```
+
+The bookmark manager app should be available at [https://127.0.0.1:25223/book](https://127.0.0.1:25223/book).
+
+See [start the service]({{< ref "#start-the-service" >}}) for details.
 
 ## Install from Source
 
