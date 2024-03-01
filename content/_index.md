@@ -30,7 +30,7 @@ Clace and its plugins are implemented in go. User applications are developed and
 There are no Python or Javascript dependencies to install, no containers to create, no yaml files to manage. Application updates are done with a gitops workflow, with no-build step. Staging and preview environments are available for all apps. Clace integrates with TailwindCSS/DaisyUI for styling and has <a href="https://esbuild.github.io/">esbuild</a> built-in for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">ESM</a> support. Data persistence to sqlite is supported using a document store interface. Clace manages request routing and SSL certificates creation and renewal, so a separate web server is not required.
 
 <h2>Installation</h2>
-To install, start the service and create an app, run:
+To install, start the service and create an app on <b>Linux or OSX</b>, run:
 <br>
 
 <div class="index-code" style="text-align: left;">
@@ -43,7 +43,31 @@ To install, start the service and create an app, run:
 </pre>
 </div>
 
-The app is available at https://localhost:25223/disk_usage. `admin` is the username, use the password printed by the install script. See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
+<br>
+To install Clace on <b>Windows</b>, run:
+
+<div class="index-code" style="text-align: left;">
+<pre class="index-pre"><code><span class="index-no-copy">$</span> pwsh -Command "iwr https://clace.io/install.ps1 -useb | iex" </code>
+</pre>
+</div>
+
+Use `powershell` if `pwsh` is not available. Start a new command window (to get the updated ENV values) and run:
+
+<div class="index-code" style="text-align: left;">
+<pre class="index-pre"><code><span class="index-no-copy">$</span> clace server start </code>
+</pre>
+</div>
+
+To install apps on Windows, use the same command as Linux/OSX. To install a bookmark manager app, run:
+
+<div class="index-code" style="text-align: left;">
+<pre class="index-pre"><code><span class="index-no-copy">$</span> clace app create --approve /book github.com/claceio/apps/utils/bookmarks </code>
+</pre>
+</div>
+
+The disk usage app is available at <a href="https://localhost:25223/disk_usage">https://localhost:25223/disk_usage</a> (use port 25222 for HTTP). `admin` is the username, use the password printed by the install script. The bookmark manager is available at <a href="https://localhost:25223/book">https://localhost:25223/book</a>.
+
+See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
 <br>
 
 <h2>Samples</h2>

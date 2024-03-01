@@ -48,7 +48,7 @@ If the API needs to redirect the client to another location after a POST/PUT/DEL
 |   url    |  false   | string |         |      The url to redirect to      |
 |   code   |   true   |  int   |   303   | The HTTP status code, 303 or 302 |
 
-For example, this code does a 303 redirect after a POST API, which provides [proper handing](https://en.wikipedia.org/wiki/Post/Redirect/Get) for update requests.
+For example, this code does a 303 redirect after a POST API, which provides [handling](https://en.wikipedia.org/wiki/Post/Redirect/Get) for update requests.
 
 ```python
 def create_game(req):
