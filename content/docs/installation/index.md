@@ -30,7 +30,7 @@ Use `powershell` if `pwsh` in not available. The app is installed under `$HOME\c
 clace server start
 ```
 
-to start the server. In another window, apps can be install using same command as Linux/OSX. To install a bookmark manager app, run
+to start the server. In another window, apps can be installed using same command as Linux/OSX. To install a bookmark manager app, run
 
 ```shell
 clace app create --approve /book github.com/claceio/apps/utils/bookmarks/
