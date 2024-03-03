@@ -13,7 +13,7 @@ The `store.in` plugin supports a document store interface for writing data to SQ
 
 ## HTTP Plugin
 
-The `http.in` plugin supports making HTTP API calls. The API's available are:
+The `http.in` plugin supports making HTTP API calls. The APIs available are:
 
 |     API     | Type  |        Notes         |
 | :---------: | :---: | :------------------: |
@@ -58,7 +58,7 @@ val = ret.value.json()
 
 ## Exec Plugin
 
-The `exec.in` plugin allows running external commands, starting a new process for the specified command. The API's available are:
+The `exec.in` plugin allows running external commands, starting a new process for the specified command. The APIs available are:
 
 |   API   |    Type    |               Notes               |
 | :-----: | :--------: | :-------------------------------: |
@@ -85,3 +85,42 @@ The response for the API (`value` within `plugin_response`) is of type list of s
 {{< alert >}}
 **Note:** Only first 100MB of the command stdout output is scanned currently, the rest is discarded.
 {{< /alert >}}
+
+## FS Plugin
+
+The `fs.in` allows working with local file system. The APIs available are
+
+|   API    | Type |                         Notes                          |
+| :------: | :--: | :----------------------------------------------------: |
+| **abs**  | Read |   Returns the absolute path for given relative path    |
+| **list** | Read |           List files in specified directory            |
+| **find** | Read | Find files under specified directory matching criteria |
+
+The `abs` API supports the following parameter:
+
+- **path** (string, required) : the file path
+
+The response for the API (`value` within `plugin_response`) is of type string, the absolute path for given path.
+
+The `list` API supports the following parameters:
+
+- **path** (string, required) : the directory path
+- **recursive_size** (bool, optional, default false) : whether to include the recursive size of sub-directories
+- **ignore_errors** (bool, optional, default false) : whether to ignore errors when accessing entries
+
+The response for the API is a list of type `FileInfo`. The `FileInfo` struct contains the fields:
+
+- **name** (string) : the file name
+- **size** (int) : the file size in bytes, rounded up to 4K
+- **is_dir** (bool) : is it a directory
+- **mode** (int) : file mode info
+
+The `find` API supports the following parameters:
+
+- **path** (string, required) : the directory path
+- **name** (string, optional) : the file name glob pattern to match
+- **limit** (int, optional) : the limit on number of entries to return
+- **min_size** (int, optional) : the minimum file size in bytes to look for
+- **ignore_errors** (bool, optional, default false) : whether to ignore errors when accessing entries
+
+The response for the `find` API is a list of type `FileInfo`, same as returned by `list`.
