@@ -46,7 +46,7 @@ All plugin API calls return a `plugin_response` structure. The fields in this ar
 - `error_code` The error code integer, zero if no error
 - `value` The actual return value for the plugin API call. The datatype for this depends on the API, check the API documentation for details.
 
-The recommended pattern for handling the AIP response is
+To check the error status of an API call:
 
 - Check boolean value for the return. If false, that indicates an error which can be returned.
 - If no error, get the `value` property and continue with processing
@@ -57,10 +57,10 @@ For example,
     ret = http.get("https://localhost:9999/test")
     if not ret:
         # error condition
-        return ace.response(ret.error, "error_block")
+        return ace.response(ret, "error_block")
 
     # success
-    print(ret.value.json())
+    print(ret.value.json()) # ret.value is the return value. The http plugin response has a json() function
 ```
 
 An alternate way to write the error check is
@@ -69,11 +69,89 @@ An alternate way to write the error check is
     ret = http.get("https://localhost:9999/test")
     if ret.error:
         # error condition
-        return ace.response(ret.error, "error_block")
+        return ace.response(ret, "error_block")
 
     # Success
     print(ret.value.json())
 ```
+
+## Automatic Error Handling
+
+Clace supports automatic error handling, so that the handler functions do not have to check the error status of every plugin API call. The way this is implemented is such that if no explicit error handling is done, then the automatic error handling kicks in. If explicit error handling is done, then automatic error handling is not done. See [bookmarks app](https://github.com/claceio/apps/blob/main/utils/bookmarks/app.star) for an example of how the automatic error handling can be used.
+
+If the `error_handler` function is defined, then error handling is automatic. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the Clace platform will automatically call the `error_handler` function. The `error_handler` is defined as:
+
+```python
+def error_handler(req, ret):
+    if req.IsPartial:
+        return ace.response(ret, "error", retarget="#error_div", reswap="innerHTML")
+    else:
+        return ace.response(ret, "error.go.html")
+```
+
+When `error_handler` is defined and no explicit error checks are done then the automatic error handling happens in these three cases:
+
+- **Value Access** When the response `value` is accessed
+- **Next API call** When the next plugin API call happens (to any plugin function)
+- **Handler Return** When the handler function returns
+
+### Value Access
+
+If the handler code is
+
+```python
+    ret = http.get("https://localhost:9999/test")
+    print(ret.value.json())
+```
+
+If the `get` API had succeeded, then the `value` property access will work as usual. But if the `get` API had failed, then the `value` access will fail and the `error_handler` will be called with the original request and the error response.
+
+### Next API Call
+
+If the `value` is not being accessed, then the next plugin call will raise the error. For example, if the handler code is
+
+```python
+    store.begin()
+    bookmark = store.select_one(table.bookmark, {"url": url}).value
+```
+
+The response of the `begin` API is not checked. When the next `select_one` API is called, if the previous `begin` had failed, the `select_one` API will raise the previous API calls error before the `select_one` executes.
+
+### Handler Return
+
+If the handler code is
+
+```python
+    def insert(req):
+        store.begin()
+        book = doc.bookmark("abc", [])
+        store.insert(table.bookmark, book)
+        store.commit()
+```
+
+Assume all the API calls had succeeded and then the `commit` fails. Since the `value` is not accessed and there is not plugin API call after the `commit` call, the Clace platform will raise the error after the handler completes since the `commit` had failed.
+
+### Overriding Automatic Error Handling
+
+The automatic error handling is great for handling the unusual error scenarios. For the error scenarios which are common, like a database uniqueness check failure, the error handing can be done explicitly in the handler code. If the handler code is
+
+```python
+ret = store.insert(table.bookmark, new_bookmark)
+if ret.error:
+    return ace.response(ret, "error.go.html")
+```
+
+The automatic error handling will not be invoked in this case since the `ret.error` is being checked. Checking the truth status of `ret` also will disable the automatic error handling:
+
+```python
+ret = store.insert(table.bookmark, new_bookmark)
+if not error:
+    return ace.response(ret, "error.go.html")
+```
+
+{{< alert >}}
+**Note:** The automatic error handling is very useful, but is needs to be enabled manually. When developing a new app, first define the `error_handler` and test it for the partial and full page scenarios. After that, all the subsequent handler code does not have to handle errors unless specific handling is required.
+{{< /alert >}}
 
 ## Plugin Accounts
 

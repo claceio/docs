@@ -18,6 +18,7 @@ The structure of a Clace application is:
 - Predefined builtins, accessed through the `ace` namespace
 - A global called `app`, created using `app = ace.app()` call
 - An optional default handler function called `handler`. Other handlers are referenced in the route config
+- An optional error handler function called `error_handler`. Defining the `error_handler` enables [automatic error handling]({{< ref "docs/plugins/overview#automatic-error-handling" >}})
 - An html template file called `index.go.html` if using custom layout
 - If not using custom layout, an html template block called `clace_body` defined in any `*.go.html` file, for example `app.go.html`
 
@@ -105,9 +106,19 @@ and an `index.go.html` file with
 </html>
 ```
 
+<!-- prettier-ignore-end -->
+
 This app uses the exec plugin to run a ls command. The output of the command is shown when the app is accessed. To allow the app to run the plugin command, use the `clace app approve` command.
 
-<!-- prettier-ignore-end -->
+To enable [automatic error handling]({{< ref "docs/plugins/overview#automatic-error-handling" >}}) (recommended), add an `error_handler` function like:
+
+```python
+def error_handler(req, ret):
+    if req.IsPartial:
+        return ace.response(ret, "error", retarget="#error_div", reswap="innerHTML")
+    else:
+        return ace.response(ret, "error.go.html")
+```
 
 ## More examples
 
