@@ -119,7 +119,7 @@ The `find` API supports the following parameters:
 
 - **path** (string, required) : the directory path
 - **name** (string, optional) : the file name glob pattern to match
-- **limit** (int, optional) : the limit on number of entries to return
+- **limit** (int, optional, default 10K, max 100K) : the limit on number of entries to return
 - **min_size** (int, optional) : the minimum file size in bytes to look for
 - **ignore_errors** (bool, optional, default false) : whether to ignore errors when accessing entries
 
