@@ -27,6 +27,9 @@ h2, h3, h4, h5, h6 {
     .index-item {
         width: 50%; /* Each item takes up 50% of the container width */
         margin-bottom: 0; /* Adjust as needed */
+
+        padding:1px 15px;
+        text-align: justify;
     }
 }
 

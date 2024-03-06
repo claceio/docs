@@ -2,8 +2,8 @@ languageCode = 'en-us'
 languageName = "English"
 weight = 1
 
-title = "Clace : Web App Self-Hosting Made Easy"
-copyright = "Copyright © 2023 ClaceIO, LLC"
+title = "Clace : Easy Self-hosted Web Tools"
+copyright = "Copyright © 2024 ClaceIO, LLC"
 
 
 [languages]
@@ -13,17 +13,19 @@ copyright = "Copyright © 2023 ClaceIO, LLC"
         isoCode = "en"
         rtl = false
         dateFormat = "2 January 2006"
-        description = "Web App Self-Hosting Made Easy"
+        description = "Easy Self-hosted Web Tools"
 
 [params]
   mainSections = ["Features", "Docs", "Blog", "About"]
 
 [params.author]
   name = "Clace"
-  headline = "Web App Self-Hosting Made Easy"
+  headline = "Easy Self-hosted Web Tools"
   links = [
      { email = "mailto:contact@clace.io" },
      { github = "https://github.com/claceio" },
      { twitter = "https://twitter.com/claceio" },
-     { linkedin = "https://www.linkedin.com/company/claceio"},
+     # { linkedin = "https://www.linkedin.com/company/claceio"},
+     { rss = "https://clace.io/blog/index.xml"},
+     { discord = "https://discord.gg/pTYA6enC"},
   ]

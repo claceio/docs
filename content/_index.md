@@ -7,12 +7,12 @@ cascade:
 ---
 
 <div class="index-container">
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-github" >}} </span>GitOps flow, staged deployments</div>
-<div class="index-item"><span style="font-size:250%;"> {{< icon "binary-off" >}} </span>No build step required</div>
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-html5" >}} </span>Hypermedia-driven web apps</div>
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-golang" >}} </span>Go binary, Starlark config </div>
-<div class="index-item"><span style="font-size:250%;"> {{< icon "shield-lock" >}} </span>Secure app sandboxing</div>
-<div class="index-item"><span style="font-size:250%;"> {{< icon "database" >}} </span>SQLite data persistence</div>
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-github" >}} </span><b>GitOps Workflow</b> - Staged deployments, versioning and preview environments with no infra management required</div>
+<div class="index-item"><span style="font-size:250%"> {{< icon "binary-off" >}} </span><b>No build step</b> - Backend and frontend development with no build step required, the source repo is the deployment artifact</div>
+<div class="index-item"><span style="font-size:250%"> {{< icon "brand-html5" >}} </span><b>Hypermedia web apps</b> - Fast and lightweight backend driven apps, minimal frontend complexity</div>
+<div class="index-item"><span style="font-size:250%"> {{< icon "brand-golang" >}} </span><b>Go binary, Starlark config</b> - Performance and stability of Go, easy Python like backend config with no dependencies</div>
+<div class="index-item"><span style="font-size:250%"> {{< icon "shield-lock" >}} </span><b>Secure app sandboxing</b> - Apps runs in security sandbox, apply code updates knowing what operations are permitted</div>
+<div class="index-item"><span style="font-size:250%"> {{< icon "database" >}} </span><b>SQLite data persistence</b> - Easy access to SQLite based app data persistence, with auto-schema management</div>
 </div>
 
 <h2>What is Clace?</h2>
