@@ -1,5 +1,5 @@
 ---
-title: "Overview"
+title: "Config Overview"
 weight: 100
 date: 2023-10-05
 summary: "Overview of Clace configuration, at the server level and client level and the $CL_HOME location for files"

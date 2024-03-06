@@ -81,7 +81,7 @@ The `--approve` option can be specified during the `app create` and `app reload`
 
 For dev mode apps, there is just one app. For a prod mode app, creating the app creates a staging app and the actual production app. All config and code changes are applied on the [staging mode]({{< ref "applications/lifecycle/#staging-apps" >}}) app first, and then manually promoted using `app promote` or automatically, if `--promote` option is specified for the `app reload`.
 
-The `app list` command lists all the apps for the specified [glob pattern]({{< ref "applications/lifecycle/#glob-pattern" >}}). By default, it lists only the dev and prod apps. To list the staging apps also, add the `--internal` option to `app list`. `all` is a shortcut for `*:**`, which means all apps in all domains. For example
+The `app list` command lists all the apps for the specified [glob pattern]({{< ref "applications/overview/#glob-pattern" >}}). By default, it lists only the dev and prod apps. To list the staging apps also, add the `--internal` option to `app list`. `all` is a shortcut for `*:**`, which means all apps in all domains. For example:
 
 ```shell
 clace app list --internal all

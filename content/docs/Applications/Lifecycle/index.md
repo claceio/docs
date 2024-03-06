@@ -98,16 +98,6 @@ The rules for fetching source code from local disk and GitHub are:
 - During `app create` and `app reload`, the commit id takes precedence over the branch name if both are specified.
 - During `app reload`, if no branch and commit are specified, the newest code is checked out from the current branch. `main` is used as current branch if no branch was previously specified for the app.
 
-## Glob Pattern
-
-The app reload/promote/approve/list commands accept a glob pattern. `example.com:**` will match apps under the example.com domain. `*:**` will match all apps in all domains, `all` is a shortcut for this. When using glob patterns, place the pattern inside double-quotes to avoid issues with shell star expansion. For example, `"example.com:**"`
-
-The default for list command is to list all apps. All other command require an glob pattern to be specified explicitly.
-
-When multiple apps are being updated, if any one app fails, the whole operation is rolled back. This allows for atomic updates across multiple applications.
-
-Use the `--dry-run` option with any write CLI call to verify if the options specified are correct before the actual run. No changes are committed during dry-run.
-
 ## Preview Apps
 
 Preview allows the creation of any number of linked preview apps for a main app. This is supported for apps created from GitHub source. The commit id to use needs to be specified when creating the preview. For example,

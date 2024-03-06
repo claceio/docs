@@ -2,7 +2,7 @@
 title: "Application Routing"
 weight: 100
 date: 2023-10-05
-summary: "Installing apps and managing request routing across Clace applications, using path and domain"
+summary: "Details about request routing across Clace applications using path and domain"
 ---
 
 ## Request Routing
