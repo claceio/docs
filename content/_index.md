@@ -7,16 +7,16 @@ cascade:
 ---
 
 <div class="index-container">
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-github" >}} </span><b>GitOps Workflow</b> - Staged deployments, versioning and preview environments with no infra management required</div>
-<div class="index-item"><span style="font-size:250%"> {{< icon "binary-off" >}} </span><b>No build step</b> - Backend and frontend development with no build step required, the source repo is the deployment artifact</div>
+<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-github" >}} </span><b>GitOps Workflow</b> - Staged deployments, versioning and preview environments with no infra to manage</div>
+<div class="index-item"><span style="font-size:250%"> {{< icon "binary-off" >}} </span><b>No build step</b> - Backend and frontend development with no build step, the source repo is the deployment artifact</div>
 <div class="index-item"><span style="font-size:250%"> {{< icon "brand-html5" >}} </span><b>Hypermedia web apps</b> - Fast and lightweight backend driven apps, minimal frontend complexity</div>
 <div class="index-item"><span style="font-size:250%"> {{< icon "brand-golang" >}} </span><b>Go binary, Starlark config</b> - Performance and stability of Go, easy Python like backend config with no dependencies</div>
-<div class="index-item"><span style="font-size:250%"> {{< icon "shield-lock" >}} </span><b>Secure app sandboxing</b> - Apps runs in security sandbox, apply code updates knowing what operations are permitted</div>
+<div class="index-item"><span style="font-size:250%"> {{< icon "shield-lock" >}} </span><b>Secure app sandboxing</b> - Apps runs in security sandbox, apply app code updates confidently</div>
 <div class="index-item"><span style="font-size:250%"> {{< icon "database" >}} </span><b>SQLite data persistence</b> - Easy access to SQLite based app data persistence, with auto-schema management</div>
 </div>
 
 <h2>What is Clace?</h2>
-Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace securely runs multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single Clace server installation.
+Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace securely runs multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single Clace server installation, providing a GitOps approach for applying app code updates.
 
 <br>
 <h2>Who is it for?</h2>
