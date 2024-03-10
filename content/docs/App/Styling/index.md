@@ -41,7 +41,7 @@ To use TailwindCSS, in app settings, add
 
 Tailwind CSS works by scanning the HTML files for class names, generating the corresponding styles and then writing them to a static CSS file. A watcher process is started when an app using Tailwind is loaded in dev mode. The output of the watcher is written to `static/gen/css/style.css` file. This file is automatically included as part of the `clace_gen_import` template.
 
-To ensure that the tailwind watcher is started, the tailwind CLI needs to be installed manually. The [standalone CLI](https://tailwindcss.com/blog/standalone-cli) can be used, that does not require npm, but that does not support DaisyUI integration.
+To ensure that the tailwind watcher is started, the tailwind CLI needs to be installed manually. The [standalone CLI](https://tailwindcss.com/blog/standalone-cli) can be used. If using DaisyUI, use this [custom build](https://github.com/dobicinaitis/tailwind-cli-extra) of the standalone CLI with DaisyUI included.
 
 The Clace server config file has the following entries:
 
@@ -68,4 +68,4 @@ To use [DaisyUI](https://daisyui.com/), in app settings, add
     style=ace.style("daisyui", themes=["dark"])
 ```
 
-Change to the preferred [theme](https://daisyui.com/docs/themes/). DaisyUI is a good option to use to get great default styling for components, with the full flexibility of Tailwind. To use DaisyUI, the standalone version of TailwindCSS CLI cannot be used, npm version is required. To get this working, follow the installation instructions [here](https://daisyui.com/docs/install/). Clace takes care of creating the config files, the `npx tailwindcss` command should be setup manually. Using the CDN version of DaisyUI or Tailwind is not recommended since that will cause the style files to be large.
+Change to the preferred [theme](https://daisyui.com/docs/themes/). DaisyUI is a good option to use to get great default styling for components, with the full flexibility of Tailwind. To use DaisyUI, use the npm version of Tailwind or use this [custom version](https://github.com/dobicinaitis/tailwind-cli-extra) of the standalone CLI with DaisyUI included. Clace takes care of creating the config files. Using the CDN version of DaisyUI or Tailwind is not recommended since that will cause the style files to be large.
