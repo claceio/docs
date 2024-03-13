@@ -24,15 +24,15 @@ admin_password_bcrypt = "" # the password bcrypt value
 
 in the config file. If the value is undefined or empty, then a random password is generated and is used as the admin password for that server session. The password being used is displayed on the stdout of the server startup. This will change on every restart.
 
-To configure a fixed value for the admin user password, use the helper command
+To configure a fixed value for the admin user password, use the `password` helper command:
 
 ```bash
 clace password
 ```
 
-To generate a random password. This will print out the password and its bcrypt value to the screen. Save the password in your password manager and add the bcrypt has to your config file.
+to generate a random password. This will print out the password and its bcrypt value to the screen. Save the password in your password manager and add the bcrypt hash to your config file.
 
-To use a particular value for the admin password, run
+To use a particular value for the admin password, run:
 
 ```bash
 clace password --prompt
@@ -69,3 +69,21 @@ If server_uri is set to the https endpoint and the Clace server is running with 
 ## Application Security
 
 See [appsecurity]({{< ref "appsecurity" >}}) for details about the application level sandboxing.
+
+## Private Repository Access
+
+The `app create` and `app reload` commands can read public GitHub repositories. If the repository is private, to be able to access the repo, the [ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) needs to be specified. In the `clace.toml` config file, create an entry like:
+
+```toml
+[git_auth.infoclace]
+key_file_path = "/Users/myuser/.ssh/infoclace_rsa"
+password = ""
+```
+
+`infoclace` is the git auth key name, `key_file_path` points to the location of a private key file for a user with access to the repository. When running `app create`, add the `--git-auth infoclace` option. The private key specified will be used for accessing the repository. `app reload` command will automatically use the same key as specified during the create.
+
+To change the git auth key for an app, run:
+
+```bash
+clace app update git-auth /myapp newkey
+```
