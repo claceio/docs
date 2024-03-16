@@ -84,7 +84,7 @@ The `~/myapp2/index.go.html` can be updated to have a complete HTML page. Use th
 
 ### Default Layout HTML App
 
-The default is `custom_layout=False` which mean the app developer has to provide only the HTML body, Clace will automatically generate the rest of the HTML. For using the auto generated HTML templates, the app has to be created in dev mode using the `--dev` option.
+The default is `custom_layout=False` meaning app developer has to provide only the HTML body, Clace will automatically generate the rest of the HTML. For using the auto generated HTML templates, the app has to be created in dev mode using the `--dev` option.
 
 Create an `~/myapp3/app.star` file containing
 
@@ -124,7 +124,7 @@ To create an app with a custom HTML page which shows a listing of files in your 
 load("exec.in", "exec")
 
 def handler(req):
-   ret = exec.run("ls", ["-l", "/sdsd"])
+   ret = exec.run("ls", ["-l", "/"])
    if ret.error:
        return {"Error": ret.error, "Lines": []}
    return {"Error": "", "Lines": ret.value}
