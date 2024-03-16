@@ -34,51 +34,100 @@ The Clace app development lifecycle is:
 
 ## Examples
 
-### Simple App
+### Simple Text App
 
-The simplest app, using the default builtin layout would be two files. An `app.star` file containing
+The hello world app for Clace is an `~/myapp/app.star` file containing:
 
 ```python
-app = ace.app("hello1", pages = [ace.page("/")])
+def handler(req):
+    return "hello world"
+
+app = ace.app("hello",
+        pages = [ace.page("/", type=ace.TEXT)]
+)
 ```
 
-and an `app.go.html` file containing
+Run `clace app create --auth-type=none /hello ~/myapp`. After that, the app is available at `/hello`
+
+```sh
+$ curl localhost:25222/hello
+hello world
+```
+
+The default response type is `ace.HTML`. `ace.TEXT` and `ace.JSON` are the other options. The data returned by the handler function is converted to the type format specified in the API.
+
+### Custom Layout HTML App
+
+To return HTML response, a HTML template file named `*.go.html` is required. Create an `~/myapp2/app.star` file containing
+
+```python
+app = ace.app("hello2",
+        custom_layout=True,
+        pages = [ace.page("/")]
+)
+```
+
+and an `~/myapp2/index.go.html` file containing
+
+```html
+hello world2
+```
+
+Run `clace app create --auth-type=none /hello2 ~/myapp2`. After that, the app is available at `/hello2`
+
+```sh
+$ curl localhost:25222/hello2
+hello world2
+```
+
+The `~/myapp2/index.go.html` can be updated to have a complete HTML page. Use the command `clace app reload --promote /hello2` to pick up changes. This app is using `custom_layout=True` which means the app developer has to provide the complete HTML.
+
+### Default Layout HTML App
+
+The default is `custom_layout=False` which mean the app developer has to provide only the HTML body, Clace will automatically generate the rest of the HTML. For using the auto generated HTML templates, the app has to be created in dev mode using the `--dev` option.
+
+Create an `~/myapp3/app.star` file containing
+
+```python
+app = ace.app("hello3",
+        pages = [ace.page("/")]
+)
+```
+
+and an `~/myapp3/app.go.html` file containing
 
 <!-- prettier-ignore -->
 ```html
 {{block "clace_body" .}}
-   Hello World
+   hello world3
 {{end}}
 ```
 
 <!-- prettier-ignore-end -->
 
-Create an app in dev mode with this code and visiting the app url will show
-![Example Output](example1.png "Example Output")
+Run `clace app create --auth-type=none --dev /hello3 ~/myapp3`. After that, the app is available at `/hello3`. Note that the `--dev` option is required for the `index_gen.go.html` file to be generated.
 
-The name of the app is hello1. There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
+The name of the app is hello3. There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
 
 ```python
-app = ace.app(name="hello1",
+app = ace.app(name="hello3",
               custom_layout=False,
               pages = [ace.page(path="/", full="index_gen.go.html")]
              )
 ```
 
-`index_gen.go.html` is the auto generated index file, created when the default builtin layout is used.
+### Complete App
 
-### App with Custom Layout
-
-To create an app with a custom HTML page which shows a listing of files in your root directory, create an `app.star` file with
+To create an app with a custom HTML page which shows a listing of files in your root directory, create an `~/myapp4/app.star` file with
 
 ```python
 load("exec.in", "exec")
 
 def handler(req):
-   ret = exec.run("ls", ["-l", "/"])
+   ret = exec.run("ls", ["-l", "/sdsd"])
    if ret.error:
        return {"Error": ret.error, "Lines": []}
-   return {"Lines": ret.value}
+   return {"Error": "", "Lines": ret.value}
 
 app = ace.app("hello1",
               custom_layout=True,
@@ -87,7 +136,7 @@ app = ace.app("hello1",
              )
 ```
 
-and an `index.go.html` file with
+and an `~/myapp4/index.go.html` file with
 
 <!-- prettier-ignore -->
 ```html
@@ -98,6 +147,7 @@ and an `index.go.html` file with
     {{ template "clace_gen_import" . }}
   </head>
   <body>
+    {{ .Data.Error }}
     {{ range .Data.Lines }}
        {{.}}
        <br/>
@@ -108,7 +158,11 @@ and an `index.go.html` file with
 
 <!-- prettier-ignore-end -->
 
-This app uses the exec plugin to run a ls command. The output of the command is shown when the app is accessed. To allow the app to run the plugin command, use the `clace app approve` command.
+Run `clace app create --auth-type=none --dev --approve /hello4 ~/myapp4`. After that, the app is available at `/hello4`. Note that the `--dev` option is required for the `clace_gen_import` file to be generated which is required for live reload.
+
+This app uses the `exec` plugin to run the ls command. The output of the command is shown when the app is accessed. To allow the app to run the plugin command, use the `clace app approve` command.
+
+## Automatic Error Handling
 
 To enable [automatic error handling]({{< ref "docs/plugins/overview#automatic-error-handling" >}}) (recommended), add an `error_handler` function like:
 
