@@ -91,7 +91,7 @@ if challenge.get("Error"):
 All responses are HTML by default, as required for building a proper Hypermedia client. There are some cases where data needs to be returned to the client in JSON format. The type property can be used for those cases. For example, [this API](https://github.com/claceio/clace/blob/1f2ca6b09a73112dc8c97cb0575942dba4d75f89/examples/memory_usage/app.star#L98) returns JSON
 
 ```python
-ace.page("/memory", handler=memory_handler, type="json"),
+ace.page("/memory", handler=memory_handler, type=ace.JSON),
 ```
 
-Here, the response from the handler function is returned as JSON, no template is used. Also, in this handler, if there is a call to `ace.Response`, the type will default to "json" since that is the type specified at the route level. Mime type detection based on the `Accept` header is planned, it is not currently supported.
+Here, the response from the handler function is returned as JSON, no template is used. Also, in this handler, if there is a call to `ace.Response`, the type will default to JSON since that is the type specified at the route level. Mime type detection based on the `Accept` header is planned, it is not currently supported.

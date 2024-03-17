@@ -71,3 +71,5 @@ h2, h3, h4, h5, h6 {
 .prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
     content: "";
 }
+
+.max-w-prose { max-width:80ch !important; }

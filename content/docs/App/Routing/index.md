@@ -78,8 +78,9 @@ The API flow is
 - The API is first sent to the matching app
 - Within the app, the API is routed based on the routes defined
 - If there is a handler defined for the matched route, the handler function is called with the request as argument
-- The response template is invoked, with a input map containing a `Data` property as returned by the handler function
+- The response template is invoked, with an input map containing a `Data` property as returned by the handler function
 - If the API type is set to json, the handler response is directly returned, with no template being used
+- If [automatic error handling]({{< ref "docs/plugins/overview#automatic-error-handling" >}}) is enabled (`error_handler` is defined), then the error handler function is called if there is a error during the handler invocation. The error handler does the response processing, the templates defined in the route are not used.
 
 ## Notes
 
