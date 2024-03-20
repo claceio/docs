@@ -159,4 +159,6 @@ In the above listing, the staging app is on version 4, prod app on version 3. Th
 
 ## Developing Apps
 
-Clace apps are written using Starlark and Go HTML templates. Starlark is a subset of Python, it is easy to pick up even if you are not familiar with Python. Go HTML templates are used by tools like Hugo and Helm,
+Clace apps are written using Starlark and Go HTML templates. Starlark is a subset of Python, it is easy to pick up even if you are not familiar with Python. Go HTML templates are used by tools like Hugo and Helm.
+
+See [overview]({{< ref "app/overview/" >}}) for a quick start overview on developing Clace applications.
