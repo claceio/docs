@@ -16,7 +16,7 @@ cascade:
 </div>
 
 <h2>What is Clace?</h2>
-Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace securely runs multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single Clace server installation, providing a GitOps approach for applying app code updates.
+Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace securely runs multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single Clace server installation, providing a GitOps approach for changes.
 
 <br>
 <h2>Who is it for?</h2>
@@ -67,11 +67,13 @@ To install apps on Windows, use the same command as Linux/OSX. To install a book
 
 The disk usage app is available at <a href="https://localhost:25223/disk_usage">https://localhost:25223/disk_usage</a> (use port 25222 for HTTP). `admin` is the username, use the password printed by the install script. The bookmark manager is available at <a href="https://localhost:25223/book">https://localhost:25223/book</a>.
 
-See <a href="https://clace.io/docs/installation/#start-the-service">service startup</a> for details.
+See <a href="https://clace.io/docs/installation/#start-the-service">here</a> for more details about installation.
 <br>
 
 <h2>Samples</h2>
-See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">examples</a> and <a href="https://github.com/claceio/apps">apps repo</a> for sample applications. <a href="https://demo.clace.io/">Demo</a> is a Clace hosted demo page.
+See <a href="/docs/app/overview/#examples">documentation</a> for steps to create Clace apps. See <a href="https://github.com/claceio/clace/tree/main/examples">examples</a> and <a href="https://github.com/claceio/apps">apps repo</a> for sample applications. See <a href="https://demo.clace.io/">here</a> for an online demo showing some Clace apps.
+
+See <a href="/docs/quickstart">quick start</a> for details on getting started with Clace.
 
 <br>
 <br>
