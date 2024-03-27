@@ -117,12 +117,12 @@ A star, like `PROD*` in the `app list` output indicates that there are staged ch
 
 ## App Authentication
 
-By default, apps are created with the default authentication type. The default (system) auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
+By default, apps are created with the system authentication type. System auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
 
-To change app to be un-authenticated, add `--auth-type none` to the `app create` command. After an app is created, the auth type can be changed by running `app update auth-type /myapp none`.
+To change app to be un-authenticated, add `--auth-type none` to the `app create` command. After an app is created, the auth type can be changed by running `app update auth-type /myapp none`. OAuth based authentication is also supported, see [authentication]({{< ref "docs/configuration/authentication" >}}) for details.
 
 {{< alert >}}
 **Note:** Changes done to the app settings using the `app update` command are not staged or versioned, they apply immediately to the stage/prod/preview apps. App settings are fundamental properties of the app, like what authentication type to use, what git auth key to use etc.
 
-All other changes done to app metadata (like account linking, permission approval and code change reload) are automatically staged before deployment. Use the `--promote` option to promote the change after applying it on the staging app. When a promotion is done, all previously staged changes for that app are promoted, not just the change being done as part of the recent command.
+All other changes done to app metadata (like account linking, permission approval and code reload) are staged before deployment. Use the `--promote` option to promote the change after applying it on the staging app. When a promotion is done, all previously staged changes for that app are promoted, not just the most recent change.
 {{< /alert >}}

@@ -58,7 +58,7 @@ For example, in this page definition
 ace.page("/game/{game_id}", full="game.go.html", partial="game_info_tmpl", handler=game_handler,
     fragments=[
         ace.fragment(
-            "submit", method="POST", handler=lambda req: post_game_update(req, "submit")),
+            "submit", method=ace.POST, handler=lambda req: post_game_update(req, "submit")),
         ace.fragment(
             "refresh", partial="refresh_tmpl")
     ]
