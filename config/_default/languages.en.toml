@@ -2,7 +2,7 @@ languageCode = 'en-us'
 languageName = "English"
 weight = 1
 
-title = "Clace : Easy Self-hosted Web Tools"
+title = "Clace : Hypermedia driven web tools platform"
 copyright = "Copyright © 2024 ClaceIO, LLC"
 
 
@@ -13,18 +13,18 @@ copyright = "Copyright © 2024 ClaceIO, LLC"
         isoCode = "en"
         rtl = false
         dateFormat = "2 January 2006"
-        description = "Easy Self-hosted Web Tools"
+        description = "Hypermedia driven web tools platform"
 
 [params]
   mainSections = ["Features", "Docs", "Blog", "About"]
 
 [params.author]
   name = "Clace"
-  headline = "Easy Self-hosted Web Tools"
+  headline = "Hypermedia Driven Web Tools Platform"
   links = [
      { email = "mailto:contact@clace.io" },
      { github = "https://github.com/claceio" },
-     { twitter = "https://twitter.com/claceio" },
+     { twitter = "https://twitter.com/akclace" },
      # { linkedin = "https://www.linkedin.com/company/claceio"},
      { rss = "https://clace.io/blog/index.xml"},
      { discord = "https://discord.gg/t2P8pJFsd7"},

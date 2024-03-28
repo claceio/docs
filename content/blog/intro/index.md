@@ -57,8 +57,9 @@ You can keep in touch by these means:
 
 - Star the repo at [github.com/claceio/clace](https://github.com/claceio/clace)
 - Sign up for [Email updates](https://clace.io/#:~:text=Sign%20up%20for%20email%20updates)
-- Follow on [Twitter](https://twitter.com/claceio)
+- Follow on [Twitter](https://twitter.com/akclace)
 - Subscribe to the blog [RSS feed](https://clace.io/blog/index.xml)
 - Follow ClaceIO on [LinkedIn](https://www.linkedin.com/company/claceio)
+- Connect on [Discord](https://discord.gg/t2P8pJFsd7)
 
 Use [discussions](https://github.com/claceio/clace/discussions) feature in Github or raise [issues](https://github.com/claceio/clace/issues) to provide feedback.
