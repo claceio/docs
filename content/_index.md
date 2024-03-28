@@ -16,18 +16,18 @@ cascade:
 </div>
 
 <h2>What is Clace?</h2>
-Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace securely runs multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single Clace server installation, providing a GitOps approach for changes.
+Clace is an Apache-2.0 licensed project building a platform to easily develop and deploy self-hosted web applications. Clace securely runs multiple <a href="https://hypermedia.systems/hypermedia-reintroduction/">Hypermedia driven</a> web applications on a single Clace server installation. Clace combines functionality usually provided by multiple services: web server (domain/path based routing, TLS certs, static file serving), application server (API handling, backend and frontend logic) and deployment infrastructure (isolation across apps, versioning and staged deployments, gitops deployment). For web application development, Clace provides all of that functionality in a single lightweight binary.
 
 <br>
-<h2>Who is it for?</h2>
+<h2>What can it do?</h2>
 <p>
-Clace can be used to easily develop and deploy hypermedia driven web applications. Clace can run web apps on personal machines and also host applications for access over the public internet. Clace can be used by teams to host internal applications. Clace supports building a hypermedia driven interface for an existing JSON API, a backend-for-frontend type pattern. Developing a web UI for command line applications is another use-case. CRUD applications and applications which glue together backend APIs are good candidates for Clace apps.
+Clace can be used to easily develop and deploy hypermedia driven web applications which are secure and portable. Clace can run web apps for personal use and also host applications for access over the public internet. Clace can be used by teams to host internal applications. Clace supports building a hypermedia driven web interface for an existing API's, a backend-for-frontend type pattern. Developing a web UI for command line applications is another use-case. CRUD applications and applications which glue together backend APIs are good candidates for Clace apps.
 <br>
 
 <h2>How does it work?</h2>
-Clace and its plugins are implemented in go. User applications are developed and configured in <a href="https://github.com/google/starlark-go">Starlark</a>, which uses a python inspired syntax. Users of Clace write only Starlark and HTML templates. The backend code runs in a security sandbox and access to plugins need to be explicitly permitted. The API routes are defined to be Hypermedia first, using templates partials to drive the UI interactions. <a href="https://htmx.org/">HTMX</a> is used for server interactions from the UI.
+Clace and its plugins are implemented in go. User applications are developed and configured in <a href="https://github.com/google/starlark-go">Starlark</a>, which uses a python inspired syntax. Users of Clace write only Starlark and HTML templates. The backend code runs in a security sandbox and access to plugins need to be explicitly permitted. The API routes are defined to be Hypermedia first, using template partials to drive the UI interactions. <a href="https://htmx.org/">HTMX</a> is used for server interactions from the UI.
 
-There are no Python or Javascript dependencies to install, no containers to create, no yaml files to manage. Application updates are done with a gitops workflow, with no-build step. Staging and preview environments are available for all apps. Clace integrates with TailwindCSS/DaisyUI for styling and has <a href="https://esbuild.github.io/">esbuild</a> built-in for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">ESM</a> support. Data persistence to sqlite is supported using a document store interface. Clace manages request routing and SSL certificates creation and renewal, so a separate web server is not required.
+There are no Python or Javascript dependencies to install, no containers to create, no yaml files to manage. Application updates are done with a gitops workflow, with no-build step. Staging and preview environments are available for apps. Clace integrates with TailwindCSS/DaisyUI for UI styling and has <a href="https://esbuild.github.io/">esbuild</a> built-in for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">ESM</a> support. Data persistence to sqlite is supported using a document store interface. Clace manages request routing and TLS certificates creation and renewal, so a separate web server is not required.
 
 <h2>Installation</h2>
 To install, start the service and create an app on <b>Linux or OSX</b>, run:

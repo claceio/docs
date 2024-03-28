@@ -32,6 +32,7 @@ The deployment features supported currently by Clace are:
 - Support for github integration, apps being directly deployed from github code.
 - Database backed application file system, for atomic version updates and rollbacks.
 - Zero downtime application updates.
+- Support for [OAuth authentication]({{< ref "docs/configuration/authentication/#oauth-authentication" >}})
 - Support for application data persistance to sqlite with full database schema management.
 - Scalable backend, all performance critical code is in Go, only application handler code is in Starlark.
 - Support for domain based and path based [routing]({{< ref "docs/applications/routing/#request-routing" >}}) at the app level.
@@ -45,8 +46,6 @@ The deployment features supported currently by Clace are:
 
 Clace is early in its development. The feature roadmap for Clace is:
 
-- Support for OAuth2 based login.
-- Support for SSO with SAML.
 - All plugins are internal (built into Clace binary) currently. The plan is to move to an external plugin model, plugins being loaded dynamically using [go-plugin](https://github.com/hashicorp/go-plugin).
 - SQLite is used as the metadata storage currently. Support for postgres and other systems is planned.
 - Support for workflow jobs, which would have a form based interface with limited customizability, but with support for triggered and scheduled execution.
