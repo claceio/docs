@@ -5,11 +5,11 @@ date: 2023-10-06
 summary: "HTML templates functions, static file handling and customizations"
 ---
 
-Clace uses [Go HTML templates](https://pkg.go.dev/html/template@go1.21.2) for returning data to the client. See [here](https://pkg.go.dev/text/template@go1.21.2) for an overview of the template syntax. [Hugo docs](https://gohugo.io/templates/introduction/) are a good source for overview of using go templates.
+Clace uses [Go HTML templates](https://pkg.go.dev/html/template@go1.21.2) for returning data to the client. See [here](https://pkg.go.dev/text/template@go1.21.2) for an overview of the template syntax. [Hugo docs](https://gohugo.io/templates/introduction/) are a good source for an overview of using go templates.
 
 The [Sprig template library functions](http://masterminds.github.io/sprig/) are included automatically. Two functions from Sprig which are excluded for security considerations are `env` and `expandenv`.
 
-Two extra functions are added for handling static file paths.
+Two extra functions `static` and `fileNonEmpty` are added for handling static file paths.
 
 ## static function
 
@@ -83,25 +83,25 @@ and a `help.go.html` file with
 
 then a route using `index.go.html` will get the HTML for the index page and route using `help.go.html` with get HTML help page. Although the `body` is defined in two template files, there is no conflict since the root level template files are loaded independently.
 
-If not using the structured template layout, if a duplicate block is found, the one to be used depends on the order in which files are loaded. To change the folder looked up for base template, set:
+Without structured template layout, if a duplicate block is found, the one to be used depends on the order in which the files are loaded. To change the folders used for base templates, set:
 
 ```json
 settings={
-    "routing": {"base_template": ["base_templates", "template_helpers"]}
+    "routing": {"base_templates": ["base_templates", "template_helpers"]}
 }
 ```
 
-## File Contents
+## App Layout
 
-When using custom layout, the app developer has to create the `index.go.html` file. Adding a directive like:
+When using custom layout with `custom_layout=True`, the app developer has to create the `index.go.html` file. Add a directive like:
 
 ```html
 {{ template "clace_gen_import" . }}
 ```
 
-in the head section ensures that the auto generated `clace_gen_import` directives are loaded. This will include the style files, HTMX library and the live reload functionality will be enabled in dev mode.
+in the head section to ensure that the auto generated `clace_gen_import` directives are loaded in the . This will include the style files, HTMX library and the live reload functionality in dev mode.
 
-In Clace layout mode (the default), the auto generated `index_gen.go.html` file is used. The app developer has to provide a `clace_body` block. It can be in any file, the convention is to use `app.go.html`. For example:
+In the default layout mode, the auto generated `index_gen.go.html` file is used. The app developer has to provide a `clace_body` block. It can be in any template file, the convention is to use `app.go.html`. For example:
 
 <!-- prettier-ignore -->
 ```html
@@ -112,4 +112,4 @@ In Clace layout mode (the default), the auto generated `index_gen.go.html` file 
 
 <!-- prettier-ignore-end -->
 
-The `.Data` binding has the response as returned by the handler function for the route.
+The `.Data` binding has the data as returned by the handler function for the route.
