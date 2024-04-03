@@ -5,7 +5,7 @@ date: 2023-10-06
 summary: "HTML templates functions, static file handling and customizations"
 ---
 
-Clace uses [Go HTML templates](https://pkg.go.dev/html/template@go1.21.2) for returning data to the client. See [here](https://pkg.go.dev/text/template@go1.21.2) for an overview of the template syntax.
+Clace uses [Go HTML templates](https://pkg.go.dev/html/template@go1.21.2) for returning data to the client. See [here](https://pkg.go.dev/text/template@go1.21.2) for an overview of the template syntax. [Hugo docs](https://gohugo.io/templates/introduction/) are a good source for overview of using go templates.
 
 The [Sprig template library functions](http://masterminds.github.io/sprig/) are included automatically. Two functions from Sprig which are excluded for security considerations are `env` and `expandenv`.
 
@@ -51,6 +51,45 @@ settings={
 ```
 
 the default is `["*.go.html"]`. If additional directories are added, `"*.go.html"` still needs to present in the list since generated files are created in the app home directory. Also, all folders in the list need to contains at least one template file. File names have to be unique across folders. Files are referenced by their name, without the folder name, when used in template import directives.
+
+## Structured Template Layout
+
+The default in Clace is to load all the templates in one parse operation. This is easy to get started with but can result in challenges when the same template block needs to be duplicated in different files. Clace also supports a structured template layout. See [this blog](https://philipptanlak.com/web-frontends-in-go/#how-i-structure-my-templates) for an explanation about the differences between the two layouts. The default in Clace is the WordPress layout, all template files are loaded in one go. To use the second, Django layout, use the structured format.
+
+If there is a `base_templates` folder in the app main folder with one or more `*.go.html` files, the structured template layout is used. In the structured layout format, all the base template files are loaded in one parse operation. Each of the files in the app main folder is then individually loaded. Each top level file has access to its own template blocks plus the base templates.
+
+This has the advantage that the main templates can have duplicate templates, with no conflicts because they are loaded individually. For example, if there is a `base_templates/base.go.html` file with
+
+```html
+<html>
+  <head></head>
+  {{block "body" .}} {{end}}
+  <footer></footer>
+</html>
+{{end}}
+```
+
+and a `index.go.html` file with
+
+```html
+{{define "body"}} My Index Body {{end}} {{- template "full" . -}}
+```
+
+and a `help.go.html` file with
+
+```html
+{{define "body"}} My Help Body {{end}} {{- template "full" . -}}
+```
+
+then a route using `index.go.html` will get the HTML for the index page and route using `help.go.html` with get HTML help page. Although the `body` is defined in two template files, there is no conflict since the root level template files are loaded independently.
+
+If not using the structured template layout, if a duplicate block is found, the one to be used depends on the order in which files are loaded. To change the folder looked up for base template, set:
+
+```json
+settings={
+    "routing": {"base_template": ["base_templates", "template_helpers"]}
+}
+```
 
 ## File Contents
 
