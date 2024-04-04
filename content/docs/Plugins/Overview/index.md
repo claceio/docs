@@ -155,18 +155,18 @@ if not error:
 
 ## Plugin Accounts
 
-Some plugins like `exec.in` do not require any account information. Others like `store.in` need some account information. The account configuration for a plugin is loaded from the Clace config file `clace.toml`. For example, the default configuration for `store.in` is [here](https://github.com/claceio/clace/blob/4cde3059e6a99abae20cebbddde5473149065fa9/internal/utils/clace.default.toml#L48), which contains:
+Some plugins like `exec.in` do not require any account information. Others like `store.in` need some account information. The account configuration for a plugin is loaded from the Clace config file `clace.toml`. For example, the default configuration for `store.in` is [here](https://github.com/claceio/clace/blob/e5ab0c1139d257c7f02fbe03d060a6bfe1b5f605/internal/system/clace.default.toml#L54), which contains:
 
 ```toml
 [plugin."store.in"]
-db_connection = "sqlite:$CL_HOME/clace_app.db?_journal_mode=WAL"
+db_connection = "sqlite:$CL_HOME/clace_app.db"
 ```
 
 Any application using the `store.in` plugin will by default use the `$CL_HOME/clace_app.db` sqlite database. To change the default account config used by apps, update `clace.toml` and restart the Clace server. For example, adding the below will overwrite the default `store.in` config for all apps.
 
 ```toml
 [plugin."store.in"]
-db_connection = "sqlite:/tmp/clace_app.db?_journal_mode=WAL"
+db_connection = "sqlite:/tmp/clace_app.db"
 ```
 
 ### Account Linking
@@ -175,10 +175,10 @@ If specific account config is required for an app, then the app can be linked to
 
 ```toml
 [plugin."store.in#tmpaccount"]
-db_connection = "sqlite:/tmp/clace_app.db?_journal_mode=WAL"
+db_connection = "sqlite:/tmp/clace_app.db"
 ```
 
-For an app using `store.in`, run `clace account link --promote /myapp store.in tmpaccount`
+For an app `/myapp` using `store.in`, run `clace account link --promote /myapp store.in tmpaccount`
 
 This links the `myapp` app to use the `tmpaccount` account.
 

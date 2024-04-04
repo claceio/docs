@@ -33,7 +33,7 @@ GLOBAL OPTIONS:
    --help, -h                     show help
 ```
 
-All the parameters have default values, specified in the code at [clace.default.toml](https://github.com/claceio/clace/blob/main/internal/utils/clace.default.toml).
+All the parameters have default values, specified in the code at [clace.default.toml](https://github.com/claceio/clace/blob/main/internal/system/clace.default.toml).
 
 A user-specified config file is required. The location of this file can be set using the command line arg `--config_file`. If CLI arg is not specified, the environment variable `CL_CONFIG_FILE` is used to locate the config file. There is no default location for this file, if no CLI argument and env value are specified, then no configuration file is loaded.
 
