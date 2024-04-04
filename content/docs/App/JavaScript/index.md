@@ -37,7 +37,7 @@ JavaScript modules (also called ESM or ECMAScript Modules) are a way to import J
 
 The workflow when using modules in Clace for an app in dev mode is:
 
-- In you home directly, install [nodejs](https://nodejs.org/en/download)
+- Ensure [nodejs](https://nodejs.org/en/download) is installed
 - Using npm, install package you want to use a modules. for example `npm install d3`
 - Add the ace.library entry in the app config. Clace will automatically run esbuild and import the package as a module into `static/gen/esm`
 - Add an importmap in the head section of the html. Like [here](https://github.com/claceio/clace/blob/8b7f0d7d0c692e0ca3c6a74e97d1913031b954a1/examples/memory_usage/index.go.html#L10).
