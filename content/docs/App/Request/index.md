@@ -24,7 +24,7 @@ The handler function is passed one argument which has the details about the API 
 |   Form    |  dict  |             The form data, including body and query             |
 |   Query   |  dict  |              The url query data, as a string array              |
 | PostForm  |  dict  |                   The form data from the body                   |
-|   Data    |  dict  |             The response from the handler function              |
+|   Data    |  dict  | The response from the handler function (passed to the template) |
 
 ## Accessing Inputs
 
