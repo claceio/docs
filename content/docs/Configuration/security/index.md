@@ -7,11 +7,11 @@ summary: "Clace Security related configuration"
 
 The default configuration for the Clace server is:
 
-- Application management (admin APIs) are accessible locally only, using unix domain sockets
-- An admin user account is used to access applications
-- The admin user password has to be added to the server config file, or a random password is generated every time the server is restarted
-- Applications can be change not require any authentication
-- There is no user management support in Clace currently, the plan is to integrate with OAuth2 providers and SAML services for managing user access
+- Application management (admin APIs) are accessible over unix domain sockets only (not accessible remotely). Since UDS enforces file permissions checks, no additional authentication is needed for admin APIs.
+- Admin user account is used to access applications, default `auth-type` for apps is `system`
+- The admin user password bcrypt hash has to be added to the server config file, or a random password is generated every time the server is restarted
+- Applications can be changed to not require any authentication, `auth-type` can be `none` or use Oauth2 based auth.
+- There is no user management support in Clace currently. The system account is present by default (which can be disabled) or OAuth based auth can be used.
 
 ## Admin Account Password
 
@@ -24,7 +24,7 @@ admin_password_bcrypt = "" # the password bcrypt value
 
 in the config file. If the value is undefined or empty, then a random password is generated and is used as the admin password for that server session. The password being used is displayed on the stdout of the server startup. This will change on every restart.
 
-To configure a fixed value for the admin user password, use the `password` helper command:
+To configure a value for the admin user password, use the `password` helper command:
 
 ```bash
 clace password
