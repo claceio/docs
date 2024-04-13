@@ -13,11 +13,11 @@ Two extra functions `static` and `fileNonEmpty` are added for handling static fi
 
 ## static function
 
-This function takes a file name and returns the url for a file in the static folder with a sha256 hash included in the file name. This approach is based on the [hashfs library](https://github.com/benbjohnson/hashfs). If the `static` folder contains a file `file1` with the content `file1data`, then a call to `static "file"` will return `/test/static/file1-ca9e40772ef9119c13100a8258bc38a665a0a1976bf81c96e69a353b6605f5a7`, assuming the app is installed at `/test`.
+This function takes a file name and returns the url for a file in the static folder with a sha256 hash included in the file name. This approach is similar to the [hashfs library](https://github.com/benbjohnson/hashfs). If the `static` folder contains a file `file1` with the content `file1data`, then a call to `static "file"` will return `/test/static/file1-ca9e40772ef9119c13100a8258bc38a665a0a1976bf81c96e69a353b6605f5a7`, assuming the app is installed at `/test`.
 
 The returned file name has a hash based on the file contents. The file server used by Clace will serve aggressive cache headers `Cache-Control: public, max-age=31536000` when this file is referenced by the browser. When the file contents change, the content hash will change and the file name will change. The files on disk are not renamed, only the filesystem used by the Clace server in memory sees the hashed file names.
 
-This approach allows for a build-less system with the aggressive static asset caching. The usual approach for this requires the static file to be renamed to have the hash value in the file name on disk. This require a build step to do the file renaming. The hashfs approach can avoid the build step. The file hash computation and compression are done once, during app installation in prod mode. There is no runtime penalty for this. In dev mode, the file hashing is done during the api serving.
+This approach allows for a build-less system with aggressive static asset caching. The usual approach for this requires the static file to be renamed to have the hash value in the file name on disk. This require a build step to do the file renaming. The hashfs approach can avoid the build step. The file hash computation and compression are done once, during app installation in prod mode. There is no runtime penalty for this. In dev mode, the file hashing is done during the api serving.
 
 ## fileNonEmpty function
 
@@ -113,3 +113,11 @@ In the default layout mode, the auto generated `index_gen.go.html` file is used.
 <!-- prettier-ignore-end -->
 
 The `.Data` binding has the data as returned by the handler function for the route.
+
+## Static Root Files
+
+The `static` folder is used for file which are served under the `/static` path. Content based hashing is supported for these files.
+
+For files which need to be served under the root level, the `static_root` folder is used. Files in this folder are served at the root path. For example, if an app is installed at `example.com:` and a robots.txt file needs to be served, a file `static_root/robots.txt` can be added to the app. This will be automatically served at `example.com/robots.txt`. Note that the static folder path is stripped from the route name. The file name should not conflict with any of the API routes defined in the app. Nested folders are looked up in the static root folder.
+
+Content based hashing is not supported for static root files. These files are expected to be used for well known files like `favicon.ico`. Most regular static file serving use cases should use the `static` folder, not the `static_root` folder.
