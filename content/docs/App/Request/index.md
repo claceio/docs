@@ -33,7 +33,7 @@ The handler function is passed one argument which has the details about the API 
 For a route defined like
 
 ```python
-ace.page("/user/{user_id}/settings", "index.go.html")
+ace.html("/user/{user_id}/settings", "index.go.html")
 ```
 
 the url parameter `user_id` can be accessed in the handler
@@ -46,7 +46,7 @@ def handler(req)
 [Wildcard parameters](https://go-chi.io/#/pages/routing?id=routing-patterns-amp-url-parameters) are allowed at the end of the route. These are defined as
 
 ```python
-ace.page("/path/*", "index.go.html")
+ace.html("/path/*", "index.go.html")
 ```
 
 and can be accessed as
@@ -56,7 +56,7 @@ def handler(req)
     user_id = req.UrlParams["*"]
 ```
 
-[Regexes](https://github.com/google/re2/wiki/Syntax) are also allowed in the path, these are defined as `ace.page("/articles/{aid:^[0-9]{5,6}}")` and accessed as `req.UrlParams["{aid}"]`. The route will match only if the regex matches.
+[Regexes](https://github.com/google/re2/wiki/Syntax) are also allowed in the path, these are defined as `ace.html("/articles/{aid:^[0-9]{5,6}}")` and accessed as `req.UrlParams["{aid}"]`. The route will match only if the regex matches.
 
 ### Query String Parameters
 

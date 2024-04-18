@@ -14,17 +14,17 @@ The app contains an `routes` array, which defines all the routes for the app. Fo
 ```python
 app = ace.app("hello1",
               routes = [
-                 ace.page("/"),
-                 ace.page("/help", "help.go.html")
+                 ace.html("/"),
+                 ace.html("/help", "help.go.html")
               ]
              )
 ```
 
 defines two routes. `/` routes to the default index page, `/help` routes to the help page.
 
-## Page
+## HTML Route
 
-`ace.page` is used to define the properties for a single page. The parameters for `ace.page` are:
+`ace.html` is used to define the properties for a HTML page. The parameters for `ace.html` are:
 
 | Property  | Optional |      Type      |                        Default                         |                     Notes                     |
 | :-------: | :------: | :------------: | :----------------------------------------------------: | :-------------------------------------------: |
@@ -34,11 +34,10 @@ defines two routes. `/` routes to the default index page, `/help` routes to the 
 |  handler  |   True   |    function    |                  handler (if defined)                  |   The handler function to use for the route   |
 | fragments |   True   | ace.fragment[] |                           []                           |              The fragment array               |
 |  method   |   True   |     string     |                          GET                           | The HTTP method type: GET,POST,PUT,DELETE etc |
-|   type    |   True   |     string     |                          html                          |        The response type, html or json        |
 
 ## Fragment
 
-The fragments array in the page definition defines the API interactions within the page. The parameters for `ace.Fragment` are:
+The fragments array in the html page definition defines the API interactions within the page. The parameters for `ace.Fragment` are:
 
 | Property | Optional |   Type   |       Default       |                     Notes                     |
 | :------: | :------: | :------: | :-----------------: | :-------------------------------------------: |
@@ -46,7 +45,6 @@ The fragments array in the page definition defines the API interactions within t
 | partial  |   True   |  string  | Inherited from page |   The template to use for partial requests    |
 | handler  |   True   | function | Inherited from page |   The handler function to use for the route   |
 |  method  |   True   | function |         GET         | The HTTP method type: GET,POST,PUT,DELETE etc |
-|   type   |   True   |  string  |        html         |        The response type, html or json        |
 
 {{< alert >}}
 **Note:** `partial` and `handler` are inherited from the page level, unless overridden for the fragment.
@@ -55,7 +53,7 @@ The fragments array in the page definition defines the API interactions within t
 For example, in this page definition
 
 ```python
-ace.page("/game/{game_id}", full="game.go.html", partial="game_info_tmpl", handler=game_handler,
+ace.html("/game/{game_id}", full="game.go.html", partial="game_info_tmpl", handler=game_handler,
     fragments=[
         ace.fragment(
             "submit", method=ace.POST, handler=lambda req: post_game_update(req, "submit")),

@@ -43,7 +43,7 @@ def handler(req):
     return "hello world"
 
 app = ace.app("hello",
-        routes = [ace.page("/", type=ace.TEXT)]
+        routes = [ace.api("/", type=ace.TEXT)]
 )
 ```
 
@@ -63,7 +63,7 @@ To return HTML response, a HTML template file named `*.go.html` is required. Cre
 ```python
 app = ace.app("hello2",
         custom_layout=True,
-        routes = [ace.page("/")]
+        routes = [ace.html("/")]
 )
 ```
 
@@ -90,7 +90,7 @@ Create an `~/myapp3/app.star` file containing
 
 ```python
 app = ace.app("hello3",
-        routes = [ace.page("/")]
+        routes = [ace.html("/")]
 )
 ```
 
@@ -112,7 +112,7 @@ The name of the app is hello3. There is only one route defined, for page /, whic
 ```python
 app = ace.app(name="hello3",
               custom_layout=False,
-              routes = [ace.page(path="/", full="index_gen.go.html")]
+              routes = [ace.html(path="/", full="index_gen.go.html")]
              )
 ```
 
@@ -131,7 +131,7 @@ def handler(req):
 
 app = ace.app("hello1",
               custom_layout=True,
-              routes = [ace.page("/")],
+              routes = [ace.html("/")],
               permissions = [ace.permission("exec.in", "run", ["ls"])]
              )
 ```
