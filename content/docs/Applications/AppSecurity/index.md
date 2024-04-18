@@ -32,7 +32,7 @@ As an example, the disk usage analysis app requires [two permissions](https://gi
 
 ```python
 app = ace.app("Disk Usage",
-              pages=[ace.page("/", partial="du_table_block")],
+              routes=[ace.page("/", partial="du_table_block")],
               permissions=[
                   ace.permission("exec.in", "run", ["du"]),
                   ace.permission("exec.in", "run", ["readlink"])

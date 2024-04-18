@@ -7,13 +7,13 @@ summary: "Defining API routes, handling pages and fragments"
 
 The request routing layer in Clace is built on top of the [chi](https://github.com/go-chi/chi) routing library. The routing is built for hypermedia exchange, so all routes are defined in terms of pages and fragments within the pages. This grouping of requests helps make it clear which API does what and provide an easy mechanism to deal with partial HTMX driven requests and full page refreshes. Simpler application might have one page with some interactions within that. Larger applications can be composed of multiple pages, each page having some interactive fragments.
 
-## Pages
+## Routes
 
-The app contains an `pages` array, which defines all the routes for the app. For example, the app definition
+The app contains an `routes` array, which defines all the routes for the app. For example, the app definition
 
 ```python
 app = ace.app("hello1",
-              pages = [
+              routes = [
                  ace.page("/"),
                  ace.page("/help", "help.go.html")
               ]

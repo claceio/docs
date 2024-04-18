@@ -20,7 +20,7 @@ def handler(req):
     else:
         return {"Error": "Name not specified", "Name": None}
 
-app = ace.app("test", pages = [ace.page("/")])
+app = ace.app("test", routes = [ace.page("/")])
 ```
 
 allows the template to handle the error by doing
