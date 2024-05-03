@@ -69,7 +69,7 @@ app = ace.app("hello2",
 
 and an `~/myapp2/index.go.html` file containing
 
-```html
+```html {filename="index.go.html"}
 hello world2
 ```
 
@@ -97,7 +97,7 @@ app = ace.app("hello3",
 and an `~/myapp3/app.go.html` file containing
 
 <!-- prettier-ignore -->
-```html
+```html {filename="app.go.html"}
 {{block "clace_body" .}}
    hello world3
 {{end}}
@@ -139,7 +139,7 @@ app = ace.app("hello1",
 and an `~/myapp4/index.go.html` file with
 
 <!-- prettier-ignore -->
-```html
+```html {filename="index.go.html"}
 <!doctype html>
 <html>
   <head>

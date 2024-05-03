@@ -41,13 +41,13 @@ The workflow when using modules in Clace for an app in dev mode is:
 - Using npm, install package you want to use a modules. for example `npm install d3`
 - Add the ace.library entry in the app config. Clace will automatically run esbuild and import the package as a module into `static/gen/esm`
 - Add an importmap in the head section of the html. Like [here](https://github.com/claceio/clace/blob/8b7f0d7d0c692e0ca3c6a74e97d1913031b954a1/examples/memory_usage/index.go.html#L10).
-  ```javascript
+  ```html
   <script type="importmap">
-  {
-    "imports": {
-        "d3": "{{ static "gen/esm/d3-7.8.5.js"}}"
+    {
+      "imports": {
+          "d3": "{{ static "gen/esm/d3-7.8.5.js"}}"
+      }
     }
-  }
   </script>
   ```
 - Use the library as required in your client. Like [here](https://github.com/claceio/clace/blob/8b7f0d7d0c692e0ca3c6a74e97d1913031b954a1/examples/memory_usage/static/js/app.js#L4)

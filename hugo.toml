@@ -87,10 +87,31 @@ url = "https://github.com/claceio/clace"
 icon = "github"
 
 [[menu.sidebar]]
-name = "More"
+name = "Contact"
 params.type = "separator"
 weight = 1
 
 [[menu.sidebar]]
-name = "Demo"
-url = "https://demo.clace.io"
+name = "Email"
+url = "mailto:contact@clace.io"
+weight = 1
+
+[[menu.sidebar]]
+name = "GitHub"
+url = "https://github.com/claceio"
+weight = 2
+
+[[menu.sidebar]]
+name = "Twitter"
+url = "https://twitter.com/akclace"
+weight = 3
+
+[[menu.sidebar]]
+name = "RSS"
+url = "https://clace.io/blog/index.xml"
+weight = 4
+
+[[menu.sidebar]]
+name = "Discord"
+url = "https://discord.gg/t2P8pJFsd7"
+weight = 5
