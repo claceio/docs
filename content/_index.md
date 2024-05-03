@@ -22,7 +22,7 @@ layout: hextra-home
 
 <br>
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace is an Apache-2.0 licensed project providing a web app development and deployment platform for internal tools. Clace allows to easily and securely host multiple web apps on a single machine. Clace provides the functionality of a reverse proxy, a micro-framework in Starlark (python-like) and container orchestrator for Docker/Podman in a single binary. For internal tools, Clace provides a gitops workflow out of the box for managing web apps." >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace is an Apache-2.0 licensed project providing a web app development and deployment platform for internal tools. Clace allows easy and secure hosting of multiple web apps on a single machine. Clace provides the functionality of a scalable reverse proxy, a micro-framework in Starlark (python-like) and container orchestrator for Docker/Podman in a single binary. For internal tools, Clace provides a gitops workflow for managing web apps with no additional setup required." >}}
 
 <br>
 
