@@ -50,9 +50,9 @@ The fragments array in the html page definition defines the API interactions wit
 | handler  |   True   | function | Inherited from page |              The handler function to use for the route               |
 |  method  |   True   |  string  |         GET         | The HTTP method type: GET,POST,PUT,DELETE etc, for example `ace.GET` |
 
-{{< alert >}}
+{{<callout type="info" >}}
 **Note:** `partial` and `handler` are inherited from the page level, unless overridden for the fragment.
-{{< /alert >}}
+{{</callout>}}
 
 For example, in this page definition
 
@@ -136,9 +136,9 @@ The plugin is authorized to allow proxying to `https://www.google.com`. Any requ
 
 If proxying is enabled for `/` route, then `/static` file serving is disabled for the app since requests to static path are also forwarded to the upstream service. `/static_root` serving is available and overrides the proxy config.
 
-{{< alert >}}
+{{<callout type="info" >}}
 **Note:** If the upstream service service uses relative paths, then all requests are automatically proxied. If the service uses absolute paths, then it better that the app is installed at the root path, like `example.com:` instead of `example.com:/test`. If the service uses absolute path including the domain name, then the client will see the absolute path and those requests will not come through the proxy. The HTML body is not rewritten by Clace to rewrite path references. The upstream service needs to use relative paths to ensure that all requests come through Clace.
-{{< /alert >}}
+{{</callout>}}
 
 ## Request Flow
 

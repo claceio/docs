@@ -74,8 +74,8 @@ The config details depend on the provider type. The `key` is generally the Clien
 
 For all the providers, an optional `scopes` property is also supported. This is the list of scopes to configure for the OAuth account.
 
-{{< alert >}}
+{{<callout type="info" >}}
 **Note:** The first time a new provider is added, it is important to manually verify an app, to verify if the required authentication restrictions are in place. For example, with google, any valid google user can login, including gmail.com accounts. The `hosted_domain` config has to be used to restrict this.
-{{< /alert >}}
+{{</callout>}}
 
 The OAuth integration internally uses the [goth](https://github.com/markbates/goth) library, see [examples](https://github.com/markbates/goth/blob/master/examples/main.go) for a sample implementation.

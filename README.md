@@ -8,6 +8,6 @@ Clace is an open-source Apache-2.0 licensed project building a platform to easil
 
 Documentation is hosted at [Clace](https://clace.io) using GitHub Pages.
 
-The docs are generated using [Hugo](https://gohugo.io/) with the [Congo](https://jpanther.github.io/congo/) theme.
+The docs are generated using [Hugo](https://gohugo.io/) with the [Hextra](https://github.com/imfing/hextra) theme.
 
 The icons are from [Tabler Icons](https://tabler-icons.io/).

@@ -1,0 +1,76 @@
+baseURL = "https://clace.io/"
+languageCode = "en-us"
+title = "Web App Deployment Platform"
+canonifyURLs = "false"
+relativeURLs = "false"
+pluralizeListTitles = "false"
+plainIdAnchors = "true"
+defaultContentLanguage = "en"
+enableInlineShortcodes= true
+
+[[module.imports]]
+    path = 'github.com/imfing/hextra'
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+
+  [markup.goldmark.renderer]
+    unsafe = true
+
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 2
+
+  [markup.highlight]
+    noClasses= false
+
+# Default Page Parameters
+[params]
+  title = "Clace"
+  description = "Web App Deployment Platform22"
+  image = "clace_icon.png"
+
+  [params.navbar.logo]
+    path = "clace.png"
+    width =80 
+    height = 80
+
+  [params.footer]
+    displayCopyright = true
+    displayPoweredBy = false
+
+
+# Docs Navigation
+
+[[menu.main]]
+name = "QuickStart"
+url = "/docs/quickstart"
+identifier = "quickstart"
+weight = 1
+
+[[menu.main]]
+name = "Blog"
+url = "/blog"
+identifier = "blog"
+weight = 2
+
+
+[[menu.main]]
+name = "Docs"
+url = "/docs"
+identifier = "docs"
+weight = 3
+
+[[menu.main]]
+name = "Search"
+weight = 4
+  [menu.main.params]
+  type = "search"
+
+[[menu.main]]
+name = "GitHub"
+weight = 5
+url = "https://github.com/claceio/clace"
+  [menu.main.params]
+  icon = "github"

@@ -82,9 +82,9 @@ The response for the API (`value` within `plugin_response`) is of type list of s
        # Process lines
 ```
 
-{{< alert >}}
+{{<callout type="info" >}}
 **Note:** Only first 100MB of the command stdout output is scanned currently, the rest is discarded.
-{{< /alert >}}
+{{</callout>}}
 
 ## FS Plugin
 

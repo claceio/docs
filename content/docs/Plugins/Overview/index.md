@@ -149,9 +149,9 @@ if not error:
     return ace.response(ret, "error.go.html")
 ```
 
-{{< alert >}}
+{{<callout type="info" >}}
 **Note:** The automatic error handling is very useful, but is needs to be enabled manually. When developing a new app, first define the `error_handler` and test it for the partial and full page scenarios. After that, all the subsequent handler code does not have to handle errors unless specific handling is required.
-{{< /alert >}}
+{{</callout>}}
 
 ## Plugin Accounts
 

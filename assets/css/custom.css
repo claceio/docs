@@ -4,72 +4,8 @@ html {
   font-family: 'Open Sans', sans-serif;
 }
 
-body {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-h1 {
-    color: #007700 !important;
-}
-
-h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
     color: #00C200 !important;
 }
 
-.index-container {
-    display: flex;
-    flex-direction: column;
-}
 
-/* Media query for larger screens */
-@media (min-width: 600px) {
-    .index-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .index-item {
-        width: 50%; /* Each item takes up 50% of the container width */
-        margin-bottom: 0; /* Adjust as needed */
-
-        padding:1px 15px;
-        text-align: justify;
-    }
-}
-
-.index-pre {
-    max-width: 95%;    /* Ensures the pre tag fits in its container */
-    overflow-x: auto;   /* Adds horizontal scrolling for overflow */
-    white-space: pre-wrap; /* Allows long lines to wrap */
-    word-wrap: break-word; /* Breaks long words if necessary */
-    padding: 5px;
-}
-
-@media (max-width: 600px) {
-    .index-pre {
-        font-size: smaller; /* Smaller font for small screens */
-    }
-}
-
-.index-code {
-    border-radius: 5px;       /* Rounded corners */
-    font-family: 'Courier New', monospace; /* Monospaced font */
-}
-
-.index-no-copy {
-    user-select: none; /* Prevents text from being selected */
-    color: #00C200;
-}
-
-
-/* Avoid backticks from showing for inline code https://github.com/jpanther/congo/discussions/798 */
-.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before {
-    content: "";
-}
-
-.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
-    content: "";
-}
-
-.max-w-prose { max-width:80ch !important; }

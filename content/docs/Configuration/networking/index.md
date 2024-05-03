@@ -36,9 +36,9 @@ storage_location = "$CL_HOME/run/certmagic" # where to cache dynamically created
 
 Port 0 means bind to any available port. Port -1 means disable HTTPS access.
 
-{{< alert >}}
+{{<callout type="info" >}}
 Using the HTTPS port is recommended even for the local environment. HTTP/2 works with HTTPS only. Server Sent Events (SSE) are used by Clace for live reload of dev apps, [SSE works best with HTTP/2](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#listening_for_custom_events). Without HTTP/2, there can be connection limit issues with HTTP causing connections from browser to Clace server to hang.
-{{< /alert >}}
+{{</callout>}}
 
 ## TLS Certificates
 

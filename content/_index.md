@@ -6,15 +6,6 @@ cascade:
   invertPagination: true
 ---
 
-<div class="index-container">
-<div class="index-item"><span style="font-size:250%;"> {{< icon "brand-github" >}} </span><b>GitOps Workflow</b> - Staged deployments, versioning and preview environments with no infra to manage</div>
-<div class="index-item"><span style="font-size:250%"> {{< icon "binary-off" >}} </span><b>No build step</b> - Backend and frontend development with no build step, the source repo is the deployment artifact</div>
-<div class="index-item"><span style="font-size:250%"> {{< icon "brand-html5" >}} </span><b>Hypermedia web apps</b> - Fast and lightweight backend driven apps, minimal frontend complexity</div>
-<div class="index-item"><span style="font-size:250%"> {{< icon "brand-golang" >}} </span><b>Go binary, Starlark config</b> - Performance and stability of Go, easy Python like backend config with no dependencies</div>
-<div class="index-item"><span style="font-size:250%"> {{< icon "shield-lock" >}} </span><b>Secure app sandboxing</b> - Apps runs in security sandbox, apply app code updates confidently</div>
-<div class="index-item"><span style="font-size:250%"> {{< icon "database" >}} </span><b>SQLite data persistence</b> - Easy access to SQLite based app data persistence, with auto-schema management</div>
-</div>
-
 <h2>What is Clace?</h2>
 
 Clace is an Apache-2.0 licensed project building a platform to develop and deploy web apps for internal tools. For running multiple web applications on a single machine, Clace provides functionality which usually requires stitching together multiple services: reverse proxy like nginx/caddy (for domain/path based routing, TLS certs, static file serving), application server like uwsgi/gunicorn with micro-framework like flask (for API handling) and deployment infrastructure like containers/VMs/k8s (for isolation across apps, versioning and staged deployments). For internal tool deployment, Clace provides similar functionality in a single lightweight binary, with gitops workflow out of the box.

@@ -107,9 +107,9 @@ for row in ret.value:
 
 Iterating till the end of the loop automatically closes the iterator. Returning from a handler without closing an iterator will cause the handler to fail. The iterator is automatically closed by the Clace platform to prevent a resource leak. The API failure is used to indicate to the developer that the code needs to be fixed to explicitly close the iterator.
 
-{{< alert >}}
+{{<callout type="info" >}}
 **Note:** The iterator cannot be directly returned from the handler. A list needs to be created and populated if the entries need to be passed to the template.
-{{< /alert >}}
+{{</callout>}}
 
 ## Select Limits and Sort
 
