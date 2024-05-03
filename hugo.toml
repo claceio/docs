@@ -69,14 +69,19 @@ identifier = "blog"
 weight = 3
 
 [[menu.main]]
-name = "Search"
+name = "About"
+url = "/about"
 weight = 4
+
+[[menu.main]]
+name = "Search"
+weight = 5
 [menu.main.params]
 type = "search"
 
 [[menu.main]]
 name = "GitHub"
-weight = 5
+weight = 6
 url = "https://github.com/claceio/clace"
 [menu.main.params]
 icon = "github"

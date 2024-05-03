@@ -1,5 +1,5 @@
 ---
-title: "About Clace"
+title: "About"
 summary: "FAQ about Clace"
 date: 2023-10-05
 ---

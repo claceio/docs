@@ -1,5 +1,5 @@
 ---
-title: "Clace Blog"
+title: "Blog"
 cascade:
   showSummary: true
   showBreadcrumbs: true

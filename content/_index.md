@@ -11,7 +11,7 @@ layout: hextra-home
 
 <div class="hx-mb-12">
 {{< hextra/hero-subtitle >}}
-  Easy, light-weight web app management&nbsp;<br class="sm:hx-block hx-hidden" />for internal tools
+  Easy, light-weight web app &nbsp;<br class="sm:hx-block hx-hidden"/> management for internal tools
 {{< /hextra/hero-subtitle >}}
 </div>
 
