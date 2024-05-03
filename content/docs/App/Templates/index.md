@@ -36,8 +36,8 @@ For example
 
 checks if the "css/style.css" file is present and not empty. If so, it is linked using the `static` function, which returns a hashed file name which can be cached aggressively.
 
-{{<callout type="info" >}}
-**Note:** The path passed to `static` and `fileNonEmpty` functions should not include static, it is automatically added. So use `{{ static "css/style.css" }}`, not `{{ static "static/css/style.css" }}`
+{{<callout type="warning" >}}
+The path passed to `static` and `fileNonEmpty` functions should not include static, it is automatically added. So use `{{ static "css/style.css" }}`, not `{{ static "static/css/style.css" }}`
 {{</callout>}}
 
 ## Template File Location

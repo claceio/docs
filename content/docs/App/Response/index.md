@@ -11,7 +11,7 @@ The Response from the handler function is passed to the template to be converted
 
 For example, a handler like
 
-```python
+```python {filename="app.star"}
 def handler(req):
     name = req.Query.get("name")
 
@@ -50,7 +50,7 @@ If the API needs to redirect the client to another location after a POST/PUT/DEL
 
 For example, this code does a 303 redirect after a POST API, which provides [handling](https://en.wikipedia.org/wiki/Post/Redirect/Get) for update requests.
 
-```python
+```python {filename="app.star"}
 def create_game(req):
     level = req.Form["level"]
     ret = http.post(SERVICE_URL + "/api/create_game/" + level[0])
@@ -72,7 +72,7 @@ In some cases, a custom response need to be generated, with special headers. Or 
 
 For example, this handler code uses retarget to handle errors by updating the html property which has id "gameErrorId"
 
-```python
+```python {filename="app.star"}
 ret = http.post(api_url).json()
 if ret.get("Error"):
     return ace.response(ret, "game_error_block", retarget="#gameErrorId")
@@ -81,7 +81,7 @@ return fetch_game(req, game_id)
 
 This code returns a 404 with a custom body generated from a template block called "invalid_challenge_block"
 
-```python
+```python {filename="app.star"}
 if challenge.get("Error"):
     return ace.response(challenge, "invalid_challenge_block", code=404)
 ```
@@ -90,7 +90,7 @@ if challenge.get("Error"):
 
 All responses are HTML by default, as required for building a proper Hypermedia client. There are some cases where data needs to be returned to the client in JSON format. The type property can be used for those cases. For example, [this API](https://github.com/claceio/apps/blob/dbec99126329adbcff30824b050ff1d559922bdd/system/memory_usage/app.star#L98) returns JSON
 
-```python
+```python {filename="app.star"}
 ace.api("/memory", handler=memory_handler),
 ```
 

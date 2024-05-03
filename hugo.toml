@@ -1,45 +1,55 @@
 baseURL = "https://clace.io/"
 languageCode = "en-us"
-title = "Web App Deployment Platform"
-canonifyURLs = "false"
-relativeURLs = "false"
-pluralizeListTitles = "false"
-plainIdAnchors = "true"
+title = "Clace"
+canonifyURLs = false
+relativeURLs = false
+pluralizeListTitles = false
+plainIdAnchors = true
 defaultContentLanguage = "en"
-enableInlineShortcodes= true
+enableInlineShortcodes = true
 
 [[module.imports]]
-    path = 'github.com/imfing/hextra'
+path = 'github.com/imfing/hextra'
 
 [markup]
-  defaultMarkdownHandler = "goldmark"
+defaultMarkdownHandler = "goldmark"
 
-  [markup.goldmark.renderer]
-    unsafe = true
+[markup.goldmark.renderer]
+unsafe = true
 
-  [markup.tableOfContents]
-    endLevel = 3
-    ordered = false
-    startLevel = 2
+[markup.tableOfContents]
+endLevel = 3
+ordered = false
+startLevel = 2
 
-  [markup.highlight]
-    noClasses= false
+[markup.highlight]
+noClasses = false
 
 # Default Page Parameters
 [params]
-  title = "Clace"
-  description = "Web App Deployment Platform22"
-  image = "clace_icon.png"
+title = "Clace"
+description = "Web App Deployment Platform"
+image = "clace_icon.png"
 
-  [params.navbar.logo]
-    path = "clace.png"
-    width =80 
-    height = 80
+[params.navbar]
+displayTitle = false
 
-  [params.footer]
-    displayCopyright = true
-    displayPoweredBy = false
+[params.navbar.logo]
+path = "clace.png"
+width = 100
+height = 100
 
+[params.editurl]
+enable = true
+base = "https://github.com/claceio/docs/edit/main/content"
+
+[params.footer]
+displayCopyright = true
+displayPoweredBy = false
+
+[params.theme]
+default = "system"
+displayToggle = true
 
 # Docs Navigation
 
@@ -50,27 +60,35 @@ identifier = "quickstart"
 weight = 1
 
 [[menu.main]]
-name = "Blog"
-url = "/blog"
-identifier = "blog"
-weight = 2
-
-
-[[menu.main]]
 name = "Docs"
 url = "/docs"
 identifier = "docs"
+weight = 2
+
+[[menu.main]]
+name = "Blog"
+url = "/blog"
+identifier = "blog"
 weight = 3
 
 [[menu.main]]
 name = "Search"
 weight = 4
-  [menu.main.params]
-  type = "search"
+[menu.main.params]
+type = "search"
 
 [[menu.main]]
 name = "GitHub"
 weight = 5
 url = "https://github.com/claceio/clace"
-  [menu.main.params]
-  icon = "github"
+[menu.main.params]
+icon = "github"
+
+[[menu.sidebar]]
+name = "More"
+params.type = "separator"
+weight = 1
+
+[[menu.sidebar]]
+name = "Demo"
+url = "https://demo.clace.io"

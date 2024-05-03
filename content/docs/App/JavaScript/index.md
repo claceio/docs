@@ -7,7 +7,7 @@ summary: "JavaScript dependency handling, esbuild config"
 
 Clace supports importing JavaScript libraries as [JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) . To use this feature, add
 
-```python
+```python {filename="app.star"}
     libraries=[ace.library("d3", "7.8.5")]
 ```
 
@@ -23,7 +23,7 @@ The args array uses the [esbuild cli syntax](https://pkg.go.dev/github.com/evanw
 
 To directly download a library from a CDN to the static folder, add the url directly. For example,
 
-```python
+```python {filename="app.star"}
     libraries=["https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"]
 ```
 
@@ -64,7 +64,7 @@ For production deployment, no changes are required. Checkout the git repo contai
 
 Clace includes esbuild, there is no need to install esbuild manually. The Clace server config has the entry
 
-```toml
+```toml {filename="clace.toml"}
 [system]
 node_path = ""
 ```

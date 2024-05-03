@@ -17,7 +17,7 @@ The default configuration for the Clace server is:
 
 When the Clace server is started, it looks for the entry
 
-```toml
+```toml {filename="clace.toml"}
 [security]
 admin_password_bcrypt = "" # the password bcrypt value
 ```
@@ -46,14 +46,14 @@ By default, the Clace client uses Unix domain sockets to connect to the Clace se
 
 To enable remote API calls, where the client is on a different machine from the server, the server needs to be changed to add the following:
 
-```toml
+```toml {filename="clace.toml"}
 [security]
 admin_over_tcp = true
 ```
 
 If running the Clace client from a remote machine, the config options required for the client are:
 
-```toml
+```toml {filename="clace.toml"}
 server_uri = "https://<SERVER_HOST>:25223"
 admin_user = "admin"
 
@@ -74,7 +74,7 @@ See [appsecurity]({{< ref "appsecurity" >}}) for details about the application l
 
 The `app create` and `app reload` commands can read public GitHub repositories. If the repository is private, to be able to access the repo, the [ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) needs to be specified. In the `clace.toml` config file, create an entry like:
 
-```toml
+```toml {filename="clace.toml"}
 [git_auth.infoclace]
 key_file_path = "/Users/myuser/.ssh/infoclace_rsa"
 password = ""

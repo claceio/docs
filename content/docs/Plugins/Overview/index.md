@@ -13,13 +13,13 @@ Each plugin is identified by a unique name, like `store.in` or `exec.in`. Plugin
 
 To use a plugin, load it using
 
-```python
+```python {filename="app.star"}
 load("http.in", "http")
 ```
 
 This adds `http` to the namespace for the app. To make a call to the plugin, first add the permissions to the app config.
 
-```python
+```python {filename="app.star"}
     permissions=[
         ace.permission("http.in", "get"),
         ace.permission("http.in", "post")
@@ -30,7 +30,7 @@ Run `clace app approve /myapp` to authorize the app to call the `get` and `post`
 
 In the app handler code, do
 
-```python
+```python {filename="app.star"}
     ret = http.get(SERVICE_URL + "/api/challenge/" + challenge_id)
     if not ret:
         return ace.response(ret.error, "invalid_challenge_id", code=404)
@@ -53,7 +53,7 @@ To check the error status of an API call:
 
 For example,
 
-```python
+```python {filename="app.star"}
     ret = http.get("https://localhost:9999/test")
     if not ret:
         # error condition
@@ -65,7 +65,7 @@ For example,
 
 An alternate way to write the error check is
 
-```python
+```python {filename="app.star"}
     ret = http.get("https://localhost:9999/test")
     if ret.error:
         # error condition
@@ -81,7 +81,7 @@ Clace supports automatic error handling, so that the handler functions do not ha
 
 If the `error_handler` function is defined, then error handling is automatic. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the Clace platform will automatically call the `error_handler` function. The `error_handler` is defined as:
 
-```python
+```python {filename="app.star"}
 def error_handler(req, ret):
     if req.IsPartial:
         return ace.response(ret, "error", retarget="#error_div", reswap="innerHTML")
@@ -99,7 +99,7 @@ When `error_handler` is defined and no explicit error checks are done then the a
 
 If the handler code is
 
-```python
+```python {filename="app.star"}
     ret = http.get("https://localhost:9999/test")
     print(ret.value.json())
 ```
@@ -110,7 +110,7 @@ If the `get` API had succeeded, then the `value` property access will work as us
 
 If the `value` is not being accessed, then the next plugin call will raise the error. For example, if the handler code is
 
-```python
+```python {filename="app.star"}
     store.begin()
     bookmark = store.select_one(table.bookmark, {"url": url}).value
 ```
@@ -121,7 +121,7 @@ The response of the `begin` API is not checked. When the next `select_one` API i
 
 If the handler code is
 
-```python
+```python {filename="app.star"}
     def insert(req):
         store.begin()
         book = doc.bookmark("abc", [])
@@ -135,7 +135,7 @@ Assume all the API calls had succeeded and then the `commit` fails. Since the `v
 
 The automatic error handling is great for handling the unusual error scenarios. For the error scenarios which are common, like a database uniqueness check failure, the error handing can be done explicitly in the handler code. If the handler code is
 
-```python
+```python {filename="app.star"}
 ret = store.insert(table.bookmark, new_bookmark)
 if ret.error:
     return ace.response(ret, "error.go.html")
@@ -143,7 +143,7 @@ if ret.error:
 
 The automatic error handling will not be invoked in this case since the `ret.error` is being checked. Checking the truth status of `ret` also will disable the automatic error handling:
 
-```python
+```python {filename="app.star"}
 ret = store.insert(table.bookmark, new_bookmark)
 if not error:
     return ace.response(ret, "error.go.html")
@@ -157,14 +157,14 @@ if not error:
 
 Some plugins like `exec.in` do not require any account information. Others like `store.in` need some account information. The account configuration for a plugin is loaded from the Clace config file `clace.toml`. For example, the default configuration for `store.in` is [here](https://github.com/claceio/clace/blob/e5ab0c1139d257c7f02fbe03d060a6bfe1b5f605/internal/system/clace.default.toml#L54), which contains:
 
-```toml
+```toml {filename="clace.toml"}
 [plugin."store.in"]
 db_connection = "sqlite:$CL_HOME/clace_app.db"
 ```
 
 Any application using the `store.in` plugin will by default use the `$CL_HOME/clace_app.db` sqlite database. To change the default account config used by apps, update `clace.toml` and restart the Clace server. For example, adding the below will overwrite the default `store.in` config for all apps.
 
-```toml
+```toml {filename="clace.toml"}
 [plugin."store.in"]
 db_connection = "sqlite:/tmp/clace_app.db"
 ```
@@ -173,7 +173,7 @@ db_connection = "sqlite:/tmp/clace_app.db"
 
 If specific account config is required for an app, then the app can be linked to a specific account config. First add a new account config by adding in `clace.toml`
 
-```toml
+```toml {filename="clace.toml"}
 [plugin."store.in#tmpaccount"]
 db_connection = "sqlite:/tmp/clace_app.db"
 ```
@@ -186,7 +186,7 @@ This links the `myapp` app to use the `tmpaccount` account.
 
 In addition to using account linking, the plugin code itself can point to specific accounts. For example, if the app code has
 
-```python
+```python {filename="app.star"}
 load("http.in#google", "googlehttp")
 ```
 

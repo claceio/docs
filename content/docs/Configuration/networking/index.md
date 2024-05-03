@@ -9,7 +9,7 @@ summary: "Clace uses unix domain sockets for client CLI requests. HTTP and HTTPS
 
 For HTTP requests, by default the Clace service listens on port 25222, on the localhost(127.0.0.1) interface. This means the HTTP port can be accessed from the same machine, it cannot be accessed remotely. To configure this, update the config file
 
-```toml
+```toml {filename="clace.toml"}
 [http]
 host = "127.0.0.1" # bind to localhost by default for HTTP
 port = 25222 # default port for HTTP
@@ -21,7 +21,7 @@ to desired values. Port 0 means bind to any available port. Port -1 means disabl
 
 For HTTPS requests, the Clace service listens on port 25223 by default, on the any(0.0.0.0) interface. This means the HTTPS port can be accessed from the same machine and also remotely. The various HTTPS config settings are:
 
-```toml
+```toml {filename="clace.toml"}
 # HTTPS port binding related Config
 [https]
 host = "0.0.0.0" # bind to all interfaces (if port is >= 0)
@@ -76,7 +76,7 @@ Clace uses the [certmagic](https://github.com/caddyserver/certmagic) library for
 
 Once the pre-requisites are met, set the `service_email` config parameter to your email address. This enables certmagic based certificate creation. The config will look like:
 
-```toml
+```toml {filename="clace.toml"}
 # HTTPS port binding related Config
 [https]
 host = "0.0.0.0"

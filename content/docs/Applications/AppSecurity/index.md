@@ -30,7 +30,7 @@ This security model allows for the following:
 
 As an example, the disk usage analysis app requires [two permissions](https://github.com/claceio/clace/blob/8b8975cea2d650c9f80dab6eb70cc5b2ddbe5c40/examples/disk_usage/app.star#L42)
 
-```python
+```python {filename="app.star"}
 app = ace.app("Disk Usage",
               routes=[ace.html("/", partial="du_table_block")],
               permissions=[
@@ -85,13 +85,13 @@ App deleted /utils/disk_usage
 
 Once the app is created, if the application code is updated to change [the line](https://github.com/claceio/clace/blob/8b8975cea2d650c9f80dab6eb70cc5b2ddbe5c40/examples/disk_usage/app.star#L9) from
 
-```python
+```python {filename="app.star"}
     ret = exec.run("readlink", ["-f", current], process_partial=True)
 ```
 
 to
 
-```python
+```python {filename="app.star"}
     ret = exec.run("rm", ["-f", current], process_partial=True)
 ```
 

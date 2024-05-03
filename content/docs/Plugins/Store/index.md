@@ -15,7 +15,7 @@ The `store.in` plugins automatically creates tables with the specified schema. T
 
 The schema for the app is specified in the `schema.star` file in the root directory of the app code. The format of this file is like:
 
-```python
+```python {filename="app.star"}
 type("bookmark",
      fields=[
          field("url", STRING),
@@ -47,7 +47,7 @@ SQL tables are used as underlying storage, but joins are not supported by the `s
 
 The type information is read from the schema file and schema types are automatically created for the app. The `doc` namespace has type objects for each type. For the previous example, the two types created are `doc.bookmark` and `doc.tag`. The `table` namespace also has entry populated which reference the table names for the type. For the previous example, the two table names available are `table.bookmark` and `table.tag`. This allows creating objects and persisting them using the store API by doing:
 
-```python
+```python {filename="app.star"}
 bookmark = doc.bookmark(
     url="http://clace.io", tags=["webapps", "tools"])
 ret = store.insert(table.bookmark, bookmark)
@@ -94,7 +94,7 @@ These fields can be accessed like regular user defined field in the store APIs. 
 
 The `select` API returns a document iterator. Use a regular python `for` loop to iterate on the entries. For example,
 
-```python
+```python {filename="app.star"}
 ret = store.select(table.bookmark, {}, limit=100,
                     sort=["_created_at:desc"])
 if ret.error:
@@ -107,7 +107,7 @@ for row in ret.value:
 
 Iterating till the end of the loop automatically closes the iterator. Returning from a handler without closing an iterator will cause the handler to fail. The iterator is automatically closed by the Clace platform to prevent a resource leak. The API failure is used to indicate to the developer that the code needs to be fixed to explicitly close the iterator.
 
-{{<callout type="info" >}}
+{{<callout type="warning" >}}
 **Note:** The iterator cannot be directly returned from the handler. A list needs to be created and populated if the entries need to be passed to the template.
 {{</callout>}}
 

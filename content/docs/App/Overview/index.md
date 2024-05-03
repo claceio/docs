@@ -38,7 +38,7 @@ The Clace app development lifecycle is:
 
 The hello world app for Clace is an `~/myapp/app.star` file containing:
 
-```python
+```python {filename="app.star"}
 def handler(req):
     return "hello world"
 
@@ -60,7 +60,7 @@ The default response type is `ace.HTML`. `ace.TEXT` and `ace.JSON` are the other
 
 To return HTML response, a HTML template file named `*.go.html` is required. Create an `~/myapp2/app.star` file containing
 
-```python
+```python {filename="app.star"}
 app = ace.app("hello2",
         custom_layout=True,
         routes = [ace.html("/")]
@@ -88,7 +88,7 @@ The default is `custom_layout=False` meaning app developer has to provide only t
 
 Create an `~/myapp3/app.star` file containing
 
-```python
+```python {filename="app.star"}
 app = ace.app("hello3",
         routes = [ace.html("/")]
 )
@@ -109,7 +109,7 @@ Run `clace app create --auth-type=none --dev /hello3 ~/myapp3`. After that, the 
 
 The name of the app is hello3. There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
 
-```python
+```python {filename="app.star"}
 app = ace.app(name="hello3",
               custom_layout=False,
               routes = [ace.html(path="/", full="index_gen.go.html")]
@@ -120,7 +120,7 @@ app = ace.app(name="hello3",
 
 To create an app with a custom HTML page which shows a listing of files in your root directory, create an `~/myapp4/app.star` file with
 
-```python
+```python {filename="app.star"}
 load("exec.in", "exec")
 
 def handler(req):
@@ -166,7 +166,7 @@ This app uses the `exec` plugin to run the ls command. The output of the command
 
 To enable [automatic error handling]({{< ref "docs/plugins/overview#automatic-error-handling" >}}) (recommended), add an `error_handler` function like:
 
-```python
+```python {filename="app.star"}
 def error_handler(req, ret):
     if req.IsPartial:
         return ace.response(ret, "error", retarget="#error_div", reswap="innerHTML")

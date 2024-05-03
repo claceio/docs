@@ -13,7 +13,7 @@ Apps can also be changed to have no authentication, making them publicly accessi
 
 Any app when created uses the default auth type configured for the server. `system` is the default. To change this, add
 
-```toml
+```toml {filename="clace.toml"}
 [security]
 app_default_auth_type = "github_prod"
 ```
@@ -40,7 +40,7 @@ OAuth based authentication is supported for the following providers:
 
 The configuration format for each is
 
-```toml
+```toml {filename="clace.toml"}
 [auth.github_test]
 key = "abcdefgh"
 secret = "mysecret"
@@ -54,7 +54,7 @@ The server `clace.toml` can have multiple auth configs defined. One of them can 
 
 To enable any Oath provider, the callback url domain has to be specified in the server config. Add
 
-```toml
+```toml {filename="clace.toml"}
 [security]
 callback_url = "https://localhost:25223"
 ```
@@ -74,8 +74,8 @@ The config details depend on the provider type. The `key` is generally the Clien
 
 For all the providers, an optional `scopes` property is also supported. This is the list of scopes to configure for the OAuth account.
 
-{{<callout type="info" >}}
-**Note:** The first time a new provider is added, it is important to manually verify an app, to verify if the required authentication restrictions are in place. For example, with google, any valid google user can login, including gmail.com accounts. The `hosted_domain` config has to be used to restrict this.
+{{<callout type="warning" >}}
+The first time a new provider is added, it is important to manually verify an app, to verify if the required authentication restrictions are in place. For example, with google, any valid google user can login, including gmail.com accounts. The `hosted_domain` config has to be used to restrict this.
 {{</callout>}}
 
 The OAuth integration internally uses the [goth](https://github.com/markbates/goth) library, see [examples](https://github.com/markbates/goth/blob/master/examples/main.go) for a sample implementation.

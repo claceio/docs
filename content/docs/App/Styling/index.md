@@ -7,7 +7,7 @@ summary: "CSS Styling, TailwindCSS, DaisyUI"
 
 Clace supports working with Classless CSS libraries and also with TailwindCSS and DaisyUI. To use this, add the directive
 
-```python
+```python {filename="app.star"}
     style=ace.style("daisyui")
 ```
 
@@ -25,7 +25,7 @@ If the library property is a url, it should point to a publicly accessible style
 
 For example,
 
-```python
+```python {filename="app.star"}
     style=ace.style("https://unpkg.com/mvp.css@1.14.0/mvp.css"),
 ```
 
@@ -35,7 +35,7 @@ imports the [MVP.css](https://andybrewer.github.io/mvp/) library. Since this is 
 
 To use TailwindCSS, in app settings, add
 
-```python
+```python {filename="app.star"}
     style=ace.style("tailwindcss")
 ```
 
@@ -45,7 +45,7 @@ To ensure that the tailwind watcher is started, the tailwind CLI needs to be ins
 
 The Clace server config file has the following entries:
 
-```toml
+```toml {filename="clace.toml"}
 [system]
 tailwindcss_command = "npx tailwindcss"
 file_watcher_debounce_millis = 300
@@ -53,7 +53,7 @@ file_watcher_debounce_millis = 300
 
 `tailwindcss_command` is the command use to start the watcher. If the standalone version is being used change to
 
-```toml
+```toml {filename="clace.toml"}
 [system]
 tailwindcss_command = "/path/to/tailwindcss"
 ```
@@ -64,7 +64,7 @@ tailwindcss_command = "/path/to/tailwindcss"
 
 To use [DaisyUI](https://daisyui.com/), in app settings, add
 
-```python
+```python {filename="app.star"}
     style=ace.style("daisyui", themes=["dark"])
 ```
 

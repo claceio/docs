@@ -32,26 +32,26 @@ The handler function is passed one argument which has the details about the API 
 
 For a route defined like
 
-```python
+```python {filename="app.star"}
 ace.html("/user/{user_id}/settings", "index.go.html")
 ```
 
 the url parameter `user_id` can be accessed in the handler
 
-```python
+```python {filename="app.star"}
 def handler(req)
     user_id = req.UrlParams["user_id"]
 ```
 
 [Wildcard parameters](https://go-chi.io/#/pages/routing?id=routing-patterns-amp-url-parameters) are allowed at the end of the route. These are defined as
 
-```python
+```python {filename="app.star"}
 ace.html("/path/*", "index.go.html")
 ```
 
 and can be accessed as
 
-```python
+```python {filename="app.star"}
 def handler(req)
     user_id = req.UrlParams["*"]
 ```
@@ -62,7 +62,7 @@ def handler(req)
 
 Query string parameters can be accessed as
 
-```python
+```python {filename="app.star"}
 def handler(req)
     name = req.Query.get("name")
     name = name[0] if name else None
@@ -74,7 +74,7 @@ The value for Query is an string array, since there can be multiple query parame
 
 Form data can be accessed like
 
-```python
+```python {filename="app.star"}
 def handler(req)
     name = req.Form.get("name")
     name = name[0] if name else None

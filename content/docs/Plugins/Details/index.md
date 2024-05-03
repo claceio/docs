@@ -47,7 +47,7 @@ The response for all API's (`value` within `plugin_response`) contains following
 
 If the API calls fails to go through then the plugin response `error` property will be set. If the APi goes through, then the response `error` will not be set, even if API call fails with an HTPP error. The `status_code` will indicate whether the API succeeded on the server. To handle all possible error conditions, do (change to handle all 2xx codes if required)
 
-```python
+```python {filename="app.star"}
 ret = http.get("http://localhost:9999/test")
 if ret.error or ret.value.status_code != 200:
     return # error handling
@@ -73,7 +73,7 @@ The API supports the following parameters:
 
 The response for the API (`value` within `plugin_response`) is of type list of strings. The stdout is scanned and split on newlines. The list of lines is returned. For example
 
-```python
+```python {filename="app.star"}
    ret = exec.run("ls", ["-l", "/"], process_partial=True)
    if ret.error:
        return {"Error": ret.error}
@@ -82,7 +82,7 @@ The response for the API (`value` within `plugin_response`) is of type list of s
        # Process lines
 ```
 
-{{<callout type="info" >}}
+{{<callout type="warning" >}}
 **Note:** Only first 100MB of the command stdout output is scanned currently, the rest is discarded.
 {{</callout>}}
 
