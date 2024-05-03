@@ -1,56 +1,51 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clace</title><link>https://clace.io/</link><description>Recent content in Clace</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>Copyright © 2024 ClaceIO, LLC</copyright><lastBuildDate>Thu, 05 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Introducing Clace</title><link>https://clace.io/blog/intro/</link><pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate><guid>https://clace.io/blog/intro/</guid><description>&lt;h1 id="clace-platform-for-easy-self-hosted-web-applications" class="relative group">Clace: Platform for Easy Self-Hosted Web Applications &lt;span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100">&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#clace-platform-for-easy-self-hosted-web-applications" aria-label="Anchor">#&lt;/a>&lt;/span>&lt;/h1>&lt;p>Clace is an
-&lt;a href="https://github.com/claceio/clace" target="_blank" rel="noreferrer">open-source&lt;/a> platform to enable easy development and deployment of self-hosted web applications. The goals for the Clace project are:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clace</title><link>https://clace.io/</link><description>Recent content in Clace</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Introducing Clace</title><link>https://clace.io/blog/intro/</link><pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate><guid>https://clace.io/blog/intro/</guid><description>&lt;h1>Clace: Platform for Easy Self-Hosted Web Applications&lt;/h1>&lt;p>Clace is an &lt;a href="https://github.com/claceio/clace" target="_blank" rel="noopener">open-source&lt;/a> platform to enable easy development and deployment of self-hosted web applications. The goals for the Clace project are:&lt;/p>
 &lt;ul>
 &lt;li>Enable development and deployment of secure internal web applications.&lt;/li>
 &lt;li>Simplify ongoing maintenance of such apps by removing build and dependency related issues. Updating an app after six months or six years should just work.&lt;/li>
 &lt;li>Provide portable and flexible deployment options, allowing use on personal machine and also shared across teams.&lt;/li>
 &lt;/ul>
-&lt;h2 id="use-cases" class="relative group">Use-cases &lt;span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100">&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#use-cases" aria-label="Anchor">#&lt;/a>&lt;/span>&lt;/h2>&lt;p>Clace is built to solve two different types of use-cases:&lt;/p>
+&lt;h2>Use-cases&lt;span class="absolute -mt-20" id="use-cases">&lt;/span>
+&lt;a href="#use-cases" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is built to solve two different types of use-cases:&lt;/p>
 &lt;ul>
-&lt;li>Custom applications: With fully customizable UI, this would be similar to solutions like
-&lt;a href="https://retool.com/" target="_blank" rel="noreferrer">Retool&lt;/a>. A low-code approach is used, with a focus on
-&lt;a href="https://hypermedia.systems/hypermedia-reintroduction/" target="_blank" rel="noreferrer">Hypermedia driven applications&lt;/a>.&lt;/li>
-&lt;li>Workflows: This would be similar to solutions like
-&lt;a href="https://www.rundeck.com/" target="_blank" rel="noreferrer">Rundeck&lt;/a>. A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.&lt;/li>
+&lt;li>Custom applications: With fully customizable UI, this would be similar to solutions like &lt;a href="https://retool.com/" target="_blank" rel="noopener">Retool&lt;/a>. A low-code approach is used, with a focus on &lt;a href="https://hypermedia.systems/hypermedia-reintroduction/" target="_blank" rel="noopener">Hypermedia driven applications&lt;/a>.&lt;/li>
+&lt;li>Workflows: This would be similar to solutions like &lt;a href="https://www.rundeck.com/" target="_blank" rel="noopener">Rundeck&lt;/a>. A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.&lt;/li>
 &lt;/ul>
 &lt;p>One of the aims of Clace is to make it possible for everyone, especially backend engineers, to develop and use simple web interfaces. For use-cases where a CLI was developed previously, a Clace based UI could be built. The backend service could invoke the CLI command or directly call the internal API which need to be exposed. Development and use of simple web interfaces for all types of use-cases should be made easier with Clace.&lt;/p>
-&lt;h2 id="how-does-it-work" class="relative group">How does it work? &lt;span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100">&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#how-does-it-work" aria-label="Anchor">#&lt;/a>&lt;/span>&lt;/h2>&lt;p>Clace applications are configured in
-&lt;a href="https://github.com/google/starlark-go" target="_blank" rel="noreferrer">Starlark&lt;/a>, which uses a subset of Python syntax. The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates.
-&lt;a href="https://htmx.org/" target="_blank" rel="noreferrer">HTMX&lt;/a> is used for server interactions. The backend code runs in a security sandbox and every access to plugins need to be explicitly permitted. Application updates can be done with no build step required. Clace integrates with TailwindCSS/DaisyUI for styling and has
-&lt;a href="https://esbuild.github.io" target="_blank" rel="noreferrer">esbuild&lt;/a> built-in for
-&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank" rel="noreferrer">ESM&lt;/a> support.&lt;/p>
-&lt;h2 id="security" class="relative group">Security &lt;span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100">&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#security" aria-label="Anchor">#&lt;/a>&lt;/span>&lt;/h2>&lt;p>The Starlark backend code for Clace runs in a sandbox, all external interactions need to go through plugins. The Clace platform implements a security sandbox at the plugin boundary. Applications define what operations they need to be able to perform. The platform enforces these permissions at runtime.&lt;/p>
-&lt;p>This
-&lt;a href="https://clace.io/docs/applications/appsecurity/">security model&lt;/a> enables the following:&lt;/p>
+&lt;h2>How does it work?&lt;span class="absolute -mt-20" id="how-does-it-work">&lt;/span>
+&lt;a href="#how-does-it-work" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace applications are configured in &lt;a href="https://github.com/google/starlark-go" target="_blank" rel="noopener">Starlark&lt;/a>, which uses a subset of Python syntax. The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. &lt;a href="https://htmx.org/" target="_blank" rel="noopener">HTMX&lt;/a> is used for server interactions. The backend code runs in a security sandbox and every access to plugins need to be explicitly permitted. Application updates can be done with no build step required. Clace integrates with TailwindCSS/DaisyUI for styling and has &lt;a href="https://esbuild.github.io" target="_blank" rel="noopener">esbuild&lt;/a> built-in for &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank" rel="noopener">ESM&lt;/a> support.&lt;/p>
+&lt;h2>Security&lt;span class="absolute -mt-20" id="security">&lt;/span>
+&lt;a href="#security" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Starlark backend code for Clace runs in a sandbox, all external interactions need to go through plugins. The Clace platform implements a security sandbox at the plugin boundary. Applications define what operations they need to be able to perform. The platform enforces these permissions at runtime.&lt;/p>
+&lt;p>This &lt;a href="https://clace.io/docs/applications/appsecurity/" >security model&lt;/a> enables the following:&lt;/p>
 &lt;ul>
 &lt;li>Users can download applications and run on their machine, without worrying about what operations the app can do on their system outside the audited permissions.&lt;/li>
 &lt;li>Operations teams can install and approve applications. Further application updates can be handled by the development team, without requiring the operational admins to verify the updated code. As long as the application works within the originally defined permission boundary, application updates will continue to work.&lt;/li>
 &lt;li>Application developers can use LLM powered automated code generation tools without worrying about the side-effects of the code. If the generated code tries to perform any operation not previously approved, it will fail.&lt;/li>
 &lt;/ul>
 &lt;p>The sandbox will ensure that the apps can do only authorized operations. This makes Clace an ideal target for LLM (like GPT) generated applications. The Clace platform will add the authentication/authorization, gitops based deployment and operational monitoring features on top of the generated app.&lt;/p>
-&lt;h2 id="current-status" class="relative group">Current Status &lt;span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100">&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#current-status" aria-label="Anchor">#&lt;/a>&lt;/span>&lt;/h2>&lt;p>Clace is in a beta state currently. Custom application support is functional. Support for loading plugins dynamically is in progress. You can try out Clace (on OSX, Linux or Windows with WSL) by doing:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">curl -L https://clace.io/install.sh &lt;span class="p">|&lt;/span> sh
+&lt;h2>Current Status&lt;span class="absolute -mt-20" id="current-status">&lt;/span>
+&lt;a href="#current-status" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is in a beta state currently. Custom application support is functional. Support for loading plugins dynamically is in progress. You can try out Clace (on OSX, Linux or Windows with WSL) by doing:&lt;/p>
+&lt;div class="code-block relative mt-6 first:mt-0 group/code">&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">curl -L https://clace.io/install.sh &lt;span class="p">|&lt;/span> sh
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> &lt;span class="nv">$HOME&lt;/span>/clhome/bin/clace.env
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clace server start &lt;span class="p">&amp;amp;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The app should be available at
-&lt;a href="https://127.0.0.1:25223/disk_usage" target="_blank" rel="noreferrer">https://127.0.0.1:25223/disk_usage&lt;/a> after allowing the self-signed certificate. &lt;code>admin&lt;/code> is the username, use the password printed by the install script. See
-&lt;a href="https://clace.io/docs/installation/">installation&lt;/a> for details.&lt;/p>
-&lt;h2 id="follow-along" class="relative group">Follow Along &lt;span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100">&lt;a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#follow-along" aria-label="Anchor">#&lt;/a>&lt;/span>&lt;/h2>&lt;p>You can keep in touch by these means:&lt;/p>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+&lt;button
+class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4">&lt;/div>
+&lt;div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The app should be available at &lt;a href="https://127.0.0.1:25223/disk_usage" target="_blank" rel="noopener">https://127.0.0.1:25223/disk_usage&lt;/a> after allowing the self-signed certificate. &lt;code>admin&lt;/code> is the username, use the password printed by the install script. See &lt;a href="https://clace.io/docs/installation/" >installation&lt;/a> for details.&lt;/p>
+&lt;h2>Follow Along&lt;span class="absolute -mt-20" id="follow-along">&lt;/span>
+&lt;a href="#follow-along" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>You can keep in touch by these means:&lt;/p>
 &lt;ul>
-&lt;li>Star the repo at
-&lt;a href="https://github.com/claceio/clace" target="_blank" rel="noreferrer">github.com/claceio/clace&lt;/a>&lt;/li>
-&lt;li>Sign up for
-&lt;a href="https://clace.io/#:~:text=Sign%20up%20for%20email%20updates" target="_blank" rel="noreferrer">Email updates&lt;/a>&lt;/li>
-&lt;li>Follow on
-&lt;a href="https://twitter.com/akclace" target="_blank" rel="noreferrer">Twitter&lt;/a>&lt;/li>
-&lt;li>Subscribe to the blog
-&lt;a href="https://clace.io/blog/index.xml" target="_blank" rel="noreferrer">RSS feed&lt;/a>&lt;/li>
-&lt;li>Follow ClaceIO on
-&lt;a href="https://www.linkedin.com/company/claceio" target="_blank" rel="noreferrer">LinkedIn&lt;/a>&lt;/li>
-&lt;li>Connect on
-&lt;a href="https://discord.gg/t2P8pJFsd7" target="_blank" rel="noreferrer">Discord&lt;/a>&lt;/li>
+&lt;li>Star the repo at &lt;a href="https://github.com/claceio/clace" target="_blank" rel="noopener">github.com/claceio/clace&lt;/a>&lt;/li>
+&lt;li>Sign up for &lt;a href="https://clace.io/#:~:text=Sign%20up%20for%20email%20updates" target="_blank" rel="noopener">Email updates&lt;/a>&lt;/li>
+&lt;li>Follow on &lt;a href="https://twitter.com/akclace" target="_blank" rel="noopener">Twitter&lt;/a>&lt;/li>
+&lt;li>Subscribe to the blog &lt;a href="https://clace.io/blog/index.xml" target="_blank" rel="noopener">RSS feed&lt;/a>&lt;/li>
+&lt;li>Follow ClaceIO on &lt;a href="https://www.linkedin.com/company/claceio" target="_blank" rel="noopener">LinkedIn&lt;/a>&lt;/li>
+&lt;li>Connect on &lt;a href="https://discord.gg/t2P8pJFsd7" target="_blank" rel="noopener">Discord&lt;/a>&lt;/li>
 &lt;/ul>
-&lt;p>Use
-&lt;a href="https://github.com/claceio/clace/discussions" target="_blank" rel="noreferrer">discussions&lt;/a> feature in Github or raise
-&lt;a href="https://github.com/claceio/clace/issues" target="_blank" rel="noreferrer">issues&lt;/a> to provide feedback.&lt;/p></description></item></channel></rss>
+&lt;p>Use &lt;a href="https://github.com/claceio/clace/discussions" target="_blank" rel="noopener">discussions&lt;/a> feature in Github or raise &lt;a href="https://github.com/claceio/clace/issues" target="_blank" rel="noopener">issues&lt;/a> to provide feedback.&lt;/p></description></item></channel></rss>
