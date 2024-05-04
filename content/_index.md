@@ -24,6 +24,8 @@ layout: hextra-home
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace is an Apache-2.0 licensed project providing a web app development and deployment platform for internal tools. Clace allows easy and secure hosting of multiple web apps on a single machine. Clace provides the functionality of a programmable reverse proxy, a micro-framework in Starlark (python-like) and container orchestrator for Docker/Podman in a single binary. For internal tools, Clace provides a gitops workflow for managing web apps with no additional setup required." >}}
 
+<br>
+
 <!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace can be used to host any web app which has a Dockerfile. It can also be used to host backend APIs and build a hypermedia driven web app using those APIs. For some scenarios, like building apps for CLIs, lightweight web apps can be developed using the Clace micro-framework. Clace can be used to add OAuth authentication for any app. For internal tools, Clace allows teams to securely manage web apps." >}}
 
 <br>
