@@ -4,7 +4,7 @@ layout: hextra-home
 ---
 
 <div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: linear-gradient(180deg, #277A9F, #359ece); color: transparent; background-clip: text; -webkit-background-clip: text;">
-{{< hextra/hero-headline style="background: #00C200; background: linear-gradient(180deg, #002000, #00FF80); color: transparent; background-clip: text; -webkit-background-clip: text;" >}}
+{{< hextra/hero-headline >}}
   Web app deployment platform
 {{< /hextra/hero-headline >}}
 </div>
