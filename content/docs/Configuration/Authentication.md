@@ -7,7 +7,7 @@ summary: "Details about authentication mechanisms for app access, including OAut
 
 By default, apps are created with the system authentication type. The system auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
 
-Apps can also be changed to have no authentication, making them publicly accessible. To change app to be un-authenticated, add `--auth-type none` to the app create command. After an app is created, the auth type can be changed by running `app update auth-type /myapp none`.
+Apps can also be changed to have no authentication, making them publicly accessible. To change app to be un-authenticated, add `--auth none` to the app create command. After an app is created, the auth type can be changed by running `app update auth /myapp none`.
 
 ## Default Authentication Type
 
@@ -20,7 +20,7 @@ app_default_auth_type = "github_prod"
 
 assuming there is a `github_prod` oauth config.
 
-Any new app created will use this as the auth-type unless overridden in the `app create` call or using `app update`.
+Any new app created will use this as the auth unless overridden in the `app create` call or using `app update`.
 
 ## OAuth Authentication
 
@@ -48,7 +48,7 @@ secret = "mysecret"
 
 Here, the auth config entry name is `github_test`. The entry name can be one of the supported providers, or a supported provider name followed by a `_` and a qualifier. The provider name is case sensitive. So `github`, `google`, `github_prod`, `google_my_org` etc are valid config names. `github-test` and `my_org_google` are not valid.
 
-The server `clace.toml` can have multiple auth configs defined. One of them can be set to be the default using `app_default_auth_type` config. Apps can be configured to use one of `system` or `none` or a valid auth config name as the `auth-type`. For example, app 1 can use `system` and app 2 can use `github_test`.
+The server `clace.toml` can have multiple auth configs defined. One of them can be set to be the default using `app_default_auth_type` config. Apps can be configured to use one of `system` or `none` or a valid auth config name as the `auth`. For example, app 1 can use `system` and app 2 can use `github_test`.
 
 ## Callback Url
 

@@ -8,9 +8,9 @@ summary: "Clace Security related configuration"
 The default configuration for the Clace server is:
 
 - Application management (admin APIs) are accessible over unix domain sockets only (not accessible remotely). Since UDS enforces file permissions checks, no additional authentication is needed for admin APIs.
-- Admin user account is used to access applications, default `auth-type` for apps is `system`
+- Admin user account is used to access applications, default `auth` for apps is `system`
 - The admin user password bcrypt hash has to be added to the server config file, or a random password is generated every time the server is restarted
-- Applications can be changed to not require any authentication, `auth-type` can be `none` or use Oauth2 based auth.
+- Applications can be changed to not require any authentication, `auth` can be `none` or use Oauth2 based auth.
 - There is no user management support in Clace currently. The system account is present by default (which can be disabled) or OAuth based auth can be used.
 
 ## Admin Account Password

@@ -119,7 +119,7 @@ A star, like `PROD*` in the `app list` output indicates that there are staged ch
 
 By default, apps are created with the system authentication type. System auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
 
-To change app to be un-authenticated, add `--auth-type none` to the `app create` command. After an app is created, the auth type can be changed by running `app update auth-type /myapp none`. OAuth based authentication is also supported, see [authentication]({{< ref "docs/configuration/authentication" >}}) for details.
+To change app to be un-authenticated, add `--auth none` to the `app create` command. After an app is created, the auth type can be changed by running `app update auth /myapp none`. OAuth based authentication is also supported, see [authentication]({{< ref "docs/configuration/authentication" >}}) for details.
 
 {{<callout type="warning" >}}
 Changes done to the app settings using the `app update` command are not staged or versioned, they apply immediately to the stage/prod/preview apps. App settings are fundamental properties of the app, like what authentication type to use, what git auth key to use etc.

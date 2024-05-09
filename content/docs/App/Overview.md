@@ -47,7 +47,7 @@ app = ace.app("hello",
 )
 ```
 
-Run `clace app create --auth-type=none /hello ~/myapp`. After that, the app is available at `/hello`
+Run `clace app create --auth=none /hello ~/myapp`. After that, the app is available at `/hello`
 
 ```sh
 $ curl localhost:25222/hello
@@ -73,7 +73,7 @@ and an `~/myapp2/index.go.html` file containing
 hello world2
 ```
 
-Run `clace app create --auth-type=none /hello2 ~/myapp2`. After that, the app is available at `/hello2`
+Run `clace app create --auth=none /hello2 ~/myapp2`. After that, the app is available at `/hello2`
 
 ```sh
 $ curl localhost:25222/hello2
@@ -105,7 +105,7 @@ and an `~/myapp3/app.go.html` file containing
 
 <!-- prettier-ignore-end -->
 
-Run `clace app create --auth-type=none --dev /hello3 ~/myapp3`. After that, the app is available at `/hello3`. Note that the `--dev` option is required for the `index_gen.go.html` file to be generated.
+Run `clace app create --auth=none --dev /hello3 ~/myapp3`. After that, the app is available at `/hello3`. Note that the `--dev` option is required for the `index_gen.go.html` file to be generated.
 
 The name of the app is hello3. There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
 
@@ -158,7 +158,7 @@ and an `~/myapp4/index.go.html` file with
 
 <!-- prettier-ignore-end -->
 
-Run `clace app create --auth-type=none --dev --approve /hello4 ~/myapp4`. After that, the app is available at `/hello4`. Note that the `--dev` option is required for the `clace_gen_import` file to be generated which is required for live reload.
+Run `clace app create --auth=none --dev --approve /hello4 ~/myapp4`. After that, the app is available at `/hello4`. Note that the `--dev` option is required for the `clace_gen_import` file to be generated which is required for live reload.
 
 This app uses the `exec` plugin to run the ls command. The output of the command is shown when the app is accessed. To allow the app to run the plugin command, use the `clace app approve` command.
 
