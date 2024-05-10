@@ -79,7 +79,7 @@ An alternate way to write the error check is
 
 Clace supports automatic error handling, so that the handler functions do not have to check the error status of every plugin API call. The way this is implemented is such that if no explicit error handling is done, then the automatic error handling kicks in. If explicit error handling is done, then automatic error handling is not done. See [bookmarks app](https://github.com/claceio/apps/blob/main/utils/bookmarks/app.star) for an example of how the automatic error handling can be used.
 
-If the `error_handler` function is defined, then error handling is automatic. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the Clace platform will automatically call the `error_handler` function. The `error_handler` is defined as:
+If the `error_handler` function is defined, then error handling is automatic. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the Clace platform will automatically call the `error_handler` function in case of an error. The `error_handler` could be defined as:
 
 ```python {filename="app.star"}
 def error_handler(req, ret):
@@ -89,7 +89,7 @@ def error_handler(req, ret):
         return ace.response(ret, "error.go.html")
 ```
 
-When `error_handler` is defined and no explicit error checks are done then the automatic error handling happens in these three cases:
+When `error_handler` is defined and no explicit error checks are done, the automatic error handling happens in these three cases:
 
 - **Value Access** When the response `value` is accessed
 - **Next API call** When the next plugin API call happens (to any plugin function)
@@ -115,7 +115,7 @@ If the `value` is not being accessed, then the next plugin call will raise the e
     bookmark = store.select_one(table.bookmark, {"url": url}).value
 ```
 
-The response of the `begin` API is not checked. When the next `select_one` API is called, if the previous `begin` had failed, the `select_one` API will raise the previous API calls error before the `select_one` executes.
+The response of the `begin` API is not checked. When the next `select_one` API is called, if the previous `begin` had failed, the `select_one` API will raise the previous API call's error, the `select_one` will not run.
 
 ### Handler Return
 
@@ -129,7 +129,7 @@ If the handler code is
         store.commit()
 ```
 
-Assume all the API calls had succeeded and then the `commit` fails. Since the `value` is not accessed and there is not plugin API call after the `commit` call, the Clace platform will raise the error after the handler completes since the `commit` had failed.
+Assume all the API calls had succeeded and then the `commit` fails. Since the `value` is not accessed and there is no plugin API call after the `commit` call, the Clace platform will raise the error after the handler completes since the `commit` had failed.
 
 ### Overriding Automatic Error Handling
 
@@ -150,7 +150,7 @@ if not error:
 ```
 
 {{<callout type="info" >}}
-**Note:** The automatic error handling is very useful, but is needs to be enabled manually. When developing a new app, first define the `error_handler` and test it for the partial and full page scenarios. After that, all the subsequent handler code does not have to handle errors unless specific handling is required.
+**Note:** The automatic error handling is very useful, but is needs to be enabled manually. When developing a new app, first define the `error_handler` and test it for the partial and full page scenarios. All subsequent handler code does not have to handle errors unless specific handling is required.
 {{</callout>}}
 
 ## Plugin Accounts
