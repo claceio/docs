@@ -42,7 +42,7 @@ This will prompt for the password and print out the bcrypt hash to add to the co
 
 ## Admin API Access
 
-By default, the Clace client uses Unix domain sockets to connect to the Clace server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. Unix sockets work when the client is on the same machine as the server, the client does not need to pass any credentials to connect over unix sockets. See [here]({{< ref "security#admin_api_access" >}}) for details about the client configuration.
+By default, the Clace client uses Unix domain sockets to connect to the Clace server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. Unix sockets work when the client is on the same machine as the server, the client does not need to pass any credentials to connect over unix sockets.
 
 To enable remote API calls, where the client is on a different machine from the server, the server needs to be changed to add the following:
 
