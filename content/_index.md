@@ -27,7 +27,7 @@ layout: hextra-home
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="How does it work?" subtitle="Clace combines the functionality of a reverse proxy, a hypermedia based micro-framework and a container orchestrator (using Docker or Podman) in a single lightweight binary. Start Clace server, ensure Docker or Podman is running. New apps can be installed from GitHub source repo. Clace builds the image and starts the container lazily, on the first API call." style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace can be used to host any containerized web app. For common frameworks which have a Clace app spec, apps are deployed directly from the git repo, no code changes required. For example, Clace can be used to deploy Streamlit apps, adding OAuth authentication for access control across a team." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace can be used to develop any containerized web app on a development machine and then deploy the app on a shared server with authentication added automatically. Apps are deployed directly from the git repo, no build step required. For example, Clace can be used to deploy Streamlit apps, adding OAuth authentication for access control across a team." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
 <br>

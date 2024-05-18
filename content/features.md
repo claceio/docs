@@ -1,54 +1,37 @@
 ---
-title: "Features"
-summary: "Features supported by Clace"
-date: 2023-10-08
+layout: hextra-home
 ---
 
-## Goals
+<div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: color: transparent; background-clip: text; -webkit-background-clip: text;">
+{{< hextra/hero-headline >}}
+  Clace Features
+{{< /hextra/hero-headline >}}
+</div>
 
-The goals Clace is being built to support are:
+{{< hextra/feature-grid >}}
 
-- Enable easy development and deployment of self-hosted web applications.
-- Simplify ongoing maintenance of such apps by removing build and dependency related issues.
-- Flexible deployment options, allowing use on personal machine and also shared across teams.
+<!-- prettier-ignore --> {{< hextra/feature-card title="Container management" subtitle="Automatically build and and deploy containers, with Docker or Podman."  icon="docker" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-## App Development Features
+<!-- prettier-ignore --> {{< hextra/feature-card title="GitOps Workflow" subtitle="Blue-green (staged) deployments, versioning and preview environments with no infra to manage."  icon="github" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-The dev time features supported currently by Clace are:
+<!-- prettier-ignore --> {{< hextra/feature-card title="Hypermedia web apps" subtitle="Fast and lightweight backend driven apps, minimal frontend complexity."  icon="html5" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-- Hypermedia driven backend [API design]({{< ref "docs/app/routing" >}}), simplifying UI development.
-- Live reload using SSE (Server Sent Events) with HTTP/2 for all application changes, backend and frontend.
-- Automatic creation of ECMAScript modules using esbuild.
-- Automatic download for JavaScript and CSS dependencies.
-- Support for TailwindCSS and DaisyUI watcher integration.
-- [Template caching]({{< ref "docs/app/templates/#template-file-location" >}}) and automatic reload on changes.
+<!-- prettier-ignore --> {{< hextra/feature-card title="No build step" subtitle="Backend and frontend development with no build artifacts to manage, deploy directly from the source repo."  icon="binary-off" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-## App Deployment Features
+<!-- prettier-ignore --> {{< hextra/feature-card title="Lazy App Initialization" subtitle="Apps are initialized lazily, on demand: scale down to zero automatically."  icon="pause" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-The deployment features supported currently by Clace are:
+<!-- prettier-ignore --> {{< hextra/feature-card title="Cross-platform support" subtitle="Clace runs on Linux, Windows and OSX, works with Docker and Podman"  icon="globe-alt" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-- Backend app code runs in a [security sandbox]({{< ref "docs/applications/appsecurity/#security-model" >}}), with allowlist based permissions.
-- [No build step]({{< ref "docs/app/overview/#app-lifecycle" >}}), the development artifacts are ready for production use.
-- Support for github integration, apps being directly deployed from github code.
-- Database backed application file system, for atomic version updates and rollbacks.
-- Zero downtime application updates.
-- Support for [OAuth authentication]({{< ref "docs/configuration/authentication/#oauth-authentication" >}})
-- Support for application data persistance to sqlite with full database schema management.
-- Scalable backend, all performance critical code is in Go, only application handler code is in Starlark.
-- Support for domain based and path based [routing]({{< ref "docs/applications/routing/#request-routing" >}}) at the app level.
-- Virtual filesystem with [content hash based file names]({{< ref "docs/app/templates/#static-function" >}}) backed by SQLite database, enabling aggressive static content caching.
-- Brotli compression for static artifacts, HTTP early hints support for performance.
-- [Automatic SSL]({{< ref "docs/configuration/networking/#enable-automatic-signed-certificate" >}}) certificate creation based on [certmagic](https://github.com/caddyserver/certmagic).
-- [Staging mode]({{< ref "docs/applications/lifecycle/#staging-apps" >}}) for app updates, to verify whether code and config changes work on prod before making them live.
-- [Preview app]({{< ref "docs/applications/lifecycle/#preview-apps" >}}) creation support, for trying out code changes.
+<!-- prettier-ignore --> {{< hextra/feature-card title="Auto TLS Certificates" subtitle="Automatically generate TLS certificates, for multiple domains"  icon="shield-check" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-## Roadmap
+<!-- prettier-ignore --> {{< hextra/feature-card title="OAuth authentication" subtitle="Add OAuth2 or OIDC based authentication to any app"  icon="globe-alt" style="shield-exclamation: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-Clace is early in its development. The feature roadmap for Clace is:
+<!-- prettier-ignore --> {{< hextra/feature-card title="Domain based and path based routing" subtitle="Install apps at a domain, subdomain or at path level"  icon="map" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
-- All plugins are internal (built into Clace binary) currently. The plan is to move to an external plugin model, plugins being loaded dynamically using [go-plugin](https://github.com/hashicorp/go-plugin).
-- SQLite is used as the metadata storage currently. Support for postgres and other systems is planned.
-- Support for workflow jobs, which would have a form based interface with limited customizability, but with support for triggered and scheduled execution.
-- UI interface for Clace admin operations.
-- Record replay based automatic integration test creation. Record all responses at the plugin boundary and use that to replay integration test scenarios.
-- Distributed agent model, where the Clace server does the initial routing but the actual application execution happens on remote worker nodes.
+<!-- prettier-ignore --> {{< hextra/feature-card title="Preview Apps" subtitle="Create preview apps from CI, allowing for changes to be reviewed before merge"  icon="check" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore --> {{< hextra/feature-card title="Blue-green Deployment" subtitle="Staged deployment, for code changes and for config changes"  icon="chevron-double-up" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore --> {{< hextra/feature-card title="Security Sandbox" subtitle="Apps using Starlark based micro-framework use sandboxing for security"  icon="shield-check" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
+
+{{< /hextra/feature-grid >}}
