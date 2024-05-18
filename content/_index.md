@@ -22,11 +22,11 @@ layout: hextra-home
 
 <br>
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace is an Apache-2.0 licensed project providing a web app development and deployment platform for internal tools. Clace allows easy and secure hosting of multiple web apps on a single machine. Clace provides the functionality of a programmable reverse proxy, a micro-framework in Starlark (python-like) and container orchestrator for Docker/Podman in a single binary. For internal tools, Clace provides a gitops workflow for managing web apps with no additional setup required." style="background: radial-gradient(ellipse at 50% 80%,rgba(240,200,100,0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace is an Apache-2.0 licensed project providing a web app development and deployment platform for internal tools. Clace allows easy and secure hosting of multiple web apps, in any language/framework, on a single machine. Clace is cross-platform (Linux/Windows/OSX) and provides a GitOps workflow for managing web apps.<br><br>Clace can be used to develop and deploy containerized applications. Clace can be used to build a hypermedia driven UI using backend APIs. Clace combines the functionality of a reverse proxy, a hypermedia based micro-framework and container orchestrator (using Docker or Podman) in a single lightweight binary." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 <br>
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace can be used to host any web app which has a Dockerfile. It can also be used to host backend APIs and build a hypermedia driven web app using those APIs. For some scenarios, like building apps for CLIs, lightweight web apps can be developed using the Clace micro-framework. Clace can be used to add OAuth authentication for any app. For internal tools, Clace allows teams to securely manage web apps." style="background: radial-gradient(ellipse at 50% 80%,rgba(240,200,100,0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace can be used to host any web app which has a Dockerfile or image. For common frameworks, Clace app specs can be used to deploy the applications, directly from the git repo, without any code changes being required. For example, Clace can be used to host multiple Streamlit apps on a single machine, adding OAuth authentication for access control across a team." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 <br>
 
@@ -40,7 +40,7 @@ layout: hextra-home
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="Hypermedia web apps" subtitle="Fast and lightweight backend driven apps, minimal frontend complexity."  icon="html5" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="Go binary, Starlark config" subtitle="Performance and stability of Go, easy Python like backend config with no dependencies."  icon="golang" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="Cross-platform support" subtitle="Linux, Windows and OSX support"  icon="globe-alt" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="Secure app sandboxing" subtitle="Apps runs in security sandbox, apply app code updates confidently."  icon="shield-lock" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 
