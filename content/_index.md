@@ -22,11 +22,11 @@ layout: hextra-home
 
 <br>
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace is an Apache-2.0 licensed project providing a web app development and deployment platform for internal tools. Clace allows easy and secure hosting of multiple web apps, in any language/framework, on a single machine. Clace is cross-platform (Linux/Windows/OSX) and provides a GitOps workflow for managing web apps.<br><br>Clace can be used to develop and deploy containerized applications. Clace can be used to build a hypermedia driven UI using backend APIs. Clace combines the functionality of a reverse proxy, a hypermedia based micro-framework and container orchestrator (using Docker or Podman) in a single lightweight binary." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace is an Apache-2.0 licensed project providing a web app development and deployment platform for internal tools. Clace allows easy and secure hosting of multiple web apps, in any language/framework, on a single machine. Clace is cross-platform (Linux/Windows/OSX) and provides a GitOps workflow for managing web apps.<br><br>Clace can be used to develop and deploy containerized applications and build a hypermedia driven UI using backend APIs. Clace combines the functionality of a reverse proxy, a hypermedia based micro-framework and container orchestrator (using Docker or Podman) in a single lightweight binary." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 <br>
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace can be used to host any web app which has a Dockerfile or image. For common frameworks, Clace app specs can be used to deploy the applications, directly from the git repo, without any code changes being required. For example, Clace can be used to host multiple Streamlit apps on a single machine, adding OAuth authentication for access control across a team." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace can be used to host any web app which can be containerized. For common frameworks, Clace app specs can be used to deploy directly from the git repo, without any code changes being required. For example, Clace can be used to deploy multiple Streamlit apps on a single machine, adding OAuth authentication for access control across a team." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 <br>
 
