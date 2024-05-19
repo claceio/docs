@@ -1,12 +1,8 @@
 ---
+title: "Features"
+summary: "Clace Features"
 layout: hextra-home
 ---
-
-<div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: color: transparent; background-clip: text; -webkit-background-clip: text;">
-{{< hextra/hero-headline >}}
-  Clace Features
-{{< /hextra/hero-headline >}}
-</div>
 
 {{< hextra/feature-grid >}}
 

@@ -57,15 +57,15 @@ identifier = "quickstart"
 weight = 1
 
 [[menu.main]]
-name = "Features"
-url = "/features"
-identifier = "features"
-weight = 2
-
-[[menu.main]]
 name = "Docs"
 url = "/docs"
 identifier = "docs"
+weight = 2
+
+[[menu.main]]
+name = "Features"
+url = "/features"
+identifier = "features"
 weight = 3
 
 [[menu.main]]

@@ -1,6 +1,6 @@
 ---
 title: "About"
-summary: "FAQ about Clace"
+summary: "About Clace"
 date: 2023-10-05
 ---
 
@@ -27,24 +27,24 @@ The name Clace is a play on **C**ommand **L**ine **Ace**, since building an UI f
 
 ### Why is there a need for such a platform?
 
-There are tools focussed on simplifying application deployment. Kamal, Dokku and Coolify simplify container management on server infrastructure. All those are Linux only tools, aiming to support production deployment of applications, managing the application layer and also the data persistence layer. Most use Traefik as the proxy, the labels added for containers are used to proxy the traffic. There are multiple component to understand when using these tools.
+There are tools focussed on simplifying application deployment. Kamal, Dokku and Coolify simplify container management on server infrastructure. All those are Linux only tools, aiming to support production deployment of applications, managing the application layer and also the data persistence layer. Most use Traefik as the proxy, the labels added for containers are used to proxy the traffic. There are multiple components to understand when using these tools.
 
-For internal tool deployment, easy of use is a primary consideration. Kubernetes is a platform to build platforms. Adding a GitOps workflow for Kubernetes requires additional tools like ArgoCD or Flux. For a use case of deploying webapps, that level of complexity is generally overkill.
+For internal tool deployment, easy of use is a primary consideration. Kubernetes is a platform to build platforms. Adding a GitOps workflow for Kubernetes requires additional tools like ArgoCD or Flux. For the use case of deploying webapps for internal tools, that level of complexity is generally overkill.
 
 Clace aims to to be cross-platform (Linux, Windows and OSX). Clace supports app development in addition to production deployment. Clace is a single binary which includes the reverse proxy and container management functionality.
 
-Only web app deplyment is supported by Clace, Clace does not aim to support installing standalone databases or other infrastructure components. Web app containers can use an in-container database, that is supported by Clace, but standalone database are not supported by Clace. For internal tools, the data persistence is expected to be done externally, so this is not a issue generally.
+Only web app deployment is supported by Clace. Clace does not aim to support installing standalone databases or other infrastructure components. Web app containers can use an in-container database, that is supported by Clace. For internal tools, the data persistence is expected to be done externally, so this is not a issue generally.
 
 ### How is Clace implemented?
 
 - Single binary web application server (in golang), with a set of plugins built in (also in golang) which allow access to external endpoints. The server is statically configured using a TOML file.
 - Applications are configured using [Starlark](https://github.com/google/starlark-go), which is a subset of Python. Python is an ideal glue language, Starlark is used to configure the application backend logic
 - Multiple applications can be dynamically installed, an embedded SQLite database is used to store application metadata (Postgres support is in the roadmap).
-- For applications using the container plugin, Clace works with Docker or Podman to build and run the containers.
+- For applications using the container plugin, Clace works with Docker or Podman using CLI to build and run the containers.
 - Path based routing, each app identified by a unique path. Also, domain based routing, which allows multiple domains to point to the same Clace instance, with path based routing being done independently for each domain.
 - Automatic TLS certificate management for each domain to simplify deployments.
 - A sandboxing layer is implemented at the Starlark(python) to Golang boundary, allowing the implementation of security and access control policies. Go code is trusted, Starlark code is untrusted.
-- The application UI is implemented using Go HTML templates, with [HTMX](https://htmx.org/) for interactivity. Go templates support [context aware templating](https://pkg.go.dev/html/template#hdr-Contexts) which prevents encoding related security issues. They also work well with the HTML fragments required for HTMX.
+- For Starlark based apps, the application UI is implemented using Go HTML templates, with [HTMX](https://htmx.org/) for interactivity. Go templates support [context aware templating](https://pkg.go.dev/html/template#hdr-Contexts) which prevents encoding related security issues. They also work well with the HTML fragments required for HTMX.
 - No need to install any additional components like Python or NodeJS/NPM on the host machine. Integration with [tailwindcss-cli](https://tailwindcss.com/blog/standalone-cli) is supported. [esbuild](https://esbuild.github.io/) (using the esbuild go library) is supported out of the box for importing ESM modules.
 
 ### Current Status
