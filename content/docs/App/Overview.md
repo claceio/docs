@@ -5,9 +5,17 @@ date: 2023-10-06
 summary: "Overview of the Clace application development model"
 ---
 
-Clace applications implement a [Hypermedia driven approach](https://hypermedia.systems/hypermedia-reintroduction/) for developing web applications. Applications return HTML fragments as API response using [Go html templates](https://pkg.go.dev/html/template). The UI uses HTML enhanced with hypermedia controls using the [HTMX library](https://htmx.org/) to implement user interactions.
+Clace supports deploying any type of app, in any language/framework, using containerized apps. Apps can also be built where the backend API is in the container but the UI is built using Clace. Clace UI applications implement a [Hypermedia driven approach](https://hypermedia.systems/hypermedia-reintroduction/) for developing web applications. Applications return HTML fragments as API response using [Go html templates](https://pkg.go.dev/html/template). The UI uses HTML enhanced with hypermedia controls using the [HTMX library](https://htmx.org/) to implement user interactions.
 
 The backend API routes and dependencies like CSS library, JavaScript modules etc are configured using [Starlark](https://github.com/google/starlark-go/blob/master/doc/spec.md) configuration. Any custom API handling required is implemented in handler functions also written in Starlark. Starlark is a subset of python, optimized for application configuration usecases.
+
+## App Types
+
+Clace apps can be of three types:
+
+- **Starlark apps**: These use the Clace plugins to implement the whole app. No containers are required for such apps.
+- **Containerized apps**: The whole app is implemented in a container, Clace proxies the container results. This uses the container and proxy plugins.
+- **Hybrid apps**: The backend APIs are implemented in a container. Clace is used to implement the Hypermedia based UI using Starlark handlers. This uses the http plugin to talk to the backend API and the container plugin to configure the backend.
 
 ## Structure
 
@@ -116,7 +124,7 @@ app = ace.app(name="hello3",
              )
 ```
 
-### Complete App
+### Sample Starlark App
 
 To create an app with a custom HTML page which shows a listing of files in your root directory, create an `~/myapp4/app.star` file with
 
@@ -129,7 +137,7 @@ def handler(req):
        return {"Error": ret.error, "Lines": []}
    return {"Error": "", "Lines": ret.value}
 
-app = ace.app("hello1",
+app = ace.app("hello4",
               custom_layout=True,
               routes = [ace.html("/")],
               permissions = [ace.permission("exec.in", "run", ["ls"])]
@@ -161,6 +169,89 @@ and an `~/myapp4/index.go.html` file with
 Run `clace app create --auth=none --dev --approve /hello4 ~/myapp4`. After that, the app is available at `/hello4`. Note that the `--dev` option is required for the `clace_gen_import` file to be generated which is required for live reload.
 
 This app uses the `exec` plugin to run the ls command. The output of the command is shown when the app is accessed. To allow the app to run the plugin command, use the `clace app approve` command.
+
+{{<callout type="warning" >}}
+**Note:** If running on Windows, change `ls` to `dir`. Else, use the `fs` plugin to make this platform independent. See https://github.com/claceio/apps/blob/main/system/disk_usage/app.star.
+{{</callout>}}
+
+### Containerized App
+
+A containerized apps needs to have a `Containerfile` (or `Dockerfile`) to define how the image is built. The app definition can have
+
+<!-- prettier-ignore -->
+```html {filename="app.star"}
+load("proxy.in", "proxy")
+load("container.in", "container")
+
+app = ace.app("My App",
+              routes=[
+                  ace.proxy("/", proxy.config(container.URL))
+              ],
+              container=container.config(container.AUTO),
+              permissions=[
+                  ace.permission("proxy.in", "config", [container.URL]),
+                  ace.permission("container.in", "config", [container.AUTO])
+              ]
+       ) 
+```
+
+which completely specifies the app. This is saying that the app is using the container plugin to configure the container and the proxy plugin to proxy all API calls (`/` route) to the container url. On the first API call to the app, Clace will build the image, start the container and proxy the API traffic to the appropriate port. No other configuration is required in Starlark. If the container spec does not define the port being exposed, then the container config needs to specify the port number to use. The port number can be parameterized.
+
+<!-- prettier-ignore-end -->
+
+## Building Apps from Spec
+
+A spec (specification) can be set for an app. This makes Clace use the spec as a template to specify the app configuration. Use `app create --spec python-flask` while creating an app or change the spec using `app update-metadata spec /myapp python-flask`. The spec brings in a set of predefined files. If a file with the same name is already present in the app code, then the spec file is ignored. So if the app code and spec both define a `Containerfile`, the file from the app code takes precedence. If the app folder contains just `app.py`
+
+```python {filename="flaskapp/app.py"}
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
+```
+
+Creating an app like `clace app create --approve --spec python-flask /myapp ./flaskapp` will do everything required to fully define the Clace app. If the app has additional python dependencies, add a `requirements.txt` file in the app source code. By [default](https://github.com/claceio/appspecs/blob/main/python-flask/requirements.txt), only the flask package is installed. The file in the app source takes precedence.
+
+See https://github.com/claceio/appspecs for the list of specs. The Clace server build includes these spec by default. Additional specs can de defined by creating a folder `$CL_HOME/config/appspecs`. Any directory within that is treated as a spec. If the name matches with the predefined ones the spec in the config folder takes precedence. No server restart is required after spec changes. Setting up the server by doing
+
+```bash
+cd $CL_HOME/config
+git clone https://github.com/claceio/appspecs.git
+```
+
+ensures that the specs are updated to the latest version. Periodically doing a git pull on this folder refreshes the specs. Instead of cloning the main spec repo, a custom spec repo can also be used similarly. If no custom specs are defined, the specs as bundled in the Clace server build are available.
+
+## App Parameters
+
+Having a file `params.star` in the app source code causes Clace to load the parameters definitions from that file. Parameters are environment value which can be specified during app creation. A sample param definition is
+
+```python {filename="params.star"}
+param("port", type=INT,
+      description="The port the flask app is listening on (inside the container)", default=5000)
+
+param("app_name", description="The name for the app", default="Flask App")
+
+param("preserve_host", type=BOOLEAN, description="Whether to preserve the original Host header", default=False)
+```
+
+This is defining three parameters. The type can be one of `STRING`(default), `INT`, `BOOLEAN`, `LIST` and `DICT`. The param structure definition is
+
+|  Property   | Optional |                    Type                    |         Default         |                                     Notes                                     |
+| :---------: | :------: | :----------------------------------------: | :---------------------: | :---------------------------------------------------------------------------: |
+|    name     |  False   |                   string                   |                         |                     Has to be be a valid starlark keyword                     |
+|    type     |   True   | `STRING`, `INT`, `BOOLEAN`, `LIST`or`DICT` |        `STRING`         |                                 The data type                                 |
+|   default   |   True   |           Type as set for `type`           | Zero value for the type |                                                                               |
+| description |   True   |                   string                   |                         |                         The description for the param                         |
+|  required   |   True   |                    bool                    |          True           | If required is True and default value is not specified, then validation fails |
+
+The parameters are available in the app Starlark code, through the `param` namespace. For example, `param.port`, `param.app_name` etc. See https://github.com/claceio/appspecs/blob/main/python-flask/app.star for an example of how this can be used.
+
+Params are set, during app creation using `app create --param port=9000` or using `app param update /myapp port 9000`. Set value to `-` to delete the param. Use `app param list /myapp` to list the params.
+
+For containerized apps, all params specified for the app (including ones not specified in `params.star` spec) are passed to the container at runtime as environment parameters. `CL_APP_PATH` is a special param passed to the container with the app installation path (without the domain name).
 
 ## Automatic Error Handling
 

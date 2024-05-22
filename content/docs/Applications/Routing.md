@@ -24,7 +24,7 @@ For every API call, the Clace server first checks whether the API call is agains
 For the above scenario:
 
 - Requests to /utils/appA/\* for any domain other than example.com and test.mydomain.com will go to App A.
-- Requests to /appB/\* for any domain other than example.com and test.mydomain.com will go to App B.
+- Requests to /appB/\* for any domain other than example.com will go to App B.
 - Requests to example.com for any path will always go to App C, since it is installed at the root path.
 - Requests to test.mydomain.com:/test/\* will go to App D.
 - Requests to test.mydomain.com:/test2/\* will go to App E.
