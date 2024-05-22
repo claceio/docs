@@ -44,7 +44,7 @@ app = ace.app("Disk Usage",
 It requests permission to use the `exec.in` plugin to `run` two CLI commands, first being `du` and other being `readlink`. When installing the app
 
 ```bash
-$ ./clace app create /utils/disk_usage ./examples/disk_usage/
+$ ./clace app create ./examples/disk_usage/ /utils/disk_usage
 App audit results /utils/disk_usage : app2WPQHwr5ZpKELqh0TvP5YMSnbab
   Plugins :
     exec.in
@@ -70,7 +70,7 @@ App permissions have been approved.
 The approval can be done during the app create itself, in that case the app is installed and approved immediately. None of the plugin code runs during the app creation, even for calls at the global scope. If the audit report does not match expectations, the app can be deleted.
 
 ```bash
-$ ./clace app create --approve /utils/disk_usage ./examples/disk_usage/
+$ ./clace app create --approve ./examples/disk_usage/ /utils/disk_usage
 App audit results /utils/disk_usage : app2WPQpws6C1mWb6BujYGOdWMnF1C
   Plugins :
     exec.in

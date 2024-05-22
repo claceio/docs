@@ -19,7 +19,7 @@ A Clace application can be one of four types:
 Development mode apps are used for developing or updating Clace apps. The source for these apps has to be on local disk, it cannot be git. Any code or config changes are live reloaded immediately for dev apps. To create a dev mode app, add the `--dev` option to the `app create` command. For example,
 
 ```sh
-clace app create --dev --approve /myapp /home/user/mycode
+clace app create --dev --approve /home/user/mycode /myapp
 ```
 
 ## Production Apps
@@ -27,7 +27,7 @@ clace app create --dev --approve /myapp /home/user/mycode
 Without the `--dev` options, apps are created as production apps by default. Production apps can be created from source on GitHub or from local disk. In either case, the source code for the app is uploaded to the Clace metadata database. For example:
 
 ```sh
-clace app create --approve example.com:/ /home/user/mycode
+clace app create --approve /home/user/mycode example.com:/
 ```
 
 creates an production app. After app creation, the original source location is not read, until a `app reload` operation is done to update the sources. The source folder `/home/user/mycode` can be deleted if reload is not required, since the sources are present in the Clace metadata database. Every production app automatically has one staging app associated with it.
@@ -103,7 +103,7 @@ The rules for fetching source code from local disk and GitHub are:
 Preview allows the creation of any number of linked preview apps for a main app. This is supported for apps created from GitHub source. The commit id to use needs to be specified when creating the preview. For example,
 
 ```sh
-clace preview create /myapp 49182d4ca1cacbd8e3463a77c2174a6da1fb66c9
+clace preview create 49182d4ca1cacbd8e3463a77c2174a6da1fb66c9 /myapp
 ```
 
 creates an app accessible at `/myapp_cl_preview_49182d4ca1cacbd8e3463a77c2174a6da1fb66c9` which runs the app code in the specified commit id.
@@ -116,6 +116,6 @@ Staging and Preview apps have read only access by default to plugin APIs. This m
 
 For cases where the plugin defines an API as Write, the app permission can overwrite the default type and define the operation to be a READ operation. For example, the disk_usage app runs the `du` command, which is a read operation. The [app config defines](https://github.com/claceio/clace/blob/49182d4ca1cacbd8e3463a77c2174a6da1fb66c9/examples/disk_usage/app.star#L45) the run plugin call as `type="READ"`, over-riding the default WRITE type defined in the plugin. If no type is specified in the permission, the type defined in the plugin takes effect.
 
-Staging and Preview apps are allowed only READ calls by default, even if the app permissions allow WRITE operations. To allow stage apps access to WRITE operations, run `clace app update stage-write-access all true`. Change `all` to the desired app glob pattern.
+Staging and Preview apps are allowed only READ calls by default, even if the app permissions allow WRITE operations. To allow stage apps access to WRITE operations, run `clace app update-settings stage-write-access true all`. Change `all` to the desired app glob pattern.
 
-To allow preview apps access to WRITE operation, run `clace app update preview-write-access example.com:/ true`. This changes the existing preview apps and any new preview apps created for example.com:/ to allow write operations, if the permissions have been approved.
+To allow preview apps access to WRITE operation, run `clace app update-settings preview-write-access true example.com:/`. This changes the existing preview apps and any new preview apps created for example.com:/ to allow write operations, if the permissions have been approved.

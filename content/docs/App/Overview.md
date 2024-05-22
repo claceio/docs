@@ -55,7 +55,7 @@ app = ace.app("hello",
 )
 ```
 
-Run `clace app create --auth=none /hello ~/myapp`. After that, the app is available at `/hello`
+Run `clace app create --auth=none ~/myapp /hello`. After that, the app is available at `/hello`
 
 ```sh
 $ curl localhost:25222/hello
@@ -81,7 +81,7 @@ and an `~/myapp2/index.go.html` file containing
 hello world2
 ```
 
-Run `clace app create --auth=none /hello2 ~/myapp2`. After that, the app is available at `/hello2`
+Run `clace app create --auth=none ~/myapp2 /hello2`. After that, the app is available at `/hello2`
 
 ```sh
 $ curl localhost:25222/hello2
@@ -113,7 +113,7 @@ and an `~/myapp3/app.go.html` file containing
 
 <!-- prettier-ignore-end -->
 
-Run `clace app create --auth=none --dev /hello3 ~/myapp3`. After that, the app is available at `/hello3`. Note that the `--dev` option is required for the `index_gen.go.html` file to be generated.
+Run `clace app create --auth=none --dev ~/myapp3 /hello3 `. After that, the app is available at `/hello3`. Note that the `--dev` option is required for the `index_gen.go.html` file to be generated.
 
 The name of the app is hello3. There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
 
@@ -166,7 +166,7 @@ and an `~/myapp4/index.go.html` file with
 
 <!-- prettier-ignore-end -->
 
-Run `clace app create --auth=none --dev --approve /hello4 ~/myapp4`. After that, the app is available at `/hello4`. Note that the `--dev` option is required for the `clace_gen_import` file to be generated which is required for live reload.
+Run `clace app create --auth=none --dev --approve ~/myapp4 /hello4`. After that, the app is available at `/hello4`. Note that the `--dev` option is required for the `clace_gen_import` file to be generated which is required for live reload.
 
 This app uses the `exec` plugin to run the ls command. The output of the command is shown when the app is accessed. To allow the app to run the plugin command, use the `clace app approve` command.
 
@@ -201,7 +201,7 @@ which completely specifies the app. This is saying that the app is using the con
 
 ## Building Apps from Spec
 
-A spec (specification) can be set for an app. This makes Clace use the spec as a template to specify the app configuration. Use `app create --spec python-flask` while creating an app or change the spec using `app update-metadata spec /myapp python-flask`. The spec brings in a set of predefined files. If a file with the same name is already present in the app code, then the spec file is ignored. So if the app code and spec both define a `Containerfile`, the file from the app code takes precedence. If the app folder contains just `app.py`
+A spec (specification) can be set for an app. This makes Clace use the spec as a template to specify the app configuration. Use `app create --spec python-flask` while creating an app or change the spec using `app update-metadata spec python-flask /myapp`. The spec brings in a set of predefined files. If a file with the same name is already present in the app code, then the spec file is ignored. So if the app code and spec both define a `Containerfile`, the file from the app code takes precedence. If the app folder contains just `app.py`
 
 ```python {filename="flaskapp/app.py"}
 from flask import Flask
@@ -213,7 +213,7 @@ def hello_world():
     return "<p>Hello, World!</p>"
 ```
 
-Creating an app like `clace app create --approve --spec python-flask /myapp ./flaskapp` will do everything required to fully define the Clace app. If the app has additional python dependencies, add a `requirements.txt` file in the app source code. By [default](https://github.com/claceio/appspecs/blob/main/python-flask/requirements.txt), only the flask package is installed. The file in the app source takes precedence.
+Creating an app like `clace app create --approve --spec python-flask ./flaskapp /myapp ` will do everything required to fully define the Clace app. If the app has additional python dependencies, add a `requirements.txt` file in the app source code. By [default](https://github.com/claceio/appspecs/blob/main/python-flask/requirements.txt), only the flask package is installed. The file in the app source takes precedence.
 
 See https://github.com/claceio/appspecs for the list of specs. The Clace server build includes these spec by default. Additional specs can de defined by creating a folder `$CL_HOME/config/appspecs`. Any directory within that is treated as a spec. If the name matches with the predefined ones the spec in the config folder takes precedence. No server restart is required after spec changes. Setting up the server by doing
 

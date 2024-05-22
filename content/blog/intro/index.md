@@ -46,7 +46,7 @@ Clace is in a beta state currently. Custom application support is functional. Su
 curl -L https://clace.io/install.sh | sh
 source $HOME/clhome/bin/clace.env
 clace server start &
-clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/
+clace app create --approve github.com/claceio/clace/examples/disk_usage/ /disk_usage
 ```
 
 The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username, use the password printed by the install script. See [installation]({{< ref "installation" >}}) for details.

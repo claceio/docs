@@ -85,5 +85,5 @@ password = ""
 To change the git auth key for an app, run:
 
 ```bash
-clace app update git-auth /myapp newkey
+clace app update-settings git-auth newkey /myapp
 ```
