@@ -10,13 +10,13 @@ main() {
 	os=$(uname -s | tr '[:upper:]' '[:lower:]')
 	arch=$(uname -m)
 
-        if test $arch = "x86_64"; then
-                arch="amd64"
-        fi
+    if test $arch = "x86_64"; then
+        arch="amd64"
+    fi
 
 	version=${1:-${LATEST_VERSION}}
-        target="clace-${version}-${os}-${arch}"
-        clace_uri="https://github.com/claceio/clace/releases/download/$version/${target}.tar.gz"
+    target="clace-${version}-${os}-${arch}"
+    clace_uri="https://github.com/claceio/clace/releases/download/$version/${target}.tar.gz"
 	clace_install="${CL_HOME:-$HOME/clhome}"
 
 	bin_dir="$clace_install/bin"
@@ -27,12 +27,11 @@ main() {
 	mkdir -p "$tmp_dir"
 
 	curl -q --fail --location --progress-bar --output "$tmp_dir/clace.tar.gz" "$clace_uri" || (echo "Error downloading $clace_uri"; exit 1)
-	# extract to tmp dir so we don't open existing executable file for writing:
+	# extract to tmp dir so we don't open existing executable file for writing
 	tar -C "$tmp_dir" -xzf "$tmp_dir/clace.tar.gz"
 	chmod +x "$tmp_dir/${target}/clace"
 	mv "$tmp_dir/${target}/clace" "$exe"
 	rm "$tmp_dir/clace.tar.gz"
-
 
     echo ""
 	echo "clace was installed successfully to $exe"
@@ -49,8 +48,7 @@ main() {
     *) shell_profile=".bash_profile" ;;
     esac
 
-    echo "export CL_CONFIG_FILE=\"$clace_install/clace.toml\"" > $bin_dir/clace.env
-    echo "export CL_HOME=\"$clace_install\"" >> $bin_dir/clace.env
+    echo "export CL_HOME=\"$clace_install\"" > $bin_dir/clace.env
     echo "export PATH=\"\$CL_HOME/bin:\$PATH\"" >> $bin_dir/clace.env
 
     echo "Manually add the following to your \$HOME/$shell_profile (or similar). Also run it now for this session:"
@@ -58,7 +56,7 @@ main() {
     echo "  source \"$bin_dir/clace.env\""
     echo ""
 
-    echo "See https://clace.io/docs/installation/#start-the-service for steps to start the service and install apps."
+    echo "See https://clace.io/docs/quickstart for quick start guide."
 }
 
 main "$1"

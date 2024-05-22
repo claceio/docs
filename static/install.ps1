@@ -86,9 +86,6 @@ if (!(";$Path;".ToLower() -like "*;$BinDir;*".ToLower())) {
   $Env:Path += ";$BinDir"
 }
 
-[Environment]::SetEnvironmentVariable('CL_CONFIG_FILE', "$ClaceConfig", $User)
-$Env:CL_CONFIG_FILE = "$ClaceConfig"
-
 [Environment]::SetEnvironmentVariable('CL_HOME', "$ClaceInstall", $User)
 $Env:CL_HOME = "$ClaceInstall"
 
