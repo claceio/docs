@@ -15,7 +15,7 @@ To install the latest release build, run the install script on Linux, OSX and Wi
 curl -L https://clace.io/install.sh | sh
 source $HOME/clhome/bin/clace.env
 clace server start &
-clace app create --approve /disk_usage github.com/claceio/app/system/disk_usage/
+clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 ```
 
 The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username and use the password printed by the install script.
@@ -103,8 +103,8 @@ or `clace app promote "/disk_usage*"` to promote specific apps. Use the `--dry-r
 
 If not using git, a workflow would be:
 
-- Create a dev mode app, like `clace app create --dev --approve /myapp_dev ~/myappcode`
-- Create a prod mode app, like `clace app create --approve /myapp ~/myappcode`
+- Create a dev mode app, like `clace app create --dev --approve ~/myappcode /myapp_dev`
+- Create a prod mode app, like `clace app create --approve ~/myappcode /myapp`
 - As code changes are saved to disk, the changes are immediately live at `https://localhost:25223/myapp_dev`
 - When code is in a stable state, run `clace app reload /myapp`. This will update the staging app with the most recent code from ` ~/myappcode` folder.
 - The staging app is available at `https://localhost:25223/myapp_cl_stage` for verification.
@@ -116,8 +116,8 @@ Having a staging environment helps catch issues related to account setup (which 
 
 If using git, a workflow would be:
 
-- Create a dev mode app, like `clace app create --dev --approve /myapp_dev ~/myappcode`
-- Create a prod mode app, like `clace app create --approve /myapp github.com/myorg/repo`
+- Create a dev mode app, like `clace app create --dev --approve ~/myappcode /myapp_dev `
+- Create a prod mode app, like `clace app create --approve github.com/myorg/repo /myapp `
 - As code changes are saved to disk, the changes are immediately live at `https://localhost:25223/myapp_dev`
 - When code is in a stable state, check in the dev code to git.
 - Run `clace app reload /myapp`. This will update the staging app with the most recent code from `main` branch in git.
