@@ -48,3 +48,21 @@ layout: hextra-home
 <!-- prettier-ignore --> {{< hextra/feature-card title="Cross-platform support" subtitle="Clace runs on Linux, Windows and OSX, works with Docker and Podman"  icon="globe-alt" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.25),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
+
+<br>
+<br>
+
+<style>
+  /* Apply width 60% for screens wider than 768px */
+  @media screen and (min-width: 768px) {
+    .responsive-picture {
+      width: 60%;
+    }
+  }
+</style>
+
+<picture  class="responsive-picture" style="display: block; margin-left: auto; margin-right: auto;">
+  <source media="(prefers-color-scheme: dark)" srcset="https://clace.io/intro_dark.gif">
+  <source media="(prefers-color-scheme: light)" srcset="https://clace.io/intro_light.gif">
+  <img alt="Gif with Clace intro commands" src="https://clace.io/intro_light.gif">
+</picture>
