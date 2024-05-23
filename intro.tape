@@ -1,11 +1,10 @@
 Output screen.gif
+#Set Theme "Hipster Green"
+Set Theme { "name": "Custom", "background": "#f0ede6", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
 
-# Set up a 1200x600 terminal with 46px font.
 Set FontSize 32
 Set Width 1200
 Set Height 1000
-#Set Theme "Hipster Green"
-Set Theme { "name": "Custom", "background": "#e6dfcf", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
 Set Shell "bash"
 
 Hide
