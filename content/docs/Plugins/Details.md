@@ -9,7 +9,11 @@ The page lists the available plugins and their API details.
 
 ## Database Storage
 
-The `store.in` plugin supports a document store interface for writing data to SQLite (PostgreSQL support is coming soon). See [store]({{< ref "store" >}}) for details.
+The `store.in` plugin supports a document store interface for writing data to SQLite. See [store]({{< ref "store" >}}) for details.
+
+## Container Config
+
+The `container.in` plugin supports configuring for using a container for deploying backend APIs. See [container]({{< ref "container" >}}) for details.
 
 ## HTTP Plugin
 
