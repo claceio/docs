@@ -1,7 +1,6 @@
 ---
 title: "JavaScript"
 weight: 700
-date: 2023-10-19
 summary: "JavaScript dependency handling, esbuild config"
 ---
 

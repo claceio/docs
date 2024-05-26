@@ -13,10 +13,10 @@ To install the latest release build on Linux, OSX or Windows with WSL, run the i
 curl -L https://clace.io/install.sh | sh
 source $HOME/clhome/bin/clace.env
 clace server start &
-clace app create --approve /disk_usage github.com/claceio/clace/examples/disk_usage/
+clace app create --approve github.com/claceio/clace/apps/system/disk_usage /disk_usage
 ```
 
-The app is installed under `$HOME/clhome` by default. The disk usage app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username and use the password printed by the install script.
+Clace is installed under `$HOME/clhome` by default. The disk usage app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username and use the password printed by the install script.
 
 On Windows, to install the Clace application, run
 
@@ -33,7 +33,7 @@ clace server start
 to start the server. In another window, apps can be installed using same command as Linux/OSX. To install a bookmark manager app, run
 
 ```shell
-clace app create --approve /book github.com/claceio/apps/utils/bookmarks/
+clace app create --approve github.com/claceio/apps/utils/bookmarks /book
 ```
 
 The bookmark manager app should be available at [https://127.0.0.1:25223/book](https://127.0.0.1:25223/book).
@@ -52,7 +52,6 @@ First add the below env variables to your shell .profile or .bash_profile:
 
 ```shell
 export CL_HOME=$HOME/clhome
-export CL_CONFIG_FILE=$CL_HOME/clace.toml
 export PATH=$CL_HOME/bin/:$PATH
 ```
 
@@ -88,10 +87,10 @@ The service logs will be going to $CL_HOME/logs. To get the logs on the console 
 
 ## Load an App
 
-To create an app, run the Clace client
+To create an app, ensure that code is available locally and then run the Clace client
 
 ```shell
-clace app create --dev /disk_usage $HOME/clace_source/clace/examples/disk_usage/
+clace app create --dev $HOME/clace_source/clace/examples/disk_usage /disk_usage
 ```
 
 To audit and approve the app's security policies, run

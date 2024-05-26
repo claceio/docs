@@ -101,5 +101,5 @@ if (Test-Path -Path $ClaceConfig -PathType Leaf) {
 
 Write-Output "clace $Version was installed successfully to $ClaceExe."
 Write-Output "Open new command shell and run 'clace' to get started."
-Write-Output "See https://clace.io/docs/quickstart/ for quick start docs."
+Write-Output "See https://clace.io/docs/quickstart/ for quick start guide."
 

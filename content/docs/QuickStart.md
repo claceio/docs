@@ -48,10 +48,10 @@ For production deployment, if wildcard DNS is setup, that makes domain routing e
 
 ## App Installation
 
-To install apps, run `clace app install --approve <source_url> <[domain:]app_path>`. For example,
+To install apps, run `clace app create --approve <source_url> <[domain:]app_path>`. For example,
 
 ```shell
-clace app install --approve github.com/claceio/apps/system/disk_usage /disk_usage
+clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 ```
 
 This is installing the `system/disk_usage` app from the main branch of the `claceio/apps` repo on GitHub. The app is installed for the default domain, to the `/disk_usage` path. Opening [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) will initialize the app and show the app home page.
@@ -60,16 +60,16 @@ This is installing the `system/disk_usage` app from the main branch of the `clac
 The `/disk_usage/*` path is now reserved for API's under this app. No new apps can be installed under the `/disk_usage/` path, but `/disk_usage2` is available. Similarly, installing an app under `/` path means no new apps can be installed for the default domain.
 {{</callout>}}
 
-If the app code is available on the Clace server node, the `app install` can be done directly with the local disk path:
+If the app code is available on the Clace server node, the `app create` can be done directly with the local disk path:
 
 ```shell
-clace app install --approve ./diskapp /disk_usage_local
+clace app create --approve ./diskapp /disk_usage_local
 ```
 
 When developing an app, the source code for the app has to be present locally. To install an app in dev mode, add the `--dev` option.
 
 ```shell
-clace app install --dev --approve ./diskapp /disk_usage_dev
+clace app create --dev --approve ./diskapp /disk_usage_dev
 ```
 
 In dev mode, source code changes are picked up immediately and the app is live reloaded. For non-dev (prod) apps, `app reload` has to be done to pick up changes, from local disk or from git.

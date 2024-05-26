@@ -111,7 +111,7 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 The `app version switch` command can be used to switch versions, up or down or to particular version. The `app version revert` command can be used to revert the last change. `app promote` makes the prod app run the same version as the current staging app.
 
-In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `app version switch utils.demo.clace.io:/bookmarks_cl_stage down` will change the stage app to version 4. `app version switch utils.demo.clace.io:/bookmarks down` will change the prod app to version 2. After that, `app promote utils.demo.clace.io:/bookmarks` will change prod to also be at version 4, same as stage.
+In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `app version switch previous utils.demo.clace.io:/bookmarks_cl_stage` will change the stage app to version 4. `app version switch previous utils.demo.clace.io:/bookmarks` will change the prod app to version 2. After that, `app promote utils.demo.clace.io:/bookmarks` will change prod to also be at version 4, same as stage.
 
 A star, like `PROD*` in the `app list` output indicates that there are staged changes waiting to be promoted. That will show up any time the prod app is at a different version than the stage app.
 
@@ -119,7 +119,7 @@ A star, like `PROD*` in the `app list` output indicates that there are staged ch
 
 By default, apps are created with the system authentication type. System auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
 
-To change app to be un-authenticated, add `--auth none` to the `app create` command. After an app is created, the auth type can be changed by running `app update auth /myapp none`. OAuth based authentication is also supported, see [authentication]({{< ref "docs/configuration/authentication" >}}) for details.
+To change app to be un-authenticated, add `--auth none` to the `app create` command. After an app is created, the auth type can be changed by running `app update-settings auth none /myapp`. OAuth based authentication is also supported, see [authentication]({{< ref "docs/configuration/authentication" >}}) for details.
 
 {{<callout type="warning" >}}
 Changes done to the app settings using the `app update` command are not staged or versioned, they apply immediately to the stage/prod/preview apps. App settings are fundamental properties of the app, like what authentication type to use, what git auth key to use etc.
