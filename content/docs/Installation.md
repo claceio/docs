@@ -83,7 +83,7 @@ To start the Clace server, run
 clace server start
 ```
 
-The service logs will be going to $CL_HOME/logs. To get the logs on the console also, you can add `-c -l DEBUG` to the server start command. The service will be started on [https://localhost:25223](https://127.0.0.1:25223) by default.
+The service logs will be going to $CL_HOME/logs. The service will be started on [https://localhost:25223](https://127.0.0.1:25223) by default.
 
 ## Load an App
 

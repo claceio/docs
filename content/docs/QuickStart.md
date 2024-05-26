@@ -9,6 +9,8 @@ This page provides an overview of how to start with Clace and provides links to 
 
 ## Installation
 
+### Install On OSX/Linux
+
 To install on OSX/Linux, run
 
 ```shell
@@ -17,14 +19,18 @@ source $HOME/clhome/bin/clace.env
 clace server start &
 ```
 
+### Install On Windows
+
 To install on Windows, run
 
 ```
 pwsh -Command "iwr https://clace.io/install.ps1 -useb | iex"
 ```
 
-Use `powershell` if `pwsh` is not available. Start a new command window (to get the updated ENV values) and run
+Use `powershell` if `pwsh` is not available. Start a new command window (to get the updated env) and run
 `clace server start` to start the Clace service.
+
+### Install Apps
 
 To install apps, run
 
@@ -33,7 +39,9 @@ clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 clace app create --approve github.com/claceio/apps/utils/bookmarks /book
 ```
 
-The disk usage app is available at https://localhost:25223/disk_usage (use port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book. Add `--auth none` to the `app create` command to disable auth.
+The disk usage app is available at https://localhost:25223/disk_usage (use port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book. Add the `--auth none` flag to the `app create` command to disable authentication.
+
+pen_spark
 
 See [installation]({{< ref "installation" >}}) for details. See [config options]({{< ref "configuration" >}}) for configuration options. To enable Let's Encrypt certificates, see [Automatic SSL]({{< ref "configuration/networking/#enable-automatic-signed-certificate" >}}).
 
