@@ -39,9 +39,7 @@ clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 clace app create --approve github.com/claceio/apps/utils/bookmarks /book
 ```
 
-The disk usage app is available at https://localhost:25223/disk_usage (use port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book. Add the `--auth none` flag to the `app create` command to disable authentication.
-
-pen_spark
+The disk usage app is available at https://localhost:25223/disk_usage (port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book. Add the `--auth none` flag to the `app create` command to disable authentication.
 
 See [installation]({{< ref "installation" >}}) for details. See [config options]({{< ref "configuration" >}}) for configuration options. To enable Let's Encrypt certificates, see [Automatic SSL]({{< ref "configuration/networking/#enable-automatic-signed-certificate" >}}).
 
