@@ -5,24 +5,39 @@ summary: "Quick Start guide on using Clace"
 date: 2024-02-03
 ---
 
-This pages provide a overview of how to start with Clace and provides links to documentation pages with more details.
+This page provides an overview of how to start with Clace and provides links to doc pages with more details.
 
 ## Installation
 
-To install the latest release build, run the install script on Linux, OSX and Windows with WSL. Note down the password printed. Add the env variables as prompted and then start the service.
+To install on OSX/Linux, run
 
 ```shell
 curl -L https://clace.io/install.sh | sh
 source $HOME/clhome/bin/clace.env
 clace server start &
-clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 ```
 
-The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username and use the password printed by the install script.
+To install on Windows, run
+
+```
+pwsh -Command "iwr https://clace.io/install.ps1 -useb | iex"
+```
+
+Use `powershell` if `pwsh` is not available. Start a new command window (to get the updated ENV values) and run
+`clace server start` to start the Clace service.
+
+To install apps, run
+
+```
+clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
+clace app create --approve github.com/claceio/apps/utils/bookmarks /book
+```
+
+The disk usage app is available at https://localhost:25223/disk_usage (use port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book. Add `--auth none` to the `app create` command to disable auth.
 
 See [installation]({{< ref "installation" >}}) for details. See [config options]({{< ref "configuration" >}}) for configuration options. To enable Let's Encrypt certificates, see [Automatic SSL]({{< ref "configuration/networking/#enable-automatic-signed-certificate" >}}).
 
-On Windows without WSL, download the release binary zip from [releases](https://github.com/claceio/clace/releases) or [install from source]({{< ref "installation/#install-from-source" >}}) if you have go installed.
+The release binaries are also available at [releases](https://github.com/claceio/clace/releases). See [install from source]({{< ref "installation/#install-from-source" >}}) to build from source.
 
 ## Managing Applications
 
@@ -33,28 +48,28 @@ For production deployment, if wildcard DNS is setup, that makes domain routing e
 
 ## App Installation
 
-To install apps, run
+To install apps, run `clace app install --approve <source_url> <[domain:]app_path>`. For example,
 
 ```shell
-clace app install --approve /disk_usage github.com/claceio/apps/system/disk_usage
+clace app install --approve github.com/claceio/apps/system/disk_usage /disk_usage
 ```
 
-This is installing the `system/disk_usage` app from the main branch of the `claceio/apps` repo on GitHub. The app is installed for the default domain, to the `/disk_usage` path. Opening [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) will make Clace initialize the app and show the app home page.
+This is installing the `system/disk_usage` app from the main branch of the `claceio/apps` repo on GitHub. The app is installed for the default domain, to the `/disk_usage` path. Opening [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) will initialize the app and show the app home page.
 
 {{<callout type="warning" >}}
 The `/disk_usage/*` path is now reserved for API's under this app. No new apps can be installed under the `/disk_usage/` path, but `/disk_usage2` is available. Similarly, installing an app under `/` path means no new apps can be installed for the default domain.
 {{</callout>}}
 
-If the app code is available locally on Clace server node, the `app install` can be done directly with the local disk path:
+If the app code is available on the Clace server node, the `app install` can be done directly with the local disk path:
 
 ```shell
-clace app install --approve /disk_usage_local ./diskapp
+clace app install --approve ./diskapp /disk_usage_local
 ```
 
 When developing an app, the source code for the app has to be present locally. To install an app in dev mode, add the `--dev` option.
 
 ```shell
-clace app install --dev --approve /disk_usage_dev ./diskapp
+clace app install --dev --approve ./diskapp /disk_usage_dev
 ```
 
 In dev mode, source code changes are picked up immediately and the app is live reloaded. For non-dev (prod) apps, `app reload` has to be done to pick up changes, from local disk or from git.
@@ -63,7 +78,7 @@ In dev mode, source code changes are picked up immediately and the app is live r
 clace app reload --approve --promote "/disk_usage*"
 ```
 
-For apps created from GitHub source, `app reload` will pick up the [latest changes]({{< ref "applications/lifecycle/#github-reload" >}}) from the branch specified during `app create` (default is `main`). For apps created from local disk sources, the reload loads from the folder originally used during the create. For non-dev apps, the source code is loaded into the SQLite metadata database managed by the Clace server.
+For apps created from GitHub source, `app reload` will pick up the [latest changes]({{< ref "applications/lifecycle/#github-reload" >}}) from the branch specified during `app create` (default is `main`). For apps created from local disk sources, the reload loads from the folder originally used during the create. For non-dev apps, the source code is loaded into the SQLite metadata database managed by the Clace server.This allow for versioning, even when working with local sources.
 
 ## App Security
 
@@ -79,9 +94,9 @@ The `--approve` option can be specified during the `app create` and `app reload`
 
 ## Staged Deployments
 
-For dev mode apps, there is just one app. For a prod mode app, creating the app creates a staging app and the actual production app. All config and code changes are applied on the [staging mode]({{< ref "applications/lifecycle/#staging-apps" >}}) app first, and then manually promoted using `app promote` or automatically, if `--promote` option is specified for the `app reload`.
+For dev mode apps, there is just one app. For a prod mode app, creating the app creates a staging app and the actual production app. All config and code changes are applied on the [staging mode]({{< ref "applications/lifecycle/#staging-apps" >}}) app first, and then manually promoted using `app promote`. Promotion is automatic if `--promote` option is specified for the `app reload` (or any other command performing a metadata change).
 
-The `app list` command lists all the apps for the specified [glob pattern]({{< ref "applications/overview/#glob-pattern" >}}). By default, it lists only the dev and prod apps. To list the staging apps also, add the `--internal` option to `app list`. `all` is a shortcut for `*:**`, which means all apps in all domains. For example:
+The `app list` command lists all the apps for the specified [glob pattern]({{< ref "applications/overview/#glob-pattern" >}}). By default, it lists only the dev and prod apps. To list the staging apps also, add the `--internal` (or `-i`) option to `app list`. `all` is a shortcut for `*:**`, which means all apps in all domains. `all` is the default for `app list`. For example:
 
 ```shell
 clace app list --internal all
@@ -97,7 +112,7 @@ To promote changes from staging to prod, run:
 clace app promote all
 ```
 
-or `clace app promote "/disk_usage*"` to promote specific apps. Use the `--dry-run` option to verify changes before they are actually applied.
+or `clace app promote "/disk_usage*"` to promote specific apps. Use the `--dry-run` option to verify commands before they are actually applied.
 
 ## Lifecycle without Git
 
@@ -155,10 +170,10 @@ app_prd_2cSkPeHiATfH46pcUX8EdZqdWQb PROD*       3 SYST main:c00d7b1e99712de13745
 app_stg_2cSkPeHiATfH46pcUX8EdZqdWQb STG         4 SYST main:c00d7b1e99712de13745      /dugit_cl_stage                                             github.com/claceio/clace/examples/disk_usage
 ```
 
-In the above listing, the staging app is on version 4, prod app on version 3. The "\*" in the `app list` output indicates that the prod app has staged changes waiting to be promoted. Running `clace app promote /dugit` will update prod with the staged changes.
+In the above listing, the staging app is on version 4, prod app on version 3. The `*` in the `app list` output indicates that the prod app has staged changes waiting to be promoted. Running `clace app promote /dugit` will update prod with the staged changes. `version revert` reverts to previous version. `version switch` can be used to switch to particular version, `next` and `previous` are shortcuts for version numbers. Version commands run against the specific app, so revert can be done on the staging app or the main app independently.
 
 ## Developing Apps
 
-Clace apps are written using Starlark and Go HTML templates. Starlark is a subset of Python, it is easy to pick up even if you are not familiar with Python. Go HTML templates are used by tools like Hugo and Helm.
+Clace app backend can be written in any language, running in a container. Some apps can be written in [Starlark](https://github.com/google/starlark-go) and [Go HTML templates](https://pkg.go.dev/text/template), in which case no containers are required.
 
-See [overview]({{< ref "app/overview/" >}}) for a quick start overview on developing Clace applications.
+See [dev overview]({{< ref "app/overview/" >}}) for a quick start overview on developing Clace applications.
