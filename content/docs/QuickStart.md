@@ -5,7 +5,7 @@ summary: "Quick Start guide on using Clace"
 date: 2024-02-03
 ---
 
-This page provides an overview of how to start with Clace and provides links to doc pages with more details.
+Clace is an Apache-2.0 licensed project building a web app development and deployment platform for internal tools. This page provides an overview of how to start with Clace and provides links to doc pages with more details.
 
 ## Installation
 
@@ -47,12 +47,44 @@ See [installation]({{< ref "installation" >}}) for details. See [config options]
 
 The release binaries are also available at [releases](https://github.com/claceio/clace/releases). See [install from source]({{< ref "installation/#install-from-source" >}}) to build from source.
 
+## Containerized Applications
+
+Clace apps which are implemented in [Starlark](https://github.com/google/starlark-go) run within the Clace server. No containers are required for running those apps. For apps where the backend is implemented in any other language, containers are used to run the app. Clace works with Docker and Podman. By default, the server looks for the `podman` client CLI. If not found, it looks for the `docker` client CLI. To customize this, add in server config
+
+```toml {filename="clace.toml"}
+[system]
+container_command = "/path/to/container_manager_cli"
+```
+
+There are two options for using containerized apps. One is to include the required files in the app repo. This will mean there should be `app.star` with the app config, a `Containerfile` or `Dockerfile` with the container config. The other option is to use an [app spec]({{< ref "app/overview/#building-apps-from-spec" >}}). This allows you to use Clace without requiring any changes to your app. No container file is even required. For example, the command
+
+```
+clace app create --spec python-streamlit --branch master --approve \
+   github.com/streamlit/streamlit-example /streamlit
+```
+
+does the following:
+
+- Checks out the `github.com/streamlit/streamlit-example`
+- Copy any missing files from the app specification `python-streamlit` into the repo
+- Load the app source and metadata into the Clace server metadata database (SQLite)
+
+When the first API call is done to the app (lazy-loading), the Clace server will build the container image from the `Containerfile` defined in the spec, start the container and setup the proxy for the app APIs.
+
+Any env params which need to be passed to the app can be configured as [app params]({{< ref "app/overview/#app-parameters" >}}). Params are set, during app creation using `app create --param port=9000` or after creation using `param update /myapp port 9000`.
+
+If the source repo has a `Containerfile` or `Dockerfile`, the `container` spec is a generic spec which works with any language or framework. If the container file defined a port using `EXPOSE` directive, then port is not required. Otherwise, specify a port, for example
+
+```
+clace app create --spec container --approve --param port=8000 \
+     github.com/myorg/myrepo /myapp
+```
+
 ## Managing Applications
 
 Multiple applications can be installed on a Clace server. Each app has a unique path and can be managed separately. The app path is made up of domain_name:url_path. If no domain_name is specified during app creation, the app is created in the default domain. The default domain is looked up when no specific domain match is found. See [app routing]({{< ref "applications/routing/" >}}) for details about routing.
 
-For local env, url based routing is easier, since wildcard DNS is not available by default for the localhost domain.
-For production deployment, if wildcard DNS is setup, that makes domain routing easy. Apps can be hosted on multiple unrelated domains on one Clace server.
+For local env, url based routing can be used or `*.localhost` domain can be used for domain based paths. For production deployment, if wildcard DNS is setup, domain based routing can be used without new DNS entries being required per app. Apps can be hosted on multiple unrelated domains on one Clace server.
 
 ## App Installation
 
@@ -133,7 +165,7 @@ If not using git, a workflow would be:
 - The staging app is available at `https://localhost:25223/myapp_cl_stage` for verification.
 - To promote the code to prod, run `clace app promote /myapp`. The staged code is promoted to prod, live at `https://localhost:25223/myapp`.
 
-Having a staging environment helps catch issues related to account setup (which endpoint is pointed to etc) and other config issues before the changes are live on prod.
+Having a staging environment helps catch issues related to account setup (which endpoint is pointed to etc) and other config issues before the changes are live on prod. Clace implements versioning for prod apps, even when source is not from git.
 
 ## Lifecycle With Git
 
