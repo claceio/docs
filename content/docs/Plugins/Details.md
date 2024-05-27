@@ -15,6 +15,10 @@ The `store.in` plugin supports a document store interface for writing data to SQ
 
 The `container.in` plugin supports configuring for using a container for deploying backend APIs. See [container]({{< ref "container" >}}) for details.
 
+## Proxy Config
+
+The `proxy.in` plugin supports proxying API calls to deploying backend APIs. See [proxy]({{< ref "proxy" >}}) for details.
+
 ## HTTP Plugin
 
 The `http.in` plugin supports making HTTP API calls. The APIs available are:
