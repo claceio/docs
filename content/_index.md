@@ -75,6 +75,6 @@ layout: hextra-home
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="Comparison with cloud services" subtitle="Cloud services like Cloud Run simplify the deployment of containerized web apps. They run outside your existing infrastructure, making it difficult to talk to your existing systems. Clace provides a similar easy to use interface. Instead of doing this as a cloud service, Clace does this on your hardware." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="How is Clace different?" subtitle="Clace is a single binary, cross-platform and can be used during development. Adding OAuth and access control and atomic updates across multiple apps is easy. Clace is build for the internal tools use-case, allowing for services to be deployed and shared across a team securely." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="How is Clace different?" subtitle="Clace is a single binary, cross-platform and can be used during development. Adding OAuth and access control and atomic updates across multiple apps is easy. Clace is built for the internal tools use-case, allowing for services to be deployed and shared across a team securely." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
