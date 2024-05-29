@@ -51,7 +51,7 @@ All the app management subcommands except `create` take a glob pattern, so multi
 
 ## Glob Pattern
 
-The `reload/delete/promote/approve/list` commands accept a glob pattern. `example.com:**` will match apps under the example.com domain. `*:**` will match all apps in all domains, `all` is a shortcut for this. When using glob patterns, place the pattern inside double-quotes to avoid issues with shell star expansion. For example, `"example.com:**"`
+The `reload/delete/promote/approve/list/update` commands accept a glob pattern. `example.com:**` will match apps under the example.com domain. `*:**` will match all apps in all domains, `all` is a shortcut for this. When using glob patterns, place the pattern inside double-quotes to avoid issues with shell star expansion. For example, `"example.com:**"`
 
 The default for `app list` command is to list all apps. All other commands require an glob pattern to be specified explicitly.
 

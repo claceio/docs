@@ -52,7 +52,7 @@ The server `clace.toml` can have multiple auth configs defined. One of them can 
 
 ## Callback Url
 
-To enable any Oath provider, the callback url domain has to be specified in the server config. Add
+To enable any Oauth provider, the callback url domain has to be specified in the server config. Add
 
 ```toml {filename="clace.toml"}
 [security]

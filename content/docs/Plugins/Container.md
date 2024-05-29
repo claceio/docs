@@ -34,7 +34,7 @@ When the `src` is auto, the container file is auto detected. It checks for prese
 A sample program using the container `config` is
 
 <!-- prettier-ignore -->
-```html {filename="app.star"}
+```python {filename="app.star"}
 load("proxy.in", "proxy")
 load("container.in", "container")
 
