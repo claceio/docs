@@ -1,6 +1,16 @@
-Output screen.gif
-Set Theme "Hipster Green"
-#Set Theme { "name": "Custom", "background": "#f0ede6", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
+# export PS1="$ "
+
+# Setup clace.toml with these defaults
+#[security]
+#app_default_auth_type = "none"
+#[client]
+#default_format = "basic"
+
+
+Output intro_light.gif
+Output intro_light.mp4
+#Set Theme "Hipster Green"
+Set Theme { "name": "Custom", "background": "#f0ede6", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
 
 Set FontSize 32
 Set Width 1200
@@ -18,12 +28,13 @@ Type "clace server start &" Sleep 600ms Enter
 Sleep 1 Enter
 
 Type "# Install app from GitHub url" Sleep 400ms Enter
-Type "# DU app runs within Clace server, no containers needed" Sleep 400ms Enter
+Type "# This app runs within Clace server," Enter
+Type "# no containers required" Sleep 400ms Enter
 Type "clace app create --approve github.com/claceio/apps/system/disk_usage /du" Sleep 400ms Enter
 Sleep 2
 Enter 2
 Type "# List apps, -i option shows internal apps also" Sleep 400ms Enter
-Type "# Prod apps have a staging app always" Sleep 400ms Enter
+Type "# Prod apps always have a staging env" Sleep 400ms Enter
 Type "clace app list -i" Sleep 400ms  Enter
 Sleep 3 Enter 2
 
@@ -139,6 +150,6 @@ Sleep 1 Enter 3
 
 Type "# Clace - Web app management platform" Sleep 400ms  Enter
 Type "# Easy, light-weight web app management"  Enter
-Type "# for internal tools. Add OAuth easily for apps" Sleep 400ms  Enter 2
+Type "# for internal tools. Setup OAuth auth easily" Sleep 400ms  Enter 2
 Type "# Cross-platform, works on Linux/Windows/OSX" Sleep 400ms Enter
 Sleep 6
