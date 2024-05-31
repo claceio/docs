@@ -7,10 +7,10 @@
 #default_format = "basic"
 
 
-Output intro_light.gif
-Output intro_light.mp4
-#Set Theme "Hipster Green"
-Set Theme { "name": "Custom", "background": "#f0ede6", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
+Output intro_dark.gif
+Output intro_dark.mp4
+Set Theme "Hipster Green"
+#Set Theme { "name": "Custom", "background": "#f0ede6", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
 
 Set FontSize 32
 Set Width 1200
@@ -44,8 +44,6 @@ Type "podman ps" Sleep 400ms  Enter
 Sleep 2 Enter 2
 
 Type "# Create a dir with source files" Sleep 400ms Enter
-Type "ls -l flask" Sleep 400ms  Enter
-Sleep 1
 Type "cat flask/app.py" Sleep 400ms  Enter
 Sleep 2 Enter 2
 
