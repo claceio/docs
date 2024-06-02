@@ -71,7 +71,7 @@ layout: hextra-home
 
 {{< hextra/feature-grid >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="Comparison with other tools" subtitle="Other tools for simplifying containerized deployment are Linux specific. They are built on top of reverse proxies (Traefik/Nginx), using container labels for routing. They are built for prod deployment only, not for dev. They are not not optimized for internal tool use-case, adding OAuth or access control are not trivial." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="Comparison with other tools" subtitle="Other tools for simplifying containerized deployment are Linux specific. They are built on top of reverse proxies (Traefik/Nginx), using container labels for routing. They are built for prod deployment only, not for dev. Adding OAuth or access control are not easy with other solutions." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="Comparison with cloud services" subtitle="Cloud services like Cloud Run simplify the deployment of containerized web apps. They run outside your existing infrastructure, making it difficult to talk to your existing systems. Clace provides a similar easy to use interface. Instead of doing this as a cloud service, Clace does this on your hardware." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
