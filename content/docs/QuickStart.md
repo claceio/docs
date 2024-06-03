@@ -69,7 +69,7 @@ does the following:
 
 When the first API call is done to the app (lazy-loading), the Clace server will build the container image from the `Containerfile` defined in the spec, start the container and setup the proxy for the app APIs.
 
-Any env params which need to be passed to the app can be configured as [app params]({{< ref "app/overview/#app-parameters" >}}). Params are set, during app creation using `app create --param port=9000` or after creation using `param update /myapp port 9000`.
+Any env params which need to be passed to the app can be configured as [app params]({{< ref "app/overview/#app-parameters" >}}). Params are set, during app creation using `app create --param port=9000` or after creation using `param update port 9000 /myapp`.
 
 If the source repo has a `Containerfile` or `Dockerfile`, the `container` spec is a generic spec which works with any language or framework. If the container file defined a port using `EXPOSE` directive, then port is not required. Otherwise, specify a port, for example
 

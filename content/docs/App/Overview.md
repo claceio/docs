@@ -249,7 +249,7 @@ This is defining three parameters. The type can be one of `STRING`(default), `IN
 
 The parameters are available in the app Starlark code, through the `param` namespace. For example, `param.port`, `param.app_name` etc. See https://github.com/claceio/appspecs/blob/main/python-flask/app.star for an example of how this can be used.
 
-Params are set, during app creation using `app create --param port=9000` or using `param update /myapp port 9000`. Set value to `-` to delete the param. Use `param list /myapp` to list the params.
+Params are set, during app creation using `app create --param port=9000` or using `param update port 9000 /myapp`. Set value to `-` to delete the param. Use `param list /myapp` to list the params.
 
 For containerized apps, all params specified for the app (including ones not specified in `params.star` spec) are passed to the container at runtime as environment parameters. `CL_APP_PATH` is a special param passed to the container with the app installation path (without the domain name).
 
