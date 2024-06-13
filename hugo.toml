@@ -1,6 +1,6 @@
 baseURL = "https://clace.io/"
 languageCode = "en-us"
-title = "Clace"
+title = "Web App Deployment Platform | Clace"
 canonifyURLs = false
 relativeURLs = false
 pluralizeListTitles = false
@@ -24,8 +24,8 @@ noClasses = false
 
 # Default Page Parameters
 [params]
-title = "Clace"
-description = "Web App Deployment Platform"
+title = "Web App Deployment Platform | Clace"
+description = "Easy, light-weight web app management and container orchestration for internal tools. Cross platform across Linux, Windows and OSX"
 image = "clace_icon.png"
 
 [params.navbar]
