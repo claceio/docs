@@ -14,26 +14,9 @@ The goal of this project is to make it easy for individuals and teams to develop
 
 A single developer should be able to manage the full application lifecycle: frontend and backend development and production deployment. Deployments should support a GitOps approach, with automatic preview environment to verify changes before making them live. It should be easy, for the original developer or a new one, to make application code changes and deploy - after six months or after six years.
 
-Clace aims to provide a developer friendly development environment, while providing a performant and scalable deployment platform which is operationally simple to manage.
-
-### Terminology
-
-- **Internal applications**: Web applications built or downloaded for use by an individual or teams. For users, this could be apps to manage their machine, like monitor disk usage across folders. For teams, apps could automate common operations like managing resource limits, provisioning accounts etc.
-- **Sandboxing**: Sandboxing is a security mechanism to ensure that an application stays within the rules set by the admin. If an application is configured to perform GET requests, trying to do a POST request from the application will fail until the admin authorizes the application to perform POST requests. Sandboxing is different from containers/jails. Those allow you to control at the network layer. Sandboxing allow more fine grained controls at the application API layer. Sandboxing allows usecases like allow GET but not POST, allow access to one database table but not to others etc. This applies for Starlark based apps. For container based apps, Clace plugin level sandboxing does not apply.
-
 ### What's with the name
 
 The name Clace is a play on **C**ommand **L**ine **Ace**, since building an UI for command line applications was an initial target use-case. The name is pronounced like _Place_, with a _C_.
-
-### Why is there a need for such a platform?
-
-There are tools focussed on simplifying application deployment. Kamal, Dokku and Coolify simplify container management on server infrastructure. All those are Linux only tools, aiming to support production deployment of applications, managing the application layer and also the data persistence layer. Most use Traefik as the proxy, the labels added for containers are used to proxy the traffic. There are multiple components to understand when using these tools.
-
-For internal tool deployment, easy of use is a primary consideration. Kubernetes is a platform to build platforms. Adding a GitOps workflow for Kubernetes requires additional tools like ArgoCD or Flux. For the use case of deploying webapps for internal tools, that level of complexity is generally overkill.
-
-Clace aims to to be cross-platform (Linux, Windows and OSX). Clace supports app development in addition to production deployment. Clace is a single binary which includes the reverse proxy and container management functionality.
-
-Only web app deployment is supported by Clace. Clace does not aim to support installing standalone databases or other infrastructure components. Web app containers can use an in-container database, that is supported by Clace. For internal tools, the data persistence is expected to be done externally, so this is not a issue generally.
 
 ### How is Clace implemented?
 
@@ -49,11 +32,12 @@ Only web app deployment is supported by Clace. Clace does not aim to support ins
 
 ### Current Status
 
-The development of Clace was started in April 2023. The current status as of May 2024 is:
+The current status as of Aug 2024 is:
 
 - Client and server (in a single binary) for service management and configuration.
 - Support for application development with Starlark based configuration.
 - Container management support with Docker and Podman
+- Auto-idling of containers to reduce resource usage
 - Go HTML template loading and caching for request processing.
 - HTTP plugin for communicating with REST endpoints.
 - Exec plugin for running system commands.
@@ -68,6 +52,10 @@ The development of Clace was started in April 2023. The current status as of May
 
 The project was started by [Ajay Kidave](https://www.linkedin.com/in/ajayvk/). Ajay's background has been in database systems and enterprise integration tools. Clace was started to find ways to reduce the development and operational complexity in tooling for internal applications.
 
-### What is the longer-term plan for Clace?
+### How to stay in touch?
 
-The current plan is to develop the open source project, with the aim of making Clace a great platform for managing internal applications. The service can currently scale up vertically. Support for metadata storage in Postgres will be added which will enable horizontal scaling. Integration with secrets managers is planned, to support passing secrets to Clace apps. RBAC mechanism is planned to support fine grained access control.
+- Star the repo at [github.com/claceio/clace](https://github.com/claceio/clace)
+- Email at [contact@clace.io](mailto:contact@clace.io)
+- Follow on [Twitter](https://twitter.com/akclace)
+- Subscribe to the blog [RSS feed](https://clace.io/blog/index.xml)
+- Connect on [Discord](https://discord.gg/t2P8pJFsd7)
