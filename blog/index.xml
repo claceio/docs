@@ -4,16 +4,16 @@
 &lt;li>Simplify ongoing maintenance of such apps by removing build and dependency related issues. Updating an app after six months or six years should just work.&lt;/li>
 &lt;li>Provide portable and flexible deployment options, allowing use on personal machine and also shared across teams.&lt;/li>
 &lt;/ul>
-&lt;h2>Use-cases&lt;span class="absolute -mt-20" id="use-cases">&lt;/span>
+&lt;h2>Use-cases&lt;span class="hx-absolute -hx-mt-20" id="use-cases">&lt;/span>
 &lt;a href="#use-cases" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is built to solve two different types of use-cases:&lt;/p>
 &lt;ul>
 &lt;li>Custom applications: With fully customizable UI, this would be similar to solutions like &lt;a href="https://retool.com/" target="_blank" rel="noopener">Retool&lt;/a>. A low-code approach is used, with a focus on &lt;a href="https://hypermedia.systems/hypermedia-reintroduction/" target="_blank" rel="noopener">Hypermedia driven applications&lt;/a>.&lt;/li>
 &lt;li>Workflows: This would be similar to solutions like &lt;a href="https://www.rundeck.com/" target="_blank" rel="noopener">Rundeck&lt;/a>. A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.&lt;/li>
 &lt;/ul>
 &lt;p>One of the aims of Clace is to make it possible for everyone, especially backend engineers, to develop and use simple web interfaces. For use-cases where a CLI was developed previously, a Clace based UI could be built. The backend service could invoke the CLI command or directly call the internal API which need to be exposed. Development and use of simple web interfaces for all types of use-cases should be made easier with Clace.&lt;/p>
-&lt;h2>How does it work?&lt;span class="absolute -mt-20" id="how-does-it-work">&lt;/span>
+&lt;h2>How does it work?&lt;span class="hx-absolute -hx-mt-20" id="how-does-it-work">&lt;/span>
 &lt;a href="#how-does-it-work" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace applications are configured in &lt;a href="https://github.com/google/starlark-go" target="_blank" rel="noopener">Starlark&lt;/a>, which uses a subset of Python syntax. The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. &lt;a href="https://htmx.org/" target="_blank" rel="noopener">HTMX&lt;/a> is used for server interactions. The backend code runs in a security sandbox and every access to plugins need to be explicitly permitted. Application updates can be done with no build step required. Clace integrates with TailwindCSS/DaisyUI for styling and has &lt;a href="https://esbuild.github.io" target="_blank" rel="noopener">esbuild&lt;/a> built-in for &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank" rel="noopener">ESM&lt;/a> support.&lt;/p>
-&lt;h2>Security&lt;span class="absolute -mt-20" id="security">&lt;/span>
+&lt;h2>Security&lt;span class="hx-absolute -hx-mt-20" id="security">&lt;/span>
 &lt;a href="#security" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Starlark backend code for Clace runs in a sandbox, all external interactions need to go through plugins. The Clace platform implements a security sandbox at the plugin boundary. Applications define what operations they need to be able to perform. The platform enforces these permissions at runtime.&lt;/p>
 &lt;p>This &lt;a href="https://clace.io/docs/applications/appsecurity/" >security model&lt;/a> enables the following:&lt;/p>
 &lt;ul>
@@ -22,23 +22,24 @@
 &lt;li>Application developers can use LLM powered automated code generation tools without worrying about the side-effects of the code. If the generated code tries to perform any operation not previously approved, it will fail.&lt;/li>
 &lt;/ul>
 &lt;p>The sandbox will ensure that the apps can do only authorized operations. This makes Clace an ideal target for LLM (like GPT) generated applications. The Clace platform will add the authentication/authorization, gitops based deployment and operational monitoring features on top of the generated app.&lt;/p>
-&lt;h2>Current Status&lt;span class="absolute -mt-20" id="current-status">&lt;/span>
+&lt;h2>Current Status&lt;span class="hx-absolute -hx-mt-20" id="current-status">&lt;/span>
 &lt;a href="#current-status" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is in a beta state currently. Custom application support is functional. Support for loading plugins dynamically is in progress. You can try out Clace (on OSX, Linux or Windows with WSL) by doing:&lt;/p>
-&lt;div class="code-block relative mt-6 first:mt-0 group/code">&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">curl -L https://clace.io/install.sh &lt;span class="p">|&lt;/span> sh
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">curl -L https://clace.io/install.sh &lt;span class="p">|&lt;/span> sh
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> &lt;span class="nv">$HOME&lt;/span>/clhome/bin/clace.env
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clace server start &lt;span class="p">&amp;amp;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
 &lt;button
-class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
 title="Copy code"
 >
-&lt;div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4">&lt;/div>
-&lt;div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4">&lt;/div>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>The app should be available at &lt;a href="https://127.0.0.1:25223/disk_usage" target="_blank" rel="noopener">https://127.0.0.1:25223/disk_usage&lt;/a> after allowing the self-signed certificate. &lt;code>admin&lt;/code> is the username, use the password printed by the install script. See &lt;a href="https://clace.io/docs/installation/" >installation&lt;/a> for details.&lt;/p>
-&lt;h2>Follow Along&lt;span class="absolute -mt-20" id="follow-along">&lt;/span>
+&lt;h2>Follow Along&lt;span class="hx-absolute -hx-mt-20" id="follow-along">&lt;/span>
 &lt;a href="#follow-along" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>You can keep in touch by these means:&lt;/p>
 &lt;ul>
 &lt;li>Star the repo at &lt;a href="https://github.com/claceio/clace" target="_blank" rel="noopener">github.com/claceio/clace&lt;/a>&lt;/li>
