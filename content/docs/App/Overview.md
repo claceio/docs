@@ -7,15 +7,17 @@ summary: "Overview of the Clace application development model"
 
 Clace supports deploying any type of app, in any language/framework, using containerized apps. Apps can also be built where the backend API is in the container but the UI is built using Clace. Clace UI applications implement a [Hypermedia driven approach](https://hypermedia.systems/hypermedia-reintroduction/) for developing web applications. Applications return HTML fragments as API response using [Go html templates](https://pkg.go.dev/html/template). The UI uses HTML enhanced with hypermedia controls using the [HTMX library](https://htmx.org/) to implement user interactions.
 
-The backend API routes and dependencies like CSS library, JavaScript modules etc are configured using [Starlark](https://github.com/google/starlark-go/blob/master/doc/spec.md) configuration. Any custom API handling required is implemented in handler functions also written in Starlark. Starlark is a subset of python, optimized for application configuration usecases.
+The backend API routes and dependencies like CSS library, JavaScript modules etc are configured using [Starlark](https://github.com/google/starlark-go/blob/master/doc/spec.md) configuration. Any custom API handling required is implemented in handler functions also written in Starlark. Starlark is a subset of python, optimized for application configuration use-cases.
 
 ## App Types
 
 Clace apps can be of three types:
 
+- **Containerized apps**: The whole app is implemented in a container, Clace proxies the container results. This uses the container and proxy plugins. No Starlark code is required for this.
 - **Starlark apps**: These use the Clace plugins to implement the whole app. No containers are required for such apps.
-- **Containerized apps**: The whole app is implemented in a container, Clace proxies the container results. This uses the container and proxy plugins.
 - **Hybrid apps**: The backend APIs are implemented in a container. Clace is used to implement the Hypermedia based UI using Starlark handlers. This uses the http plugin to talk to the backend API and the container plugin to configure the backend.
+
+This section of the docs covers Starlark and Hybrid apps. For a containerized app, the `--spec` definition includes all the app definition. There is no need to do any custom Starlark config for a regular containerized app.
 
 ## Structure
 
@@ -115,7 +117,7 @@ and an `~/myapp3/app.go.html` file containing
 
 Run `clace app create --auth=none --dev ~/myapp3 /hello3 `. After that, the app is available at `/hello3`. Note that the `--dev` option is required for the `index_gen.go.html` file to be generated.
 
-The name of the app is hello3. There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
+There is only one route defined, for page /, which shows a HTML page with the name of the app. The body is generated from the contents of the app.go.html file. A more verbose way to write the same app config would be
 
 ```python {filename="app.star"}
 app = ace.app(name="hello3",
@@ -226,7 +228,7 @@ ensures that the specs are updated to the latest version. Periodically doing a g
 
 ## App Parameters
 
-Having a file `params.star` in the app source code causes Clace to load the parameters definitions from that file. Parameters are environment value which can be specified during app creation. A sample param definition is
+Having a file `params.star` in the app source code causes Clace to load the parameters definitions from that file. Parameters are environment values which can be specified during app creation. A sample param definition is
 
 ```python {filename="params.star"}
 param("port", type=INT,
@@ -251,7 +253,7 @@ The parameters are available in the app Starlark code, through the `param` names
 
 Params are set, during app creation using `app create --param port=9000` or using `param update port 9000 /myapp`. Set value to `-` to delete the param. Use `param list /myapp` to list the params.
 
-For containerized apps, all params specified for the app (including ones not specified in `params.star` spec) are passed to the container at runtime as environment parameters. `CL_APP_PATH` is a special param passed to the container with the app installation path (without the domain name).
+For containerized apps, all params specified for the app (including ones not specified in `params.star` spec) are passed to the container at runtime as environment parameters. `CL_APP_PATH` is a special param passed to the container with the app installation path (without the domain name). `PORT` is also set with the value of the port number the app is expected to bind to within the container.
 
 ## Automatic Error Handling
 

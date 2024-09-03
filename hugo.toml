@@ -1,6 +1,6 @@
 baseURL = "https://clace.io/"
 languageCode = "en-us"
-title = "Web App Deployment Platform | Clace"
+title = "Container-Native Application Server | Clace"
 canonifyURLs = false
 relativeURLs = false
 pluralizeListTitles = false
@@ -24,8 +24,8 @@ noClasses = false
 
 # Default Page Parameters
 [params]
-title = "Web App Deployment Platform | Clace"
-description = "Easy, light-weight web app management and container orchestration for internal tools. Cross platform across Linux, Windows and OSX"
+title = "Container-Native Application Server | Clace"
+description = "AppServer for containerized deployment of web apps. Cross platform across Linux, Windows and OSX"
 image = "clace_icon.png"
 
 [params.navbar]
@@ -86,24 +86,46 @@ weight = 6
 type = "search"
 
 [[menu.main]]
-name = "Discord"
-weight = 7
-url = "https://discord.gg/t2P8pJFsd7"
-[menu.main.params]
-icon = "discord"
-
-[[menu.main]]
 name = "Twitter"
-weight = 8
+weight = 7
 url = "https://twitter.com/akclace"
 [menu.main.params]
 icon = "twitter"
 
 [[menu.main]]
 name = "GitHub"
-weight = 9
+weight = 8
 url = "https://github.com/claceio/clace"
 
 [menu.main.params]
 icon = "github"
 
+[[menu.sidebar]]
+name = "Contact"
+params.type = "separator"
+weight = 1
+
+[[menu.sidebar]]
+name = "Email"
+url = "mailto:contact@clace.io"
+weight = 1
+
+[[menu.sidebar]]
+name = "GitHub"
+url = "https://github.com/claceio"
+weight = 2
+
+[[menu.sidebar]]
+name = "Twitter"
+url = "https://twitter.com/akclace"
+weight = 3
+
+[[menu.sidebar]]
+name = "Blog Feed"
+url = "https://clace.io/blog/index.xml"
+weight = 4
+
+[[menu.sidebar]]
+name = "Discord"
+url = "https://discord.gg/t2P8pJFsd7"
+weight = 5
