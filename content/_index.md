@@ -11,8 +11,8 @@ layout: hextra-home
 
 <div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  Application server for easy dev and deployment of containerized webapps.&nbsp;<br class="sm:hx-block hx-hidden"/>
-  Cross platform across Linux, Windows and OSX.
+  Easy, light-weight application server for development and deployment of containerized webapps.&nbsp;<br class="sm:hx-block hx-hidden"/>
+  Supports all languages/frameworks, runs on Linux, Windows and OSX. Idle apps scale down to zero.
 {{< /hextra/hero-subtitle >}}
 </div>
 

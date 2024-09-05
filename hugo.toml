@@ -25,7 +25,7 @@ noClasses = false
 # Default Page Parameters
 [params]
 title = "AppServer for WebApp Dev and Hosting | Clace"
-description = "Application server for easy dev and deployment of containerized webapps. Cross platform across Linux, Windows and OSX"
+description = "Easy, light-weight application server for development and deployment of containerized webapps. Supports all languages/frameworks, runs on Linux, Windows and OSX. Idle apps scale down to zero."
 image = "clace_icon.png"
 
 [params.navbar]
