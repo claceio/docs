@@ -5,20 +5,18 @@ layout: hextra-home
 
 <div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: linear-gradient(180deg, #277A9F, #359ece); color: transparent; background-clip: text; -webkit-background-clip: text;">
 {{< hextra/hero-headline >}}
-  Container-Native Application Server
+  AppServer for WebApp Dev and Hosting
 {{< /hextra/hero-headline >}}
 </div>
 
-<div class="hx-mb-12">
+<div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  AppServer for containerized deployment of web apps.&nbsp;<br class="sm:hx-block hx-hidden"/>
+  Application server for easy dev and deployment of containerized webapps.&nbsp;<br class="sm:hx-block hx-hidden"/>
   Cross platform across Linux, Windows and OSX.
 {{< /hextra/hero-subtitle >}}
-
 </div>
 
-<br>
-<div class="hx-mb-6">
+<div class="hx-mb-4">
 {{< hextra/hero-button text="Get Started" link="docs/quickstart" >}}
 </div>
 

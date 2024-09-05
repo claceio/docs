@@ -1,6 +1,6 @@
 baseURL = "https://clace.io/"
 languageCode = "en-us"
-title = "Container-Native Application Server | Clace"
+title = "AppServer for WebApp Dev and Hosting | Clace"
 canonifyURLs = false
 relativeURLs = false
 pluralizeListTitles = false
@@ -24,8 +24,8 @@ noClasses = false
 
 # Default Page Parameters
 [params]
-title = "Container-Native Application Server | Clace"
-description = "AppServer for containerized deployment of web apps. Cross platform across Linux, Windows and OSX"
+title = "AppServer for WebApp Dev and Hosting | Clace"
+description = "Application server for easy dev and deployment of containerized webapps. Cross platform across Linux, Windows and OSX"
 image = "clace_icon.png"
 
 [params.navbar]
