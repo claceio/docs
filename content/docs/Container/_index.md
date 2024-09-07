@@ -8,5 +8,5 @@ Details about developing containerized Clace applications.
 
 {{< cards >}}
 {{< card link="overview" title="Overview" subtitle="Overview of a containerized Clace app" icon="zoom-in" >}}
-{{< card link="state" title="Container State" subtitle="Details about the container state management" icon="inbox-in" >}}
+{{< card link="config" title="Container Config" subtitle="Details about the container config and state management" icon="inbox-in" >}}
 {{< /cards >}}

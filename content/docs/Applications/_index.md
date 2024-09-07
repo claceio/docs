@@ -1,6 +1,6 @@
 ---
 title: "Managing Apps"
-weight: 200
+weight: 300
 summary: "Application routing and security details"
 ---
 
