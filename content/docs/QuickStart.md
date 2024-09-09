@@ -78,6 +78,8 @@ clace app create --spec container --approve --param port=8000 \
      github.com/myorg/myrepo /myapp
 ```
 
+See [containerized apps]({{< ref "container/overview/" >}}) for details.
+
 ## Managing Applications
 
 Multiple applications can be installed on a Clace server. Each app has a unique path and can be managed separately. The app path is made up of domain_name:url_path. If no domain_name is specified during app creation, the app is created in the default domain. The default domain is looked up when no specific domain match is found. See [app routing]({{< ref "applications/routing/" >}}) for details about routing.

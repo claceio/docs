@@ -4,10 +4,6 @@ weight: 200
 summary: "Overview of containerized app config and state management"
 ---
 
-Containerized apps are lazy initialized. The image is created and container started on the first API call to the app.
-
-## Container Config
-
 The default configuration for the Clace server is defined [here](https://github.com/claceio/clace/blob/main/internal/system/clace.default.toml). The container related config settings are
 
 ```toml
