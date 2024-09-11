@@ -52,7 +52,7 @@ layout: hextra-home
 
 {{< hextra/feature-grid >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="Container management" link="docs/quickstart/#containerized-applications" subtitle="Automatically build and deploy containers, with Docker or Podman."  icon="docker" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="Container management" link="docs/quickstart/#containerized-applications" subtitle="Build and deploy containers, with Docker or Podman."  icon="docker" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="GitOps Workflow" link="docs/quickstart/#lifecycle-with-git" subtitle="Blue-green (staged) deployments, versioning and preview environments with no infra to manage."  icon="github" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 
@@ -60,7 +60,7 @@ layout: hextra-home
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="No build step" link="docs/app/overview/#app-lifecycle" subtitle="Backend and frontend development with no build artifacts to manage, deploy directly from the source repo."  icon="binary-off" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="Scale down to zero" link="docs/quickstart/#containerized-applications" subtitle="Apps are initialized lazily, on demand: scale down to zero automatically."  icon="pause" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="Scale down to zero" link="/docs/container/overview/" subtitle="Apps are initialized lazily, on demand: scale down to zero automatically."  icon="pause" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="Cross-platform" link="docs/quickstart/#installation" subtitle="Clace runs natively on Linux, Windows and OSX and works with Docker or Podman"  icon="globe-alt" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
 

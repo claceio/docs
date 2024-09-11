@@ -6,11 +6,17 @@ layout: hextra-home
 
 {{< hextra/feature-grid >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="Container management" link="/docs/quickstart/#containerized-applications" subtitle="Automatically build and and deploy containers, with Docker or Podman."  icon="docker" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="Cross-language AppServer" link="/docs/quickstart/#containerized-applications" subtitle="Application Server which supports all languages."  icon="support" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore --> {{< hextra/feature-card title="Container management" link="/docs/container/overview/" subtitle="Automatically build and and deploy containers, with Docker or Podman."  icon="docker" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="GitOps Workflow" link="/docs/quickstart/#lifecycle-with-git" subtitle="Blue-green (staged) deployments, versioning and preview environments with no infra to manage."  icon="github" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="Hypermedia web apps" link="/docs/app/routing/#html-route" subtitle="Fast and lightweight backend driven apps, minimal frontend complexity."  icon="html5" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore --> {{< hextra/feature-card title="Secrets Management" link="/docs/configuration/secrets/" subtitle="Manage secrets with AWS Secrets Manager and Vault."  icon="shield-exclamation" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore --> {{< hextra/feature-card title="Auto-Pause Idle apps" link="/docs/container/config/" subtitle="Idle pause are paused, reducing resource usage."  icon="pause" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="No build step" link="/docs/app/overview/#app-lifecycle" subtitle="Backend and frontend development with no build artifacts to manage, deploy directly from the source repo."  icon="binary-off" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.15),hsla(0,0%,100%,0));" >}}
 
