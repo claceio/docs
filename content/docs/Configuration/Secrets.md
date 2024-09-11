@@ -50,7 +50,7 @@ Adding a secret provider with the name `env`, like
 [secret.env]
 ```
 
-enables looking up the Clace server environment for secrets. This can be accessed like `--param MYPARAM='{{secret "env" "MY_SECRET_KEY"}}'`. No properties are required in the env provider config. The vaule of MY_SECRET_KEY in the Clace server env wil be passed as the param.
+enables looking up the Clace server environment for secrets. This can be accessed like `--param MYPARAM='{{secret "env" "MY_SECRET_KEY"}}'`. No properties are required in the env provider config. The value of MY_SECRET_KEY in the Clace server env wil be passed as the param.
 
 ## Secrets Usage
 
