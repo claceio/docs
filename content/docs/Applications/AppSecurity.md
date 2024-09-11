@@ -18,6 +18,8 @@ The security model used by Clace is:
 
 The trust boundary is about what the application can do in the backend. The frontend code is sandboxed by the browser, there is no additional auditing implemented for the frontend code.
 
+For apps which make calls to external programs (using `exec` plugin) and containerized apps, the external program runs as usual. The Clace security model applies for Starlark apps. For other apps, the security model allows control on which program to run and what args to pass and which container to use. But there is no restriction on what the external program or container itself can do.
+
 ## Usecases
 
 This security model allows for the following:
