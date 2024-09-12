@@ -109,4 +109,4 @@ The app cannot be run until either the code change is reverted or the admin appr
 
 The following enhancements are planned for the security model
 
-- Secrets management is planned, in such a manner that the application can request access to specific secrets. The application can use the secret but will not have direct access to the secret value, it will work with a reference to the secret key.
+- For the [secrets management feature]({{< ref "/docs/configuration/secrets/" >}}), the app does not have direct access to the secret value. Apps can access any secret from the secret manager currently. An improvement planned to to allow restricting apps to specific secrets.
