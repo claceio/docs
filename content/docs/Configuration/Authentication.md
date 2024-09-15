@@ -22,6 +22,28 @@ assuming there is a `github_prod` oauth config.
 
 Any new app created will use this as the auth unless overridden in the `app create` call or using `app update`.
 
+## Client Cert Authentication (mTLS)
+
+Apps can be updated to use mutual TLS authentication. To enable this, add a `client_auth` config entry in server config with the CA certificate to verify against. Multiple entries can be added, the entry name should be `cert` or should start with `cert_`. For example
+
+```toml {filename="clace.toml"}
+[client_auth.cert_test1]
+ca_cert_file="/data/certs/ca1.crt"
+
+[client_auth.cert_test2]
+ca_cert_file="/data/certs/ca2.crt"
+```
+
+defines two client_auth configs: `cert_test1` using ca1.crt and `cert_test2` using ca2.crt. Apps can be updated to use this auth config by running `app update-settings auth cert_test1 /myapp` or `app update-settings auth cert_test2 /myapp`.
+
+Any API call to the app has to pass the client certificates. Using curl, the call would look like:
+
+```sh
+curl -k --cert client.crt --key client.key https://localhost:25223/myapp
+```
+
+If the client cert has been signed with the root CA defined in /data/certs/ca1.crt, the API call will succeed. Otherwise it fails. HTTP requests are not allowed when client cert authentication is used.
+
 ## OAuth Authentication
 
 OAuth based authentication is supported for the following providers:
