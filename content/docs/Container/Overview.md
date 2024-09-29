@@ -26,7 +26,7 @@ clace app create --spec python-streamlit --branch master \
   --approve github.com/streamlit/streamlit-example /streamlit_app
 ```
 
-will create an app at `https://localhost:25223/streamlit_app`. On the first API call to the app, the image is built from the defined spec and the container is started.
+will create an app at `https://localhost:25223/streamlit_app`. On the first API call to the app, the image is built from the defined spec and the container is started. The `python-gradio` spec does the same for gradio apps.
 
 ## App Specs Listing
 
@@ -43,6 +43,7 @@ The specs defined currently are:
 | python-streamlit        |                                                                                                                            | <ul><li><b>app_file</b> : The file name of the streamlit app to run. Default streamlit_app.py</li></ul>                          | Yes                   |                                                                      | `clace app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app`                                    |
 | python-streamlit-poetry |                                                                                                                            | <ul><li><b>app_file</b> : The file name of the streamlit app to run. Default streamlit_app.py</li></ul>                          | Yes                   | Installs packages using poetry                                       |
 | python-fasthtml         |                                                                                                                            | <ul><li><b>APP_MODULE</b>: The module:app for the ASGI app. Defaults to app:app, meaning app in app.py</li> </ul>                | Depends on app        | Runs app using uvicorn                                               | `clace app create --approve --spec python-fasthtml --param APP_MODULE=basic_ws:app  https://github.com/AnswerDotAI/fasthtml/examples fasthtmlapp.localhost:/` |
+| python-gradio           |                                                                                                                            | <ul><li><b>app_file</b> : The file name of the gradio app to run. Default run.py</li></ul>                                       | Yes                   |                                                                      | `clace app create --spec python-gradio --approve github.com/gradio-app/gradio/demo/blocks_flag /gradio_app`                                                   |
 
 ## App Environment Params
 
