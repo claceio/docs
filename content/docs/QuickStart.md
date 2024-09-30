@@ -217,3 +217,15 @@ In the above listing, the staging app is on version 4, prod app on version 3. Th
 Clace app backend can be written in any language, running in a container. Some apps can be written in [Starlark](https://github.com/google/starlark-go) and [Go HTML templates](https://pkg.go.dev/text/template), in which case no containers are required.
 
 See [dev overview]({{< ref "app/overview/" >}}) for a quick start overview on developing Clace applications.
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16721841645">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16721841645');
+</script>

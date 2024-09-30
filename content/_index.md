@@ -77,3 +77,14 @@ layout: hextra-home
 <!-- prettier-ignore --> {{< hextra/feature-card title="How is Clace different?" subtitle="Clace provides a Cloud Run type experience on your hardware. Code and config changes are blue-green staged for deployment. Multiple apps can be updated atomically (all-or-nothing), no broken state after deployment failures. <br><br>Clace is built for the application management lifecycle across a team, not just the initial installation. Clace has OAuth support and security sand-boxing features which allow operations teams to easily manage applications through GitOps while allowing development teams to freely make code changes." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16721841645">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16721841645');
+</script>
