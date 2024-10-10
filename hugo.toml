@@ -86,11 +86,11 @@ weight = 6
 type = "search"
 
 [[menu.main]]
-name = "Twitter"
+name = "Discord"
 weight = 7
-url = "https://twitter.com/akclace"
+url = "https://discord.gg/t2P8pJFsd7"
 [menu.main.params]
-icon = "twitter"
+icon = "discord"
 
 [[menu.main]]
 name = "GitHub"
