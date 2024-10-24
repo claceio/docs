@@ -35,15 +35,63 @@ Use `powershell` if `pwsh` is not available. Start a new command window (to get 
 To install apps, run
 
 ```
+clace app create --approve github.com/claceio/apps/system/list_files /files
 clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 clace app create --approve github.com/claceio/apps/utils/bookmarks /book
 ```
 
-The disk usage app is available at https://localhost:25223/disk_usage (port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book. Add the `--auth none` flag to the `app create` command to disable authentication.
+The disk usage app is available at https://localhost:25223/disk_usage (port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book, the list files app is available at https://localhost:25223/files. Add the `--auth none` flag to the `app create` command to disable authentication.
 
 See [installation]({{< ref "installation" >}}) for details. See [config options]({{< ref "configuration" >}}) for configuration options. To enable Let's Encrypt certificates, see [Automatic SSL]({{< ref "configuration/networking/#enable-automatic-signed-certificate" >}}).
 
 The release binaries are also available at [releases](https://github.com/claceio/clace/releases). See [install from source]({{< ref "installation/#install-from-source" >}}) to build from source.
+
+## Application Types
+
+Clace allows easy management of multiple apps on one Clace server installation. There are three main types of Clace apps:
+
+- **Action apps** - App backend is defined in Starlark and an auto generated form UI and report is created by Clace. These are the simplest apps.
+- **Containerized Apps** - App backend (in any language/framework) runs in a container. Clace acts as an application server doing reverse proxying for the app APIs. This allows Clace to install and manage apps built in frameworks like Streamlit/Gradio/FastHTML/FastAPI/Flask etc.
+- **Hypermedia apps** - The app is completely customizable, allowing combining containerized apps with actions and custom API handlers, building Hypermedia driven UIs.
+
+For all apps, Clace provides blue-green staged deployment, OAuth access controls, secrets management, TLS cert management etc.
+
+## Action Apps
+
+For use cases where an existing CLI application or API needs to be exposed as a web app, actions provide an easy solution. First, define the parameters to be exposed in the form UI. Create a `params.star` file with the params. For example,
+
+```python {filename="params.star"}
+param("dir", description="The directory to list files from", default="/tmp")
+```
+
+The app defines a run handler which runs `ls` on the specified directory. The output text is returned.
+
+```python {filename="app.star"}
+load ("exec.in", "exec")
+
+def run(dry_run, args):
+   out = exec.run("ls", ["-Lla"])
+   if out.error:
+       return ace.result(out.error)
+   return ace.result("File listing for " + args.dir, out.value)
+
+app = ace.app("List Files",
+   actions=[ace.action("List Files", "/", run, description="Show the ls -a output for specified directory")],
+   permissions=[
+     ace.permission("exec.in", "run", ["ls"]),
+   ],
+)
+```
+
+The app, when accessed will look as shown below, with the `ls` command output displayed:
+
+<picture  class="responsive-picture" style="display: block; margin-left: auto; margin-right: auto;">
+  <source media="(prefers-color-scheme: dark)" srcset="/images/list_files_dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="/images/list_files_light.png">
+  <img alt="List files app" src="/images/list_files_light.png">
+</picture>
+
+See [list_files](https://github.com/claceio/apps/tree/main/system/list_files) for the source code for above app. See [dictionary](https://github.com/claceio/apps/tree/main/misc/dictionary) for another actions example app which shows different type of reports. [Actions]({{< ref "actions" >}}) has more details on building app actions.
 
 ## Containerized Applications
 
@@ -217,5 +265,3 @@ In the above listing, the staging app is on version 4, prod app on version 3. Th
 Clace app backend can be written in any language, running in a container. Some apps can be written in [Starlark](https://github.com/google/starlark-go) and [Go HTML templates](https://pkg.go.dev/text/template), in which case no containers are required.
 
 See [dev overview]({{< ref "app/overview/" >}}) for a quick start overview on developing Clace applications.
-
-
