@@ -97,3 +97,23 @@ If the `report` type is set to any value other than AUTO/TEXT/JSON/TABLE, that i
 For styling, Clace uses DaisyUI by default, so default styles are reset. The custom template can use inline styles or it can use TailwindCSS/DaisyUI. For DaisyUI, the app has to be run in dev mode first for the style.css to be generated. See [styling]({{< ref "docs/develop/styling/#tailwindcss" >}}) for details.
 
 See [dictionary](https://github.com/claceio/apps/tree/main/misc/dictionary) for an actions example app which shows different type of reports.
+
+## Param Value Selector
+
+For some params, it is useful to be able to provide a list of values from which the user can choose. The way this is supported is by using an options param. If `param1` is a param which should show up as a selector, then define another param with the name `options-param1`, of type `LIST`. Set a default value for `options-param1` with the values to show in the selector dropdown. For example
+
+```python {filename="params.star"}
+param("param1", description="The param1 description", default="option1")
+
+param("options-param1", type=LIST, description="Options for param1", default=["option1", "option2"])
+```
+
+In the UI, `options-param1` is not displayed. `param1` is show with a selector, having `option1` and `option2` as options. See [dictionary](https://github.com/claceio/apps/tree/main/misc/dictionary) for an app which uses this.
+
+This approach is used for flexibility, instead of directly allowing the options to be configured for the param. The options param approach has the flexibility that when an app is installed, the options can be configured for the installation. This avoids having to maintain different copies of the app code. For example:
+
+```bash
+clace app create --approve --param options-param1='["option1", "option2", "options3"]' /mycode /myapp
+```
+
+adds a new `options3` option.
