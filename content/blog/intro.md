@@ -5,20 +5,22 @@ date: 2023-11-01
 draft: false
 ---
 
+{{< clace-intro  >}}
+
 # Clace: Platform for Easy Self-Hosted Web Applications
 
-Clace is an [open-source](https://github.com/claceio/clace) platform to enable easy development and deployment of self-hosted web applications. The goals for the Clace project are:
+Clace is an [open-source](https://github.com/claceio/clace) platform to enable easy development and deployment of web applications for internal tools. The goals for the Clace project are:
 
 - Enable development and deployment of secure internal web applications.
-- Simplify ongoing maintenance of such apps by removing build and dependency related issues. Updating an app after six months or six years should just work.
-- Provide portable and flexible deployment options, allowing use on personal machine and also shared across teams.
+- Simplify ongoing maintenance of such apps by solving build and dependency related issues. Updating an app after six months or six years should just work.
+- Provide portable and flexible deployment options, allowing use on developer machine and also on server shared across teams.
 
 ## Use-cases
 
 Clace is built to solve two different types of use-cases:
 
 - Custom applications: With fully customizable UI, this would be similar to solutions like [Retool](https://retool.com/). A low-code approach is used, with a focus on [Hypermedia driven applications](https://hypermedia.systems/hypermedia-reintroduction/).
-- Workflows: This would be similar to solutions like [Rundeck](https://www.rundeck.com/). A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.
+- Actions: This would be similar to solutions like [Rundeck](https://www.rundeck.com/). A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.
 
 One of the aims of Clace is to make it possible for everyone, especially backend engineers, to develop and use simple web interfaces. For use-cases where a CLI was developed previously, a Clace based UI could be built. The backend service could invoke the CLI command or directly call the internal API which need to be exposed. Development and use of simple web interfaces for all types of use-cases should be made easier with Clace.
 
