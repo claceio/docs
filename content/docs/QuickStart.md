@@ -32,7 +32,7 @@ Use `powershell` if `pwsh` is not available. Start a new command window (to get 
 
 ### Install Apps
 
-To install apps, run
+Once Clace server is running, to install apps, run:
 
 ```
 clace app create --approve github.com/claceio/apps/system/list_files /files
