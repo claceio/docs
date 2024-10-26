@@ -1,14 +1,107 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clace</title><link>https://clace.io/</link><description>Recent content in Clace</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 27 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Introducing Clace</title><link>https://clace.io/blog/intro/</link><pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate><guid>https://clace.io/blog/intro/</guid><description>&lt;h1>Clace: Platform for Easy Self-Hosted Web Applications&lt;/h1>&lt;p>Clace is an &lt;a href="https://github.com/claceio/clace" target="_blank" rel="noopener">open-source&lt;/a> platform to enable easy development and deployment of self-hosted web applications. The goals for the Clace project are:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clace</title><link>https://clace.io/</link><description>Recent content in Clace</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 25 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/index.xml" rel="self" type="application/rss+xml"/><item><title>SQLite as a Storage Backend for Web Server Static Content</title><link>https://clace.io/blog/sqlite/</link><pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/sqlite/</guid><description>
+&lt;div
+class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
+&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+&lt;div
+class="hx-select-none hx-text-xl"
+style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+📎
+&lt;/div>
+&lt;/div>
+&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
+&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+Clace is an
+&lt;a href="https://github.com/claceio/clace">open source project&lt;/a>
+building a secure platform for easily developing and deploying internal
+tools across a team. Clace can be used to develop actions which present a
+simple auto-generated web UI for backend operations. Clace also implements
+an appserver for containerized web apps implemented in any language.
+&lt;br />
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Background&lt;span class="hx-absolute -hx-mt-20" id="background">&lt;/span>
+&lt;a href="#background" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is built to serve web applications, primarily for internal tools. Clace provides functionality usually handled separately by a web server and an application server. When the development of Clace was started last year, one of the first decisions was how to store the application data (files) and metadata. The app metadata obviously made sense to store in a database, since apps are created dynamically. The app data (static files, app code, config files etc) is usually stored on the file system. That is how most web servers do it.&lt;/p>
+&lt;h2>Using SQLite for serving files&lt;span class="hx-absolute -hx-mt-20" id="using-sqlite-for-serving-files">&lt;/span>
+&lt;a href="#using-sqlite-for-serving-files" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For Clace, the decision was made to use &lt;a href="https://www.sqlite.org/" target="_blank" rel="noopener">SQLite&lt;/a> for app files storage instead of using the file system. The reasoning was mainly to be able to do atomic version changes. When updating an app, since there could be lots of files being updated, using a database would allow all changes to be done atomically in a transaction. This would prevent broken web pages from being served during a version change.&lt;/p>
+&lt;p>Clace uploads all files to the SQlite database during app creation and updates. File are uploaded from GitHub or file local disk. Only for &lt;a href="https://clace.io/docs/applications/lifecycle/#development-apps" >development mode&lt;/a>, the local file system is used.&lt;/p>
+&lt;h2>Benefits of using SQLite&lt;span class="hx-absolute -hx-mt-20" id="benefits-of-using-sqlite">&lt;/span>
+&lt;a href="#benefits-of-using-sqlite" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The decision to use SQLite for file storage has provided lots of additional benefits (some of then unexpected).&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Transactional Updates&lt;/strong> : This is the main benefit. Updating multiple files can be done in one transaction. Isolation ensures that there are no broken webapps during the update.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Deployment Rollbacks&lt;/strong>: Another of the transactional benefits is the ability to roll back deployment in case of errors. If multiple apps are being updated, all of them can be rolled back in one go. Rolling back a database transaction is much easier that cleaning up files on the file system.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>File De-duplication Across Versions&lt;/strong>: Clace automatically &lt;a href="https://clace.io/docs/applications/overview/#app-listing" >versions&lt;/a> all updates. This can lead to lots of duplicate files. The file data is stored in a table with the schema&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">CREATE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">TABLE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">files&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sha&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">text&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">compression_type&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">text&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">content&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">blob&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">create_time&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">datetime&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">PRIMARY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">KEY&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sha&lt;/span>&lt;span class="p">));&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The uncompressed content SHA256 hash is used as the primary key to store the file data. This means that even if multiple versions of an app have the same file, the file contents are stored only once.&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>De-duplication Across Apps&lt;/strong> : Each production app in Clace has an &lt;a href="https://clace.io/docs/applications/lifecycle/#application-types" >staging app&lt;/a>. Apps can have multiple &lt;a href="https://clace.io/docs/applications/lifecycle/#preview-apps" >previews apps&lt;/a>. This can lead to lots of duplication of files. Using the database helps avoid all the duplication. Even across apps, there are files which have the same contents. Files are de-duplicated across apps also.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Easy Backups&lt;/strong>: Using SQLite means that backups are easy. The state of the whole system, metadata and files can be backed up easily using SQLite backup tools like &lt;a href="https://litestream.io/" target="_blank" rel="noopener">Litestream&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Content Hashing&lt;/strong>: For content caching on the browser, web servers return a &lt;a href="https://en.wikipedia.org/wiki/HTTP_ETag" target="_blank" rel="noopener">ETag&lt;/a> header. Using the database for files makes it easy to save the content SHA once during file upload without having to recompute it later.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Compression&lt;/strong>: The file contents are saved &lt;a href="https://en.wikipedia.org/wiki/Brotli" target="_blank" rel="noopener">Brotli&lt;/a> compressed in the SQLite table. The database approach has the advantage that contents can be saved in multiple formats easily. GZip compressed data and uncompressed data can be added by just adding a column in the &lt;code>files&lt;/code> table.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2>Performance&lt;span class="hx-absolute -hx-mt-20" id="performance">&lt;/span>
+&lt;a href="#performance" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For Clace, the SQLite database approach provides great performance. There is no equivalent implementation using the file system to compare against, so a direct benchmark test is not done. Based on &lt;a href="https://www.sqlite.org/fasterthanfs.html" target="_blank" rel="noopener">benchmarking&lt;/a> done by the SQLite team, SQLite can have better performance than direct file system use for some workloads.&lt;/p>
+&lt;h2>Multi-Node Support&lt;span class="hx-absolute -hx-mt-20" id="multi-node-support">&lt;/span>
+&lt;a href="#multi-node-support" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace currently runs on a single node. When multi-node support is added later, the plan is to use a shared Postgres database instead of using local SQLite for metadata and file data storage. This will come with latency issues. The plan is to use a local SQLite database as a file cache to avoid latency while accessing Postgres.&lt;/p>
+&lt;h2>Why this approach is not more common?&lt;span class="hx-absolute -hx-mt-20" id="why-this-approach-is-not-more-common">&lt;/span>
+&lt;a href="#why-this-approach-is-not-more-common" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>One of the reasons most web servers use the file system is convenience. File updates can be done using any file system tool: rsync, tar etc work for copying files over. The other reason is probably historical: file systems are what were used before there were good in-process relational databases available. Using a database means some kind of API interface is required for uploading files, which is not always feasible.&lt;/p></description></item><item><title>Introducing Clace</title><link>https://clace.io/blog/intro/</link><pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate><guid>https://clace.io/blog/intro/</guid><description>
+&lt;div
+class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
+&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+&lt;div
+class="hx-select-none hx-text-xl"
+style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+📎
+&lt;/div>
+&lt;/div>
+&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
+&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+Clace is an
+&lt;a href="https://github.com/claceio/clace">open source project&lt;/a>
+building a secure platform for easily developing and deploying internal
+tools across a team. Clace can be used to develop actions which present a
+simple auto-generated web UI for backend operations. Clace also implements
+an appserver for containerized web apps implemented in any language.
+&lt;br />
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h1>Clace: Platform for Easy Self-Hosted Web Applications&lt;/h1>&lt;p>Clace is an &lt;a href="https://github.com/claceio/clace" target="_blank" rel="noopener">open-source&lt;/a> platform to enable easy development and deployment of web applications for internal tools. The goals for the Clace project are:&lt;/p>
 &lt;ul>
 &lt;li>Enable development and deployment of secure internal web applications.&lt;/li>
-&lt;li>Simplify ongoing maintenance of such apps by removing build and dependency related issues. Updating an app after six months or six years should just work.&lt;/li>
-&lt;li>Provide portable and flexible deployment options, allowing use on personal machine and also shared across teams.&lt;/li>
+&lt;li>Simplify ongoing maintenance of such apps by solving build and dependency related issues. Updating an app after six months or six years should just work.&lt;/li>
+&lt;li>Provide portable and flexible deployment options, allowing use on developer machine and also on server shared across teams.&lt;/li>
 &lt;/ul>
 &lt;h2>Use-cases&lt;span class="hx-absolute -hx-mt-20" id="use-cases">&lt;/span>
 &lt;a href="#use-cases" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is built to solve two different types of use-cases:&lt;/p>
 &lt;ul>
 &lt;li>Custom applications: With fully customizable UI, this would be similar to solutions like &lt;a href="https://retool.com/" target="_blank" rel="noopener">Retool&lt;/a>. A low-code approach is used, with a focus on &lt;a href="https://hypermedia.systems/hypermedia-reintroduction/" target="_blank" rel="noopener">Hypermedia driven applications&lt;/a>.&lt;/li>
-&lt;li>Workflows: This would be similar to solutions like &lt;a href="https://www.rundeck.com/" target="_blank" rel="noopener">Rundeck&lt;/a>. A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.&lt;/li>
+&lt;li>Actions: This would be similar to solutions like &lt;a href="https://www.rundeck.com/" target="_blank" rel="noopener">Rundeck&lt;/a>. A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.&lt;/li>
 &lt;/ul>
 &lt;p>One of the aims of Clace is to make it possible for everyone, especially backend engineers, to develop and use simple web interfaces. For use-cases where a CLI was developed previously, a Clace based UI could be built. The backend service could invoke the CLI command or directly call the internal API which need to be exposed. Development and use of simple web interfaces for all types of use-cases should be made easier with Clace.&lt;/p>
 &lt;h2>How does it work?&lt;span class="hx-absolute -hx-mt-20" id="how-does-it-work">&lt;/span>
