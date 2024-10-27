@@ -1,5 +1,5 @@
 ---
-title: "SQLite as a Storage Backend for Web Server Static Content"
+title: "Using SQLite as Storage for Web Server Static Content"
 summary: "Why Clace uses a SQLite database instead of the local file system for static files."
 date: 2024-10-25
 ---
