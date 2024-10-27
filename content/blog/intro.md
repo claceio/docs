@@ -1,19 +1,19 @@
 ---
 title: "Introducing Clace"
-summary: "Introducing the Clace project: A Platform for Easy Self-Hosted Web Apps"
+summary: "Clace: Platform for managing internal tools"
 date: 2023-11-01
 draft: false
 ---
 
 {{< clace-intro  >}}
 
-# Clace: Platform for Easy Self-Hosted Web Applications
+# Clace: Platform for Managing Internal Tools
 
 Clace is an [open-source](https://github.com/claceio/clace) platform to enable easy development and deployment of web applications for internal tools. The goals for the Clace project are:
 
 - Enable development and deployment of secure internal web applications.
-- Simplify ongoing maintenance of such apps by solving build and dependency related issues. Updating an app after six months or six years should just work.
-- Provide portable and flexible deployment options, allowing use on developer machine and also on server shared across teams.
+- Simplify ongoing maintenance of such apps by removing build and dependency related issues. Updating an app after six months or six years should just work.
+- Provide portable and flexible deployment options, easy to use on developer machines and also on a shared server across teams.
 
 ## Use-cases
 
@@ -47,7 +47,7 @@ Clace is in a beta state currently. Custom application support is functional. Su
 ```shell
 curl -L https://clace.io/install.sh | sh
 source $HOME/clhome/bin/clace.env
-clace server start &
+clace server start && sleep 2
 clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 ```
 
