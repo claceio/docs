@@ -8,17 +8,17 @@ date: 2024-10-25
 
 ## Background
 
-Clace is built to serve web applications, primarily for internal tools. Clace provides functionality usually handled separately by a web server and an application server. When the development of Clace was started last year, one of the first decisions was how to store the application data (files) and metadata. The app metadata obviously made sense to store in a database, since apps are created dynamically. The app data (static files, app code, config files etc) is usually stored on the file system. That is how most web servers do it.
+Clace is built to serve web applications, primarily for internal tools. Clace provides functionality usually handled separately by a web server and an application server. When the development of Clace was started last year, one of the first decisions was how to store the application data (files) and metadata. The app metadata obviously made sense to store in a database, since apps are created dynamically. The app data (static files, app code, config files etc) is usually stored on the file system by most web servers.
 
 ## Using SQLite for serving files
 
 For Clace, the decision was made to use [SQLite](https://www.sqlite.org/) for app files storage instead of using the file system. The reasoning was mainly to be able to do atomic version changes. When updating an app, since there could be lots of files being updated, using a database would allow all changes to be done atomically in a transaction. This would prevent broken web pages from being served during a version change.
 
-Clace uploads all files to the SQlite database during app creation and updates. File are uploaded from GitHub or file local disk. Only for [development mode]({{< ref "/docs/applications/lifecycle/#development-apps" >}}), the local file system is used.
+Clace uploads all files to the SQlite database during app creation and updates. Files are uploaded from GitHub or from local disk. Only for [development mode]({{< ref "/docs/applications/lifecycle/#development-apps" >}}), the local file system is used.
 
 ## Benefits of using SQLite
 
-The decision to use SQLite for file storage has provided lots of additional benefits (some of then unexpected).
+The decision to use SQLite for file storage has provided lots of additional benefits (some unanticipated).
 
 - **Transactional Updates** : This is the main benefit. Updating multiple files can be done in one transaction. Isolation ensures that there are no broken webapps during the update.
 
