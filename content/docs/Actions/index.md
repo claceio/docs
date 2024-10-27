@@ -39,6 +39,14 @@ app = ace.app("List Files",
 )
 ```
 
+The app, when accessed will look as shown below, with the `ls` command output displayed:
+
+<picture  class="responsive-picture" style="display: block; margin-left: auto; margin-right: auto;">
+  <source media="(prefers-color-scheme: dark)" srcset="/images/list_filesd_dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="/images/list_filesd_light.png">
+  <img alt="List files app" src="/images/list_files_light.png">
+</picture>
+
 ## Action Definition
 
 An action is defined using the `ace.action` struct. The fields in this structure are:
@@ -83,20 +91,20 @@ Errors can be reported for multiple params.
 
 ## Report Types
 
-The response `values` can be a list of string or a list of dicts. The report is generated automatically by default. For list of strings, the report is a text report. For list of dicts, the report can be either
+The response `values` can be a list of string or a list of dicts. The report is generated automatically by default. For list of strings, the report is a TEXT report. For list of dicts, the report can be either
 
 - TABLE - selected if all dict values for the first row are simple types
-- JSON - selected if any of the values for the first row is a complex type (like dist or list)
+- JSON - selected if any of the values for the first row is a complex type (like dict or list)
 
-For TABLE report, the columns from the first row are used as columns. Extra columns in subsequent rows are ignored. For JSON report, a JSON tree representation of each row is shown. The report type can be set to specific type instead of using AUTO.
+For TABLE report, the fields from the first row are used as columns. Extra fields in subsequent rows are ignored. For JSON report, a JSON tree representation of each row is shown. The report type can be set to specific type instead of using AUTO.
 
 ## Custom Templates
 
-If the `report` type is set to any value other than AUTO/TEXT/JSON/TABLE, that is treated as a custom template to use. The template should be defined in a `*.go.html` file. Either the file name can be used or a template/block name can be used. See [template]({{< ref "docs/develop/templates/#template-file-location" >}}) for details.
+If the `report` type is set to any value other than `ace.AUTO/TEXT/JSON/TABLE`, that is treated as a custom template to use. The template should be defined in a `*.go.html` file. Either the file name can be used or a template/block name can be used. See [template]({{< ref "docs/develop/templates/#template-file-location" >}}) for details.
 
 For styling, Clace uses DaisyUI by default, so default styles are reset. The custom template can use inline styles or it can use TailwindCSS/DaisyUI. For DaisyUI, the app has to be run in dev mode first for the style.css to be generated. See [styling]({{< ref "docs/develop/styling/#tailwindcss" >}}) for details.
 
-See dictionary [code](https://github.com/claceio/apps/tree/main/misc/dictionary):[demo](https://utils.demo.clace.io/dict) for another actions example app which shows different type of reports.
+See dictionary [code](https://github.com/claceio/apps/tree/main/misc/dictionary):[demo](https://utils.demo.clace.io/dict) for an actions example app which shows different type of reports.
 
 ## Param Value Selector
 
