@@ -91,7 +91,7 @@ The app, when accessed will look as shown below, with the `ls` command output di
   <img alt="List files app" src="/images/list_files_light.png">
 </picture>
 
-See [list_files](https://github.com/claceio/apps/tree/main/system/list_files) for the source code for above app. See [dictionary](https://github.com/claceio/apps/tree/main/misc/dictionary) for another actions example app which shows different type of reports. [Actions]({{< ref "actions" >}}) has more details on building app actions.
+See list files [code](https://github.com/claceio/apps/tree/main/system/list_files):[demo](https://utils.demo.clace.io/list_files) for the above app. See dictionary [code](https://github.com/claceio/apps/tree/main/misc/dictionary):[demo](https://utils.demo.clace.io/dict) for another actions example app which shows different type of reports. [Actions]({{< ref "actions" >}}) has more details on building app actions.
 
 ## Containerized Applications
 

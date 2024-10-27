@@ -96,7 +96,7 @@ If the `report` type is set to any value other than AUTO/TEXT/JSON/TABLE, that i
 
 For styling, Clace uses DaisyUI by default, so default styles are reset. The custom template can use inline styles or it can use TailwindCSS/DaisyUI. For DaisyUI, the app has to be run in dev mode first for the style.css to be generated. See [styling]({{< ref "docs/develop/styling/#tailwindcss" >}}) for details.
 
-See [dictionary](https://github.com/claceio/apps/tree/main/misc/dictionary) for an actions example app which shows different type of reports.
+See dictionary [code](https://github.com/claceio/apps/tree/main/misc/dictionary):[demo](https://utils.demo.clace.io/dict) for another actions example app which shows different type of reports.
 
 ## Param Value Selector
 
