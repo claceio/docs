@@ -14,7 +14,7 @@ Clace is built to serve web applications, primarily for internal tools. Clace pr
 
 For Clace, the decision was made to use [SQLite](https://www.sqlite.org/) for app files storage instead of using the file system. The reasoning was mainly to be able to do atomic version changes. When updating an app, since there could be lots of files being updated, using a database would allow all changes to be done atomically in a transaction. This would prevent broken web pages from being served during a version change.
 
-Clace uploads all files to the SQlite database during app creation and updates. Files are uploaded from GitHub or from local disk. Only for [development mode]({{< ref "/docs/applications/lifecycle/#development-apps" >}}), the local file system is used.
+Clace uploads all files to the SQLite database during app creation and updates. Files are uploaded from GitHub or from local disk. Only for [development mode]({{< ref "/docs/applications/lifecycle/#development-apps" >}}), the local file system is used.
 
 ## Benefits of using SQLite
 
@@ -22,7 +22,7 @@ The decision to use SQLite for file storage has provided lots of additional bene
 
 - **Transactional Updates** : This is the main benefit. Updating multiple files can be done in one transaction. Isolation ensures that there are no broken webapps during the update.
 
-- **Deployment Rollbacks**: Another of the transactional benefits is the ability to roll back deployment in case of errors. If multiple apps are being updated, all of them can be rolled back in one go. Rolling back a database transaction is much easier that cleaning up files on the file system.
+- **Deployment Rollbacks**: Another of the transactional benefits is the ability to roll back deployment in case of errors. If multiple apps are being updated, all of them can be rolled back in one go. Rolling back a database transaction is much easier than cleaning up files on the file system.
 
 - **File De-duplication Across Versions**: Clace automatically [versions]({{< ref "docs/applications/overview/#app-listing" >}}) all updates. This can lead to lots of duplicate files. The file data is stored in a table with the schema
 
