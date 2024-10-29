@@ -14,6 +14,10 @@ main() {
         arch="amd64"
     fi
 
+    if test $arch = "aarch64"; then
+        arch="arm64"
+    fi
+
     version=${1:-${LATEST_VERSION}}
     target="clace-${version}-${os}-${arch}"
     clace_uri="https://github.com/claceio/clace/releases/download/$version/${target}.tar.gz"
