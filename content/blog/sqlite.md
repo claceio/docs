@@ -51,3 +51,7 @@ Clace currently runs on a single node. When multi-node support is added later, t
 ## Why this approach is not more common?
 
 One of the reasons most web servers use the file system is convenience. File updates can be done using any file system tool: rsync, tar etc work for copying files over. The other reason is probably historical: file systems are what were used before there were good in-process relational databases available. Using a database means some kind of API interface is required for uploading files, which is not always feasible.
+
+{{<callout emoji="💬" >}}
+Discussion thread on [Hacker News](https://news.ycombinator.com/item?id=41963996)
+{{</callout>}}
