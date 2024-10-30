@@ -69,7 +69,17 @@ title="Copy code"
 &lt;h2>Multi-Node Support&lt;span class="hx-absolute -hx-mt-20" id="multi-node-support">&lt;/span>
 &lt;a href="#multi-node-support" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace currently runs on a single node. When multi-node support is added later, the plan is to use a shared Postgres database instead of using local SQLite for metadata and file data storage. This will come with latency issues. The plan is to use a local SQLite database as a file cache to avoid latency while accessing Postgres.&lt;/p>
 &lt;h2>Why this approach is not more common?&lt;span class="hx-absolute -hx-mt-20" id="why-this-approach-is-not-more-common">&lt;/span>
-&lt;a href="#why-this-approach-is-not-more-common" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>One of the reasons most web servers use the file system is convenience. File updates can be done using any file system tool: rsync, tar etc work for copying files over. The other reason is probably historical: file systems are what were used before there were good in-process relational databases available. Using a database means some kind of API interface is required for uploading files, which is not always feasible.&lt;/p></description></item><item><title>Introducing Clace</title><link>https://clace.io/blog/intro/</link><pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate><guid>https://clace.io/blog/intro/</guid><description>
+&lt;a href="#why-this-approach-is-not-more-common" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>One of the reasons most web servers use the file system is convenience. File updates can be done using any file system tool: rsync, tar etc work for copying files over. The other reason is probably historical: file systems are what were used before there were good in-process relational databases available. Using a database means some kind of API interface is required for uploading files, which is not always feasible.&lt;/p>
+&lt;div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-orange-100 hx-bg-orange-50 hx-text-orange-800 dark:hx-border-orange-400/30 dark:hx-bg-orange-400/20 dark:hx-text-orange-300">
+&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">&lt;div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+💬
+&lt;/div>&lt;/div>
+&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
+&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+Discussion thread on &lt;a href="https://news.ycombinator.com/item?id=41963996" target="_blank" rel="noopener">Hacker News&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div></description></item><item><title>Introducing Clace</title><link>https://clace.io/blog/intro/</link><pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate><guid>https://clace.io/blog/intro/</guid><description>
 &lt;div
 class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
 &lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
