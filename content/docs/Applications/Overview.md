@@ -16,13 +16,15 @@ USAGE:
    clace [global options] command [command options] [arguments...]
 
 COMMANDS:
-   server    Manage the Clace server
-   app       Manage Clace apps
-   preview   Manage Clace preview apps
-   account   Manage Clace accounts
-   version   Manage app versions
-   password  Generate a password bcrypt config entry
-   help, h   Shows a list of commands or help for one command
+   server       Manage the Clace server
+   app          Manage Clace apps
+   preview      Manage Clace preview apps
+   account      Manage Clace accounts
+   param        Manage app parameter values
+   version      Manage app versions
+   app-webhook  Manage app level webhooks
+   password     Generate a password bcrypt config entry
+   help, h      Shows a list of commands or help for one command
 
 $ clace app
 NAME:
@@ -32,15 +34,15 @@ USAGE:
    clace app command [command options] [arguments...]
 
 COMMANDS:
-   create   Create a new app
-   list     List apps
-   delete   Delete an app
-   approve  Approve app permissions
-   reload   Reload the app source code
-   promote  Promote the app from staging to production
-   update   Update Clace apps settings
-   help, h  Shows a list of commands or help for one command
-
+   create           Create a new app
+   list             List apps
+   delete           Delete an app
+   approve          Approve app permissions
+   reload           Reload the app source code
+   promote          Promote the app from staging to production
+   update-settings  Update Clace apps settings. Settings changes are NOT staged, they apply immediately to matched stage, prod and preview apps.
+   update-metadata  Update Clace app metadata. Metadata updates are staged and have to be promoted to prod. Use "clace param" to update app parameter metadata.
+   help, h          Shows a list of commands or help for one command
 ```
 
 The app management subcommands are under the `app` command. The `preview` command manages preview app for an app and `version` command manages versions for an app. The `account` command is for managing accounts for an app.
@@ -85,7 +87,7 @@ app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a
 app_stg_2d6KcZmNwHIB8cSzNCotqBHpeje STG         5 NONE main:ed7545ae739dfe85140a      utils.demo.clace.io:/bookmarks_cl_stage                      github.com/claceio/apps/utils/bookmarks
 ```
 
-Use the `app version` command to list versions for particular apps. This command works on prod app or staging app specifically.
+Use the `version list` command to list versions for particular apps. This command works on prod app or staging app specifically.
 
 ```shell
 $ clace version list utils.demo.clace.io:/bookmarks_cl_stage
@@ -111,7 +113,7 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 The `version switch` command can be used to switch versions, up or down or to particular version. The `version revert` command can be used to revert the last change. `app promote` makes the prod app run the same version as the current staging app.
 
-In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `version switch previous utils.demo.clace.io:/bookmarks_cl_stage` will change the stage app to version 4. `version switch previous utils.demo.clace.io:/bookmarks` will change the prod app to version 2. After that, `app promote utils.demo.clace.io:/bookmarks` will change prod to also be at version 4, same as stage. The `switch` command takes `previous`, `next` and actual version number as arguments.
+In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `version switch previous utils.demo.clace.io:/bookmarks_cl_stage` will change the stage app to version 4. `version switch previous utils.demo.clace.io:/bookmarks` will change the prod app to version 2. After that, `app promote utils.demo.clace.io:/bookmarks` will change prod to also be at version 4, same as stage. The `version switch` command accepts `previous`, `next` and actual version number as version to switch to.
 
 A star, like `PROD*` in the `app list` output indicates that there are staged changes waiting to be promoted. That will show up any time the prod app is at a different version than the stage app.
 
@@ -124,5 +126,5 @@ To change app to be un-authenticated, add `--auth none` to the `app create` comm
 {{<callout type="warning" >}}
 Changes done to the app settings using the `app update-settings` command are not staged or versioned, they apply immediately to the stage/prod/preview apps. App settings are fundamental properties of the app, like what authentication type to use, what git auth key to use etc.
 
-All other changes done to app metadata (like account linking, permission approval and code reload) are staged before deployment. Use the `--promote` option on the change to promote the change immediately after applying it on the staging app. Use `app promote` command to promote later. When a promotion is done, **all** previously staged changes for that app are promoted, not just the most recent change.
+All other changes done to app metadata using `app update-metadata`, `app reload`, `param update`, `account link` command, (like account linking, permission approval and code reload) are staged before deployment. Use the `--promote` option on the change to promote the change immediately when applying it on the staging app. Use `app promote` command to promote later. When a promotion is done, **all** currently staged changes for that app are promoted, not just the most recent change. After promote, the prod app is exactly same as staging app.
 {{</callout>}}
