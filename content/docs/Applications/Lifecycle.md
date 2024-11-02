@@ -62,12 +62,18 @@ The staging app is version 2 now, prod app is still at version 1.
 
 ```sh
 clace app list -i
-Id                                  Type Version GitCommit                                GitBranch       Domain:Path                    SourceUrl
-app_prd_2aMvX3fc9fH18n6i2Jew0tNxnky PROD 1                                                                example.com:/                  /home/user/mycode
-app_stg_2aMvX3fc9fH18n6i2Jew0tNxnky STG  2                                                                example.com:/_cl_stage         /home/user/mycode
+Id                                  Type  Version GitCommit                                GitBranch       Domain:Path                    SourceUrl
+app_prd_2aMvX3fc9fH18n6i2Jew0tNxnky PROD* 1                                                                example.com:/                  /home/user/mycode
+app_stg_2aMvX3fc9fH18n6i2Jew0tNxnky STG   2                                                                example.com:/_cl_stage         /home/user/mycode
 ```
 
-At this point, going to the url `example.com:/_cl_stage` will show the updated code while `example.com:/` has not been updated. To promote the changes to prod, run `app promote`
+At this point, going to the url `example.com:/_cl_stage` will show the updated code while `example.com:/` has not been updated.
+
+{{<callout type="info" >}}
+The `*` next to PROD indicates that there are staged changes waiting to be promoted to PROD.
+{{</callout>}}
+
+To promote the changes to prod, run `app promote`
 
 ```sh
 clace app promote example.com:/

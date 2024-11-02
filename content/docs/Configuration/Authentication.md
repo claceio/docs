@@ -78,12 +78,12 @@ To enable any Oauth provider, the callback url domain has to be specified in the
 
 ```toml {filename="clace.toml"}
 [security]
-callback_url = "https://localhost:25223"
+callback_url = "https://example.com:25223"
 ```
 
-in the `clace.toml`. In the OAuth account, for an entry `github_test`, the callback url to use will be `https://localhost:25223/_clace/auth/github_test/callback`.
+in the `clace.toml`. In the OAuth account, for an entry `github_test`, the callback url to use will be `https://example.com:25223/_clace/auth/github_test/callback`.
 
-The format for the callback url to use is `<CALLBACK_URL>/_clace/auth/<PROVIDER_ENTRY_NAME>/callback`. OAuth applications are strict, the callback url has to exactly match this format.
+The format for the callback url to use is `<CALLBACK_URL>/_clace/auth/<PROVIDER_ENTRY_NAME>/callback`. The callback url has to exactly match this format.
 
 ## OAuth Config Details
 
@@ -100,4 +100,4 @@ For all the providers, an optional `scopes` property is also supported. This is 
 The first time a new provider is added, it is important to manually verify an app, to verify if the required authentication restrictions are in place. For example, with google, any valid google user can login, including gmail.com accounts. The `hosted_domain` config has to be used to restrict this.
 {{</callout>}}
 
-The OAuth integration internally uses the [goth](https://github.com/markbates/goth) library, see [examples](https://github.com/markbates/goth/blob/master/examples/main.go) for a sample implementation.
+The OAuth integration internally uses the [goth](https://github.com/markbates/goth) library, see [examples](https://github.com/markbates/goth/blob/master/examples/main.go) for implementation details.

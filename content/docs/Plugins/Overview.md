@@ -79,7 +79,7 @@ An alternate way to write the error check is
 
 Clace supports automatic error handling, so that the handler functions do not have to check the error status of every plugin API call. The way this is implemented is such that if no explicit error handling is done, then the automatic error handling kicks in. If explicit error handling is done, then automatic error handling is not done. See [bookmarks app](https://github.com/claceio/apps/blob/main/utils/bookmarks/app.star) for an example of how the automatic error handling can be used.
 
-If the `error_handler` function is defined, then error handling is automatic. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the Clace platform will automatically call the `error_handler` function in case of an error. The `error_handler` could be defined as:
+If the `error_handler` function is defined, then that is called with the error. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the Clace platform will automatically call the `error_handler` function in case of an error. The `error_handler` could be defined as:
 
 ```python {filename="app.star"}
 def error_handler(req, ret):
@@ -89,7 +89,7 @@ def error_handler(req, ret):
         return ace.response(ret, "error.go.html")
 ```
 
-When `error_handler` is defined and no explicit error checks are done, the automatic error handling happens in these three cases:
+When no explicit error checks are done, the automatic error handling happens in these three cases:
 
 - **Value Access** When the response `value` is accessed
 - **Next API call** When the next plugin API call happens (to any plugin function)
@@ -150,7 +150,7 @@ if not error:
 ```
 
 {{<callout type="info" >}}
-**Note:** The automatic error handling is very useful, but is needs to be enabled manually. When developing a new app, first define the `error_handler` and test it for the partial and full page scenarios. All subsequent handler code does not have to handle errors unless specific handling is required.
+**Note:** When developing a new app, first define the `error_handler` and test it for the partial and full page scenarios. All subsequent handler code does not need to handle errors unless specific handling is required. If no `error_handler` is defined, a generic error message screen is returned. If is recommended to define a custom `error_handler`.
 {{</callout>}}
 
 ## Plugin Accounts
