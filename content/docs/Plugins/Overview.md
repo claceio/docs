@@ -7,7 +7,7 @@ summary: "Overview of how plugins work, how to use them"
 
 Plugins provide an API for Clace Starlark code to call out to external systems. Plugins are implemented in Go. Every plugin API calls needs to be in the approved list for it to be permitted. See [security]({{< ref "appsecurity#sample-application" >}}/) for an overview of the security model.
 
-Each plugin is identified by a unique name, like `store.in` or `exec.in`. Plugins ending with `.in` are internal plugins, built into the Clace binary. Support for external plugins which are loaded dynamically is currently in progress.
+Each plugin is identified by a unique name, like `store.in` or `exec.in`. Plugins ending with `.in` are internal plugins, built into the Clace binary. Support for external plugins which are loaded dynamically is planned.
 
 ## Plugin Usage
 
