@@ -5,7 +5,7 @@ date: 2023-10-06
 summary: "Defining API routes, handling pages and fragments"
 ---
 
-The request routing layer in Clace is built on top of the [chi](https://github.com/go-chi/chi) routing library. API requests (JSON or text), HTML requests and proxied requests are supported. (For HTML requests, the routing is built for hypermedia exchange, so all routes are defined in terms of pages and fragments within the pages. This grouping of requests helps make it clear which API does what and provide an easy mechanism to deal with partial HTMX driven requests and full page refreshes. Simpler application might have one page with some interactions within that. Larger applications can be composed of multiple pages, each page having some interactive fragments.
+The request routing layer in Clace is built on top of the [chi](https://github.com/go-chi/chi) routing library. API requests (JSON or text), HTML requests and proxied requests are supported. For HTML requests, the routing is built for hypermedia exchange, so all routes are defined in terms of pages and fragments within the pages. This grouping of requests helps make it clear which API does what and provide an easy mechanism to deal with partial HTMX driven requests and full page refreshes. Simpler application might have one page with some interactions within that. Larger applications can be composed of multiple pages, each page having some interactive fragments.
 
 ## Routes
 
@@ -111,10 +111,11 @@ A Proxy route defines a route which has to be proxied to another service. All AP
 
 The proxy configuration `proxy.config` has the options:
 
-|  Property  | Optional |  Type  | Default |                                                  Notes                                                   |
-| :--------: | :------: | :----: | :-----: | :------------------------------------------------------------------------------------------------------: |
-|    url     |  False   | string |         |                                    The url to forward the requests to                                    |
-| strip_path |   True   | string |         | Additional path components to strip from the request path. The app installation path is always stripped. |
+|   Property    | Optional |  Type   | Default |                                                  Notes                                                   |
+| :-----------: | :------: | :-----: | :-----: | :------------------------------------------------------------------------------------------------------: |
+|      url      |  False   | string  |         |                                    The url to forward the requests to                                    |
+|  strip_path   |   True   | string  |         | Additional path components to strip from the request path. The app installation path is always stripped. |
+| preserve_host |  False   | boolean |         |   Whether to preserve the Host header. Default false, the Host header is set to the target host value    |
 
 For example, an app which forwards requests to `www.google.com` is
 
@@ -135,6 +136,8 @@ app = ace.app("Proxy",
 The plugin is authorized to allow proxying to `https://www.google.com`. Any request to the app will be forwarded after stripping the app path. So if app is installed at `/test`, a request to `/test/abc/def` will be forwarded to `/abc/def`. In addition, if the proxy is configured with `strip_path="/abc"`, then the request will be sent to `/def`.
 
 If proxying is enabled for `/` route, then `/static` file serving is disabled for the app since requests to static path are also forwarded to the upstream service. `/static_root` serving is available and overrides the proxy config.
+
+See [proxy plugin]({{< ref "docs/plugins/proxy" >}}) for details about the proxy config.
 
 {{<callout type="warning" >}}
 **Note:** If the upstream service service uses relative paths, then all requests are automatically proxied. If the service uses absolute paths, then it better that the app is installed at the root path, like `example.com:` instead of `example.com:/test`. If the service uses absolute path including the domain name, then the client will see the absolute path and those requests will not come through the proxy. The HTML body is not rewritten by Clace to rewrite path references. The upstream service needs to use relative paths to ensure that all requests come through Clace.
