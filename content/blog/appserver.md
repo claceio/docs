@@ -8,19 +8,19 @@ date: 2024-11-07
 
 ## What is an Application Server
 
-[Application Server](https://en.wikipedia.org/wiki/Application_server) means a service which makes it easy to deploy applications and provides common features required by most apps. These include implementing connection handling (HTTP request routing), deployment and versioning, logging, monitoring and authentication features.
+An [Application Server](https://en.wikipedia.org/wiki/Application_server) is a service that makes it easy to deploy applications and provides common features required by most apps. This includes implementing connection handling (HTTP request routing), deployment and versioning, logging, monitoring and authentication features.
 
-Many application servers are programming language [specific](https://en.wikipedia.org/wiki/List_of_application_servers). For the Java and .Net ecosystems, class loader level isolation is used to implement app servers. The request processing model of PHP also makes app servers suitable for serving PHP apps. For dynamic languages like Python and Ruby, there are some app servers which provide some cross language support. App server support is limited for statically compiled languages. This article will focus on app servers which support multiple languages, since those are more widely usable.
+Many application servers are programming language [specific](https://en.wikipedia.org/wiki/List_of_application_servers). In the Java and .Net ecosystems, class loader level isolation is used to implement app servers. The request processing model of PHP also makes app servers suitable for serving PHP apps. For interpreted languages like Python and Ruby, there are some app servers which provide cross language support. App server support is limited for compiled languages. This article will focus on app servers which support multiple languages, since those are more widely usable.
 
 ## Multi-Language AppServers
 
 Some of the prominent multi-language app servers are:
 
-- [NGINX Unit](https://unit.nginx.org/): Nginx Unit is a different application from the regular Nginx web server. Unit is configured through [JSON based APIs](https://unit.nginx.org/controlapi/). Packaging apps to work with Unit is not straight forward. For example, see [Unit Java sample](https://unit.nginx.org/howto/samples/#sample-java).
-- [uWSGI](https://uwsgi-docs.readthedocs.io/): uWSGI is a "full stack for building hosting services". It supports many powerful features for process management and is widely used. Combining all its features and configuring it correctly is non trivial. Many languages are supported but outside of dynamic languages, it is not easy to configure. For example, see [uWSGI Java config](https://uwsgi-docs.readthedocs.io/en/latest/JVM.html). The uWSGI project is currently in maintenance mode.
-- [Phusion Passenger](https://www.phusionpassenger.com/): Phusion Passenger primarily supports Ruby, Python and Javascript. Passenger 6 added support for [generic apps](https://www.phusionpassenger.com/docs/advanced_guides/gls/). This requires changing the app to pass the port to use on its command line. For example, [Phusion Java](https://www.phusionpassenger.com/docs/advanced_guides/gls/java.html).
+- [NGINX Unit](https://unit.nginx.org/): Nginx Unit is a different application from the regular Nginx web server. Unit is configured through [JSON based APIs](https://unit.nginx.org/controlapi/). Packaging apps to work with Unit is not straightforward. For example, see [Unit Java sample](https://unit.nginx.org/howto/samples/#sample-java).
+- [uWSGI](https://uwsgi-docs.readthedocs.io/): uWSGI is a "full stack for building hosting services". It supports many powerful features for process management. Combining all its features and configuring them correctly is non-trivial. Many languages are supported but outside of interpreted languages, it is not easy to configure. For example, see [uWSGI Java config](https://uwsgi-docs.readthedocs.io/en/latest/JVM.html). The uWSGI project is currently in maintenance mode.
+- [Phusion Passenger](https://www.phusionpassenger.com/): Phusion Passenger primarily supports Ruby, Python and Javascript. Passenger 6 added support for [generic apps](https://www.phusionpassenger.com/docs/advanced_guides/gls/). This requires changing the app to pass the port to use on its command line. For example, [Passenger Java](https://www.phusionpassenger.com/docs/advanced_guides/gls/java.html).
 
-These projects either run the app in-process or use a process model to run each application separately. The in-process model has issues with ensuring stability of one app when another misbehaves. Even with the multi-process model, complete isolation across apps is not supported.
+These projects either run the app in-process or use a process model to run each application separately. The in-process model has issues with ensuring stability of apps when another app misbehaves. Even with the multi-process model, complete isolation across apps is not supported.
 
 ## AppServers Miss the Cloud-Native Train
 
@@ -30,7 +30,7 @@ No application server currently supports running apps within containers. App ser
 
 ## PaaS vs AppServers
 
-Most of the recent innovation in the container orchestration space have focussed on providing support for the complete software stack. This includes deploying stateless applications, stateful databases, object stores and any other type of application. The goal has been to build Platform-As-A-Service solutions (PaaS). Kubernetes is built as a [platform for building platforms](https://www.opensourcerers.org/2021/12/06/kubernetes-is-a-platform-for-building-platforms/). Even outside Kubernetes, most of the container focussed deployment platforms focus on trying to provide a complete PaaS solution. Since the scope of applicable use cases is large, even the simplest use case requires complex configuration with a PaaS solution.
+Most of the recent innovation in the container orchestration space have focussed on providing support for hosting the complete software stack. This includes deploying stateless applications, stateful databases, object stores and any other type of application. The goal has been to build Platform-As-A-Service solutions (PaaS). Kubernetes is built as a [platform for building platforms](https://www.opensourcerers.org/2021/12/06/kubernetes-is-a-platform-for-building-platforms/). Even beyond Kubernetes, most container deployment platforms focus on trying to provide a complete PaaS solution. Since the scope of applicable use cases is large, even the simplest use case requires complex configuration with a PaaS solution.
 
 AppServers by definition are simpler. They support deploying stateless applications. Given the source code for a service, an AppServer can run the service and give an HTTP endpoint to access the service. AppServers do not support deploying databases or queues or object stores.
 
@@ -68,4 +68,4 @@ deploys a [Streamlit](https://streamlit.io/) based app.
 
 Each app has a dedicated url, domain based or path based. Clace ensures that no other app can conflict with that path. Clace can currently scale between zero and one instance of the container. More than one is not supported since Clace runs on a single machine (multi-node support is planned). Clace has a CLI interface currently, a [declarative interface](https://github.com/claceio/clace/issues/34) based on the CLI is planned.
 
-For use cases where teams are building internal tools, Clace can provide a much simpler approach rather than using a general purpose PaaS solution.
+For use cases where teams are deploying internal tools, Clace can provide a much simpler solution rather than using a general purpose PaaS.
