@@ -1,6 +1,6 @@
 ---
-title: "Missed Connections: Application Servers in the Containerized Landscape"
-summary: "Application Servers can make deployments, but they have not kept up with the times"
+title: "Missed Connections: AppServers in the Containerized Landscape"
+summary: "Application Servers can make deployments easier, but they have not kept up with the times."
 date: 2024-11-07
 ---
 
@@ -32,9 +32,9 @@ No application server currently supports running apps within containers. App ser
 
 Most of the recent innovation in the container orchestration space have focussed on providing support for hosting the complete software stack. This includes deploying stateless applications, stateful databases, object stores and any other type of application. The goal has been to build Platform-As-A-Service solutions (PaaS). Kubernetes is built as a [platform for building platforms](https://www.opensourcerers.org/2021/12/06/kubernetes-is-a-platform-for-building-platforms/). Even beyond Kubernetes, most container deployment platforms focus on trying to provide a complete PaaS solution. Since the scope of applicable use cases is large, even the simplest use case requires complex configuration with a PaaS solution.
 
-AppServers by definition are simpler. They support deploying stateless applications. Given the source code for a service, an AppServer can run the service and give an HTTP endpoint to access the service. AppServers do not support deploying databases or queues or object stores.
+AppServers by definition are simpler. They support deploying stateless applications. Given the source code for a service, an AppServer can run the service and give an HTTP endpoint to access the service. AppServer can provide a standardized deployment approach, irrespective of the language/framework. AppServers do not support deploying databases or queues or object stores.
 
-Many teams choose an externally managed database (like RDS) or managed queues (AWS MSK) for data persistence. If the stateful applications are externally managed, then AppServers can be used for deploying the stateless applications. This avoids the complexity of having to maintain PaaS configurations.
+Many teams choose managed services (like AWS RDS or MSK) for data persistence. If the stateful applications are externally managed, then AppServers can be used for deploying the stateless applications. This avoids the complexity of having to maintain PaaS configurations.
 
 ## Cloud-Native AppServer Features
 
@@ -68,4 +68,4 @@ deploys a [Streamlit](https://streamlit.io/) based app.
 
 Each app has a dedicated url, domain based or path based. Clace ensures that no other app can conflict with that path. Clace can currently scale between zero and one instance of the container. More than one is not supported since Clace runs on a single machine (multi-node support is planned). Clace has a CLI interface currently, a [declarative interface](https://github.com/claceio/clace/issues/34) based on the CLI is planned.
 
-For use cases where teams are deploying internal tools, Clace can provide a much simpler solution rather than using a general purpose PaaS.
+For use cases where teams are deploying internal tools, Clace can provide a much simpler solution as against using a general purpose PaaS solution.
