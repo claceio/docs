@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog</title><link>https://clace.io/blog/</link><description>Recent content in Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 25 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Using SQLite as Storage for Web Server Static Content</title><link>https://clace.io/blog/sqlite/</link><pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/sqlite/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog</title><link>https://clace.io/blog/</link><description>Recent content in Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 07 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Missed Connections: Application Servers in the Containerized Landscape</title><link>https://clace.io/blog/appserver/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/appserver/</guid><description>
 &lt;div
 class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
 &lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
@@ -12,10 +12,90 @@ style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 &lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
 Clace is an
 &lt;a href="https://github.com/claceio/clace">open source project&lt;/a>
-building a secure platform for easily developing and deploying internal
-tools across a team. Clace can be used to develop actions which present a
-simple auto-generated web UI for backend operations. Clace also implements
-an appserver for containerized web apps implemented in any language.
+building a platform for developing internal tools and deploying them
+locally or across a team. Clace can be used to develop auto-generated UI
+for backend actions or to develop custom Hypermedia driven web apps. Clace
+also implements an application server for deploying containerized web
+apps.
+&lt;br />
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>What is an Application Server&lt;span class="hx-absolute -hx-mt-20" id="what-is-an-application-server">&lt;/span>
+&lt;a href="#what-is-an-application-server" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Application_server" target="_blank" rel="noopener">Application Server&lt;/a> means a service which makes it easy to deploy applications and provides common features required by most apps. These include implementing connection handling (HTTP request routing), deployment and versioning, logging, monitoring and authentication features.&lt;/p>
+&lt;p>Many application servers are programming language &lt;a href="https://en.wikipedia.org/wiki/List_of_application_servers" target="_blank" rel="noopener">specific&lt;/a>. For the Java and .Net ecosystems, class loader level isolation is used to implement app servers. The request processing model of PHP also makes app servers suitable for serving PHP apps. For dynamic languages like Python and Ruby, there are some app servers which provide some cross language support. App server support is limited for statically compiled languages. This article will focus on app servers which support multiple languages, since those are more widely usable.&lt;/p>
+&lt;h2>Multi-Language AppServers&lt;span class="hx-absolute -hx-mt-20" id="multi-language-appservers">&lt;/span>
+&lt;a href="#multi-language-appservers" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Some of the prominent multi-language app servers are:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://unit.nginx.org/" target="_blank" rel="noopener">NGINX Unit&lt;/a>: Nginx Unit is a different application from the regular Nginx web server. Unit is configured through &lt;a href="https://unit.nginx.org/controlapi/" target="_blank" rel="noopener">JSON based APIs&lt;/a>. Packaging apps to work with Unit is not straight forward. For example, see &lt;a href="https://unit.nginx.org/howto/samples/#sample-java" target="_blank" rel="noopener">Unit Java sample&lt;/a>.&lt;/li>
+&lt;li>&lt;a href="https://uwsgi-docs.readthedocs.io/" target="_blank" rel="noopener">uWSGI&lt;/a>: uWSGI is a &amp;ldquo;full stack for building hosting services&amp;rdquo;. It supports many powerful features for process management and is widely used. Combining all its features and configuring it correctly is non trivial. Many languages are supported but outside of dynamic languages, it is not easy to configure. For example, see &lt;a href="https://uwsgi-docs.readthedocs.io/en/latest/JVM.html" target="_blank" rel="noopener">uWSGI Java config&lt;/a>. The uWSGI project is currently in maintenance mode.&lt;/li>
+&lt;li>&lt;a href="https://www.phusionpassenger.com/" target="_blank" rel="noopener">Phusion Passenger&lt;/a>: Phusion Passenger primarily supports Ruby, Python and Javascript. Passenger 6 added support for &lt;a href="https://www.phusionpassenger.com/docs/advanced_guides/gls/" target="_blank" rel="noopener">generic apps&lt;/a>. This requires changing the app to pass the port to use on its command line. For example, &lt;a href="https://www.phusionpassenger.com/docs/advanced_guides/gls/java.html" target="_blank" rel="noopener">Phusion Java&lt;/a>.&lt;/li>
+&lt;/ul>
+&lt;p>These projects either run the app in-process or use a process model to run each application separately. The in-process model has issues with ensuring stability of one app when another misbehaves. Even with the multi-process model, complete isolation across apps is not supported.&lt;/p>
+&lt;h2>AppServers Miss the Cloud-Native Train&lt;span class="hx-absolute -hx-mt-20" id="appservers-miss-the-cloud-native-train">&lt;/span>
+&lt;a href="#appservers-miss-the-cloud-native-train" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Since the initial release of Docker in 2013, containers have become very popular for application deployment. Containers have the advantage of encapsulating the application runtime and dependencies in an easily deployable image. Being able to set resource limits on CPU/memory/disk usage enables isolation across applications.&lt;/p>
+&lt;p>No application server currently supports running apps within containers. App servers are missing from the crowded cloud native &lt;a href="https://landscape.cncf.io/" target="_blank" rel="noopener">landscape&lt;/a> (possibly the only infrastructure software component missing there).&lt;/p>
+&lt;h2>PaaS vs AppServers&lt;span class="hx-absolute -hx-mt-20" id="paas-vs-appservers">&lt;/span>
+&lt;a href="#paas-vs-appservers" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Most of the recent innovation in the container orchestration space have focussed on providing support for the complete software stack. This includes deploying stateless applications, stateful databases, object stores and any other type of application. The goal has been to build Platform-As-A-Service solutions (PaaS). Kubernetes is built as a &lt;a href="https://www.opensourcerers.org/2021/12/06/kubernetes-is-a-platform-for-building-platforms/" target="_blank" rel="noopener">platform for building platforms&lt;/a>. Even outside Kubernetes, most of the container focussed deployment platforms focus on trying to provide a complete PaaS solution. Since the scope of applicable use cases is large, even the simplest use case requires complex configuration with a PaaS solution.&lt;/p>
+&lt;p>AppServers by definition are simpler. They support deploying stateless applications. Given the source code for a service, an AppServer can run the service and give an HTTP endpoint to access the service. AppServers do not support deploying databases or queues or object stores.&lt;/p>
+&lt;p>Many teams choose an externally managed database (like RDS) or managed queues (AWS MSK) for data persistence. If the stateful applications are externally managed, then AppServers can be used for deploying the stateless applications. This avoids the complexity of having to maintain PaaS configurations.&lt;/p>
+&lt;h2>Cloud-Native AppServer Features&lt;span class="hx-absolute -hx-mt-20" id="cloud-native-appserver-features">&lt;/span>
+&lt;a href="#cloud-native-appserver-features" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>A cloud-native application server would include the following features:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Container-Based&lt;/strong>: Uses containers for application deployment, with isolation across apps.&lt;/li>
+&lt;li>&lt;strong>Easy Config&lt;/strong>: Provide zero config or simple config approach&lt;/li>
+&lt;li>&lt;strong>GitOps&lt;/strong> : App deployment driven by source code changes.&lt;/li>
+&lt;li>&lt;strong>Elastic Scalability&lt;/strong>: Scale down to zero, scale up as required based on load.&lt;/li>
+&lt;li>&lt;strong>Declarative Configuration&lt;/strong>: All configuration is applied declaratively as opposed to being imperative.&lt;/li>
+&lt;/ul>
+&lt;p>The AppServer is not replacing the language specific services. For example, with Python, Gunicorn/Uvicorn would provide the WSGI/ASGI functionality within the container.&lt;/p>
+&lt;h2>AppServer features of Clace&lt;span class="hx-absolute -hx-mt-20" id="appserver-features-of-clace">&lt;/span>
+&lt;a href="#appserver-features-of-clace" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is built as a platform for teams to deploy internal tools. As part of that, Clace implements an AppServer to deploy containerized apps. The goal is to make it easy for teams to deploy and manage Streamlit/Gradio type apps for internal users. Clace provides blue-green staged deployment, GitOps, OAuth access control, secrets management etc for the apps.&lt;/p>
+&lt;p>With Clace, any Containerized app (having a &lt;code>Dockerfile&lt;/code>) can be installed using a command like&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">clace app create --spec container --approve github.com/&amp;lt;USERID&amp;gt;/&amp;lt;REPO&amp;gt; /myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The app will be available at the /myapp url. For many &lt;a href="https://github.com/claceio/appspecs" target="_blank" rel="noopener">frameworks&lt;/a>, zero config is required. Not even a &lt;code>Dockerfile&lt;/code> is required. For example&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">clace app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>deploys a &lt;a href="https://streamlit.io/" target="_blank" rel="noopener">Streamlit&lt;/a> based app.&lt;/p>
+&lt;p>Each app has a dedicated url, domain based or path based. Clace ensures that no other app can conflict with that path. Clace can currently scale between zero and one instance of the container. More than one is not supported since Clace runs on a single machine (multi-node support is planned). Clace has a CLI interface currently, a &lt;a href="https://github.com/claceio/clace/issues/34" target="_blank" rel="noopener">declarative interface&lt;/a> based on the CLI is planned.&lt;/p>
+&lt;p>For use cases where teams are building internal tools, Clace can provide a much simpler approach rather than using a general purpose PaaS solution.&lt;/p></description></item><item><title>Using SQLite as Storage for Web Server Static Content</title><link>https://clace.io/blog/sqlite/</link><pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/sqlite/</guid><description>
+&lt;div
+class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
+&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+&lt;div
+class="hx-select-none hx-text-xl"
+style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+📎
+&lt;/div>
+&lt;/div>
+&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
+&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+Clace is an
+&lt;a href="https://github.com/claceio/clace">open source project&lt;/a>
+building a platform for developing internal tools and deploying them
+locally or across a team. Clace can be used to develop auto-generated UI
+for backend actions or to develop custom Hypermedia driven web apps. Clace
+also implements an application server for deploying containerized web
+apps.
 &lt;br />
 &lt;/div>
 &lt;/div>
@@ -93,10 +173,11 @@ style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 &lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
 Clace is an
 &lt;a href="https://github.com/claceio/clace">open source project&lt;/a>
-building a secure platform for easily developing and deploying internal
-tools across a team. Clace can be used to develop actions which present a
-simple auto-generated web UI for backend operations. Clace also implements
-an appserver for containerized web apps implemented in any language.
+building a platform for developing internal tools and deploying them
+locally or across a team. Clace can be used to develop auto-generated UI
+for backend actions or to develop custom Hypermedia driven web apps. Clace
+also implements an application server for deploying containerized web
+apps.
 &lt;br />
 &lt;/div>
 &lt;/div>
