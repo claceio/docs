@@ -6,6 +6,8 @@ date: 2024-11-07
 
 {{< clace-intro >}}
 
+Application Servers can make application deployment easy. AppServers do not support all the features of a PaaS solution but that comes with the benefit of zero config deployments. Especially for internal tools, AppServers are a great alternative to building a deployment solution on top of Kubernetes. Clace is the first AppServer built for use with containers.
+
 ## What is an Application Server
 
 An [Application Server](https://en.wikipedia.org/wiki/Application_server) is a service that makes it easy to deploy applications and provides common features required by most apps. This includes implementing connection handling (HTTP request routing), deployment and versioning, logging, monitoring and authentication features.
