@@ -49,7 +49,7 @@ apps.
 &lt;li>&lt;strong>Declarative Configuration&lt;/strong>: All configuration is applied declaratively as opposed to being imperative.&lt;/li>
 &lt;/ul>
 &lt;p>The AppServer is not replacing the language specific services. For example, with Python, Gunicorn/Uvicorn would provide the WSGI/ASGI functionality within the container.&lt;/p>
-&lt;h2>AppServer features of Clace&lt;span class="hx-absolute -hx-mt-20" id="appserver-features-of-clace">&lt;/span>
+&lt;h2>AppServer Features of Clace&lt;span class="hx-absolute -hx-mt-20" id="appserver-features-of-clace">&lt;/span>
 &lt;a href="#appserver-features-of-clace" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is built as a platform for teams to deploy internal tools. As part of that, Clace implements an AppServer to deploy containerized apps. The goal is to make it easy for teams to deploy and manage Streamlit/Gradio type apps for internal users. Clace provides blue-green staged deployment, GitOps, OAuth access control, secrets management etc for the apps.&lt;/p>
 &lt;p>With Clace, any Containerized app (having a &lt;code>Dockerfile&lt;/code>) can be installed using a command like&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
@@ -77,6 +77,11 @@ title="Copy code"
 &lt;/div>
 &lt;p>deploys a &lt;a href="https://streamlit.io/" target="_blank" rel="noopener">Streamlit&lt;/a> based app.&lt;/p>
 &lt;p>Each app has a dedicated url, domain based or path based. Clace ensures that no other app can conflict with that path. Clace can currently scale between zero and one instance of the container. More than one is not supported since Clace runs on a single machine (multi-node support is planned). Clace has a CLI interface currently, a &lt;a href="https://github.com/claceio/clace/issues/34" target="_blank" rel="noopener">declarative interface&lt;/a> based on the CLI is planned.&lt;/p>
+&lt;picture class="responsive-picture" style="display: block; margin-left: auto; margin-right: auto;">
+&lt;source media="(prefers-color-scheme: dark)" srcset="https://clace.io/AppServerDark.png">
+&lt;source media="(prefers-color-scheme: light)" srcset="https://clace.io/AppServerLight.png">
+&lt;img alt="Clace AppServer" src="https://clace.io/AppServerLight.png">
+&lt;/picture>
 &lt;p>For use cases where teams are deploying internal tools, Clace can provide a much simpler solution as against using a general purpose PaaS solution.&lt;/p></description></item><item><title>Using SQLite as Storage for Web Server Static Content</title><link>https://clace.io/blog/sqlite/</link><pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/sqlite/</guid><description>
 &lt;div
 class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
