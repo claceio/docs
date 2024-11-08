@@ -1,0 +1,71 @@
+---
+title: "Missed Connections: Application Servers in the Containerized Landscape"
+summary: "Application Servers can make deployments, but they have not kept up with the times"
+date: 2024-11-07
+---
+
+{{< clace-intro >}}
+
+## What is an Application Server
+
+[Application Server](https://en.wikipedia.org/wiki/Application_server) means a service which makes it easy to deploy applications and provides common features required by most apps. These include implementing connection handling (HTTP request routing), deployment and versioning, logging, monitoring and authentication features.
+
+Many application servers are programming language [specific](https://en.wikipedia.org/wiki/List_of_application_servers). For the Java and .Net ecosystems, class loader level isolation is used to implement app servers. The request processing model of PHP also makes app servers suitable for serving PHP apps. For dynamic languages like Python and Ruby, there are some app servers which provide some cross language support. App server support is limited for statically compiled languages. This article will focus on app servers which support multiple languages, since those are more widely usable.
+
+## Multi-Language AppServers
+
+Some of the prominent multi-language app servers are:
+
+- [NGINX Unit](https://unit.nginx.org/): Nginx Unit is a different application from the regular Nginx web server. Unit is configured through [JSON based APIs](https://unit.nginx.org/controlapi/). Packaging apps to work with Unit is not straight forward. For example, see [Unit Java sample](https://unit.nginx.org/howto/samples/#sample-java).
+- [uWSGI](https://uwsgi-docs.readthedocs.io/): uWSGI is a "full stack for building hosting services". It supports many powerful features for process management and is widely used. Combining all its features and configuring it correctly is non trivial. Many languages are supported but outside of dynamic languages, it is not easy to configure. For example, see [uWSGI Java config](https://uwsgi-docs.readthedocs.io/en/latest/JVM.html). The uWSGI project is currently in maintenance mode.
+- [Phusion Passenger](https://www.phusionpassenger.com/): Phusion Passenger primarily supports Ruby, Python and Javascript. Passenger 6 added support for [generic apps](https://www.phusionpassenger.com/docs/advanced_guides/gls/). This requires changing the app to pass the port to use on its command line. For example, [Phusion Java](https://www.phusionpassenger.com/docs/advanced_guides/gls/java.html).
+
+These projects either run the app in-process or use a process model to run each application separately. The in-process model has issues with ensuring stability of one app when another misbehaves. Even with the multi-process model, complete isolation across apps is not supported.
+
+## AppServers Miss the Cloud-Native Train
+
+Since the initial release of Docker in 2013, containers have become very popular for application deployment. Containers have the advantage of encapsulating the application runtime and dependencies in an easily deployable image. Being able to set resource limits on CPU/memory/disk usage enables isolation across applications.
+
+No application server currently supports running apps within containers. App servers are missing from the crowded cloud native [landscape](https://landscape.cncf.io/) (possibly the only infrastructure software component missing there).
+
+## PaaS vs AppServers
+
+Most of the recent innovation in the container orchestration space have focussed on providing support for the complete software stack. This includes deploying stateless applications, stateful databases, object stores and any other type of application. The goal has been to build Platform-As-A-Service solutions (PaaS). Kubernetes is built as a [platform for building platforms](https://www.opensourcerers.org/2021/12/06/kubernetes-is-a-platform-for-building-platforms/). Even outside Kubernetes, most of the container focussed deployment platforms focus on trying to provide a complete PaaS solution. Since the scope of applicable use cases is large, even the simplest use case requires complex configuration with a PaaS solution.
+
+AppServers by definition are simpler. They support deploying stateless applications. Given the source code for a service, an AppServer can run the service and give an HTTP endpoint to access the service. AppServers do not support deploying databases or queues or object stores.
+
+Many teams choose an externally managed database (like RDS) or managed queues (AWS MSK) for data persistence. If the stateful applications are externally managed, then AppServers can be used for deploying the stateless applications. This avoids the complexity of having to maintain PaaS configurations.
+
+## Cloud-Native AppServer Features
+
+A cloud-native application server would include the following features:
+
+- **Container-Based**: Uses containers for application deployment, with isolation across apps.
+- **Easy Config**: Provide zero config or simple config approach
+- **GitOps** : App deployment driven by source code changes.
+- **Elastic Scalability**: Scale down to zero, scale up as required based on load.
+- **Declarative Configuration**: All configuration is applied declaratively as opposed to being imperative.
+
+The AppServer is not replacing the language specific services. For example, with Python, Gunicorn/Uvicorn would provide the WSGI/ASGI functionality within the container.
+
+## AppServer features of Clace
+
+Clace is built as a platform for teams to deploy internal tools. As part of that, Clace implements an AppServer to deploy containerized apps. The goal is to make it easy for teams to deploy and manage Streamlit/Gradio type apps for internal users. Clace provides blue-green staged deployment, GitOps, OAuth access control, secrets management etc for the apps.
+
+With Clace, any Containerized app (having a `Dockerfile`) can be installed using a command like
+
+```sh
+clace app create --spec container --approve github.com/<USERID>/<REPO> /myapp
+```
+
+The app will be available at the /myapp url. For many [frameworks](https://github.com/claceio/appspecs), zero config is required. Not even a `Dockerfile` is required. For example
+
+```sh
+clace app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app
+```
+
+deploys a [Streamlit](https://streamlit.io/) based app.
+
+Each app has a dedicated url, domain based or path based. Clace ensures that no other app can conflict with that path. Clace can currently scale between zero and one instance of the container. More than one is not supported since Clace runs on a single machine (multi-node support is planned). Clace has a CLI interface currently, a [declarative interface](https://github.com/claceio/clace/issues/34) based on the CLI is planned.
+
+For use cases where teams are building internal tools, Clace can provide a much simpler approach rather than using a general purpose PaaS solution.
