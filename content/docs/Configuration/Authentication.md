@@ -24,9 +24,12 @@ Any new app created will use this as the auth unless overridden in the `app crea
 
 ## Client Cert Authentication (mTLS)
 
-Apps can be updated to use mutual TLS authentication. To enable this, add a `client_auth` config entry in server config with the CA certificate to verify against. Multiple entries can be added, the entry name should be `cert` or should start with `cert_`. For example
+Apps can be updated to use mutual TLS authentication. To enable this, first set `disable_client_certs` to `false` in the `https` section. Add a `client_auth` config entry in server config with the CA certificate to verify against. Multiple entries can be added, the entry name should be `cert` or should start with `cert_`. For example
 
 ```toml {filename="clace.toml"}
+[https]
+disable_client_certs = false
+
 [client_auth.cert_test1]
 ca_cert_file="/data/certs/ca1.crt"
 
