@@ -12,7 +12,7 @@ To install the latest release build on Linux, OSX or Windows with WSL, run the i
 ```shell
 curl -L https://clace.io/install.sh | sh
 source $HOME/clhome/bin/clace.env
-clace server start &
+clace server start && sleep 2
 clace app create --approve github.com/claceio/clace/apps/system/disk_usage /disk_usage
 ```
 

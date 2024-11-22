@@ -42,7 +42,7 @@ All the API's support the following parameters:
 - **form_body** (dict, optional) : form body to send
 - **form_encoding** (string, optional) : the form encoding to use, `application/x-www-form-urlencoded` (default) or `multipart/form-data`
 - **json_body** (object, optional) : the object to send as json encoded body
-- **auth** (tuple(string, string), optional): HTTP basic auth username and password
+- **auth_basic** (tuple(string, string), optional): HTTP basic auth username and password
 
 The response for all API's (`value` within `plugin_response`) contains following properties:
 
@@ -53,7 +53,7 @@ The response for all API's (`value` within `plugin_response`) contains following
 - **body** (string) : the response body as a string
 - **json** (object) : the response body un-marshalled as a json
 
-If the API calls fails to go through then the plugin response `error` property will be set. If the APi goes through, then the response `error` will not be set, even if API call fails with an HTPP error. The `status_code` will indicate whether the API succeeded on the server. To handle all possible error conditions, do (change to handle all 2xx codes if required)
+If the API calls fails to go through then the plugin response `error` property will be set. If the API goes through, then the response `error` will not be set, even if API call fails with an HTTP error. The `status_code` will indicate whether the API succeeded on the server. To handle all possible error conditions, do (change to handle all 2xx codes if required)
 
 ```python {filename="app.star"}
 ret = http.get("http://localhost:9999/test")
