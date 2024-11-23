@@ -44,13 +44,24 @@ creates two Vault configs. The `address` and `token` properties are required.
 
 ## Environment Secrets
 
-Adding a secret provider with the name `env`, like
+Adding a secret provider with the name `env` or starting with `env_`, like
 
 ```toml {filename="clace.toml"}
 [secret.env]
 ```
 
 enables looking up the Clace server environment for secrets. This can be accessed like `--param MYPARAM='{{secret "env" "MY_SECRET_KEY"}}'`. No properties are required in the env provider config. The value of MY_SECRET_KEY in the Clace server env wil be passed as the param.
+
+## Properties Secrets
+
+Secrets can be read from a properties file. The config name should be `prop` or should start with `prop_`. To use this, add
+
+```toml {filename="clace.toml"}
+[secret.prop_test1]
+file_name = "/etc/props.properties"
+```
+
+`file_name` is a required property.
 
 ## Secrets Usage
 
@@ -73,3 +84,21 @@ key = "mykey.apps.googleusercontent.com"
 secret = '{{secret "PROVIDER_NAME" "GOOGLE_OAUTH_SECRET"}}'
 hosted_domain = "example.com"
 ```
+
+## Multiple Keys
+
+If the `KEY_NAME` is a single string, it is passed as is to the provider. If multiple keys are specified, they are concatenated and passed to the provider. For example, `{{secret "env" "ABC" "DEF"}}` will get converted to a env lookup for `ABC_DEF`. The delimiter used depends on the provider. The defaults are:
+
+- ASM and Vault : `/`
+- Env : `_`
+- Properties: `.`
+
+The formatter used to concatenate the keys can be customized by setting the `keys_printf` property. For example,
+
+```toml {filename="clace.toml"}
+[secret.prop]
+file_name = "/etc/mykeys.properties"
+keys_printf = "%s-%s.%s"
+```
+
+combines `{{secret "prop" "ABC" "DEF" "XYZ"}}` as `ABC-DEF.XYZ`. This allows the app to work with multiple secret providers without requiring code changes in the app.
