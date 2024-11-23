@@ -25,7 +25,7 @@ noClasses = false
 # Default Page Parameters
 [params]
 title = "Internal Tools Deployment Platform | Clace"
-description = "Platform for securely developing and deploying internal tools easily. Application server for containerized webapps. Create and share webapps from CLI applications."
+description = "Platform for easily developing and deploying secure internal tools. Application server for containerized webapps."
 image = "clace_icon.png"
 
 [params.navbar]

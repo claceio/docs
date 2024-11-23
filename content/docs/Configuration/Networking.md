@@ -92,6 +92,26 @@ Test out the certificate creation by sending HTTPS requests to port 443. If the 
 
 With this config, certmagic is used to create certificates for all HTTPS requests. Self signed certificates and enable_cert_lookup property are not used when certmagic is enabled.
 
+## Default Domain
+
+The config has the default domain set to `localhost` by default. The default domain is used for any app which is installed without an explicit domain being specified. This can be changed to the required value when configuring the server.
+
+```toml {filename="clace.toml"}
+[system]
+default_domain = "localhost" # default domain for apps
+```
+
+The list_app app is served at the default domain root level if no app is installed there.
+
+```toml {filename="clace.toml"}
+[system]
+root_serve_list_apps = "auto"  # "auto" means serve list_apps app for default domain, "disable" means don't server for any domain,
+```
+
+To disable this, set `root_serve_list_apps` to `disable`. The list apps app uses the defult authentication as set for the system. If another domain needs to be used, set the value to that.
+
+The list_apps app can be installed explicitly from `github.com/claceio/apps/clace/list_apps` source path. This allows the app to be installed with required auth settings. The listing shows apps which are available unauthenticated and apps which are using the same auth as the one set for the list_apps app.
+
 ## Privileged Ports
 
 On Linux, binding to low ports is disabled for non-root users. To enable binding to port 80 for HTTP and 443 for HTTPS, run the command

@@ -13,11 +13,13 @@ Clace supports working with Classless CSS libraries and also with TailwindCSS an
 
 in the app definition. The fields in the `ace.style` structure are:
 
-|    Property     | Optional |   Type   | Default |                                  Notes                                   |
-| :-------------: | :------: | :------: | :-----: | :----------------------------------------------------------------------: |
-|     library     |  false   |  string  |         | The library to use, url to classless library, "tailwindcss" or "daisyui" |
-|     themes      |   true   | string[] |   []    |                      The daisyui themes to include                       |
-| disable_watcher |   true   |   bool   |  false  |   Whether to disable the tailwind watcher process startup in dev mode    |
+|    Property     | Optional |   Type   |  Default  |                                  Notes                                   |
+| :-------------: | :------: | :------: | :-------: | :----------------------------------------------------------------------: |
+|     library     |  false   |  string  |           | The library to use, url to classless library, "tailwindcss" or "daisyui" |
+|     themes      |   true   | string[] |    []     |                      The daisyui themes to include                       |
+| disable_watcher |   true   |   bool   |   false   |   Whether to disable the tailwind watcher process startup in dev mode    |
+|      light      |   true   |  string  | bumblebee |            The DaisyUI them to use in light mode for Actions             |
+|      dark       |   true   |  string  |    dim    |             The DaisyUI them to use in dark mode for Actions             |
 
 ## Classless CSS
 
@@ -69,3 +71,5 @@ To use [DaisyUI](https://daisyui.com/), in app settings, add
 ```
 
 Change to the preferred [theme](https://daisyui.com/docs/themes/). DaisyUI is a good option to use to get great default styling for components, with the full flexibility of Tailwind. To use DaisyUI, use the npm version of Tailwind or use this [custom version](https://github.com/dobicinaitis/tailwind-cli-extra) of the standalone CLI with DaisyUI included. Clace takes care of creating the config files. Using the CDN version of DaisyUI or Tailwind is not recommended since that will cause the style files to be large.
+
+If using [Actions]({{< ref "/docs/actions/" >}}), DaisyUI styles are automatically included. The themes can be customized using the `light` and `dark` property.

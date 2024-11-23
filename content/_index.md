@@ -5,14 +5,14 @@ layout: hextra-home
 
 <div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: linear-gradient(180deg, #277A9F, #359ece); color: transparent; background-clip: text; -webkit-background-clip: text;">
 {{< hextra/hero-headline >}}
-  Webapp Management for Internal Tools
+  Internal Tools Deployment Platform
 {{< /hextra/hero-headline >}}
 </div>
 
 <div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  Platform for securely developing and deploying web tools across a team.&nbsp;<br class="sm:hx-block hx-hidden"/>
-  Application server for containerized webapps. Create and share webapps for CLI applications.
+  Platform for developing and deploying internal tools across a team.&nbsp;<br class="sm:hx-block hx-hidden"/>
+  Application server for containerized webapps.
 {{< /hextra/hero-subtitle >}}
 </div>
 
