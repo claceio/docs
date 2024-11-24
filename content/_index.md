@@ -11,8 +11,8 @@ layout: hextra-home
 
 <div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  Platform for developing and deploying internal tools across a team.&nbsp;<br class="sm:hx-block hx-hidden"/>
-  Application server for containerized webapps.
+  Platform for building Hypermedia based internal tools.&nbsp;<br class="sm:hx-block hx-hidden"/>
+  Application server for containerized webapps. Easy, secure GitOps based webapps.
 {{< /hextra/hero-subtitle >}}
 </div>
 
