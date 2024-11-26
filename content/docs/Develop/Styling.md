@@ -18,8 +18,8 @@ in the app definition. The fields in the `ace.style` structure are:
 |     library     |  false   |  string  |         | The library to use, url to classless library, "tailwindcss" or "daisyui" |
 |     themes      |   true   | string[] |   []    |                      The daisyui themes to include                       |
 | disable_watcher |   true   |   bool   |  false  |   Whether to disable the tailwind watcher process startup in dev mode    |
-|      light      |   true   |  string  | emerald |            The DaisyUI them to use in light mode for Actions             |
-|      dark       |   true   |  string  |  night  |             The DaisyUI them to use in dark mode for Actions             |
+|      light      |   true   |  string  | emerald |            The DaisyUI theme to use in light mode for Actions            |
+|      dark       |   true   |  string  |  night  |            The DaisyUI theme to use in dark mode for Actions             |
 
 ## Classless CSS
 
