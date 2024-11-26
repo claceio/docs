@@ -51,13 +51,14 @@ The app, when accessed will look as shown below, with the `ls` command output di
 
 An action is defined using the `ace.action` struct. The fields in this structure are:
 
-|  Property   | Optional |   Type   | Default |                      Notes                       |
-| :---------: | :------: | :------: | :-----: | :----------------------------------------------: |
-|    name     |  false   |  string  |         |                 The action name                  |
-|    path     |  false   |  string  |         |         The path to use within app path          |
-|     run     |  false   | function |         |         The function to run on execution         |
-|   suggest   |   true   | function |  none   | The function to run on suggest, currently unused |
-| description |   true   |  string  |  none   |          The description for the action          |
+|  Property   | Optional |     Type     | Default |                            Notes                            |
+| :---------: | :------: | :----------: | :-----: | :---------------------------------------------------------: |
+|    name     |  false   |    string    |         |                       The action name                       |
+|    path     |  false   |    string    |         |               The path to use within app path               |
+|     run     |  false   |   function   |         |              The function to run on execution               |
+|   suggest   |   true   |   function   |  none   |      The function to run on suggest, currently unused       |
+| description |   true   |    string    |  none   |               The description for the action                |
+|   hidden    |   true   | list strings |  none   | The params which should be hidden in the UI for this Action |
 
 The name and description are shown in the app UI. The app params are displayed in a form. `BOOLEAN` types are checkboxes, others are text boxes.
 
@@ -66,6 +67,8 @@ When the form is submitted, the `run` function is called. The params are passed 
 {{<callout type="warning" >}}
 In the action handler function, use `args` argument to get the values from the form. Referencing `params` will give the default values for the parameters, not the actual values passed in.
 {{</callout>}}
+
+The `hidden` property can be used to hide params for specific Actions. Set it to the list of params to hide, for example `hidden=["param1"]`.
 
 ## Action Result
 

@@ -13,13 +13,13 @@ Clace supports working with Classless CSS libraries and also with TailwindCSS an
 
 in the app definition. The fields in the `ace.style` structure are:
 
-|    Property     | Optional |   Type   |  Default  |                                  Notes                                   |
-| :-------------: | :------: | :------: | :-------: | :----------------------------------------------------------------------: |
-|     library     |  false   |  string  |           | The library to use, url to classless library, "tailwindcss" or "daisyui" |
-|     themes      |   true   | string[] |    []     |                      The daisyui themes to include                       |
-| disable_watcher |   true   |   bool   |   false   |   Whether to disable the tailwind watcher process startup in dev mode    |
-|      light      |   true   |  string  | bumblebee |            The DaisyUI them to use in light mode for Actions             |
-|      dark       |   true   |  string  |    dim    |             The DaisyUI them to use in dark mode for Actions             |
+|    Property     | Optional |   Type   | Default |                                  Notes                                   |
+| :-------------: | :------: | :------: | :-----: | :----------------------------------------------------------------------: |
+|     library     |  false   |  string  |         | The library to use, url to classless library, "tailwindcss" or "daisyui" |
+|     themes      |   true   | string[] |   []    |                      The daisyui themes to include                       |
+| disable_watcher |   true   |   bool   |  false  |   Whether to disable the tailwind watcher process startup in dev mode    |
+|      light      |   true   |  string  | emerald |            The DaisyUI them to use in light mode for Actions             |
+|      dark       |   true   |  string  |  night  |             The DaisyUI them to use in dark mode for Actions             |
 
 ## Classless CSS
 
