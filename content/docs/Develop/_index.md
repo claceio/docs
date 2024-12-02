@@ -89,13 +89,14 @@ param("preserve_host", type=BOOLEAN, description="Whether to preserve the origin
 
 This is defining three parameters. The type can be one of `STRING`(default), `INT`, `BOOLEAN`, `LIST` and `DICT`. The param structure definition is
 
-|  Property   | Optional |                    Type                    |         Default         |                                     Notes                                     |
-| :---------: | :------: | :----------------------------------------: | :---------------------: | :---------------------------------------------------------------------------: |
-|    name     |  False   |                   string                   |                         |                     Has to be be a valid starlark keyword                     |
-|    type     |   True   | `STRING`, `INT`, `BOOLEAN`, `LIST`or`DICT` |        `STRING`         |                                 The data type                                 |
-|   default   |   True   |           Type as set for `type`           | Zero value for the type |                                                                               |
-| description |   True   |                   string                   |                         |                         The description for the param                         |
-|  required   |   True   |                    bool                    |          True           | If required is True and default value is not specified, then validation fails |
+|   Property   | Optional |                    Type                    |         Default         |                                                       Notes                                                        |
+| :----------: | :------: | :----------------------------------------: | :---------------------: | :----------------------------------------------------------------------------------------------------------------: |
+|     name     |  False   |                   string                   |                         |                                       Has to be be a valid starlark keyword                                        |
+|     type     |   True   | `STRING`, `INT`, `BOOLEAN`, `LIST`or`DICT` |        `STRING`         |                                                   The data type                                                    |
+|   default    |   True   |           Type as set for `type`           | Zero value for the type |                                                                                                                    |
+| description  |   True   |                   string                   |                         |                                           The description for the param                                            |
+|   required   |   True   |                    bool                    |          True           |                   If required is True and default value is not specified, then validation fails                    |
+| display_type |   True   |                   string                   |                         | How ths param should be displayed in the UI. Options are `FILE`, `PASSWORD` and `TEXTAREA`, default is text input. |
 
 The parameters are available in the app Starlark code, through the `param` namespace. For example, `param.port`, `param.app_name` etc. See https://github.com/claceio/appspecs/blob/main/python-flask/app.star for an example of how this can be used.
 

@@ -74,12 +74,12 @@ The `hidden` property can be used to hide params for specific Actions. Set it to
 
 The handler returns an `ace.result` struct. The fields in this structure are:
 
-|   Property   | Optional |  Type  | Default  |                                                                                                 Notes                                                                                                 |
-| :----------: | :------: | :----: | :------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|    status    |   true   | string |          |                                                                                       The action status message                                                                                       |
-|    values    |   true   |  list  |    []    |                                                                         The actions output, list of strings or list of dicts                                                                          |
-|    report    |   true   | string | ace.AUTO | The type of report to generate. Default is `ace.AUTO`, where it is selected based on response type. Other options are `ace.JSON`, `ace.TEXT`, `ace.TABLE`. Any other value is a custom template name. |
-| param_errors |   true   |  dict  |    {}    |                                               The validation errors to report for each param. The key is the param name, the value is the error message                                               |
+|   Property   | Optional |  Type  | Default  |                                                                                                                 Notes                                                                                                                 |
+| :----------: | :------: | :----: | :------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    status    |   true   | string |          |                                                                                                       The action status message                                                                                                       |
+|    values    |   true   |  list  |    []    |                                                                                         The actions output, list of strings or list of dicts                                                                                          |
+|    report    |   true   | string | ace.AUTO | The type of report to generate. Default is `ace.AUTO`, where it is selected based on response type. Other options are `ace.JSON`, `ace.TEXT`, `ace.TABLE`, `ace.DOWNLOAD` and `ace.IMAGE`. Any other value is a custom template name. |
+| param_errors |   true   |  dict  |    {}    |                                                               The validation errors to report for each param. The key is the param name, the value is the error message                                                               |
 
 ## Validating Params
 
@@ -128,3 +128,28 @@ clace app create --approve --param options-param1='["option1", "option2", "optio
 ```
 
 adds a new `options3` option.
+
+## Display Types
+
+For string type params, the `display_type` property can be set to `FILE`, `PASSWORD` or `TEXTAREA`. If no value is set, the field shows as a text input box. `FILE` param shows as a file upload input. `PASSWORD` shows as a password input. `TEXTAREA` shows as a text area.
+
+## File Handling
+
+For `FILE` display type, the Action app user can upload a file. The file is uploaded to a temp file on the server and the file name is available through the `args.param_name`. The file can be process as required from disk. Multiple `FILE` type params are supported, each param can upload one file only. The temp files are deleted at the end of the handler function execution.
+
+To return file as output for the Action, using the [`fs.load_file`]({{< ref "/docs/plugins/catalog/#load_file" >}}) API. This makes a file on disk available through an API.
+
+See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API. Use `report=ace.DOWNLOAD` property in the `ace.result` to generate a file download link.
+
+Files from the system temp directory and from `/tmp` are accessible by default for `load_file` API. This can be configured at the system level using
+
+```toml {filename="clace.toml"}
+[app_config]
+fs.file_access = ["$TEMPDIR", "/tmp"]
+```
+
+To set this at the app level, run
+
+```
+clace app update-metadata conf --promote fs.file_access='["/var/tmp", "$TEMPDIR", "/tmp"]' /myapp
+```

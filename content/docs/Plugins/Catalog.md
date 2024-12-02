@@ -164,8 +164,8 @@ The response for the `load_file` API is a dict with the fields:
 - **url** (string) : the url path (without domain) for downloading the file
 - **name** (string) : the file name
 
-The `load_file` API creates a metadata entry. The default behavior is the file is accessible to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and also deletes the file from disk. If the file should not be deleted, use
+The `load_file` API creates a metadata entry in the Clace database. The file can be served through an API using this entry. The default behavior is the file is accessible only to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and **also deletes the file from disk**. If the file should not be deleted, do:
 
 `ret = fs.load_file("/tmp/myfile", single_access=False, expiry_minutes=0)`
 
-See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API.
+See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API. Setting `visibility` to `fs.APP` will make the API available to anyone who has access to the app.
