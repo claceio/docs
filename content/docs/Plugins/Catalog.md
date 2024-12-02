@@ -1,8 +1,8 @@
 ---
-title: "Plugin Details"
+title: "Plugin Catalog"
 weight: 200
 date: 2024-02-18
-summary: "Details of Clace Plugins"
+summary: "Catalog of Clace Plugins"
 ---
 
 The page lists the available plugins and their API details.
@@ -20,6 +20,8 @@ The `container.in` plugin supports configuring for using a container for deployi
 The `proxy.in` plugin supports proxying API calls to deploying backend APIs. See [proxy]({{< ref "proxy" >}}) for details.
 
 ## HTTP Plugin
+
+### get,head,options,post,put,delete,patch
 
 The `http.in` plugin supports making HTTP API calls. The APIs available are:
 
@@ -50,8 +52,8 @@ The response for all API's (`value` within `plugin_response`) contains following
 - **status_code** (int): the HTTP status code
 - **headers** (dict): the output headers
 - **encoding** (string): the transfer encoding header
-- **body** (string) : the response body as a string
-- **json** (object) : the response body un-marshalled as a json
+- **body()** (string) : the response body as a string
+- **json()** (object) : the response body un-marshalled as a json
 
 If the API calls fails to go through then the plugin response `error` property will be set. If the API goes through, then the response `error` will not be set, even if API call fails with an HTTP error. The `status_code` will indicate whether the API succeeded on the server. To handle all possible error conditions, do (change to handle all 2xx codes if required)
 
@@ -66,6 +68,8 @@ val = ret.value.json()
 
 ## Exec Plugin
 
+### run
+
 The `exec.in` plugin allows running external commands, starting a new process for the specified command. The APIs available are:
 
 |   API   |    Type    |               Notes               |
@@ -78,8 +82,9 @@ The API supports the following parameters:
 - **args** (list of strings, optional) : arguments to pass to the cmd
 - **env** (list of strings, optional) : the env to pass to the cmd, in the form `key=value`
 - **process_partial** (bool, optional) : whether to process the output when there is a failure
+- **stdout_file** (bool, optional) : whether to send the stdout for the process to a temporary file on disk
 
-The response for the API (`value` within `plugin_response`) is of type list of strings. The stdout is scanned and split on newlines. The list of lines is returned. For example
+The default response (when `stdout_file` is `False`) for the `exec` API (`value` within `plugin_response`) is of type list of strings. The stdout is scanned and split on newlines. The list of lines is returned. For example
 
 ```python {filename="app.star"}
    ret = exec.run("ls", ["-l", "/"], process_partial=True)
@@ -94,21 +99,28 @@ The response for the API (`value` within `plugin_response`) is of type list of s
 **Note:** Only first 100MB of the command stdout output is scanned currently, the rest is discarded.
 {{</callout>}}
 
+If `stdout_file` is `True`, then the plugin output `value` is the name for the temp file to which the output was written. There is no size limit on this file output. The user is responsible for deleting this file.
+
 ## FS Plugin
 
 The `fs.in` allows working with local file system. The APIs available are
 
-|   API    | Type |                         Notes                          |
-| :------: | :--: | :----------------------------------------------------: |
-| **abs**  | Read |   Returns the absolute path for given relative path    |
-| **list** | Read |           List files in specified directory            |
-| **find** | Read | Find files under specified directory matching criteria |
+|      API      | Type |                         Notes                          |
+| :-----------: | :--: | :----------------------------------------------------: |
+|    **abs**    | Read |   Returns the absolute path for given relative path    |
+|   **list**    | Read |           List files in specified directory            |
+|   **find**    | Read | Find files under specified directory matching criteria |
+| **load_file** | Read |        Load file metadata to the Clace database        |
+
+### abs
 
 The `abs` API supports the following parameter:
 
 - **path** (string, required) : the file path
 
 The response for the API (`value` within `plugin_response`) is of type string, the absolute path for given path.
+
+### list
 
 The `list` API supports the following parameters:
 
@@ -123,6 +135,8 @@ The response for the API is a list of type `FileInfo`. The `FileInfo` struct con
 - **is_dir** (bool) : is it a directory
 - **mode** (int) : file mode info
 
+### find
+
 The `find` API supports the following parameters:
 
 - **path** (string, required) : the directory path
@@ -132,3 +146,26 @@ The `find` API supports the following parameters:
 - **ignore_errors** (bool, optional, default false) : whether to ignore errors when accessing entries
 
 The response for the `find` API is a list of type `FileInfo`, same as returned by `list`.
+
+### load_file
+
+The `load_file` API supports the following parameters:
+
+- **path** (string, required) : the file path to load
+- **name** (string, optional, default basename of path) : the file name to use (when serving the API)
+- **visibility** (string, optional, default `fs.USER`) : the API access level for the file (`fs.USER` or `fs.APP`)
+- **mime_type** (string, optional, default `application/octet-stream`) : the mime type to use when serving the file
+- **expiry_minutes** (int, optional, default 60 minutes) : how long to keep the file metadata, set to zero for no deletion
+- **single_access** (bool, optional, default `True`) : whether to serve the file just once and then automatically delete it
+
+The response for the `load_file` API is a dict with the fields:
+
+- **id** (string) : the id of the metadata entry
+- **url** (string) : the url path (without domain) for downloading the file
+- **name** (string) : the file name
+
+The `load_file` API creates a metadata entry. The default behavior is the file is accessible to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and also deletes the file from disk. If the file should not be deleted, use
+
+`ret = fs.load_file("/tmp/myfile", single_access=False, expiry_minutes=0)`
+
+See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API.
