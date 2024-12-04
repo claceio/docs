@@ -105,12 +105,12 @@ If `stdout_file` is `True`, then the plugin output `value` is the name for the t
 
 The `fs.in` allows working with local file system. The APIs available are
 
-|      API      | Type |                         Notes                          |
-| :-----------: | :--: | :----------------------------------------------------: |
-|    **abs**    | Read |   Returns the absolute path for given relative path    |
-|   **list**    | Read |           List files in specified directory            |
-|   **find**    | Read | Find files under specified directory matching criteria |
-| **load_file** | Read |        Load file metadata to the Clace database        |
+|        API         | Type |                                  Notes                                  |
+| :----------------: | :--: | :---------------------------------------------------------------------: |
+|      **abs**       | Read |            Returns the absolute path for given relative path            |
+|      **list**      | Read |                    List files in specified directory                    |
+|      **find**      | Read |         Find files under specified directory matching criteria          |
+| **serve_tmp_file** | Read | Load file metadata to the Clace database and make available through API |
 
 ### abs
 
@@ -147,25 +147,25 @@ The `find` API supports the following parameters:
 
 The response for the `find` API is a list of type `FileInfo`, same as returned by `list`.
 
-### load_file
+### serve_tmp_file
 
-The `load_file` API supports the following parameters:
+The `serve_tmp_file` API supports the following parameters:
 
-- **path** (string, required) : the file path to load
+- **path** (string, required) : the file path to serve
 - **name** (string, optional, default basename of path) : the file name to use (when serving the API)
 - **visibility** (string, optional, default `fs.USER`) : the API access level for the file (`fs.USER` or `fs.APP`)
 - **mime_type** (string, optional, default `application/octet-stream`) : the mime type to use when serving the file
 - **expiry_minutes** (int, optional, default 60 minutes) : how long to keep the file metadata, set to zero for no deletion
 - **single_access** (bool, optional, default `True`) : whether to serve the file just once and then automatically delete it
 
-The response for the `load_file` API is a dict with the fields:
+The response for the `serve_tmp_file` API is a dict with the fields:
 
 - **id** (string) : the id of the metadata entry
 - **url** (string) : the url path (without domain) for downloading the file
 - **name** (string) : the file name
 
-The `load_file` API creates a metadata entry in the Clace database. The file can be served through an API using this entry. The default behavior is the file is accessible only to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and **also deletes the file from disk**. If the file should not be deleted, do:
+The `serve_tmp_file` API creates a metadata entry in the Clace database. The file can be served through an API using this entry. The default behavior is the file is accessible only to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and **also deletes the file from disk**. If the file should not be deleted, do:
 
-`ret = fs.load_file("/tmp/myfile", single_access=False, expiry_minutes=0)`
+`ret = fs.serve_tmp_file("/tmp/myfile", single_access=False, expiry_minutes=0)`
 
 See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API. Setting `visibility` to `fs.APP` will make the API available to anyone who has access to the app.

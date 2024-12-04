@@ -137,7 +137,7 @@ For string type params, the `display_type` property can be set to `FILE`, `PASSW
 
 For `FILE` display type, the Action app user can upload a file. The file is uploaded to a temp file on the server and the file name is available through the `args.param_name`. The file can be process as required from disk. Multiple `FILE` type params are supported, each param can upload one file only. The temp files are deleted at the end of the handler function execution.
 
-To return file as output for the Action, using the [`fs.load_file`]({{< ref "/docs/plugins/catalog/#load_file" >}}) API. This makes a file on disk available through an API.
+To return file as output for the Action, using the [`fs.load_file`]({{< ref "/docs/plugins/catalog/#serve_tmp_file" >}}) API. This makes a file on disk available through an API.
 
 See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API. Use `report=ace.DOWNLOAD` property in the `ace.result` to generate a file download link.
 
