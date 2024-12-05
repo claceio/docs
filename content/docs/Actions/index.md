@@ -51,14 +51,15 @@ The app, when accessed will look as shown below, with the `ls` command output di
 
 An action is defined using the `ace.action` struct. The fields in this structure are:
 
-|  Property   | Optional |     Type     | Default |                            Notes                            |
-| :---------: | :------: | :----------: | :-----: | :---------------------------------------------------------: |
-|    name     |  false   |    string    |         |                       The action name                       |
-|    path     |  false   |    string    |         |               The path to use within app path               |
-|     run     |  false   |   function   |         |              The function to run on execution               |
-|   suggest   |   true   |   function   |  none   |      The function to run on suggest, currently unused       |
-| description |   true   |    string    |  none   |               The description for the action                |
-|   hidden    |   true   | list strings |  none   | The params which should be hidden in the UI for this Action |
+|   Property    | Optional |     Type     | Default |                            Notes                            |
+| :-----------: | :------: | :----------: | :-----: | :---------------------------------------------------------: |
+|     name      |  false   |    string    |         |                       The action name                       |
+|     path      |  false   |    string    |         |               The path to use within app path               |
+|      run      |  false   |   function   |         |              The function to run on execution               |
+|    suggest    |   true   |   function   |  none   |               The function to run on suggest                |
+|  description  |   true   |    string    |  none   |               The description for the action                |
+|    hidden     |   true   | list strings |  none   | The params which should be hidden in the UI for this Action |
+| show_validate |   true   |   boolean    |  False  |     Whether to show an Validate option for this action      |
 
 The name and description are shown in the app UI. The app params are displayed in a form. `BOOLEAN` types are checkboxes, others are text boxes.
 
@@ -86,11 +87,35 @@ The handler returns an `ace.result` struct. The fields in this structure are:
 The `run` handler can validate the parameters. If there are errors, it can return a validation error like
 
 ```python {filename="app.star"}
-   if args.dir == "." or args.dir.startswith("./") or args.dir == ".." or args.dir.startswith("../"):
+  def run(dry_run, args):
+    if args.dir == "." or args.dir.startswith("./") or args.dir == ".." or args.dir.startswith("../"):
        return ace.result("Validation failed", param_errors={"dir": "relative paths not supported"})
+    if dry_run:
+       return ace.result("Validation successful")
+
+    # Actual code for run handler
 ```
 
-Errors can be reported for multiple params.
+Errors can be reported for multiple params. If the action definition has `show_validate=True`, then a Validate option will show up in the UI. Calling that will invoke the run handler with `dry_run=True`. The run handler should return after the param validation when dry_run is true.
+
+## Suggest Handler
+
+If a suggest handler is defined for an action, then a Suggest button shows up in the UI. Suggest allows property values to be populated dynamically. For example, if the app has three params A, B and C, and all are empty initially. The first suggest can do `return {"A": ["avalue1", "avalue2", "avalue3"]}`. This will populate the A param with a dropdown. A subsequent suggest call can populate the value for B, with a list of options or with an actual value. The suggest handler is optional. A sample suggest handler is
+
+```python {filename="app.star"}
+def suggest(args):
+    if not args.A:
+        alist = []
+        res = store.select(table.adata, {})
+        for aval in res.value:
+            alist.append(aval.name)
+        return {"A": alist}
+    else:
+        if not args.B:
+            res = store.select_one(table.adata, {"A": args.A})
+            return {"B": res.value.bval}
+    return {}
+```
 
 ## Report Types
 
@@ -137,11 +162,11 @@ For string type params, the `display_type` property can be set to `FILE`, `PASSW
 
 For `FILE` display type, the Action app user can upload a file. The file is uploaded to a temp file on the server and the file name is available through the `args.param_name`. The file can be process as required from disk. Multiple `FILE` type params are supported, each param can upload one file only. The temp files are deleted at the end of the handler function execution.
 
-To return file as output for the Action, using the [`fs.load_file`]({{< ref "/docs/plugins/catalog/#serve_tmp_file" >}}) API. This makes a file on disk available through an API.
+To return file as output for the Action, using the [`fs.serve_tmp_file`]({{< ref "/docs/plugins/catalog/#serve_tmp_file" >}}) API. This makes a file on disk available through an API.
 
 See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API. Use `report=ace.DOWNLOAD` property in the `ace.result` to generate a file download link.
 
-Files from the system temp directory and from `/tmp` are accessible by default for `load_file` API. This can be configured at the system level using
+Files from the system temp directory and from `/tmp` are accessible by default for `serve_tmp_file` API. The file is deleted from disk by default after the first download. This can be configured at the system level using
 
 ```toml {filename="clace.toml"}
 [app_config]
@@ -153,3 +178,7 @@ To set this at the app level, run
 ```
 clace app update-metadata conf --promote fs.file_access='["/var/tmp", "$TEMPDIR", "/tmp"]' /myapp
 ```
+
+## Multiple Actions
+
+Multiple actions can be defined for an app. Each action should have a dedicated path. If there are multiple actions, a switcher dropdown is automatically added for each app. The order of entries in this is the same order as defined in the app.
