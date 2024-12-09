@@ -72,6 +72,6 @@ The Clace runtime provides all the APIs used by Clace apps by means of plugin ca
 
 The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace.
 
-This error handling solution is limited in scope to use cases where glue scripts are being written which make lots of API calls. Basically provider a shell errexit type facility for non shell code. This does not support error handling which needs to happen within user defined code, like one function which returns an error to be handled by another function.
+This error handling solution is limited in scope to use cases where glue scripts are being written which make lots of API calls. This provides a shell errexit type feature for regular code. This does not support error handling that needs to happen within user defined code, like one function which returns an error to be handled by another function.
 
 Handling resource leaks is another concern. For Clace, since all resources (transactions, result sets etc) are created through the plugin API, they are automatically closed when an error occurs.
