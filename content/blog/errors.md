@@ -70,4 +70,4 @@ The Clace runtime provides all the APIs by means of plugin calls. This solution 
 - Thread locals are feasible for tracking errors
 - There is a standard error handling function which does something useful (could be user defined)
 
-The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace. Handling resource leaks is another concern. For Clace, since all resources (transactions, iterators etc) are created through the plugin API, they are automatically closed when error occur.
+The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace. Handling resource leaks is another concern. For Clace, since all resources (transactions, iterators etc) are created through the plugin API, they are automatically closed when an error occurs.
