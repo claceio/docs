@@ -1,4 +1,92 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog</title><link>https://clace.io/blog/</link><description>Recent content in Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 07 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Missed Connections: AppServers in the Containerized Landscape</title><link>https://clace.io/blog/appserver/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/appserver/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog</title><link>https://clace.io/blog/</link><description>Recent content in Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 09 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Errors and Exceptions: Is there a third option?</title><link>https://clace.io/blog/errors/</link><pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/errors/</guid><description>
+&lt;div
+class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
+&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+&lt;div
+class="hx-select-none hx-text-xl"
+style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+📎
+&lt;/div>
+&lt;/div>
+&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
+&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+Clace is an
+&lt;a href="https://github.com/claceio/clace">open source project&lt;/a>
+building a platform for developing internal tools and deploying them
+locally or across a team. Clace can be used to develop auto-generated UI
+for backend actions or to develop custom Hypermedia driven web apps. Clace
+also implements an application server for deploying containerized web
+apps.
+&lt;br />
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Background&lt;span class="hx-absolute -hx-mt-20" id="background">&lt;/span>
+&lt;a href="#background" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Most programming languages handle error conditions either by supporting error values or by means of exceptions. Error return value support varies, with some statically typed languages enforcing that the error conditions be handled. With exceptions, the invoker can either catch and handle it or it automatically gets thrown up the stack. The purpose of error handling is to allow an invoker to either handle the issue or allow the invoker to return the error to the caller.&lt;/p>
+&lt;p>Exceptions have the advantage of the error handling being automatic. Error values have the advantage of requiring more explicit error handling, at the cost of verbosity.&lt;/p>
+&lt;h2>Error handling for Glue code&lt;span class="hx-absolute -hx-mt-20" id="error-handling-for-glue-code">&lt;/span>
+&lt;a href="#error-handling-for-glue-code" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For code which is gluing together multiple API&amp;rsquo;s, error handling can be tedious. Some languages have specific support for this. The most famous example is the &lt;a href="https://www.baeldung.com/linux/bash-script-raise-error" target="_blank" rel="noopener">errexit&lt;/a> setting &lt;code>set -e&lt;/code> in shell scripts. This will automatically check each command for error return status and fail the script if an error occurs.&lt;/p>
+&lt;h2>Trade-Offs&lt;span class="hx-absolute -hx-mt-20" id="trade-offs">&lt;/span>
+&lt;a href="#trade-offs" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The two main trade-offs we are handling are:&lt;/p>
+&lt;ul>
+&lt;li>Exceptions are automatically checked, but they result in error handling being done away from the code which actually failed.&lt;/li>
+&lt;li>Error values need to be checked explicitly, but the error handling code is local to where the error occurred. In most languages, it is easy to miss checking for errors (Rust being one exception with the Result type)&lt;/li>
+&lt;/ul>
+&lt;p>The ideal scenario in terms of code verbosity is that error handling should be automatic. The ideal scenario in terms of proper error handling is that the explicit error checks should be easy for the invoker, else the automatic error handling kicks in.&lt;/p>
+&lt;h2>Is there a third option?&lt;span class="hx-absolute -hx-mt-20" id="is-there-a-third-option">&lt;/span>
+&lt;a href="#is-there-a-third-option" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Clace is built to be a platform for building internal tools. Clace is built in Go and uses &lt;a href="https://starlark-lang.org/" target="_blank" rel="noopener">Starlark&lt;/a> for app configuration and also for API business logic. Starlark does not support exceptions and does not support multi value returns. This makes error handling difficult. The solution implemented for Clace is an API boundary error checker with the following properties:&lt;/p>
+&lt;ul>
+&lt;li>Automatic error handling, no explicit error checks required for every API call&lt;/li>
+&lt;li>Easy way to do explicit error checks when errors are expected&lt;/li>
+&lt;/ul>
+&lt;p>This gives the best of both worlds. All error conditions are automatically checked like exceptions. When explicit error checks are required, they are easy to do like error values.&lt;/p>
+&lt;h2>How does this work?&lt;span class="hx-absolute -hx-mt-20" id="how-does-this-work">&lt;/span>
+&lt;a href="#how-does-this-work" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;a href="https://clace.io/docs/plugins/overview/#automatic-error-handling" target="_blank" rel="noopener">automatic error handling&lt;/a> feature of Clace keeps track of every plugin call&amp;rsquo;s status. If the plugin call fails, the Clace runtime makes sure that return value cannot be accessed, unless an explicit error check was done. If no explicit check is done, the Clace runtime will fail the API, calling the user defined error handler or a generic error handler if none is defined. So for the code&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;pre>&lt;code> def insert(req):
+store.begin()
+book = doc.bookmark(&amp;#34;abc&amp;#34;, [])
+ret = store.insert(table.bookmark, book)
+print(ret.value)
+store.commit()&lt;/code>&lt;/pre>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;ul>
+&lt;li>If begin() fails, the call to insert() will fail since the previous error was not handled (begin&amp;rsquo;s error message is raised).&lt;/li>
+&lt;li>If insert() fails, the value access will fail, so the print will not run&lt;/li>
+&lt;li>If commit fails, the Clace runtime will first check whether the last plugin failed before handling the API response.&lt;/li>
+&lt;/ul>
+&lt;p>Thread locals are used to track errors across plugin API calls. This works since an API handler starlark function is single threaded. When begin() fails, it sets a thread local. If the error is explicitly checked, like&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;pre>&lt;code>ret = store.begin()
+if ret.error:
+pass
+print(ret.value)&lt;/code>&lt;/pre>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>then the thread local state is cleared. So if the code is doing explicit error checks, the automatic error handling is disabled.&lt;/p>
+&lt;h2>Can this be a generic solution?&lt;span class="hx-absolute -hx-mt-20" id="can-this-be-a-generic-solution">&lt;/span>
+&lt;a href="#can-this-be-a-generic-solution" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Clace runtime provides all the APIs by means of plugin calls. This solution can be applied when&lt;/p>
+&lt;ul>
+&lt;li>All code which can cause errors are provided through a standard API interface&lt;/li>
+&lt;li>Thread locals are feasible for tracking errors&lt;/li>
+&lt;li>There is a standard error handling function which does something useful (could be user defined)&lt;/li>
+&lt;/ul>
+&lt;p>The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace. Handling resource leaks is another concern. For Clace, since all resources (transactions, iterators etc) are created through the plugin API, they are automatically closed when error occur.&lt;/p></description></item><item><title>Missed Connections: AppServers in the Containerized Landscape</title><link>https://clace.io/blog/appserver/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/appserver/</guid><description>
 &lt;div
 class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
 &lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
