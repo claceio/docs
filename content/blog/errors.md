@@ -49,9 +49,9 @@ The [automatic error handling](https://clace.io/docs/plugins/overview/#automatic
 
 - If begin() fails, the call to insert() will fail since the previous error was not handled (begin's error message is raised).
 - If insert() fails, the value access will fail, so the print will not run
-- If commit fails, the Clace runtime will first check whether the last plugin failed before handling the API response.
+- If commit() fails, the Clace runtime will first check whether the last plugin failed before handling the API response.
 
-Thread locals are used to track errors across plugin API calls. This works since an API handler starlark function is single threaded. When begin() fails, it sets a thread local. If the error is explicitly checked, like
+Thread locals are used to track errors across plugin API calls. This works since an API handler Starlark function is single threaded. When begin() fails, it sets a thread local. If the error is explicitly checked, like
 
 ```
 ret = store.begin()
@@ -64,10 +64,14 @@ then the thread local state is cleared. So if the code is doing explicit error c
 
 ## Can this be a generic solution?
 
-The Clace runtime provides all the APIs by means of plugin calls. This solution can be applied when
+The Clace runtime provides all the APIs used by Clace apps by means of plugin calls. This solution can be applied when
 
-- All code which can cause errors are provided through a standard API interface
+- All code that can cause errors are provided through a standard API interface
 - Thread locals are feasible for tracking errors
 - There is a standard error handling function which does something useful (could be user defined)
 
-The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace. Handling resource leaks is another concern. For Clace, since all resources (transactions, iterators etc) are created through the plugin API, they are automatically closed when an error occurs.
+The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace.
+
+This error handling solution is limited in scope to use cases where glue scripts are being written which make lots of API calls. Basically provider a shell errexit type facility for non shell code. This does not support error handling which needs to happen within user defined code, like one function which returns an error to be handled by another function.
+
+Handling resource leaks is another concern. For Clace, since all resources (transactions, result sets etc) are created through the plugin API, they are automatically closed when an error occurs.
