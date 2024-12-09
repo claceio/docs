@@ -61,9 +61,9 @@ title="Copy code"
 &lt;ul>
 &lt;li>If begin() fails, the call to insert() will fail since the previous error was not handled (begin&amp;rsquo;s error message is raised).&lt;/li>
 &lt;li>If insert() fails, the value access will fail, so the print will not run&lt;/li>
-&lt;li>If commit fails, the Clace runtime will first check whether the last plugin failed before handling the API response.&lt;/li>
+&lt;li>If commit() fails, the Clace runtime will first check whether the last plugin failed before handling the API response.&lt;/li>
 &lt;/ul>
-&lt;p>Thread locals are used to track errors across plugin API calls. This works since an API handler starlark function is single threaded. When begin() fails, it sets a thread local. If the error is explicitly checked, like&lt;/p>
+&lt;p>Thread locals are used to track errors across plugin API calls. This works since an API handler Starlark function is single threaded. When begin() fails, it sets a thread local. If the error is explicitly checked, like&lt;/p>
 &lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
 &lt;pre>&lt;code>ret = store.begin()
 if ret.error:
@@ -80,13 +80,15 @@ title="Copy code"
 &lt;/div>
 &lt;p>then the thread local state is cleared. So if the code is doing explicit error checks, the automatic error handling is disabled.&lt;/p>
 &lt;h2>Can this be a generic solution?&lt;span class="hx-absolute -hx-mt-20" id="can-this-be-a-generic-solution">&lt;/span>
-&lt;a href="#can-this-be-a-generic-solution" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Clace runtime provides all the APIs by means of plugin calls. This solution can be applied when&lt;/p>
+&lt;a href="#can-this-be-a-generic-solution" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Clace runtime provides all the APIs used by Clace apps by means of plugin calls. This solution can be applied when&lt;/p>
 &lt;ul>
-&lt;li>All code which can cause errors are provided through a standard API interface&lt;/li>
+&lt;li>All code that can cause errors are provided through a standard API interface&lt;/li>
 &lt;li>Thread locals are feasible for tracking errors&lt;/li>
 &lt;li>There is a standard error handling function which does something useful (could be user defined)&lt;/li>
 &lt;/ul>
-&lt;p>The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace. Handling resource leaks is another concern. For Clace, since all resources (transactions, iterators etc) are created through the plugin API, they are automatically closed when an error occurs.&lt;/p></description></item><item><title>Missed Connections: AppServers in the Containerized Landscape</title><link>https://clace.io/blog/appserver/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/appserver/</guid><description>
+&lt;p>The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace.&lt;/p>
+&lt;p>This error handling solution is limited in scope to use cases where glue scripts are being written which make lots of API calls. Basically provider a shell errexit type facility for non shell code. This does not support error handling which needs to happen within user defined code, like one function which returns an error to be handled by another function.&lt;/p>
+&lt;p>Handling resource leaks is another concern. For Clace, since all resources (transactions, result sets etc) are created through the plugin API, they are automatically closed when an error occurs.&lt;/p></description></item><item><title>Missed Connections: AppServers in the Containerized Landscape</title><link>https://clace.io/blog/appserver/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/appserver/</guid><description>
 &lt;div
 class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
 &lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
