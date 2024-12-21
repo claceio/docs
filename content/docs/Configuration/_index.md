@@ -11,4 +11,5 @@ Most configuration options specified in the following sections are for the Clace
 {{< card link="networking" title="Ports and Certificates" subtitle="Setting up ports, TLS certs, certificate signing " icon="adjustments" >}}
 {{< card link="security" title="Security" subtitle="Admin account, admin API access, github repo security" icon="shield-check" >}}
 {{< card link="authentication" title="App authentication" subtitle="App authentication using admin account, OAuth account config" icon="badge-check" >}}
+{{< card link="secrets" title="Secrets Management" subtitle="Secrets management, with AWS secrets manager, env, vault and properties file" icon="lock-closed" >}}
 {{< /cards >}}

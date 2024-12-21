@@ -50,6 +50,19 @@ In the default configuration, where service_email is empty, certmagic integratio
 
 The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For example, if files example.com.crt and example.com.key are found in the certificates folder, those are used for example.com domain.
 
+## Redirect from HTTP to HTTPS
+
+To enable automatic redirect from HTTP to HTTPS, add `redirect_to_https = true` in the `http` section of the config. Also, change the `host` to `0.0.0.0`. For example,
+
+```toml {filename="clace.toml"}
+[http]
+host = "0.0.0.0"
+port = 80
+redirect_to_https = true
+```
+
+All requests to the HTTP port will 308 redirect to the HTTPS port.
+
 ## Dev Env Certificates
 
 For local dev environment, using the auto generated certs will result in browser warnings when connecting to the HTTPS port. To avoid this, use a tool like [mkcert](https://github.com/FiloSottile/mkcert) to generate root CA for local env. Install `mkcert` and then run
