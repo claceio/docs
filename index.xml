@@ -1,4 +1,96 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clace</title><link>https://clace.io/</link><description>Recent content in Clace</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 09 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Errors and Exceptions: Is there a third option?</title><link>https://clace.io/blog/errors/</link><pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/errors/</guid><description>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Clace</title><link>https://clace.io/</link><description>Recent content in Clace</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 24 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://clace.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Go Composition does not compose well with Implicit Interfaces</title><link>https://clace.io/blog/go-composition/</link><pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/go-composition/</guid><description>
+&lt;div
+class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
+&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+&lt;div
+class="hx-select-none hx-text-xl"
+style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+📎
+&lt;/div>
+&lt;/div>
+&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
+&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+Clace is an
+&lt;a href="https://github.com/claceio/clace">open source project&lt;/a>
+building a platform for developing internal tools and deploying them
+locally or across a team. Clace can be used to develop auto-generated UI
+for backend actions or to develop custom Hypermedia driven web apps. Clace
+also implements an application server for deploying containerized web
+apps.
+&lt;br />
+&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Background&lt;span class="hx-absolute -hx-mt-20" id="background">&lt;/span>
+&lt;a href="#background" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>I recently encountered an issue where Server-Sent Events (SSE) stopped working in Clace. SSE are used for live reload functionality in Clace. The problem turned out to be a recent change in Clace which added support for tracking HTTP response status code. This was implemented by implementing a composition over the &lt;code>http.ResponseWriter&lt;/code> to keep track of the status code. This composition broke the SSE functionality.&lt;/p>
+&lt;h2>Composition over Inheritance&lt;span class="hx-absolute -hx-mt-20" id="composition-over-inheritance">&lt;/span>
+&lt;a href="#composition-over-inheritance" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Go supports &lt;a href="https://go.dev/doc/effective_go#embedding" target="_blank" rel="noopener">embedding&lt;/a>, which can be used to implement Composition (has-a relationship) rather than inheritance (is-a relationship). Composition has some &lt;a href="https://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits" target="_blank" rel="noopener">benefits&lt;/a> over inheritance. Embedding in Go allows the use of composition without requiring forwarding methods.&lt;/p>
+&lt;h2>Implicit Interfaces&lt;span class="hx-absolute -hx-mt-20" id="implicit-interfaces">&lt;/span>
+&lt;a href="#implicit-interfaces" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Interfaces in Go are implemented &lt;a href="https://go.dev/tour/methods/10" target="_blank" rel="noopener">implicitly&lt;/a>. This is a powerful feature, allowing interfaces to be added when required later. Interfaces can even be created for types in different packages. This allows clients to control how types are used rather than depending on how the types were originally defined.&lt;/p>
+&lt;h2>Stdlib Implicit Interfaces&lt;span class="hx-absolute -hx-mt-20" id="stdlib-implicit-interfaces">&lt;/span>
+&lt;a href="#stdlib-implicit-interfaces" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Go stdlib uses implicit interfaces to implement optimizations (like &lt;a href="https://pkg.go.dev/io#WriterTo" target="_blank" rel="noopener">io.WriterTo&lt;/a> and &lt;a href="https://pkg.go.dev/io#ReaderFrom" target="_blank" rel="noopener">io.ReaderFrom&lt;/a>) and custom behaviors (like &lt;a href="https://pkg.go.dev/fmt#Stringer" target="_blank" rel="noopener">fmt.Stringer&lt;/a>). Other similar interfaces are http.Hijacker, http.Pusher, and io.Closer.&lt;/p>
+&lt;h2>Composition breaks Implicit Interfaces&lt;span class="hx-absolute -hx-mt-20" id="composition-breaks-implicit-interfaces">&lt;/span>
+&lt;a href="#composition-breaks-implicit-interfaces" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The reason for the issue encountered is an implicit interface &lt;a href="https://pkg.go.dev/net/http#Flusher" target="_blank" rel="noopener">http.Flusher&lt;/a> implemented by most implementations of &lt;a href="https://pkg.go.dev/net/http#ResponseWriter" target="_blank" rel="noopener">http.ResponseWriter&lt;/a>. Adding a composition over &lt;code>http.ResponseWriter&lt;/code> causes this implicit interface to no longer be implemented.&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">CustomWriter&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">statusCode&lt;/span> &lt;span class="kt">int&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Here, &lt;code>CustomWriter&lt;/code> no longer implements &lt;code>http.Flusher&lt;/code>, even if the underlying &lt;code>http.ResponseWriter&lt;/code> implementation did. SSE was supported for flushable writers only, so adding the composition broke SSE. The fix is to have the composing struct explicitly implement &lt;code>http.Flusher&lt;/code>. See &lt;a href="https://go.dev/play/p/IQ4qtCzjaTC" target="_blank" rel="noopener">go playground&lt;/a> to see an example.&lt;/p>
+&lt;h2>Fixing the issue&lt;span class="hx-absolute -hx-mt-20" id="fixing-the-issue">&lt;/span>
+&lt;a href="#fixing-the-issue" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">cw&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">CustomWriter&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">Flush&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">flusher&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ok&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">cw&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>&lt;span class="p">.(&lt;/span>&lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Flusher&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="nx">ok&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">flusher&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Flush&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Adding a &lt;code>Flush&lt;/code> function is a fix, but an issue with this is that if the caller had support for non-flushable writers, that behavior is lost. A better fix is to have two implementation, one flushable and another non flushable. The appropriate one should be used based on whether the underlying writer implements flusher. This way, the original behavior is not changed by adding the composition.&lt;/p>
+&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">FlushableWriter&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Flusher&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">FlushableCustomWriter&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">FlushableWriter&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">statusCode&lt;/span> &lt;span class="kt">int&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">CustomWriter&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">statusCode&lt;/span> &lt;span class="kt">int&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;button
+class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+title="Copy code"
+>
+&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>How to avoid this issue&lt;span class="hx-absolute -hx-mt-20" id="how-to-avoid-this-issue">&lt;/span>
+&lt;a href="#how-to-avoid-this-issue" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Go type system does not have a way to catch such issues are compile time. At runtime, the issue can show up as a performance degradation (if the implicit interface is used as an performance optimization) or as a unexpected behavior (if custom behavior is implemented using the implicit interface).&lt;/p>
+&lt;p>It would have helped if the documentation for &lt;a href="https://pkg.go.dev/net/http#ResponseWriter" target="_blank" rel="noopener">http.ResponseWriter&lt;/a> had mentioned the &lt;code>http.Flusher&lt;/code> interface and when it is used. This is feasible when the types are in the same package.&lt;/p>
+&lt;p>The takeaway is that if using composition over types which could have implicit interfaces, it is important to look at whether any of those implicit interfaces have to be explicitly implemented by the composing type.&lt;/p></description></item><item><title>Errors and Exceptions: Is there a third option?</title><link>https://clace.io/blog/errors/</link><pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/errors/</guid><description>
 &lt;div
 class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
 &lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
