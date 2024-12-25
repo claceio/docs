@@ -87,10 +87,21 @@ title="Copy code"
 &lt;/button>
 &lt;/div>
 &lt;/div>
+&lt;p>Some HTTP routers like &lt;a href="https://go-chi.io/#/README" target="_blank" rel="noopener">Chi&lt;/a> have &lt;a href="https://pkg.go.dev/github.com/go-chi/chi/middleware#NewWrapResponseWriter" target="_blank" rel="noopener">middleware&lt;/a> which implement the required implicit interfaces.&lt;/p>
 &lt;h2>How to avoid this issue&lt;span class="hx-absolute -hx-mt-20" id="how-to-avoid-this-issue">&lt;/span>
 &lt;a href="#how-to-avoid-this-issue" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Go type system does not have a way to catch such issues are compile time. At runtime, the issue can show up as a performance degradation (if the implicit interface is used as an performance optimization) or as a unexpected behavior (if custom behavior is implemented using the implicit interface).&lt;/p>
 &lt;p>It would have helped if the documentation for &lt;a href="https://pkg.go.dev/net/http#ResponseWriter" target="_blank" rel="noopener">http.ResponseWriter&lt;/a> had mentioned the &lt;code>http.Flusher&lt;/code> interface and when it is used. This is feasible when the types are in the same package.&lt;/p>
-&lt;p>The takeaway is that if using composition over types which could have implicit interfaces, it is important to look at whether any of those implicit interfaces have to be explicitly implemented by the composing type.&lt;/p></description></item><item><title>Errors and Exceptions: Is there a third option?</title><link>https://clace.io/blog/errors/</link><pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/errors/</guid><description>
+&lt;p>The takeaway is that if using composition over types which could have implicit interfaces, it is important to look at whether any of those implicit interfaces have to be explicitly implemented by the composing type.&lt;/p>
+&lt;div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-orange-100 hx-bg-orange-50 hx-text-orange-800 dark:hx-border-orange-400/30 dark:hx-bg-orange-400/20 dark:hx-text-orange-300">
+&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">&lt;div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
+💬
+&lt;/div>&lt;/div>
+&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
+&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+Discussion thread on &lt;a href="https://www.reddit.com/r/golang/comments/1hm54r4/go_composition_can_break_implicit_interfaces/" target="_blank" rel="noopener">Reddit&lt;/a>
+&lt;/div>
+&lt;/div>
+&lt;/div></description></item><item><title>Errors and Exceptions: Is there a third option?</title><link>https://clace.io/blog/errors/</link><pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><guid>https://clace.io/blog/errors/</guid><description>
 &lt;div
 class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
 &lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
