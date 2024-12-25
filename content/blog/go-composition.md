@@ -64,6 +64,8 @@ type CustomWriter struct {
 }
 ```
 
+Some HTTP routers like [Chi](https://go-chi.io/#/README) have [middleware](https://pkg.go.dev/github.com/go-chi/chi/middleware#NewWrapResponseWriter) which implement the required implicit interfaces.
+
 ## How to avoid this issue
 
 The Go type system does not have a way to catch such issues are compile time. At runtime, the issue can show up as a performance degradation (if the implicit interface is used as an performance optimization) or as a unexpected behavior (if custom behavior is implemented using the implicit interface).
@@ -71,3 +73,7 @@ The Go type system does not have a way to catch such issues are compile time. At
 It would have helped if the documentation for [http.ResponseWriter](https://pkg.go.dev/net/http#ResponseWriter) had mentioned the `http.Flusher` interface and when it is used. This is feasible when the types are in the same package.
 
 The takeaway is that if using composition over types which could have implicit interfaces, it is important to look at whether any of those implicit interfaces have to be explicitly implemented by the composing type.
+
+{{<callout emoji="💬" >}}
+Discussion thread on [Reddit](https://www.reddit.com/r/golang/comments/1hm54r4/go_composition_can_break_implicit_interfaces/)
+{{</callout>}}
