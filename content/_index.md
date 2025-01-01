@@ -17,7 +17,8 @@ layout: hextra-home
 </div>
 
 <div class="hx-mb-4">
-{{< hextra/hero-button text="Get Started" link="docs/quickstart" >}}
+{{< hextra/hero-button style="border-radius: 8px;" text="Get Started" link="docs/quickstart" >}}
+{{< hextra/hero-button style="border-radius: 8px; padding: 12px 40px;" text="Demo" link="https://apps.demo.clace.io" >}}
 </div>
 
 {{< hextra/feature-grid >}}
