@@ -77,3 +77,7 @@ Each app has a dedicated url, domain based or path based. Clace ensures that no 
 </picture>
 
 For use cases where teams are deploying internal tools, Clace can provide a much simpler solution as against using a general purpose PaaS solution.
+
+{{<callout >}}
+Update (Jan 2025): Clace is now listed in the [CNCF Landscape](https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--clace).
+{{</callout>}}
