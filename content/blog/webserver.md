@@ -12,7 +12,7 @@ Clace is a platform for developing and deploying internal tools. Clace provides 
 
 ## Web Server Overview
 
-A Web Server is software that accepts HTTP/HTTPS requests and routes them appropriately. Web Servers provide features like URL rewrites, reverse proxying, header manipulation, static file and WebSocket connection handling. Web Servers can accept connections on multiple ports. A common pattern is that all requests are received on port 80 (for HTTP) and 443 (for HTTPS) and routing is done based on request domain (from the Host HTTP header) and path (from the url). Apache, Nginx, and Caddy are popular web servers.
+A Web Server is software that accepts HTTP/HTTPS requests and routes them appropriately. Web Servers provide features like URL rewrites, reverse proxying, header manipulation, static file serving, and WebSocket connection handling. Web Servers can accept connections on multiple ports. A common pattern is that all requests are received on port 80 (for HTTP) and 443 (for HTTPS) and routing is done based on request domain (from the Host HTTP header) and path (from the url). Apache, Nginx, and Caddy are popular web servers.
 
 ## Updating Routing Rules
 
@@ -20,7 +20,7 @@ Most web servers use a config file for specifying the rules for request routing.
 
 The issue with this approach is that if there are multiple apps, updating the rules for one app can break other apps. There is no enforcement of isolation across apps. This results in app developers trying to avoid updating the web server, doing more in the application server when it would have been more efficiently done in the web server.
 
-## App Level Isolation
+## App-Level Isolation
 
 The goal of app-level isolation is for developers to confidently update web server routing rules, being sure that a broken update will not impact other apps.
 
@@ -36,4 +36,4 @@ Within the app, rules are defined using [Starlark](https://starlark-lang.org/). 
 
 ## Conclusion
 
-By enforcing app-level isolation in routing rules, Clace allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others.
+By enforcing app-level isolation in routing rules, Clace allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others. No all webserver routing use case can use this approach, but this is useful for app deployment use cases.
