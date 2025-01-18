@@ -36,4 +36,4 @@ Within the app, rules are defined using [Starlark](https://starlark-lang.org/). 
 
 ## Conclusion
 
-By enforcing app-level isolation in routing rules, Clace allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others. No all webserver routing use case can use this approach, but this is useful for app deployment use cases.
+By enforcing app-level isolation in routing rules, Clace allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others. Some webserver routing use cases which are more complex cannot use this approach, but this is useful for app deployment scenarios.
