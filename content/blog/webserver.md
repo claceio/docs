@@ -12,7 +12,7 @@ Clace is a platform for developing and deploying internal tools. Clace provides 
 
 ## Web Server Overview
 
-Webserver is software which accepts HTTP/HTTPS requests and routes them appropriately. Web Servers provide features like URL rewrites, reverse proxying, header manipulation, static file and WebSocket connection handling. Web Servers can accept connections on multiple ports. A common pattern is that all requests are received on port 80 (for HTTP) and 443 (for HTTPS) and routing is done based on request domain (from the Host HTTP header) and path (from the url). Apache, Nginx, and Caddy are popular web servers.
+A Web Server is software that accepts HTTP/HTTPS requests and routes them appropriately. Web Servers provide features like URL rewrites, reverse proxying, header manipulation, static file and WebSocket connection handling. Web Servers can accept connections on multiple ports. A common pattern is that all requests are received on port 80 (for HTTP) and 443 (for HTTPS) and routing is done based on request domain (from the Host HTTP header) and path (from the url). Apache, Nginx, and Caddy are popular web servers.
 
 ## Updating Routing Rules
 
