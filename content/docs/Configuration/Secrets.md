@@ -85,6 +85,21 @@ secret = '{{secret "PROVIDER_NAME" "GOOGLE_OAUTH_SECRET"}}'
 hosted_domain = "example.com"
 ```
 
+## Plugin Access to Secrets
+
+For secrets which are passed to plugins, through app params or plugin arguments, the plugin needs to be authorized to access the secret. The permissions for each plugin are defined in the app definition. For example:
+
+```python {filename="app.star"}
+app = ace.app("test",
+              routes = [ace.api("/", type="TEXT")],
+              permissions = [
+                ace.permission("exec.in", "run", ["ls"], secrets=[["c1", "c2"], ["TESTENV"]]),
+              ]
+             )
+```
+
+The secrets accessible are specified as a list of list of strings. In this case, the `{{secret "PROVIDER_NAME" "c1" "c2"}}` and `{{secret "PROVIDER_NAME" "TESTENV"}}` calls are allowed. Additional keys are also permitted.
+
 ## Multiple Keys
 
 If the `KEY_NAME` is a single string, it is passed as is to the provider. If multiple keys are specified, they are concatenated and passed to the provider. For example, `{{secret "env" "ABC" "DEF"}}` will get converted to a env lookup for `ABC_DEF`. The delimiter used depends on the provider. The defaults are:
@@ -102,3 +117,18 @@ keys_printf = "%s-%s.%s"
 ```
 
 combines `{{secret "prop" "ABC" "DEF" "XYZ"}}` as `ABC-DEF.XYZ`. This allows the app to work with multiple secret providers without requiring code changes in the app.
+
+## Default Provider
+
+If the provider name is passed as `default` or set to empty, a default provider is used. The default provider can be configured in the `clace.toml` as
+
+```toml {filename="clace.toml"}
+[app_config]
+security.default_secrets_provider = "env"
+```
+
+The `env` provider is used by default if it is enabled in the config. The default can be changed per app by setting
+
+```sh
+clace app update-metadata conf --promote 'security.default_secrets_provider="prop_myfile"' /myapp
+```
