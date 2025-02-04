@@ -168,6 +168,22 @@ which completely specifies the app. This is saying that the app is using the con
 
 [Containerized Apps]({{< ref "/docs/container" >}}) has more details on building containerized apps.
 
+## App Permissions
+
+For plugin calls made by the app, the plugin permissions have to be specified in the app permissions and approved in the app metadata. The `ace.permission` struct definition is
+
+| Property  | Optional |          Type          |  Default  |                  Notes                   |
+| :-------: | :------: | :--------------------: | :-------: | :--------------------------------------: |
+|  plugin   |  False   |         string         |           |             The plugin name              |
+|  method   |  False   |         string         |           |             The method name              |
+| arguments |   True   |      list string       |           |    The arguments allowed for the call    |
+|   type    |   True   |         string         | ace.WRITE | The call type, `ace.READ` or `ace.WRITE` |
+|  secrets  |   True   | list of list of string |           |  The secrets the plugin call can access  |
+
+For example `ace.permission("proxy.in", "config", [container.URL])` is a plugin call to `config` method in `proxy.in` plugin. The first argument has to be `container.URL`. Additional arguments are allowed. If no arguments are specified in the permission, then there is no restriction on arguments passed at runtime. If the value specified starts with `regex:`, then the value passed is checked against the specified regex at runtime.
+
+See [secrets]({{< ref "/docs/configuration/secrets/#plugin-access-to-secrets" >}}) for details on specifying the secrets which can be accessed by the plugin call.
+
 ## More examples
 
 There is one disk_usage example [here](https://github.com/claceio/clace/tree/main/examples) and many in the [apps repo](https://github.com/claceio/apps). The disk_usage example uses the MVP classless library for styling and shows a basic hypermedia flow. The cowbull game has multiple [pages](https://github.com/claceio/apps/blob/f5566cea6061ec85ea59495efc7b8700f06a4e70/misc/cowbull/app.star#L107), each page with some dynamic behavior. The cowbull game depends on another service for data persistence, so it is implementing a backend for frontend pattern. For styling, it uses the [DaisyUI](https://daisyui.com/) component library for Tailwind CSS. These two examples work fine with Javascript disabled in the browser, falling back to basic HTML without any HTMX extensions.
