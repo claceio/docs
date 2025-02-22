@@ -75,15 +75,24 @@ See [appsecurity]({{< ref "appsecurity" >}}) for details about the application l
 The `app create` and `app reload` commands can read public GitHub repositories. If the repository is private, to be able to access the repo, the [ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) needs to be specified. In the `clace.toml` config file, create an entry like:
 
 ```toml {filename="clace.toml"}
-[git_auth.infoclace]
+[git_auth.mykey]
 key_file_path = "/Users/myuser/.ssh/infoclace_rsa"
 password = ""
 ```
 
-`infoclace` is the git auth key name, `key_file_path` points to the location of a private key file for a user with access to the repository. When running `app create`, add the `--git-auth infoclace` option. The private key specified will be used for accessing the repository. `app reload` command will automatically use the same key as specified during the create.
+`mykey` is the git auth key name, `key_file_path` points to the location of a private key file for a user with access to the repository. When running `app create`, add the `--git-auth mykey` option and use the git url instead of http url (like `git@github.com:claceio/clace.git/examples/disk_usage`). The private key specified will be used for accessing the repository. `app reload` command will automatically use the same key as specified during the create. To set the default git key to use, add in config:
+
+```toml {filename="clace.toml"}
+[security]
+default_git_auth = "mykey"
+```
+
+If an app has no `git_auth` set and uses a repo with git url (starts with `git@github.com:`), then the default_git_auth will be used if it is specified in the config. This git key is used for `apply` files also.
 
 To change the git auth key for an app, run:
 
 ```bash
 clace app update-settings git-auth newkey /myapp
 ```
+
+The git auth is not a staged changed, it applies immediately for the staging and prod apps and preview apps.
