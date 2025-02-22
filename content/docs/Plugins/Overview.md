@@ -153,6 +153,25 @@ if not error:
 **Note:** When developing a new app, first define the `error_handler` and test it for the partial and full page scenarios. All subsequent handler code does not need to handle errors unless specific handling is required. If no `error_handler` is defined, a generic error message screen is returned. If is recommended to define a custom `error_handler`.
 {{</callout>}}
 
+## Returning Errors from Functions
+
+For returning error values within Starlark code, a convenience `ace.output` struct is available. If you have a function in Starlark which can return success or an error, use `ace.output`.
+
+The fields in the `ace.output` structure are:
+
+| Property | Optional |  Type  | Default |       Notes       |
+| :------: | :------: | :----: | :-----: | :---------------: |
+|  value   |   true   |  any   |         | The return value  |
+|  error   |   true   | string |         | The error message |
+
+If a function `f1` returns an error value, using `return ace.output(error="mymessage")`, the caller will automatically fail when it tries to access the return value using `f1().value`. To do custom error handling, do
+
+```
+ret = f1()
+if not ret:
+    return "Call failed: " + ret.error
+```
+
 ## Plugin Accounts
 
 Some plugins like `exec.in` do not require any account information. Others like `store.in` need some account information. The account configuration for a plugin is loaded from the Clace config file `clace.toml`. For example, the default configuration for `store.in` is [here](https://github.com/claceio/clace/blob/e5ab0c1139d257c7f02fbe03d060a6bfe1b5f605/internal/system/clace.default.toml#L54), which contains:
