@@ -128,3 +128,89 @@ Changes done to the app settings using the `app update-settings` command are not
 
 All other changes done to app metadata using `app update-metadata`, `app reload`, `param update`, `account link` command, (like account linking, permission approval and code reload) are staged before deployment. Use the `--promote` option on the change to promote the change immediately when applying it on the staging app. Use `app promote` command to promote later. When a promotion is done, **all** currently staged changes for that app are promoted, not just the most recent change. After promote, the prod app is exactly same as staging app.
 {{</callout>}}
+
+## Declarative App Management
+
+The CLI and management apps allow imperative management of Clace apps. Clace apps can also be managed declaratively. The app definition has to be defined in a file and Clace can apply the configuration. This works similar to the Kubernetes `apply` functionality.
+
+To use this feature, create an app config file, with `.ace` extension. The config file should contain one or more `app` definitions. For example, in a file called `apps.ace`
+
+```python {filename="apps.ace"}
+app("/myapps/disk_usage", "github.com/claceio/apps/system/disk_usage")
+app("/myapps/memory_usage", "github.com/claceio/apps/system/memory_usage")
+app("/myapps/list_files", "github.com/claceio/apps/system/list_files")
+```
+
+defines three apps. Running
+
+```sh
+clace apply --approve apps.ace
+```
+
+will create the apps if not already present. If present, the app configuration is updated to match the new configuration.
+
+### Apply Command
+
+The `apply` command takes one or two arguments: `<filePath> [<appPathGlob>]`. The first is a file path, which can be a glob pointing to multiple files. The files can be from local disk or from a git url. The second optional argument is an app path glob which specifies which apps to apply from the loaded files. By default, all apps are applied.
+
+The options the `apply` command takes are:
+
+```
+   --branch value, -b value    The branch to checkout if using git source (default: "main")
+   --commit value, -c value    The commit SHA to checkout if using git source. This takes precedence over branch
+   --git-auth value, -g value  The name of the git_auth entry in server config to use
+   --approve, -a               Approve the app permissions (default: false)
+   --reload value, -r value    Which apps to reload: none, updated, matched
+   --promote, -p               Promote changes from stage to prod (default: false)
+   --force, -f                 Force update app config, overwriting non-declarative changes (default: false)
+   --dry-run                   Verify command but don't commit any changes (default: false)
+   --help, -h                  show help
+```
+
+The branch/commit/git-auth arguments are for the apply file itself (if the file path is a git url). For the app source code, the git config has to be specified in the config file.
+
+By default, changes are applied to the stage app. Add the `--promote` option to promote the changes. Use the `--approve` option to approve any permission changes required by apps.
+
+The `--reload` option controls whether new source code is loaded for apps during the apply operation. Setting it to `none` means no apps are reloaded, `updated` means apps which have a config update are reloaded. `matched` means all apps matched by the app glob are reloaded, even if there is no config update.
+
+If no app glob is specified, `--reload` defaults to `updated`, all apps with a config update are reloaded. If an app glob is specified, `--reload` defaults to `matched`, all matched apps are reloaded, even if there is no config change.
+
+So `clace apply apps.ace` will reload only the updated apps. `clace apply apps.ace all` will apply updates and then reload all the apps.
+
+By default, changes are applied as a three way merge. The old config and new config are compared against the live config. If there are changes beween old and new declarative config, those changes are applied. Changes done imperatively are not overwritten. Using the `--force` option will overwrite any changes applied imperatively through the CLI or UI. The new declarative config overwrites any existing state when `--force` is used.
+
+### App Configuration
+
+The declarative app configuration uses Starlark syntax. An app is defined using the `app` struct which has these properties:
+
+|    Property    | Optional |    Type     | Default |                                Notes                                |
+| :------------: | :------: | :---------: | :-----: | :-----------------------------------------------------------------: |
+|      path      |  false   |   string    |         |                  The app installation domain:path                   |
+|     source     |  false   |   string    |         |                       The app source code url                       |
+|      dev       |   true   |    bool     |  false  |                     Whether app is in dev mode                      |
+|      auth      |   true   |   string    | default | The app authentication type (none or system or default or <custom>) |
+|    git_auth    |   true   |   string    | default |                      The git auth entry to use                      |
+|   git_branch   |   true   |   string    |  main   |                        The git branch to use                        |
+|   git_commit   |   true   |   string    |         |                        The git commit to use                        |
+|     params     |   true   |    dict     |         |                       The params for the app                        |
+|      spec      |   true   |   string    |         |                   The app spec to use for the app                   |
+|   app_config   |   true   |    dict     |         |                   The config settings for the app                   |
+| container_opts |   true   |    dict     |         |                  The container options for the app                  |
+| container_args |   true   |    dict     |         |            The container build args options for the app             |
+| container_vols |   true   | list string |         |                  The container volumes for the app                  |
+
+For example, a definition like
+
+```python
+app("/streamlit", "github.com/streamlit/streamlit-example",
+    git_branch="master", spec="python-streamlit",
+    params={"p1":["1", "2"]}, container_opts={"cpus": 1},
+    container_vols=["/v1", "/v2"], app_config={"ac1": 11}
+)
+```
+
+defines a Streamlit based app. Applying this file will create the app. Config can be updated through the CLI or UI. Subsequent runs of apply will not overwrite the imperative changes. For example, if a new param "p2" is defined using the CLI, that will be retained during subsequent runs. If the value of "p1" is updated in the config file, the next apply run will modify the value.
+
+{{<callout type="warning" >}}
+Apps are identified by their path and source url, so those cannot be changed. Dev mode is set during app creation and cannot be updated. App auth and git_auth are settings which are directly applied without being staged. They can be updated through the CLI but not through the config file. All other properties are metadata changes which are staged. They can be updated through the app config. New app versions are created during apply and versions can be reverted at the app level.
+{{</callout>}}
