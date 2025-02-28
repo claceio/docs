@@ -1,6 +1,6 @@
 baseURL = "https://clace.io/"
 languageCode = "en-us"
-title = "Internal Tools Deployment Platform | Clace"
+title = "App Deployment Simplified | Clace"
 canonifyURLs = false
 relativeURLs = false
 pluralizeListTitles = false
@@ -24,7 +24,7 @@ noClasses = false
 
 # Default Page Parameters
 [params]
-title = "Internal Tools Deployment Platform | Clace"
+title = "App Deployment Simplified | Clace"
 description = "Platform for easily developing and deploying secure internal tools. Application server for containerized webapps."
 image = "clace_icon.png"
 

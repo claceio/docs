@@ -5,14 +5,14 @@ layout: hextra-home
 
 <div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: linear-gradient(180deg, #277A9F, #359ece); color: transparent; background-clip: text; -webkit-background-clip: text;">
 {{< hextra/hero-headline >}}
-  Internal Tools Deployment Platform
+  App Deployment Simplified
 {{< /hextra/hero-headline >}}
 </div>
 
 <div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  Hypermedia based low-code internal tools for teams.&nbsp;<br class="sm:hx-block hx-hidden"/>
-  Runbook automation like Rundeck, custom apps like Retool.
+  GitOps without the hassles. Hypermedia based internal tools for teams.&nbsp;<br class="sm:hx-block hx-hidden"/>
+  AppServer for containerized apps.
 {{< /hextra/hero-subtitle >}}
 </div>
 
