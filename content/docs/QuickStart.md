@@ -11,22 +11,23 @@ Clace is an Apache-2.0 licensed project building a web app development and deplo
 
 ### Certs and Default password
 
-Clace manages TLS cert using LetsEncrypt for prod environmnts. For dev environemnt, it is recommeded to install [mkcert](https://github.com/FiloSottile/mkcert). Clace will automatically create local certs using mkcert if it is present. Install mkcert and run `mkcert -install` before starting Clace server. Installing Clace using brew will automatically install mkcert.
+Clace manages TLS cert using LetsEncrypt for prod environments. For dev environment, it is recommended to install [mkcert](https://github.com/FiloSottile/mkcert). Clace will automatically create local certs using mkcert if it is present. Install mkcert and run `mkcert -install` before starting Clace server. Installing Clace using brew will automatically install mkcert.
 
-Clace uses an `admin` user account as the default authentication for accessing apps. A random password is generated for this account during initial Clace server instalation. Note down this password for accessing apps.
+Clace uses an `admin` user account as the default authentication for accessing apps. A random password is generated for this account during initial Clace server installation. Note down this password for accessing apps.
 
 ### Install Clace On OSX/Linux
 
 To install on OSX/Linux, run
 
 ```shell
-curl -L https://clace.io/install.sh | source /dev/stdin
-clace server start 
+source /dev/stdin  <<< "$(curl -L https://clace.io/install.sh)"
+clace server start
 ```
 
 ### Brew Install
 
 To install using brew, run
+
 ```
 brew tap claceio/homebrew-clace
 brew install clace
@@ -47,11 +48,13 @@ Start a new command window (to get the updated env) and run
 ### Install Apps
 
 Once Clace server is running, to install apps declaratively, open a new window and run
+
 ```
 clace apply --approve github.com/claceio/clace/examples/utils.star all
 ```
 
 To install apps using the CLI, run
+
 ```
 clace app create --approve github.com/claceio/apps/system/list_files /files
 clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage

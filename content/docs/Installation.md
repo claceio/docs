@@ -14,7 +14,7 @@ Clace uses an `admin` user account as the default authentication for accessing a
 To install the latest release build on Linux, OSX or Windows with WSL, run the install script. Note down the password printed. Add the env variables as prompted and then start the service.
 
 ```shell
-curl -L https://clace.io/install.sh | source /dev/stdin
+source /dev/stdin  <<< "$(curl -L https://clace.io/install.sh)"
 clace server start
 
 ```
