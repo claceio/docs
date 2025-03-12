@@ -100,7 +100,7 @@ app = ace.app("test",
 
 The secrets accessible are specified as a list of list of strings. In this case, the `{{secret "PROVIDER_NAME" "c1" "c2"}}` and `{{secret "PROVIDER_NAME" "TESTENV"}}` calls are allowed. Additional keys are also permitted.
 
-If the key is specified as a string starting with `regex:`, then the subsequent part is s regex which is matched against the specified value. For example, `ace.permission("exec.in", "run", ["ls"], secrets=[["regex:TEST_.*"]),` allows accessing any secret starting with `TEST_`.
+If the key is specified as a string starting with `regex:`, then the subsequent part is a regex which is matched against the specified value. For example, `ace.permission("exec.in", "run", ["ls"], secrets=[["regex:TEST_.*"]),` allows accessing any secret starting with `TEST_`.
 
 ## Multiple Keys
 
