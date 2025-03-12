@@ -37,29 +37,31 @@ main() {
     mv "$tmp_dir/${target}/clace" "$exe"
     rm "$tmp_dir/clace.tar.gz"
 
-    echo ""
-    echo "clace was installed successfully to $exe"
-
     if test ! -s $clace_install/clace.toml; then
         echo ""
+        echo "********** Initializing \"admin\" user **********"
         $exe password > $clace_install/clace.toml 
-            echo ""
-            echo "Password config has been setup, save the above password for app access with admin account"
+        echo "************ Save this password ***************"
     fi
 
-    case $SHELL in
-    /bin/zsh) shell_profile=".zshrc" ;;
-    *) shell_profile=".bash_profile" ;;
+    profile_file="$HOME/.profile"
+    if [ "$SHELL_NAME" = "zsh" ]; then
+        profile_file="$HOME/.zshrc"
+    elif [ "$SHELL_NAME" = "bash" ] &&  [ -f "$HOME/.bash_profile" ]; then
+        profile_file="$HOME/.bash_profile"
+    fi
+
+    export_cmd="export PATH=\"$bin_dir:\$PATH\""
+    if ! grep -Fxq "$export_cmd" "$profile_file" 2>/dev/null; then
+        echo "$export_cmd" >> "$profile_file"
+    fi
+
+    case ":$PATH:" in
+       *":$bin_dir:"*) ;;
+       *) export PATH=$bin_dir:$PATH ;;
     esac
 
-    echo "export CL_HOME=\"$clace_install\"" > $bin_dir/clace.env
-    echo "export PATH=\"\$CL_HOME/bin:\$PATH\"" >> $bin_dir/clace.env
-
-    echo "Manually add the following to your \$HOME/$shell_profile (or similar). Also run it now for this session:"
-    echo ""
-    echo "  source \"$bin_dir/clace.env\""
-    echo ""
-
+    echo "$bin_dir added to PATH. Run \"clace server start\" to start the server."
     echo "See https://clace.io/docs/quickstart for quick start guide."
 }
 

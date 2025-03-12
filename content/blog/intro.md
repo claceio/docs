@@ -45,13 +45,18 @@ The sandbox will ensure that the apps can do only authorized operations. This ma
 Clace is in a beta state currently. Custom application support is functional. Support for loading plugins dynamically is in progress. You can try out Clace (on OSX, Linux or Windows with WSL) by doing:
 
 ```shell
-curl -L https://clace.io/install.sh | sh
-source $HOME/clhome/bin/clace.env
-clace server start && sleep 2
-clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
+curl -L https://clace.io/install.sh | source /dev/stdin
+clace server start
+
 ```
 
-The app should be available at [https://127.0.0.1:25223/disk_usage](https://127.0.0.1:25223/disk_usage) after allowing the self-signed certificate. `admin` is the username, use the password printed by the install script. See [installation]({{< ref "installation" >}}) for details.
+To install apps declaratively, open a new window and run
+
+```
+clace apply --approve github.com/claceio/clace/examples/utils.star all
+```
+
+Open https://localhost:25223 to see app listing. `admin` is the username, use the password printed by the install script. See [installation]({{< ref "installation" >}}) for details.
 
 ## Follow Along
 
