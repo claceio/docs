@@ -6,7 +6,7 @@
 set -e
 
 main() {
-    LATEST_VERSION=$(curl -s https://api.github.com/repos/claceio/clace/releases/latest | grep tag_name | cut -d '"' -f 4)
+    LATEST_VERSION=$(curl -sS https://api.github.com/repos/claceio/clace/releases/latest | grep tag_name | cut -d '"' -f 4)
     os=$(uname -s | tr '[:upper:]' '[:lower:]')
     arch=$(uname -m)
 
@@ -34,7 +34,7 @@ main() {
     # extract to tmp dir so we don't open existing executable file for writing
     tar -C "$tmp_dir" -xzf "$tmp_dir/clace.tar.gz"
     chmod +x "$tmp_dir/${target}/clace"
-    mv "$tmp_dir/${target}/clace" "$exe"
+    mv -f "$tmp_dir/${target}/clace" "$exe"
     rm -f "$tmp_dir/clace.tar.gz"
 
     if test ! -s $clace_install/clace.toml; then
