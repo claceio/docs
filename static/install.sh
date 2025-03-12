@@ -35,7 +35,7 @@ main() {
     tar -C "$tmp_dir" -xzf "$tmp_dir/clace.tar.gz"
     chmod +x "$tmp_dir/${target}/clace"
     mv "$tmp_dir/${target}/clace" "$exe"
-    rm "$tmp_dir/clace.tar.gz"
+    rm -f "$tmp_dir/clace.tar.gz"
 
     if test ! -s $clace_install/clace.toml; then
         echo ""

@@ -42,8 +42,7 @@ To install on Windows, run
 powershell -Command "iwr https://clace.io/install.ps1 -useb | iex"
 ```
 
-Start a new command window (to get the updated env) and run
-`clace server start` to start the Clace service.
+Start a new command window (to get the updated env) and run `clace server start` to start the Clace service.
 
 ### Install Apps
 

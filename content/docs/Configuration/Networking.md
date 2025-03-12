@@ -65,19 +65,11 @@ All requests to the HTTP port will 308 redirect to the HTTPS port.
 
 ## Dev Env Certificates
 
-For local dev environment, using the auto generated certs will result in browser warnings when connecting to the HTTPS port. To avoid this, use a tool like [mkcert](https://github.com/FiloSottile/mkcert) to generate root CA for local env. Install `mkcert` and then run
+For local dev environment, using the auto generated certs will result in browser warnings when connecting to the HTTPS port. To avoid this, if [mkcert](https://github.com/FiloSottile/mkcert) is installed and configured, Clace automatically creates a mkcert cert for any new local domain. Ensure that the mkcert installation has been done once.
 
 ```sh
 mkcert -install
-mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
-
-cp ./example.com+5.pem $CL_HOME/config/certificates/default.crt
-cp ./example.com+5-key.pem $CL_HOME/config/certificates/default.key
 ```
-
-The mkcert generated certificates signed with the local CA will be used after the next Clace server restart.
-
-For local env, wildcard DNS will not work without tools like `dnsmasq`. An easier alternative is to add `/etc/hosts` entries as required mapping to `127.0.0.1`. Using url path routing instead of domain based routing for local env is a convenient option.
 
 ## Enable Automatic Signed Certificate
 
