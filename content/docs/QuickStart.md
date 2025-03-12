@@ -20,7 +20,7 @@ Clace uses an `admin` user account as the default authentication for accessing a
 To install on OSX/Linux, run
 
 ```shell
-source /dev/stdin  <<< "$(curl -L https://clace.io/install.sh)"
+curl -sSLo /tmp/install.sh https://clace.io/install.sh && source /tmp/install.sh
 clace server start
 ```
 
