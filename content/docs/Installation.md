@@ -9,6 +9,8 @@ date: 2023-10-05
 
 Clace manages TLS cert using LetsEncrypt for prod environments. For dev environment, it is recommended to install [mkcert](https://github.com/FiloSottile/mkcert). Clace will automatically create local certs using mkcert if it is present. Install mkcert and run `mkcert -install` before starting Clace server.
 
+For container based apps, Docker or Podman or Orbstack should be installed and running on the machine. Clace automatically detects the container manager to use.
+
 Clace uses an `admin` user account as the default authentication for accessing apps. A random password is generated for this account during initial Clace server installation. Note down this password for accessing apps.
 
 To install the latest release build on Linux, OSX or Windows with WSL, run the install script. Note down the password printed. Add the env variables as prompted and then start the service.

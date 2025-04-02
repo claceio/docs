@@ -113,7 +113,7 @@ The list_app app is served at the default domain root level if no app is install
 root_serve_list_apps = "auto"  # "auto" means serve list_apps app for default domain, "disable" means don't server for any domain,
 ```
 
-To disable this, set `root_serve_list_apps` to `disable`. The list apps app uses the defult authentication as set for the system. If another domain needs to be used, set the value to that.
+To disable this, set `root_serve_list_apps` to `disable`. The list apps app uses the default authentication as set for the system. If another domain needs to be used, set the value to that.
 
 The list_apps app can be installed explicitly from `github.com/claceio/apps/clace/list_apps` source path. This allows the app to be installed with required auth settings. The listing shows apps which are available unauthenticated and apps which are using the same auth as the one set for the list_apps app.
 

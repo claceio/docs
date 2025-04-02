@@ -5,13 +5,15 @@ summary: "Quick Start guide on using Clace"
 date: 2024-02-03
 ---
 
-Clace is an Apache-2.0 licensed project building a web app development and deployment platform for internal tools. This page provides an overview of how to start with Clace and provides links to doc pages with more details.
+Clace is an Apache-2.0 licensed project building a web app development and deployment platform for internal tools. Clace is built in Go and runs on Linux, macOS and Windows.
 
 ## Installation
 
 ### Certs and Default password
 
 Clace manages TLS cert using LetsEncrypt for prod environments. For dev environment, it is recommended to install [mkcert](https://github.com/FiloSottile/mkcert). Clace will automatically create local certs using mkcert if it is present. Install mkcert and run `mkcert -install` before starting Clace server. Installing Clace using brew will automatically install mkcert.
+
+For container based apps, Docker or Podman or Orbstack should be installed and running on the machine. Clace automatically detects the container manager to use.
 
 Clace uses an `admin` user account as the default authentication for accessing apps. A random password is generated for this account during initial Clace server installation. Note down this password for accessing apps.
 
@@ -62,9 +64,7 @@ clace app create --approve github.com/claceio/apps/utils/bookmarks /book
 
 Open https://localhost:25223 to see the app listing. The disk usage app is available at https://localhost:25223/disk_usage (port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book, the list files app is available at https://localhost:25223/files. Add the `--auth none` flag to the `app create` command to disable authentication.
 
-See [installation]({{< ref "installation" >}}) for details. See [config options]({{< ref "configuration" >}}) for configuration options. To enable Let's Encrypt certificates, see [Automatic SSL]({{< ref "configuration/networking/#enable-automatic-signed-certificate" >}}).
-
-The release binaries are also available at [releases](https://github.com/claceio/clace/releases). See [install from source]({{< ref "installation/#install-from-source" >}}) to build from source.
+The release binaries are also available at [releases](https://github.com/claceio/clace/releases).
 
 ## Application Types
 
