@@ -47,7 +47,7 @@ main() {
     profile_file="$HOME/.profile"
     if [ "$SHELL_NAME" = "zsh" ]; then
         profile_file="$HOME/.zshrc"
-    elif [ "$SHELL_NAME" = "bash" ] &&  [ -f "$HOME/.bash_profile" ]; then
+    elif [ "$SHELL_NAME" = "bash" ]; then
         profile_file="$HOME/.bash_profile"
     fi
 
