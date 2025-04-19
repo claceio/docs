@@ -104,9 +104,3 @@ app /utils/disk_usage is not permitted to call exec.in.run with argument 0 havin
 ```
 
 The app cannot be run until either the code change is reverted or the admin approves the new call to rm.
-
-## Roadmap
-
-The following enhancements are planned for the security model
-
-- For the [secrets management feature]({{< ref "/docs/configuration/secrets/" >}}), the app does not have direct access to the secret value. Apps can access any secret from the secret manager currently. An improvement planned to to allow restricting apps to specific secrets.

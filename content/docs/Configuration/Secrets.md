@@ -24,7 +24,7 @@ profile = "myaccount"
 
 creates two ASM configs. `asm` uses the default profile and `asm_prod` uses the `myaccount` profile. The default config is read from the home directory ~/.aws/config and ~/.aws/credentials as documented in [AWS docs](https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html). The user id under which the Clace server was started is looked up for the aws config file.
 
-To access a secret in app parameters from `asm_prod` config, use `--param MYPARAM='{{secret "asm_prod" "MY_SECRET_KEY"}}'` as the param value.
+To access a secret in app parameters from `asm_prod` config, use `--param MYPARAM='{{secret_from "asm_prod" "MY_SECRET_KEY"}}'` as the param value. Use `--param MYPARAM='{{secret "MY_SECRET_KEY"}}'` to read from the default provider.
 
 ## HashiCorp Vault
 
@@ -50,7 +50,7 @@ Adding a secret provider with the name `env` or starting with `env_`, like
 [secret.env]
 ```
 
-enables looking up the Clace server environment for secrets. This can be accessed like `--param MYPARAM='{{secret "env" "MY_SECRET_KEY"}}'`. No properties are required in the env provider config. The value of MY_SECRET_KEY in the Clace server env wil be passed as the param.
+enables looking up the Clace server environment for secrets. This can be accessed like `--param MYPARAM='{{secret_from "env" "MY_SECRET_KEY"}}'`. No properties are required in the env provider config. The value of MY_SECRET_KEY in the Clace server env wil be passed as the param.
 
 ## Properties Secrets
 
@@ -65,7 +65,7 @@ file_name = "/etc/props.properties"
 
 ## Secrets Usage
 
-Secrets can be accessed using the syntax `{{secret "PROVIDER_NAME" "KEY_NAME"}}`. The three contexts in which secrets can be accessed are:
+Secrets can be accessed using the syntax `{{secret_from "PROVIDER_NAME" "KEY_NAME"}}`. To read from the default provider, use `{{secret "KEY_NAME"}}`. The three contexts in which secrets can be accessed are:
 
 - **App Params** : Param values in `params.star` or in the [app metadata definition]({{< ref "/docs/container/overview/#app-environment-params" >}}) can access the secrets.
 - **Plugin arguments** : Secrets can be passed as string arguments in calls to [plugin functions]({{< ref "plugins" >}}).
@@ -81,7 +81,7 @@ For git_auth config, an example secret usage is
 ```toml {filename="clace.toml"}
 [auth.google_prod]
 key = "mykey.apps.googleusercontent.com"
-secret = '{{secret "PROVIDER_NAME" "GOOGLE_OAUTH_SECRET"}}'
+secret = '{{secret_from "PROVIDER_NAME" "GOOGLE_OAUTH_SECRET"}}'
 hosted_domain = "example.com"
 ```
 
@@ -98,13 +98,13 @@ app = ace.app("test",
              )
 ```
 
-The secrets accessible are specified as a list of list of strings. In this case, the `{{secret "PROVIDER_NAME" "c1" "c2"}}` and `{{secret "PROVIDER_NAME" "TESTENV"}}` calls are allowed. Additional keys are also permitted.
+The secrets accessible are specified as a list of list of strings. In this case, the `{{secret "c1" "c2"}}` and `{{secret "TESTENV"}}` calls are allowed. Additional keys are also permitted.
 
 If the key is specified as a string starting with `regex:`, then the subsequent part is a regex which is matched against the specified value. For example, `ace.permission("exec.in", "run", ["ls"], secrets=[["regex:TEST_.*"]),` allows accessing any secret starting with `TEST_`.
 
 ## Multiple Keys
 
-If the `KEY_NAME` is a single string, it is passed as is to the provider. If multiple keys are specified, they are concatenated and passed to the provider. For example, `{{secret "env" "ABC" "DEF"}}` will get converted to a env lookup for `ABC_DEF`. The delimiter used depends on the provider. The defaults are:
+If the `KEY_NAME` is a single string, it is passed as is to the provider. If multiple keys are specified, they are concatenated and passed to the provider. For example, `{{secret_from "env" "ABC" "DEF"}}` will get converted to a env lookup for `ABC_DEF`. The delimiter used depends on the provider. The defaults are:
 
 - ASM and Vault : `/`
 - Env : `_`
@@ -118,7 +118,7 @@ file_name = "/etc/mykeys.properties"
 keys_printf = "%s-%s.%s"
 ```
 
-combines `{{secret "prop" "ABC" "DEF" "XYZ"}}` as `ABC-DEF.XYZ`. This allows the app to work with multiple secret providers without requiring code changes in the app.
+combines `{{secret_from "prop" "ABC" "DEF" "XYZ"}}` as `ABC-DEF.XYZ`. This allows the app to work with multiple secret providers without requiring code changes in the app.
 
 ## Default Provider
 
