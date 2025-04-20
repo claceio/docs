@@ -127,3 +127,40 @@ Like all metadata updates, option updates are staged. Pass `--promote` to promot
 {{<callout type="info" >}}
 **Note:** By default there are no limits set for the containers. That allows for full utilization of system resources. To avoid individual apps from utilizing too much of the system resources, CPU/memory limits can be set.
 {{</callout>}}
+
+## Volumes
+
+Clace automatically manages volumes for containers. Volumes definitions are picked from:
+
+- The `Dockerfile`/`Containerfile` in the source or spec
+- The container config in the app definition `app.star`
+- The app metadata, `container-volume`/`cvol`
+
+For named and unnamed volumes, Clace creates a unique named volume for each app. This volume is mounted across app updates.
+
+Bind mounts are supported for mounting secrets into the container. If the source has a template file `secret.tmpl` which needs to be loaded into the container at `/app/secret.ini`, a volume can be defined like `cl_secret:secret.tmpl:/app/secret.ini`. The template file is passed the environment params and the generated file is bound into the container. For example, if the template file contains
+
+```{filename="secret.tmpl"}
+[DEFAULT]
+{{range $k, $v := .params}}
+{{- $k -}} = {{- $v }}
+{{end}}
+```
+
+the params are generated in the ini file format. See [streamlit spec](https://github.com/claceio/appspecs/blob/main/python-streamlit/app.star#L10) for an example of using this.
+
+To define the volume in the app config, add
+
+```{filename="secret.tmpl"}
+    container=container.config(container.AUTO, port=param.port, volumes=[
+        "cl_secret:secret.tmpl:/app/secret.ini",
+    ]),
+```
+
+To set the volume info in the app metadata, run
+
+```sh
+clace app update-metadata cvol --promote "cl_secret:secret.tmpl:/app/secret.ini" /APPPATH
+```
+
+multiple values are supported for `cvol`.
