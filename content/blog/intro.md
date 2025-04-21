@@ -45,11 +45,11 @@ The sandbox will ensure that the apps can do only authorized operations. This ma
 Clace is in a beta state currently. Custom application support is functional. Support for loading plugins dynamically is in progress. You can try out Clace (on OSX, Linux or Windows with WSL) by doing:
 
 ```shell
-curl -sSLo /tmp/install.sh https://clace.io/install.sh && source /tmp/install.sh
-clace server start
+curl -sSL https://clace.io/install.sh | sh
 ```
+Start a new terminal (to get the updated env) and run `clace server start` to start the Clace service.
 
-To install apps declaratively, open a new window and run
+To install apps declaratively, run
 
 ```
 clace apply --approve github.com/claceio/clace/examples/utils.star all

@@ -16,8 +16,7 @@ Clace uses an `admin` user account as the default authentication for accessing a
 To install the latest release build on Linux, OSX or Windows with WSL, run the install script. Note down the password printed. Add the env variables as prompted and then start the service.
 
 ```shell
-curl -sSLo /tmp/install.sh https://clace.io/install.sh && source /tmp/install.sh
-clace server start
+curl -sSL https://clace.io/install.sh | sh
 ```
 
 On Windows, to install the Clace application, run
@@ -26,15 +25,15 @@ On Windows, to install the Clace application, run
 powershell -Command "iwr https://clace.io/install.ps1 -useb | iex"
 ```
 
-The app is installed under `$HOME\clhome` by default. Note down the generated password for the admin user. Open a new command window (to get the updated ENV values) and run
+The app is installed under `$HOME/clhome` by default. Note down the generated password for the admin user. Open a new terminal (to get the updated ENV values) and run
 
 ```shell
 clace server start
 ```
 
-to start the server.
+to start the Clace server.
 
-To install apps declaratively, open a new window and run
+To install apps declaratively, run
 
 ```
 clace apply --approve github.com/claceio/clace/examples/utils.star all
