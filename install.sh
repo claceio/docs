@@ -44,6 +44,7 @@ main() {
         echo "************ Save this password ***************"
     fi
 
+    SHELL_NAME=`basename $SHELL`
     profile_file="$HOME/.profile"
     if [ "$SHELL_NAME" = "zsh" ]; then
         profile_file="$HOME/.zshrc"
@@ -56,13 +57,8 @@ main() {
         echo "$export_cmd" >> "$profile_file"
     fi
 
-    case ":$PATH:" in
-       *":$bin_dir:"*) ;;
-       *) export PATH=$bin_dir:$PATH ;;
-    esac
-
-    echo "$bin_dir added to PATH. Run \"clace server start\" to start the server."
-    echo "See https://clace.io/docs/quickstart for quick start guide."
+    echo "\nStart new shell to get updated PATH with $bin_dir. Run \"clace server start\" to start the server."
+    echo "See https://clace.io/docs/quickstart for the quick start guide."
 }
 
 main "$1"
