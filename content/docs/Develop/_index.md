@@ -17,6 +17,17 @@ The structure of a Clace application is:
 - An html template file called `index.go.html` if using custom layout
 - If not using custom layout, an html template block called `clace_body` defined in any `*.go.html` file, for example `app.go.html`
 
+## Sharing Files Across Apps
+
+The app config property `star_base` can be use to set the base directory for Starlark files. This is useful when multiple apps need to share common files, like templates, static files, container spec etc. For example, if dir /mydir/ is the base directory with /mydir/app1 and /mydir/app2 as subdirectories containing two apps, creating apps using
+
+```
+clace app create --approve --conf-str star_base=/app1 /mydir /test1
+clace app create --approve --conf-str star_base=/app2 /mydir /test2
+```
+
+will create two apps. `/mydir/app1/app.star` will be used as the app definition for test1 app, static and static_root and template files will be read from /mydir and
+
 ## App Lifecycle
 
 The Clace app development lifecycle is:

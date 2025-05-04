@@ -83,6 +83,7 @@ The API supports the following parameters:
 - **env** (list of strings, optional) : the env to pass to the cmd, in the form `key=value`
 - **process_partial** (bool, optional) : whether to process the output when there is a failure
 - **stdout_file** (bool, optional) : whether to send the stdout for the process to a temporary file on disk
+- **parse** (string, optional) : Whether to parse the stdout. Supported options are `json` and `jsonlines`
 
 The default response (when `stdout_file` is `False`) for the `exec` API (`value` within `plugin_response`) is of type list of strings. The stdout is scanned and split on newlines. The list of lines is returned. For example
 

@@ -151,18 +151,20 @@ will create the apps if not already present. If present, the app configuration i
 
 ### Apply Command
 
-The `apply` command takes one or two arguments: `<filePath> [<appPathGlob>]`. The first is a file path, which can be a glob pointing to multiple files. The files can be from local disk or from a git url. The second optional argument is an app path glob which specifies which apps to apply from the loaded files. By default, all apps are applied.
+The `apply` command takes one or two arguments: `<filePath> [<appPathGlob>]`. The first is a file path, which can be a glob pointing to multiple files. The files can be from local disk or from a git url. The second optional argument is an app path glob which specifies which apps to apply from the loaded files. By default, all apps is the file(s) are applied.
 
 The options the `apply` command takes are:
 
 ```
+OPTIONS:
    --branch value, -b value    The branch to checkout if using git source (default: "main")
    --commit value, -c value    The commit SHA to checkout if using git source. This takes precedence over branch
    --git-auth value, -g value  The name of the git_auth entry in server config to use
    --approve, -a               Approve the app permissions (default: false)
    --reload value, -r value    Which apps to reload: none, updated, matched
    --promote, -p               Promote changes from stage to prod (default: false)
-   --force, -f                 Force update app config, overwriting non-declarative changes (default: false)
+   --clobber                   Force update app config, overwriting non-declarative changes (default: false)
+   --force-reload, -f          Force reload even if there is no new commit (default: false)
    --dry-run                   Verify command but don't commit any changes (default: false)
    --help, -h                  show help
 ```
@@ -171,13 +173,9 @@ The branch/commit/git-auth arguments are for the apply file itself (if the file 
 
 By default, changes are applied to the stage app. Add the `--promote` option to promote the changes. Use the `--approve` option to approve any permission changes required by apps.
 
-The `--reload` option controls whether new source code is loaded for apps during the apply operation. Setting it to `none` means no apps are reloaded, `updated` means apps which have a config update are reloaded. `matched` means all apps matched by the app glob are reloaded, even if there is no config update.
+The `--reload` option controls whether new source code is loaded for apps during the apply operation. Setting it to `none` means no apps are reloaded, `updated` means apps which have a config update are reloaded. `matched` (the default) means all apps matched by the app glob are reloaded, even if there is no config update.
 
-If no app glob is specified, `--reload` defaults to `updated`, all apps with a config update are reloaded. If an app glob is specified, `--reload` defaults to `matched`, all matched apps are reloaded, even if there is no config change.
-
-So `clace apply apps.ace` will reload only the updated apps. `clace apply apps.ace all` will apply updates and then reload all the apps.
-
-By default, changes are applied as a three way merge. The old config and new config are compared against the live config. If there are changes beween old and new declarative config, those changes are applied. Changes done imperatively are not overwritten. Using the `--force` option will overwrite any changes applied imperatively through the CLI or UI. The new declarative config overwrites any existing state when `--force` is used.
+By default, changes are applied as a three way merge. The old config and new config are compared against the live config. If there are changes between old and new declarative config, those changes are applied. Changes done imperatively are not overwritten. Using the `--force` option will overwrite any changes applied imperatively through the CLI or UI. The new declarative config overwrites any existing state when `--force` is used.
 
 ### App Configuration
 
