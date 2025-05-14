@@ -212,3 +212,58 @@ defines a Streamlit based app. Applying this file will create the app. Config ca
 {{<callout type="warning" >}}
 Apps are identified by their path and source url, so those cannot be changed. Dev mode is set during app creation and cannot be updated. App auth and git_auth are settings which are directly applied without being staged. They can be updated through the CLI but not through the config file. All other properties are metadata changes which are staged. They can be updated through the app config. New app versions are created during apply and versions can be reverted at the app level.
 {{</callout>}}
+
+## Automated Sync
+
+Clace supports automatically syncing the app definition from Git. The commands to manage sync are:
+
+```
+clace sync
+NAME:
+   clace sync - Manage sync operations, scheduled and webhook
+
+USAGE:
+   clace sync command [command options]
+
+COMMANDS:
+   schedule  Create scheduled sync job for updating app config
+   list      List the sync jobs
+   delete    Delete specified sync job
+   help, h   Shows a list of commands or help for one command
+```
+
+`clace sync schedule --approve --promote github.com/claceio/clace/examples/utils.star` will create a scheduled sync which will run every 5 minutes and check for app config updates to apply.
+
+```
+clace sync schedule --help
+NAME:
+   clace sync schedule - Create scheduled sync job for updating app config
+
+USAGE:
+   args: <filePath>
+
+   <filePath> is the path to the apply file containing the app configuration.
+
+   Examples:
+     Create scheduled sync, reloading apps with code changes: clace sync schedule ./app.ace
+     Create scheduled sync, reloading only apps with a config change: clace sync schedule --reload=updated github.com/claceio/apps/apps.ace
+     Create scheduled sync, promoting changes: clace sync schedule --promote --approve github.com/claceio/apps/apps.ace
+     Create scheduled sync, overwriting changes: clace sync schedule --promote --clobber github.com/claceio/apps/apps.ace
+
+
+OPTIONS:
+   --branch value, -b value    The branch to checkout if using git source (default: "main")
+   --git-auth value, -g value  The name of the git_auth entry in server config to use
+   --approve, -a               Approve the app permissions (default: false)
+   --reload value, -r value    Which apps to reload: none, updated, matched
+   --promote, -p               Promote changes from stage to prod (default: false)
+   --minutes value, -s value   Schedule sync for every N minutes (default: 0)
+   --clobber                   Force update app config, overwriting non-declarative changes (default: false)
+   --force-reload, -f          Force reload even if there are no new commits (default: false)
+   --dry-run                   Verify command but don't commit any changes (default: false)
+   --help, -h                  show help
+```
+
+Scheduled sync takes all the same options as the `apply` command. The apply is done automatically by Clace on schedule.
+
+Use `clace sync list` to list all jobs and `clace sync delete <sync_id>` to delete a sync job.

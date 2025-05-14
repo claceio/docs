@@ -114,16 +114,7 @@ In the default layout mode, the auto generated `index_gen.go.html` file is used.
 
 The `.Data` binding has the data as returned by the handler function for the route.
 
-## Sharing Files Across Apps
-
-The app config property `star_base` can be use to set the base directory for Starlark files. This is useful when multiple apps need to share common files, like templates, static files, container spec etc. For example, if dir /mydir/ is the base directory with /mydir/app1 and /mydir/app2 as subdirectories containing two apps, creating apps using
-
-```
-clace app create --approve --conf-str star_base=/app1 /mydir /test1
-clace app create --approve --conf-str star_base=/app2 /mydir /test2
-```
-
-will create two apps. `/mydir/app1/app.star` will be used as the app definition for test1 app, static and static_root and template files will be read from /mydir and shared across both apps.
+shared across both apps.
 
 ## Static Root Files
 
