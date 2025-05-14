@@ -23,13 +23,99 @@ layout: hextra-home
 
 {{< hextra/feature-grid >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" subtitle="Clace™ is an Apache-2.0 licensed application server for deploying internal tools for teams.<br><br>Clace implements an AppServer for deploying containerized apps. Clace provides GitOps, blue-green deployment, OAuth, TLS certs, secrets management. Clace  provides an auto-generate UI for accessing backend actions." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" icon="question-mark-circle" subtitle="Clace™ is an application server for teams to deploy internal tools. Clace provides declarative GitOps based blue-green deployment, OAuth access controls, TLS certs & secrets management etc.<br><br> Some of the unique features of Clace are:<br>➣ Staged deployment, for code and config changes<br>➣ Atomic updates for multiple apps, all or nothing<br>➣ Declarative config sync with automated reconciliation" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="How does it work?" subtitle="Clace implements a reverse proxy and application server. Clace does container orchestration using Docker or Podman, allowing deployment of apps developed in any language.<br><br>Clace is implemented in Go and uses Starlark for app configuration and declarative config." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="First AppServer for Containerized apps" icon="lightning-bolt" subtitle="Clace is the first AppServer built to manage containerized webapps. Clace supports:<br>➣ Deploy webapps developed in any language/framework<br>➣ Handle request routing, domain based or path based<br>➣ Manage app lifecycle imperatively (using CLI) or declaratively (through GitOps)" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What can it be used for?" subtitle="Clace is the easiest  solution for teams to deploy apps built in low-code frameworks like Streamlit/Gradio/FastHTML.<br><br> Clace is ideal for  securely deploying internal tools. Clace can also be used to build Hypermedia based user interfaces." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="How is Clace implemented" icon="beaker" subtitle="Clace is cross-platform, built as a single binary which implements the webserver and AppServer. Clace uses: <br>➣ Declarative config using Starlark (python-like)<br>➣ SQLite database for metadata persistence (allowing for transactional updates)<br>➣ CLI which uses a unix domain socket for security<br>➣ GitOps driven declarative interface which works with any hosted Git service" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
+<br>
+<br>
+
+<div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); background: #007700; color: white; justify-content: center; box-sizing: border-box; padding: 25px; font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', 'Roboto', 'Arial', sans-serif;">
+<div style="max-width: 800px; width: 100%; margin: 0 auto; padding: 1rem;">
+<div style="position: relative;">
+<div style="font-weight: bold; margin-bottom: 5px;">To install Clace, run:</div>
+<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code1">
+curl -sSL https://clace.io/install.sh | sh
+</div>
+<button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code1', this)">Copy</button>
+</div>
+
+<div style="position: relative;">
+<div style="font-weight: bold; margin-bottom: 5px;">To start Clace server, run in a new window:</div>
+<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code2">
+clace server start
+</div>
+<button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code2', this)">Copy</button>
+</div>
+
+<div style="position: relative;">
+<div style="font-weight: bold; margin-bottom: 5px;">To schedule a sync which runs in background, run:</div>
+<div style="padding: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code3">
+clace sync schedule --approve github.com/claceio/clace/examples/utils.star
+</div>
+<button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">Copy</button>
+</div>
+
+</div>
+</div>
+
+<script>
+function copyCode(codeId, buttonElem) {
+    const code = document.getElementById(codeId).textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        const originalText = buttonElem.textContent;
+        buttonElem.textContent = 'Copied!';
+        setTimeout(() => {
+            buttonElem.textContent = originalText;
+        }, 2000);
+    }).catch(err => {
+        console.error('Copy failed', err);
+    });
+}
+</script>
+
+<br>
+<br>
+
+{{< hextra/feature-grid >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="Container management" link="docs/quickstart/#containerized-applications" subtitle="Build and deploy containerized web apps, with Docker or Podman."  icon="docker" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="GitOps Workflow" link="docs/quickstart/#lifecycle-with-git" subtitle="Blue-green (staged) deployments, versioning and preview environments with no infra to manage."  icon="github" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="Automatic GitOps Sync" link="/docs/applications/overview/#automated-sync" subtitle="Easily setup scheduled Git sync with pull based updates"  icon="sparkles" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="Scale down to zero" link="/docs/container/overview/" subtitle="Apps are initialized lazily, on demand: scale down to zero automatically."  icon="pause" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="Autogenerated web-apps" link="docs/actions" subtitle="Auto generate simple web interfaces for existing CLI tools and API endpoints."  icon="html5" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="Cross-platform" link="docs/quickstart/#installation" subtitle="Clace runs natively on Linux, Windows and OSX; use for app dev and then for app hosting"  icon="globe-alt" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
+
+{{< /hextra/feature-grid >}}
+
+<br />
+
+{{< hextra/feature-grid >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="Comparison with other solutions" icon="zoom-in" subtitle="Compared to  solutions like Coolify, Dokku etc, Clace provides:<br />➣ Declarative GitOps interface, not just imperative interface<br/>➣ OAuth and auditing features required by teams <br/>➣ Deploying custom apps as against deploying pre-packaged services<br/><br/>Compared to heavyweight solutions built on K8s, Clace provides:<br/>➣ Single service as against glueing together CI/CD with ArgoCD/FluxCD and IDPs<br/>➣ Easy OAuth config for app access controls<br/>➣ Simple declarative config for container and web server. No YAML files, no webserver DSLs." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+
+<!-- prettier-ignore -->
+{{< hextra/feature-card title="Built for deploying internal tools" icon="cog" subtitle="Clace is built for teams to be able to securely develop and deploy internal tools:<br />➣Multiple apps can be updated atomically (all-or-nothing), no broken state after deployment failures.<br />➣ Built for the full application management lifecycle across a team, not just the initial installation.<br />➣ Security sand-boxing features which allow operations teams to easily manage applications through GitOps while allowing development teams to freely make code changes.<br /><br /> Clace apps can be:<br />➣ Containerized apps deployed from source<br />➣ Autogenerated form interface for backend Actions<br />➣ Hypermedia based apps served by Clace" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+
+{{< hextra/feature-card title="Common use cases" icon="users" subtitle="Clace can be used by teams to:<br/>➣  Deploy web apps built with Streamlit/Gradio/FastHTML/NiceGUI etc<br/>➣ Zero config required for most common frameworks, just specify the spec to use<br />➣ Automate internal operations using Action Jobs, replacing Jenkins and Rundeck<br/>➣ Expose web apps for internal REST APIs, replacing curl and Postman<br><br>The auth and auditing features of Clace are built for use by teams. Clace can also be used by individuals:<br/>➣ To easily run web apps in development mode locally, without having to set up a dev environment<br/>➣ To host web apps exposed publicly, with OAuth enabled or otherwise" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+
+{{< /hextra/feature-grid >}}
+
 <br>
 <br>
 
@@ -47,34 +133,4 @@ layout: hextra-home
   <source media="(prefers-color-scheme: light)" srcset="https://clace.io/intro_light.gif">
   <img alt="Gif with Clace intro commands" src="https://clace.io/intro_light.gif">
 </picture>
-
 <br>
-<br>
-
-{{< hextra/feature-grid >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="Container management" link="docs/quickstart/#containerized-applications" subtitle="Build and deploy containerized web apps, with Docker or Podman."  icon="docker" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="GitOps Workflow" link="docs/quickstart/#lifecycle-with-git" subtitle="Blue-green (staged) deployments, versioning and preview environments with no infra to manage."  icon="github" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="No build step" link="docs/app/overview/#app-lifecycle" subtitle="Backend and frontend development with no build artifacts to manage, deploy directly from the source repo."  icon="binary-off" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="Scale down to zero" link="/docs/container/overview/" subtitle="Apps are initialized lazily, on demand: scale down to zero automatically."  icon="pause" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="Autogenerated web-apps" link="docs/actions" subtitle="Auto generate simple web interfaces for existing CLI tools and API endpoints."  icon="html5" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="Cross-platform" link="docs/quickstart/#installation" subtitle="Clace runs natively on Linux, Windows and OSX; use for app dev and then for app hosting"  icon="globe-alt" style="background: radial-gradient(ellipse at 50% 80%,rgba(102, 89, 186, 0.25),hsla(0,0%,100%,0));" >}}
-
-{{< /hextra/feature-grid >}}
-
-<br>
-
-{{< hextra/feature-grid >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="Comparison with other low-code solutions" subtitle="There are many low-code solutions for building internal tools. Most are JavaScript focused solutions which providing UI components which can be configured using a drag and drop UI builder. Backend teams stick to using tools like Rundeck for web interfaces to avoid heavyweight UI solutions.<br><br>Clace provides a solution which is focused on providing simple UI for backend actions. Clace allows customizing the UI using server rendering, without requiring any client side JavaScript code. Clace is implemented in Go, avoiding the JavaScript dependency challenges." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="Comparison with other deployment solutions" subtitle="Using Kubernetes for internal tools deployment requires glueing together CI/CD with ArgoCD/FluxCD and IDP(Internal Developer Portal) for app lifecycle management. Managing the infrastructure requires more work than the actual app code.<br><br>Clace provides a integrated solution focused on supporting deployment of internal tools. Clace handles GitOps, container image management, blue-green staged deployment and OAuth based app access controls." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
-
-<!-- prettier-ignore --> {{< hextra/feature-card title="How is Clace different?" subtitle="Clace is built for teams to be able to securely develop and deploy internal tools. Code and config changes are blue-green staged for deployment. Multiple apps can be updated atomically (all-or-nothing), there is no broken state after deployment failures. <br><br>Clace is built for the full application management lifecycle across a team, not just the initial installation. Clace has security sand-boxing features which allow operations teams to easily manage applications through GitOps while allowing development teams to freely make code changes." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
-
-{{< /hextra/feature-grid >}}
