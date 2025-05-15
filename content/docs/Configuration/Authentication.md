@@ -5,13 +5,13 @@ date: 2024-03-27
 summary: "Details about authentication mechanisms for app access, including OAuth based auth"
 ---
 
-By default, apps are created with the system authentication type. The system auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
+By default, apps are created with the `none` authentication type. A `system` auth is available which uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
 
-Apps can also be changed to have no authentication, making them publicly accessible. To change app to be un-authenticated, add `--auth none` to the app create command. After an app is created, the auth type can be changed by running `app update-settings auth none /myapp`.
+To set the auth type, add `--auth system` to the app create command. After an app is created, the auth type can be changed by running `app update-settings auth system /myapp`.
 
 ## Default Authentication Type
 
-Any app when created uses the default auth type configured for the server. `system` is the default. To change this, add
+Any app when created uses the default auth type configured for the server. `none` is the default. To change this, add
 
 ```toml {filename="clace.toml"}
 [security]

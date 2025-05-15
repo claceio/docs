@@ -232,7 +232,7 @@ COMMANDS:
    help, h   Shows a list of commands or help for one command
 ```
 
-`clace sync schedule --approve --promote github.com/claceio/clace/examples/utils.star` will create a scheduled sync which will run every 5 minutes and check for app config updates to apply.
+`clace sync schedule --approve --promote github.com/claceio/clace/examples/utils.star` will create a scheduled sync which will run every 15 minutes and check for app config updates to apply. Use `--minutes` option to change the frequency.
 
 ```
 clace sync schedule --help

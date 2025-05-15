@@ -23,7 +23,7 @@ layout: hextra-home
 
 {{< hextra/feature-grid >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" icon="question-mark-circle" subtitle="Clace™ is an application server for teams to deploy internal tools. Clace provides declarative GitOps based blue-green deployment, OAuth access controls, TLS certs & secrets management etc.<br><br> Some of the unique features of Clace are:<br>➣ Staged deployment, for code and config changes<br>➣ Atomic updates for multiple apps, all or nothing<br>➣ Declarative config sync with automated reconciliation" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What is Clace?" icon="information-circle" subtitle="Clace™ is an application server for teams to deploy internal tools. Clace provides declarative GitOps based blue-green deployment, OAuth access controls, TLS certs & secrets management etc.<br><br> Some of the unique features of Clace are:<br>➣ Staged deployment, for code and config changes<br>➣ Atomic updates for multiple apps, all or nothing<br>➣ Declarative config sync with automated reconciliation" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore --> {{< hextra/feature-card title="First AppServer for Containerized apps" icon="lightning-bolt" subtitle="Clace is the first AppServer built to manage containerized webapps. Clace supports:<br>➣ Deploy webapps developed in any language/framework<br>➣ Handle request routing, domain based or path based<br>➣ Manage app lifecycle imperatively (using CLI) or declaratively (through GitOps)" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
@@ -37,7 +37,7 @@ layout: hextra-home
 <div style="max-width: 800px; width: 100%; margin: 0 auto; padding: 1rem;">
 
 <div style="position: relative;">
-<div style="font-weight: bold; margin-bottom: 5px;">To install Clace, run:</div>
+<div style="font-weight: bold; margin-bottom: 5px;">To install Clace:</div>
 <div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code1">
 curl -sSL https://clace.io/install.sh | sh
 </div>
@@ -53,16 +53,16 @@ clace server start
 </div>
 
 <div style="position: relative;">
-<div style="font-weight: bold; margin-bottom: 5px;">To install a Streamlit app, run:</div>
-<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code3">
+<div style="font-weight: bold; margin-bottom: 5px;">To install a Streamlit app:</div>
+<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" title="This command downloads the source code from main branch, adds the app definition and Containerfile from the spec and loads the source files it into the SQLite metadata database,. On the next API call to /uber_pickups, the image will be built and container started" id="code3">
 clace app create --approve --spec python-streamlit github.com/streamlit/demo-uber-nyc-pickups /uber_pickups
 </div>
 <button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">Copy</button>
 </div>
 
 <div style="position: relative;">
-<div style="font-weight: bold; margin-bottom: 5px;">To schedule a sync which runs in background, run:</div>
-<div style="padding: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code4">
+<div style="font-weight: bold; margin-bottom: 5px;">To schedule a sync which runs in background:</div>
+<div style="padding: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" title="This creates a schedule sync which runs every 15 minutes. The sync loads the config for the apps from Git, creates new apps and checks whether there are any config or code change for any of the existing apps and applies the changes." id="code4">
 clace sync schedule --approve github.com/claceio/clace/examples/utils.star
 </div>
 <button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code4', this)">Copy</button>
