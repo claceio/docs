@@ -24,6 +24,7 @@ To install on OSX/Linux, run
 ```shell
 curl -sSL https://clace.io/install.sh | sh
 ```
+
 Start a new terminal (to get the updated env) and run `clace server start` to start the Clace service.
 
 ### Brew Install
@@ -51,7 +52,7 @@ Start a new command window (to get the updated env) and run `clace server start`
 Once Clace server is running, to install apps declaratively, open a new window and run
 
 ```
-clace apply --approve github.com/claceio/clace/examples/utils.star all
+clace apply --approve github.com/claceio/clace/examples/utils.star
 ```
 
 To install apps using the CLI, run
@@ -62,7 +63,7 @@ clace app create --approve github.com/claceio/apps/system/disk_usage /disk_usage
 clace app create --approve github.com/claceio/apps/utils/bookmarks /book
 ```
 
-Open https://localhost:25223 to see the app listing. The disk usage app is available at https://localhost:25223/disk_usage (port 25222 for HTTP). admin is the username, use the password printed by the install script. The bookmark manager is available at https://localhost:25223/book, the list files app is available at https://localhost:25223/files. Add the `--auth none` flag to the `app create` command to disable authentication.
+Open https://localhost:25223 to see the app listing. The disk usage app is available at https://localhost:25223/disk_usage (port 25222 for HTTP). The bookmark manager is available at https://localhost:25223/book, the list files app is available at https://localhost:25223/files.
 
 The release binaries are also available at [releases](https://github.com/claceio/clace/releases).
 
