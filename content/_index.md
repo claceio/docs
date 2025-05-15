@@ -35,9 +35,10 @@ layout: hextra-home
 
 <div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); background: #007700; color: white; justify-content: center; box-sizing: border-box; padding: 25px; font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', 'Roboto', 'Arial', sans-serif;">
 <div style="max-width: 800px; width: 100%; margin: 0 auto; padding: 1rem;">
+
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 5px;">To install Clace, run:</div>
-<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code1">
+<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code1">
 curl -sSL https://clace.io/install.sh | sh
 </div>
 <button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code1', this)">Copy</button>
@@ -45,18 +46,26 @@ curl -sSL https://clace.io/install.sh | sh
 
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 5px;">To start Clace server, run in a new window:</div>
-<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code2">
+<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code2">
 clace server start
 </div>
 <button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code2', this)">Copy</button>
 </div>
 
 <div style="position: relative;">
-<div style="font-weight: bold; margin-bottom: 5px;">To schedule a sync which runs in background, run:</div>
-<div style="padding: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code3">
-clace sync schedule --approve github.com/claceio/clace/examples/utils.star
+<div style="font-weight: bold; margin-bottom: 5px;">To install a Streamlit app, run:</div>
+<div style="padding: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code3">
+clace app create --approve --spec python-streamlit github.com/streamlit/demo-uber-nyc-pickups /uber_pickups
 </div>
 <button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">Copy</button>
+</div>
+
+<div style="position: relative;">
+<div style="font-weight: bold; margin-bottom: 5px;">To schedule a sync which runs in background, run:</div>
+<div style="padding: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code4">
+clace sync schedule --approve github.com/claceio/clace/examples/utils.star
+</div>
+<button style="position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code4', this)">Copy</button>
 </div>
 
 </div>
