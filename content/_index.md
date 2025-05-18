@@ -43,7 +43,7 @@ layout: hextra-home
 <div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code1">
 curl -sSL https://clace.io/install.sh | sh
 </div>
-<button style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code1', this)">⧉</button>
+<button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code1', this)">⧉</button>
 </div>
 
 <div style="position: relative;">
@@ -51,7 +51,7 @@ curl -sSL https://clace.io/install.sh | sh
 <div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code2">
 clace server start &
 </div>
-<button style="position: absolute; top: 5px; right: 5px;  padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code2', this)">⧉</button>
+<button title="Copy" style="position: absolute; top: 5px; right: 5px;  padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code2', this)">⧉</button>
 </div>
 
 <div style="position: relative;">
@@ -59,7 +59,7 @@ clace server start &
 <div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" title="This creates a schedule sync which runs every 15 minutes. The sync loads the config for the apps from Git, creates new apps and checks whether there are any config or code change for any of the existing apps and applies the changes." id="code3">
 clace sync schedule --approve github.com/claceio/clace/examples/utils.star
 </div>
-<button style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">⧉</button>
+<button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">⧉</button>
 </div>
 
 <div style="margin-top: 5px; margin-bottom: 5px; text-align: center;font-size: 16px; color: lightgray;">Starts a background sync which automatically creates new apps and updates existing apps, reading latest app config and code from Git.</div>
