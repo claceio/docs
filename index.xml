@@ -513,7 +513,7 @@ title="Copy code"
 &lt;/button>
 &lt;/div>
 &lt;/div>
-&lt;p>Open https://localhost:25223 to see app listing. &lt;code>admin&lt;/code> is the username, use the password printed by the install script. See &lt;a href="https://clace.io/docs/installation/" >installation&lt;/a> for details.&lt;/p>
+&lt;p>Open https://localhost:25223 to see app listing. See &lt;a href="https://clace.io/docs/installation/" >installation&lt;/a> for details.&lt;/p>
 &lt;h2>Follow Along&lt;span class="hx-absolute -hx-mt-20" id="follow-along">&lt;/span>
 &lt;a href="#follow-along" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>You can keep in touch by these means:&lt;/p>
 &lt;ul>
