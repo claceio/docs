@@ -30,8 +30,8 @@ layout: hextra-home
 <!-- prettier-ignore --> {{< hextra/feature-card title="How is Clace implemented" icon="beaker" subtitle="Clace is cross-platform, built as a single binary which implements the webserver and AppServer. Clace has: <br>➣ Declarative config using Starlark (python-like)<br>➣ SQLite database for metadata persistence (allowing for transactional updates)<br>➣ CLI which uses a unix domain socket for security<br>➣ GitOps driven declarative interface which works with any hosted Git service" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
-<br>
-<br>
+
+<div style="height: 20px;"></div>
 
 <div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); background: #007700; color: white; justify-content: center; box-sizing: border-box; padding: 25px; font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', 'Roboto', 'Arial', sans-serif;">
 <div style="max-width: 800px; width: 100%; margin: 0 auto; padding: 1rem;">
@@ -82,8 +82,7 @@ function copyCode(codeId, buttonElem) {
 }
 </script>
 
-<br>
-<br>
+<div style="height: 20px;"></div>
 
 {{< hextra/feature-grid >}}
 
@@ -107,7 +106,7 @@ function copyCode(codeId, buttonElem) {
 
 {{< /hextra/feature-grid >}}
 
-<br />
+<div style="height: 20px;"></div>
 
 {{< hextra/feature-grid >}}
 
@@ -121,8 +120,7 @@ function copyCode(codeId, buttonElem) {
 
 {{< /hextra/feature-grid >}}
 
-<br>
-<br>
+<div style="height: 20px;"></div>
 
 <style>
   /* Apply width 60% for screens wider than 768px */
