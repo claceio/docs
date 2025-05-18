@@ -47,6 +47,7 @@ Clace is in a beta state currently. Custom application support is functional. Su
 ```shell
 curl -sSL https://clace.io/install.sh | sh
 ```
+
 Start a new terminal (to get the updated env) and run `clace server start` to start the Clace service.
 
 To install apps declaratively, run
@@ -55,7 +56,7 @@ To install apps declaratively, run
 clace apply --approve github.com/claceio/clace/examples/utils.star all
 ```
 
-Open https://localhost:25223 to see app listing. `admin` is the username, use the password printed by the install script. See [installation]({{< ref "installation" >}}) for details.
+Open https://localhost:25223 to see app listing. See [installation]({{< ref "installation" >}}) for details.
 
 ## Follow Along
 
