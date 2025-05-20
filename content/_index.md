@@ -35,11 +35,11 @@ layout: hextra-home
 <div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); background: #007700; color: white; justify-content: center; box-sizing: border-box; padding: 25px; font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', 'Roboto', 'Arial', sans-serif;">
 <div style="max-width: 800px; width: 100%; margin: 0 auto; padding: 1rem;">
 
-<div style="font-weight: bold; margin-bottom: 20px; text-align: center;font-size: 32px; color: mintcream;">Install Clace</div>
+<div style="font-weight: bold; margin-bottom: 20px; text-align: center;font-size: 24px; color: mintcream;">Install Clace</div>
 
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 10px; color: lightgray;">Install Clace:</div>
-<div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code1">
+<div style="padding-inline: 10px; padding-top: 5px; padding-bottom: 20px; font-size: 14px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code1">
 curl -sSL https://clace.io/install.sh | sh
 </div>
 <button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code1', this)">⧉</button>
@@ -47,17 +47,17 @@ curl -sSL https://clace.io/install.sh | sh
 
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 10px; color: lightgray;">Start Clace server (in a new window):</div>
-<div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; overflow-x: auto; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Courier, monospace;" id="code2">
+<div style="padding-inline: 10px; padding-top: 5px; padding-bottom: 20px; font-size: 14px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code2">
 clace server start &
 </div>
 <button title="Copy" style="position: absolute; top: 5px; right: 5px;  padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code2', this)">⧉</button>
 </div>
 
-<div style="font-weight: bold; margin-top: 10px; margin-bottom: 20px; text-align: center;font-size: 32px; color: mintcream;">Enable GitOps with One Command</div>
+<div style="font-weight: bold; margin-top: 20px; margin-bottom: 20px; text-align: center;font-size: 24px; color: mintcream;">GitOps in One Command</div>
 
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 10px; color: lightgray;">Schedule a sync:</div>
-<div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code3">
+<div style="padding-inline: 10px; padding-top: 5px; padding-bottom: 20px; font-size: 14px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code3">
 clace sync schedule --approve --promote github.com/claceio/clace/examples/utils.star
 </div>
 <button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">⧉</button>
