@@ -5,14 +5,13 @@ layout: hextra-home
 
 <div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: linear-gradient(180deg, #277A9F, #359ece); color: transparent; background-clip: text; -webkit-background-clip: text;">
 {{< hextra/hero-headline >}}
-  App Deployment Simplified
+  App Deployment Simplified.
 {{< /hextra/hero-headline >}}
 </div>
 
 <div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  GitOps without the hassle.&nbsp;<br class="sm:hx-block hx-hidden"/>
-  Securely deploy internal tools for teams.
+  Application server for deploying containerized web apps.&nbsp;<br class="sm:hx-block hx-hidden"/>Easily deploy internal tools across a team.
 {{< /hextra/hero-subtitle >}}
 </div>
 
@@ -36,7 +35,7 @@ layout: hextra-home
 <div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); background: #007700; color: white; justify-content: center; box-sizing: border-box; padding: 25px; font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', 'Roboto', 'Arial', sans-serif;">
 <div style="max-width: 800px; width: 100%; margin: 0 auto; padding: 1rem;">
 
-<div style="font-weight: bold; margin-bottom: 20px; text-align: center;font-size: 32px; color: mintcream;">Three Steps to Declarative GitOps</div>
+<div style="font-weight: bold; margin-bottom: 20px; text-align: center;font-size: 32px; color: mintcream;">Install Clace</div>
 
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 10px; color: lightgray;">Install Clace:</div>
@@ -54,10 +53,12 @@ clace server start &
 <button title="Copy" style="position: absolute; top: 5px; right: 5px;  padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code2', this)">⧉</button>
 </div>
 
+<div style="font-weight: bold; margin-top: 10px; margin-bottom: 20px; text-align: center;font-size: 32px; color: mintcream;">Enable GitOps with One Command</div>
+
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 10px; color: lightgray;">Schedule a sync:</div>
-<div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" title="This creates a schedule sync which runs every 15 minutes. The sync loads the config for the apps from Git, creates new apps and checks whether there are any config or code change for any of the existing apps and applies the changes." id="code3">
-clace sync schedule --approve github.com/claceio/clace/examples/utils.star
+<div style="padding-inline: 20px; padding-top: 5px; padding-bottom: 20px; font-family: 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code3">
+clace sync schedule --approve --promote github.com/claceio/clace/examples/utils.star
 </div>
 <button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">⧉</button>
 </div>
