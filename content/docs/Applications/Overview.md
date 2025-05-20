@@ -267,3 +267,16 @@ OPTIONS:
 Scheduled sync takes all the same options as the `apply` command. The apply is done automatically by Clace on schedule.
 
 Use `clace sync list` to list all jobs and `clace sync delete <sync_id>` to delete a sync job.
+
+## Sync Frequency
+
+The default sync frequency is every 15 minutes. This can be changed for each sync by passing `--minutes 10` during sync creation. To change the default globally, for any new sync being created, set
+
+```python {filename="clace.toml"}
+[system]
+default_schedule_mins = 10
+```
+
+GitHub imposes a [rate limit](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api) for API calls. Every sync run make one list API call to the apply file repo and one API call to each source file repo. So if apply files and source files are in the same repo, there is just one API call in total. If there are multiple sync operation, each runs independently. If there a new commit found, then a clone is done on the repo.
+
+Sync can be run more frequently, making sure rate limits are respected. If a [default git auth]({{< ref "/docs/configuration/security/#private-repository-access" >}}) entry is added, that will be used for all list API calls. The rate limits are higher for authenticated requests.
