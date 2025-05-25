@@ -35,7 +35,7 @@ layout: hextra-home
 <div style="position: relative; width: 100vw; margin-left: calc(-50vw + 50%); background: #007700; color: white; justify-content: center; box-sizing: border-box; padding: 25px; font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', 'Roboto', 'Arial', sans-serif;">
 <div style="max-width: 800px; width: 100%; margin: 0 auto; padding: 1rem;">
 
-<div style="font-weight: bold; margin-bottom: 20px; text-align: center;font-size: 24px; color: mintcream;">Install Clace</div>
+<div style="font-weight: bold; margin-bottom: 20px; text-align: center;font-size: 24px; color: mintcream;">Installation</div>
 
 <div style="position: relative;">
 <div style="font-weight: bold; margin-bottom: 10px; color: lightgray;">Install Clace:</div>
