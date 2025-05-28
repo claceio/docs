@@ -132,9 +132,8 @@ function copyCode(codeId, buttonElem) {
   }
 </style>
 
-<picture  class="responsive-picture" style="display: block; margin-left: auto; margin-right: auto;">
-  <source media="(prefers-color-scheme: dark)" srcset="https://clace.io/intro_dark.gif">
-  <source media="(prefers-color-scheme: light)" srcset="https://clace.io/intro_light.gif">
-  <img alt="Gif with Clace intro commands" src="https://clace.io/intro_light.gif">
-</picture>
+<video controls muted class="responsive-picture" style="display: block; margin-left: auto; margin-right: auto;">
+  <source media="(prefers-color-scheme: dark)" src="https://clace.io/demo_dark.mp4" type="video/mp4">
+  <source media="(prefers-color-scheme: light)" src="https://clace.io/demo_light.mp4" type="video/mp4">
+</video>
 <br>
