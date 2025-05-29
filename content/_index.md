@@ -85,6 +85,12 @@ function copyCode(codeId, buttonElem) {
 
 <div style="height: 20px;"></div>
 
+<div  style="position:relative; width:100%; max-width:560px; padding-bottom:5%; margin:0 auto; overflow:hidden;">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/YrWNz4JQ6p0?si=tnjma2uqBp2OrE7m" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<div style="height: 20px;"></div>
+
 {{< hextra/feature-grid >}}
 
 <!-- prettier-ignore -->
