@@ -8,7 +8,7 @@ Clace supports secret management when working with apps. Secrets can be passed t
 
 ## Supported Providers
 
-Clace currently supports AWS Secrets Manager (ASM) and HashiCorp Vault as providers for secrets management. Secrets can also be read from the environment of the Clace server, which can be used in development and testing.
+Clace currently supports AWS Secrets Manager (ASM) and HashiCorp Vault as providers for secrets management. Secrets can also be read from the environment of the Clace server, which can be used in development and testing. Secrets can also be read from a local properties file.
 
 ## AWS Secrets Manager
 

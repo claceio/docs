@@ -91,10 +91,8 @@ The app defines a run handler which runs `ls` on the specified directory. The ou
 load ("exec.in", "exec")
 
 def run(dry_run, args):
-   out = exec.run("ls", ["-Lla"])
-   if out.error:
-       return ace.result(out.error)
-   return ace.result("File listing for " + args.dir, out.value)
+   out = exec.run("ls", ["-Lla"]).value
+   return ace.result("File listing for " + args.dir, out)
 
 app = ace.app("List Files",
    actions=[ace.action("List Files", "/", run, description="Show the ls -a output for specified directory")],

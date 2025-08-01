@@ -28,10 +28,8 @@ To create an app with a custom HTML page which shows a listing of files in your 
 load("exec.in", "exec")
 
 def handler(req):
-   ret = exec.run("ls", ["-l", "/"])
-   if ret.error:
-       return {"Error": ret.error, "Lines": []}
-   return {"Error": "", "Lines": ret.value}
+   ret = exec.run("ls", ["-l", "/"]).value
+   return {"Error": "", "Lines": ret}
 
 app = ace.app("hello4",
               custom_layout=True,
