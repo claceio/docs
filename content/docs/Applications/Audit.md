@@ -4,7 +4,7 @@ weight: 400
 summary: "Auditing and viewing events"
 ---
 
-Clace automatically creates audit events for all operations. See [demo](https://events.demo.clace.io/) for a demo of events viewing.
+Clace automatically creates audit events for all operations. See [demo](https://audit.demo.clace.io/) for a demo of events viewing.
 
 ## Introduction
 
@@ -56,16 +56,16 @@ For example, the dictionary app [does](https://github.com/claceio/apps/blob/4e77
    ace.audit("word_lookup", args.word)
 ```
 
-This will enable [searching](https://events.demo.clace.io/?operation=word_lookup) the audit events (using the Viewer app) for all operation of type "word_lookup".
+This will enable [searching](https://audit.demo.clace.io/?operation=word_lookup) the audit events (using the Viewer app) for all operation of type "word_lookup".
 
 Only the last call to `ace.audit` from a handler function is logged.
 
 ## Event Viewer
 
-Events can be viewed by admin using the Event Viewer app [code](https://github.com/claceio/apps/tree/main/clace/audit_viewer): [demo](https://events.demo.clace.io/). To install the app on your instance, run
+Events can be viewed by admin using the Event Viewer app [code](https://github.com/claceio/apps/tree/main/clace/audit_viewer): [demo](https://audit.demo.clace.io/). To install the app on your instance, run
 
 ```sh
 clace app create --approve github.com/claceio/apps/clace/audit_viewer /events
 ```
 
-The event viewer shows events for all apps. This app should be installed for access by admins only.
+The event viewer shows events for all apps. This app can be installed with access by admins only.
