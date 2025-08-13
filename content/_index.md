@@ -11,7 +11,7 @@ layout: hextra-home
 
 <div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  Application server for deploying containerized web apps.&nbsp;<br class="sm:hx-block hx-hidden"/>Easily deploy internal tools across a team.
+  Open source alternative to Google Cloud Run and AWS AppRunner.&nbsp;<br class="sm:hx-block hx-hidden"/>Easily deploy internal tools across a team.
 {{< /hextra/hero-subtitle >}}
 </div>
 
