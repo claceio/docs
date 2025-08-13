@@ -5,7 +5,7 @@ date: 2023-10-06
 summary: "HTML templates functions, static file handling and customizations"
 ---
 
-Clace uses [Go HTML templates](https://pkg.go.dev/html/template@go1.21.2) for returning data to the client. See [here](https://pkg.go.dev/text/template@go1.21.2) for an overview of the template syntax. [Hugo docs](https://gohugo.io/templates/introduction/) are a good source for an overview of using go templates.
+OpenRun uses [Go HTML templates](https://pkg.go.dev/html/template@go1.21.2) for returning data to the client. See [here](https://pkg.go.dev/text/template@go1.21.2) for an overview of the template syntax. [Hugo docs](https://gohugo.io/templates/introduction/) are a good source for an overview of using go templates.
 
 The [Sprig template library functions](http://masterminds.github.io/sprig/) are included automatically. Two functions from Sprig which are excluded for security considerations are `env` and `expandenv`.
 
@@ -15,7 +15,7 @@ Two extra functions `static` and `fileNonEmpty` are added for handling static fi
 
 This function takes a file name and returns the url for a file in the static folder with a sha256 hash included in the file name. This approach is similar to the [hashfs library](https://github.com/benbjohnson/hashfs). If the `static` folder contains a file `file1` with the content `file1data`, then a call to `static "file"` will return `/test/static/file1-ca9e40772ef9119c13100a8258bc38a665a0a1976bf81c96e69a353b6605f5a7`, assuming the app is installed at `/test`.
 
-The returned file name has a hash based on the file contents. The file server used by Clace will serve aggressive cache headers `Cache-Control: public, max-age=31536000` when this file is referenced by the browser. When the file contents change, the content hash will change and the file name will change. The files on disk are not renamed, only the filesystem used by the Clace server in memory sees the hashed file names.
+The returned file name has a hash based on the file contents. The file server used by OpenRun will serve aggressive cache headers `Cache-Control: public, max-age=31536000` when this file is referenced by the browser. When the file contents change, the content hash will change and the file name will change. The files on disk are not renamed, only the filesystem used by the OpenRun server in memory sees the hashed file names.
 
 This approach allows for a build-less system with aggressive static asset caching. The usual approach for this requires the static file to be renamed to have the hash value in the file name on disk. This require a build step to do the file renaming. The hashfs approach can avoid the build step. The file hash computation and compression are done once, during app installation in prod mode. There is no runtime penalty for this. In dev mode, the file hashing is done during the api serving.
 
@@ -54,7 +54,7 @@ the default is `["*.go.html"]`. If additional directories are added, `"*.go.html
 
 ## Structured Template Layout
 
-The default in Clace is to load all the templates in one parse operation. This is easy to get started with but can result in challenges when the same template block needs to be duplicated in different files. Clace also supports a structured template layout. See [this blog](https://philipptanlak.com/web-frontends-in-go/#how-i-structure-my-templates) for an explanation about the differences between the two layouts. The default in Clace is the WordPress layout, all template files are loaded in one go. To use the second, Django layout, use the structured format.
+The default in OpenRun is to load all the templates in one parse operation. This is easy to get started with but can result in challenges when the same template block needs to be duplicated in different files. OpenRun also supports a structured template layout. See [this blog](https://philipptanlak.com/web-frontends-in-go/#how-i-structure-my-templates) for an explanation about the differences between the two layouts. The default in OpenRun is the WordPress layout, all template files are loaded in one go. To use the second, Django layout, use the structured format.
 
 If there is a `base_templates` folder in the app main folder with one or more `*.go.html` files, the structured template layout is used. In the structured layout format, all the base template files are loaded in one parse operation. Each of the files in the app main folder is then individually loaded. Each top level file has access to its own template blocks plus the base templates.
 
@@ -96,16 +96,16 @@ settings={
 When using custom layout with `custom_layout=True`, the app developer has to create the `index.go.html` file. Add a directive like:
 
 ```html
-{{ template "clace_gen_import" . }}
+{{ template "openrun_gen_import" . }}
 ```
 
-in the head section to ensure that the auto generated `clace_gen_import` directives are loaded in the . This will include the style files, HTMX library and the live reload functionality in dev mode.
+in the head section to ensure that the auto generated `openrun_gen_import` directives are loaded in the . This will include the style files, HTMX library and the live reload functionality in dev mode.
 
-In the default layout mode, the auto generated `index_gen.go.html` file is used. The app developer has to provide a `clace_body` block. It can be in any template file, the convention is to use `app.go.html`. For example:
+In the default layout mode, the auto generated `index_gen.go.html` file is used. The app developer has to provide a `openrun_body` block. It can be in any template file, the convention is to use `app.go.html`. For example:
 
 <!-- prettier-ignore -->
 ```html
-{{block "clace_body" .}}
+{{block "openrun_body" .}}
    Data is {{.Data}}
 {{end}}
 ```

@@ -2,7 +2,7 @@
 title: "Plugin Catalog"
 weight: 200
 date: 2024-02-18
-summary: "Catalog of Clace Plugins"
+summary: "Catalog of OpenRun Plugins"
 ---
 
 The page lists the available plugins and their API details.
@@ -108,7 +108,7 @@ The `fs.in` allows working with local file system. The APIs available are
 |      **abs**       | Read |            Returns the absolute path for given relative path            |
 |      **list**      | Read |                    List files in specified directory                    |
 |      **find**      | Read |         Find files under specified directory matching criteria          |
-| **serve_tmp_file** | Read | Load file metadata to the Clace database and make available through API |
+| **serve_tmp_file** | Read | Load file metadata to the OpenRun database and make available through API |
 
 ### abs
 
@@ -162,8 +162,8 @@ The response for the `serve_tmp_file` API is a dict with the fields:
 - **url** (string) : the url path (without domain) for downloading the file
 - **name** (string) : the file name
 
-The `serve_tmp_file` API creates a metadata entry in the Clace database. The file can be served through an API using this entry. The default behavior is the file is accessible only to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and **also deletes the file from disk**. If the file should not be deleted, do:
+The `serve_tmp_file` API creates a metadata entry in the OpenRun database. The file can be served through an API using this entry. The default behavior is the file is accessible only to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and **also deletes the file from disk**. If the file should not be deleted, do:
 
 `ret = fs.serve_tmp_file("/tmp/myfile", single_access=False, expiry_minutes=0)`
 
-See number_lines app [code](https://github.com/claceio/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API. Setting `visibility` to `fs.APP` will make the API available to anyone who has access to the app.
+See number_lines app [code](https://github.com/openrundev/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.openrun.dev/num_lines) for an example of using this API. Setting `visibility` to `fs.APP` will make the API available to anyone who has access to the app.

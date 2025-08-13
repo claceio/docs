@@ -1,4 +1,4 @@
-module github.com/claceio/docs
+module github.com/openrundev/docs
 
 go 1.19
 

@@ -4,11 +4,11 @@ summary: "Most web servers provide an update interface that does not isolate app
 date: 2025-01-17
 ---
 
-{{< clace-intro >}}
+{{< openrun-intro >}}
 
 ## Background
 
-Clace is a platform for developing and deploying internal tools. Clace provides functionality usually handled separately by a web server and an application server. The web server part of Clace is built such that there is complete isolation between app-level routing rules. Creating a new app or updating an existing app cannot break other apps. This post goes into details about how this is done and why it is useful.
+OpenRun is a platform for developing and deploying internal tools. OpenRun provides functionality usually handled separately by a web server and an application server. The web server part of OpenRun is built such that there is complete isolation between app-level routing rules. Creating a new app or updating an existing app cannot break other apps. This post goes into details about how this is done and why it is useful.
 
 ## Web Server Overview
 
@@ -26,9 +26,9 @@ The goal of app-level isolation is for developers to confidently update web serv
 
 To enforce isolation across apps, web servers first need a concept of an app. There needs to be a way to say which rules are for which app. Each update has to be scoped to be for a particular app. If there are rules which conflict with another app, those rules need to be rejected.
 
-## Clace Approach
+## OpenRun Approach
 
-Clace has the concept of an app where each app is [installed]({{< ref "/docs/applications/routing/" >}}) for a path within a domain. If app A is installed at `appA.example.com:/`, then that domain is completely dedicated for that app. An app installed at `appB.example.com:/test` owns the `/test/*` namespace for domain `appB.example.com`, no other app can use that namespace.
+OpenRun has the concept of an app where each app is [installed]({{< ref "/docs/applications/routing/" >}}) for a path within a domain. If app A is installed at `appA.example.com:/`, then that domain is completely dedicated for that app. An app installed at `appB.example.com:/test` owns the `/test/*` namespace for domain `appB.example.com`, no other app can use that namespace.
 
 This approach has the benefit that each app gets a dedicated namespace. Within that namespace, the app can do whatever it wants, without interfering with other apps. At app installation time, a check is done whether the domain path being requested is available. If some other app is using that path, the new app installation is rejected. A SQLite database is used to [store app metadata]({{< ref "/blog/sqlite/" >}}), so API driven app updates do not conflict with each other.
 
@@ -36,4 +36,4 @@ Within the app, rules are defined using [Starlark](https://starlark-lang.org/). 
 
 ## Conclusion
 
-By enforcing app-level isolation in routing rules, Clace allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others. Some webserver routing use cases which are more complex cannot use this approach, but this is useful for app deployment scenarios.
+By enforcing app-level isolation in routing rules, OpenRun allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others. Some webserver routing use cases which are more complex cannot use this approach, but this is useful for app deployment scenarios.

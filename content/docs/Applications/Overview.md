@@ -2,36 +2,36 @@
 title: "App Management Overview"
 weight: 50
 date: 2024-03-03
-summary: "Overview of managing Clace applications"
+summary: "Overview of managing OpenRun applications"
 ---
 
-The various commands for managing Clace apps are
+The various commands for managing OpenRun apps are
 
 ```shell
-$ clace
+$ openrun
 NAME:
-   clace - Clace client and server https://clace.io/
+   openrun - OpenRun client and server https://openrun.dev/
 
 USAGE:
-   clace [global options] command [command options] [arguments...]
+   openrun [global options] command [command options] [arguments...]
 
 COMMANDS:
-   server       Manage the Clace server
-   app          Manage Clace apps
-   preview      Manage Clace preview apps
-   account      Manage Clace accounts
+   server       Manage the OpenRun server
+   app          Manage OpenRun apps
+   preview      Manage OpenRun preview apps
+   account      Manage OpenRun accounts
    param        Manage app parameter values
    version      Manage app versions
    app-webhook  Manage app level webhooks
    password     Generate a password bcrypt config entry
    help, h      Shows a list of commands or help for one command
 
-$ clace app
+$ openrun app
 NAME:
-   clace app - Manage Clace apps
+   openrun app - Manage OpenRun apps
 
 USAGE:
-   clace app command [command options] [arguments...]
+   openrun app command [command options] [arguments...]
 
 COMMANDS:
    create           Create a new app
@@ -40,8 +40,8 @@ COMMANDS:
    approve          Approve app permissions
    reload           Reload the app source code
    promote          Promote the app from staging to production
-   update-settings  Update Clace apps settings. Settings changes are NOT staged, they apply immediately to matched stage, prod and preview apps.
-   update-metadata  Update Clace app metadata. Metadata updates are staged and have to be promoted to prod. Use "clace param" to update app parameter metadata.
+   update-settings  Update OpenRun apps settings. Settings changes are NOT staged, they apply immediately to matched stage, prod and preview apps.
+   update-metadata  Update OpenRun app metadata. Metadata updates are staged and have to be promoted to prod. Use "openrun param" to update app parameter metadata.
    help, h          Shows a list of commands or help for one command
 ```
 
@@ -65,32 +65,32 @@ Use the `app list` command to list apps. If the `--internal` option is used, the
 
 ```shell
 
-$ clace app list
+$ openrun app list
 Id                                  Type  Version Auth GitInfo                        Domain:Path                                                  SourceUrl
-app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.clace.io:/                                       github.com/claceio/clace/examples/memory_usage/
-app_prd_2d3kCZ28w6VIzoXMsT9yldwijxL PROD        3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/                                                 github.com/claceio/clace/examples/cowbull
-app_prd_2d3kCjmw8ldQ2LaOd0CLmWXDApq PROD        3 NONE main:9ce5e1adfc28983f7894      /                                                            github.com/claceio/clace/examples/demo
-app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.clace.io:/                                           github.com/claceio/clace/examples/disk_usage/
-app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.clace.io:/bookmarks                               github.com/claceio/apps/utils/bookmarks
+app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.openrun.dev:/                                       github.com/openrundev/openrun/examples/memory_usage/
+app_prd_2d3kCZ28w6VIzoXMsT9yldwijxL PROD        3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/                                                 github.com/openrundev/openrun/examples/cowbull
+app_prd_2d3kCjmw8ldQ2LaOd0CLmWXDApq PROD        3 NONE main:9ce5e1adfc28983f7894      /                                                            github.com/openrundev/openrun/examples/demo
+app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.openrun.dev:/                                           github.com/openrundev/openrun/examples/disk_usage/
+app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.openrun.dev:/bookmarks                               github.com/openrundev/apps/utils/bookmarks
 
-$ clace app list -i
+$ openrun app list -i
 Id                                  Type  Version Auth GitInfo                        Domain:Path                                                  SourceUrl
-app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.clace.io:/                                       github.com/claceio/clace/examples/memory_usage/
-app_stg_2d3kCRk43FOuIGy979NbBWakRMm STG         3 NONE main:9ce5e1adfc28983f7894      memory.demo.clace.io:/_cl_stage                              github.com/claceio/clace/examples/memory_usage/
-app_prd_2d3kCZ28w6VIzoXMsT9yldwijxL PROD        3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/                                                 github.com/claceio/clace/examples/cowbull
-app_stg_2d3kCZ28w6VIzoXMsT9yldwijxL STG         3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/_cl_stage                                        github.com/claceio/clace/examples/cowbull
-app_prd_2d3kCjmw8ldQ2LaOd0CLmWXDApq PROD        3 NONE main:9ce5e1adfc28983f7894      /                                                            github.com/claceio/clace/examples/demo
-app_stg_2d3kCjmw8ldQ2LaOd0CLmWXDApq STG         3 NONE main:9ce5e1adfc28983f7894      /_cl_stage                                                   github.com/claceio/clace/examples/demo
-app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.clace.io:/                                           github.com/claceio/clace/examples/disk_usage/
-app_stg_2d3kKVvSsSgUHqtNGZaD95NuLK3 STG         3 NONE main:9ce5e1adfc28983f7894      du.demo.clace.io:/_cl_stage                                  github.com/claceio/clace/examples/disk_usage/
-app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.clace.io:/bookmarks                               github.com/claceio/apps/utils/bookmarks
-app_stg_2d6KcZmNwHIB8cSzNCotqBHpeje STG         5 NONE main:ed7545ae739dfe85140a      utils.demo.clace.io:/bookmarks_cl_stage                      github.com/claceio/apps/utils/bookmarks
+app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.openrun.dev:/                                       github.com/openrundev/openrun/examples/memory_usage/
+app_stg_2d3kCRk43FOuIGy979NbBWakRMm STG         3 NONE main:9ce5e1adfc28983f7894      memory.demo.openrun.dev:/_cl_stage                              github.com/openrundev/openrun/examples/memory_usage/
+app_prd_2d3kCZ28w6VIzoXMsT9yldwijxL PROD        3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/                                                 github.com/openrundev/openrun/examples/cowbull
+app_stg_2d3kCZ28w6VIzoXMsT9yldwijxL STG         3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/_cl_stage                                        github.com/openrundev/openrun/examples/cowbull
+app_prd_2d3kCjmw8ldQ2LaOd0CLmWXDApq PROD        3 NONE main:9ce5e1adfc28983f7894      /                                                            github.com/openrundev/openrun/examples/demo
+app_stg_2d3kCjmw8ldQ2LaOd0CLmWXDApq STG         3 NONE main:9ce5e1adfc28983f7894      /_cl_stage                                                   github.com/openrundev/openrun/examples/demo
+app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.openrun.dev:/                                           github.com/openrundev/openrun/examples/disk_usage/
+app_stg_2d3kKVvSsSgUHqtNGZaD95NuLK3 STG         3 NONE main:9ce5e1adfc28983f7894      du.demo.openrun.dev:/_cl_stage                                  github.com/openrundev/openrun/examples/disk_usage/
+app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.openrun.dev:/bookmarks                               github.com/openrundev/apps/utils/bookmarks
+app_stg_2d6KcZmNwHIB8cSzNCotqBHpeje STG         5 NONE main:ed7545ae739dfe85140a      utils.demo.openrun.dev:/bookmarks_cl_stage                      github.com/openrundev/apps/utils/bookmarks
 ```
 
 Use the `version list` command to list versions for particular apps. This command works on prod app or staging app specifically.
 
 ```shell
-$ clace version list utils.demo.clace.io:/bookmarks_cl_stage
+$ openrun version list utils.demo.openrun.dev:/bookmarks_cl_stage
 Active  Version Previous CreateTime                     GitCommit            GitMessage
               1        0 2024-03-01 19:59:27 +0000 UTC  86385ff67deab288c362 Updated bookmarks app
 
@@ -102,7 +102,7 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 =====>        5        4 2024-03-02 00:23:35 +0000 UTC  ed7545ae739dfe85140a Update styling for bookmarks app
 
-$ clace version list utils.demo.clace.io:/bookmarks
+$ openrun version list utils.demo.openrun.dev:/bookmarks
 Active  Version Previous CreateTime                     GitCommit            GitMessage
               1        0 2024-03-01 19:59:27 +0000 UTC  86385ff67deab288c362 Updated bookmarks app
 
@@ -113,13 +113,13 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 The `version switch` command can be used to switch versions, up or down or to particular version. The `version revert` command can be used to revert the last change. `app promote` makes the prod app run the same version as the current staging app.
 
-In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `version switch previous utils.demo.clace.io:/bookmarks_cl_stage` will change the stage app to version 4. `version switch previous utils.demo.clace.io:/bookmarks` will change the prod app to version 2. After that, `app promote utils.demo.clace.io:/bookmarks` will change prod to also be at version 4, same as stage. The `version switch` command accepts `previous`, `next` and actual version number as version to switch to.
+In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `version switch previous utils.demo.openrun.dev:/bookmarks_cl_stage` will change the stage app to version 4. `version switch previous utils.demo.openrun.dev:/bookmarks` will change the prod app to version 2. After that, `app promote utils.demo.openrun.dev:/bookmarks` will change prod to also be at version 4, same as stage. The `version switch` command accepts `previous`, `next` and actual version number as version to switch to.
 
 A star, like `PROD*` in the `app list` output indicates that there are staged changes waiting to be promoted. That will show up any time the prod app is at a different version than the stage app.
 
 ## App Authentication
 
-By default, apps are created with the no authentication type. `system` auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the Clace server config.
+By default, apps are created with the no authentication type. `system` auth uses `admin` as the username. The password is displayed on the screen during the initial setup of the OpenRun server config.
 
 To change app auth type, add `--auth system` to the `app create` command. After an app is created, the auth type can be changed by running `app update-settings auth system /myapp`. OAuth based authentication is also supported, see [authentication]({{< ref "docs/configuration/authentication" >}}) for details.
 
@@ -131,20 +131,20 @@ All other changes done to app metadata using `app update-metadata`, `app reload`
 
 ## Declarative App Management
 
-The CLI and management apps allow imperative management of Clace apps. Clace apps can also be managed declaratively. The app definition has to be defined in a file and Clace can apply the configuration. This works similar to the Kubernetes `apply` functionality.
+The CLI and management apps allow imperative management of OpenRun apps. OpenRun apps can also be managed declaratively. The app definition has to be defined in a file and OpenRun can apply the configuration. This works similar to the Kubernetes `apply` functionality.
 
 To use this feature, create an app config file, with `.ace` extension. The config file should contain one or more `app` definitions. For example, in a file called `apps.ace`
 
 ```python {filename="apps.ace"}
-app("/myapps/disk_usage", "github.com/claceio/apps/system/disk_usage")
-app("/myapps/memory_usage", "github.com/claceio/apps/system/memory_usage")
-app("/myapps/list_files", "github.com/claceio/apps/system/list_files")
+app("/myapps/disk_usage", "github.com/openrundev/apps/system/disk_usage")
+app("/myapps/memory_usage", "github.com/openrundev/apps/system/memory_usage")
+app("/myapps/list_files", "github.com/openrundev/apps/system/list_files")
 ```
 
 defines three apps. Running
 
 ```sh
-clace apply --approve apps.ace
+openrun apply --approve apps.ace
 ```
 
 will create the apps if not already present. If present, the app configuration is updated to match the new configuration.
@@ -215,15 +215,15 @@ Apps are identified by their path and source url, so those cannot be changed. De
 
 ## Automated Sync
 
-Clace supports automatically syncing the app definition from Git. The commands to manage sync are:
+OpenRun supports automatically syncing the app definition from Git. The commands to manage sync are:
 
 ```
-clace sync
+openrun sync
 NAME:
-   clace sync - Manage sync operations, scheduled and webhook
+   openrun sync - Manage sync operations, scheduled and webhook
 
 USAGE:
-   clace sync command [command options]
+   openrun sync command [command options]
 
 COMMANDS:
    schedule  Create scheduled sync job for updating app config
@@ -232,12 +232,12 @@ COMMANDS:
    help, h   Shows a list of commands or help for one command
 ```
 
-`clace sync schedule --approve --promote github.com/claceio/clace/examples/utils.star` will create a scheduled sync which will run every 15 minutes and check for app config updates to apply. Use `--minutes` option to change the frequency.
+`openrun sync schedule --approve --promote github.com/openrundev/openrun/examples/utils.star` will create a scheduled sync which will run every 15 minutes and check for app config updates to apply. Use `--minutes` option to change the frequency.
 
 ```
-clace sync schedule --help
+openrun sync schedule --help
 NAME:
-   clace sync schedule - Create scheduled sync job for updating app config
+   openrun sync schedule - Create scheduled sync job for updating app config
 
 USAGE:
    args: <filePath>
@@ -245,10 +245,10 @@ USAGE:
    <filePath> is the path to the apply file containing the app configuration.
 
    Examples:
-     Create scheduled sync, reloading apps with code changes: clace sync schedule ./app.ace
-     Create scheduled sync, reloading only apps with a config change: clace sync schedule --reload=updated github.com/claceio/apps/apps.ace
-     Create scheduled sync, promoting changes: clace sync schedule --promote --approve github.com/claceio/apps/apps.ace
-     Create scheduled sync, overwriting changes: clace sync schedule --promote --clobber github.com/claceio/apps/apps.ace
+     Create scheduled sync, reloading apps with code changes: openrun sync schedule ./app.ace
+     Create scheduled sync, reloading only apps with a config change: openrun sync schedule --reload=updated github.com/openrundev/apps/apps.ace
+     Create scheduled sync, promoting changes: openrun sync schedule --promote --approve github.com/openrundev/apps/apps.ace
+     Create scheduled sync, overwriting changes: openrun sync schedule --promote --clobber github.com/openrundev/apps/apps.ace
 
 
 OPTIONS:
@@ -264,15 +264,15 @@ OPTIONS:
    --help, -h                  show help
 ```
 
-Scheduled sync takes all the same options as the `apply` command. The apply is done automatically by Clace on schedule.
+Scheduled sync takes all the same options as the `apply` command. The apply is done automatically by OpenRun on schedule.
 
-Use `clace sync list` to list all jobs and `clace sync delete <sync_id>` to delete a sync job.
+Use `openrun sync list` to list all jobs and `openrun sync delete <sync_id>` to delete a sync job.
 
 ## Sync Frequency
 
 The default sync frequency is every 15 minutes. This can be changed for each sync by passing `--minutes 10` during sync creation. To change the default globally, for any new sync being created, set
 
-```python {filename="clace.toml"}
+```python {filename="openrun.toml"}
 [system]
 default_schedule_mins = 10
 ```

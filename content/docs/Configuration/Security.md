@@ -2,22 +2,22 @@
 title: "Security"
 weight: 300
 date: 2023-10-05
-summary: "Clace Security related configuration"
+summary: "OpenRun Security related configuration"
 ---
 
-The default configuration for the Clace server is:
+The default configuration for the OpenRun server is:
 
 - Application management (admin APIs) are accessible over unix domain sockets only (not accessible remotely). Since UDS enforces file permissions checks, no additional authentication is needed for admin APIs.
 - Admin user account is used to access applications, default `auth` for apps is `system`
 - The admin user password bcrypt hash has to be added to the server config file, or a random password is generated every time the server is restarted
 - Applications can be changed to not require any authentication, `auth` can be `none` or use Oauth2 based auth.
-- There is no user management support in Clace currently. The system account is present by default (which can be disabled) or OAuth based auth can be used.
+- There is no user management support in OpenRun currently. The system account is present by default (which can be disabled) or OAuth based auth can be used.
 
 ## Admin Account Password
 
-When the Clace server is started, it looks for the entry
+When the OpenRun server is started, it looks for the entry
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [security]
 admin_password_bcrypt = "" # the password bcrypt value
 ```
@@ -27,7 +27,7 @@ in the config file. If the value is undefined or empty, then a random password i
 To configure a value for the admin user password, use the `password` helper command:
 
 ```bash
-clace password
+openrun password
 ```
 
 to generate a random password. This will print out the password and its bcrypt value to the screen. Save the password in your password manager and add the bcrypt hash to your config file.
@@ -35,25 +35,25 @@ to generate a random password. This will print out the password and its bcrypt v
 To use a particular value for the admin password, run:
 
 ```bash
-clace password --prompt
+openrun password --prompt
 ```
 
 This will prompt for the password and print out the bcrypt hash to add to the config file.
 
 ## Admin API Access
 
-By default, the Clace client uses Unix domain sockets to connect to the Clace server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. Unix sockets work when the client is on the same machine as the server, the client does not need to pass any credentials to connect over unix sockets.
+By default, the OpenRun client uses Unix domain sockets to connect to the OpenRun server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. Unix sockets work when the client is on the same machine as the server, the client does not need to pass any credentials to connect over unix sockets.
 
 To enable remote API calls, where the client is on a different machine from the server, the server needs to be changed to add the following:
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [security]
 admin_over_tcp = true
 ```
 
-If running the Clace client from a remote machine, the config options required for the client are:
+If running the OpenRun client from a remote machine, the config options required for the client are:
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 server_uri = "https://<SERVER_HOST>:25223"
 admin_user = "admin"
 
@@ -62,9 +62,9 @@ admin_password = "" # Change to actual password
 skip_cert_check = false # Change to true if using self-signed certs
 ```
 
-All other server related config entries are ignored by the Clace client. Note that to connect to a Clace server over HTTP remotely, the server needs to be bound to the all interface(0.0.0.0), see [here]({{< ref "networking" >}}).
+All other server related config entries are ignored by the OpenRun client. Note that to connect to a OpenRun server over HTTP remotely, the server needs to be bound to the all interface(0.0.0.0), see [here]({{< ref "networking" >}}).
 
-If server_uri is set to the https endpoint and the Clace server is running with a self-signed certificate, set `skip_cert_check = true` in config to disable the TLS certificate check.
+If server_uri is set to the https endpoint and the OpenRun server is running with a self-signed certificate, set `skip_cert_check = true` in config to disable the TLS certificate check.
 
 ## Application Security
 
@@ -76,9 +76,9 @@ The `app create` and `app reload` commands can read public GitHub repositories. 
 
 ### SSH Keys
 
-For SSH key, in the `clace.toml` config file, create an entry like:
+For SSH key, in the `openrun.toml` config file, create an entry like:
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [git_auth.mykey]
 key_file_path = "/Users/myuser/.ssh/id_rsa"
 password = "mypassphrase"
@@ -94,7 +94,7 @@ Use `ssh-keygen -l -f ~/.ssh/id_rsa.pub` (on public key) to check if the fingerp
 
 For personal access token, set
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [git_auth.mypat]
 user_id = "myid"
 password = "github_pat_11A7FXXXXXXX"
@@ -104,7 +104,7 @@ The `user_id` needs to be set to an non-empty value like the github id even thou
 
 When running `app create`, add `--git-auth mykey` or `--git-auth mypat` option. The private key specified will be used for accessing the repository. `app reload` command will automatically use the same key as specified during the create. To set the default git key to use, add in config:
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [security]
 default_git_auth = "mykey"
 ```
@@ -112,7 +112,7 @@ default_git_auth = "mykey"
 This git key is used for `apply` and `sync` also. To change the git auth key for an app, run:
 
 ```bash
-clace app update-settings git-auth newkey /myapp
+openrun app update-settings git-auth newkey /myapp
 ```
 
 The git auth is not a staged changed, it applies immediately for the staging and prod apps and preview apps.

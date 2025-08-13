@@ -5,7 +5,7 @@ date: 2023-10-06
 summary: "Defining API routes, handling pages and fragments"
 ---
 
-The request routing layer in Clace is built on top of the [chi](https://github.com/go-chi/chi) routing library. API requests (JSON or text), HTML requests and proxied requests are supported. For HTML requests, the routing is built for hypermedia exchange, so all routes are defined in terms of pages and fragments within the pages. This grouping of requests helps make it clear which API does what and provide an easy mechanism to deal with partial HTMX driven requests and full page refreshes. Simpler application might have one page with some interactions within that. Larger applications can be composed of multiple pages, each page having some interactive fragments.
+The request routing layer in OpenRun is built on top of the [chi](https://github.com/go-chi/chi) routing library. API requests (JSON or text), HTML requests and proxied requests are supported. For HTML requests, the routing is built for hypermedia exchange, so all routes are defined in terms of pages and fragments within the pages. This grouping of requests helps make it clear which API does what and provide an easy mechanism to deal with partial HTMX driven requests and full page refreshes. Simpler application might have one page with some interactions within that. Larger applications can be composed of multiple pages, each page having some interactive fragments.
 
 ## Routes
 
@@ -140,7 +140,7 @@ If proxying is enabled for `/` route, then `/static` file serving is disabled fo
 See [proxy plugin]({{< ref "docs/plugins/proxy" >}}) for details about the proxy config.
 
 {{<callout type="warning" >}}
-**Note:** If the upstream service service uses relative paths, then all requests are automatically proxied. If the service uses absolute paths, then it better that the app is installed at the root path, like `example.com:` instead of `example.com:/test`. If the service uses absolute path including the domain name, then the client will see the absolute path and those requests will not come through the proxy. The HTML body is not rewritten by Clace to rewrite path references. The upstream service needs to use relative paths to ensure that all requests come through Clace.
+**Note:** If the upstream service service uses relative paths, then all requests are automatically proxied. If the service uses absolute paths, then it better that the app is installed at the root path, like `example.com:` instead of `example.com:/test`. If the service uses absolute path including the domain name, then the client will see the absolute path and those requests will not come through the proxy. The HTML body is not rewritten by OpenRun to rewrite path references. The upstream service needs to use relative paths to ensure that all requests come through OpenRun.
 {{</callout>}}
 
 ## Request Flow

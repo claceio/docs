@@ -5,9 +5,9 @@ date: 2024-02-18
 summary: "Overview of how plugins work, how to use them"
 ---
 
-Plugins provide an API for Clace Starlark code to call out to external systems. Plugins are implemented in Go. Every plugin API calls needs to be in the approved list for it to be permitted. See [security]({{< ref "appsecurity#sample-application" >}}/) for an overview of the security model.
+Plugins provide an API for OpenRun Starlark code to call out to external systems. Plugins are implemented in Go. Every plugin API calls needs to be in the approved list for it to be permitted. See [security]({{< ref "appsecurity#sample-application" >}}/) for an overview of the security model.
 
-Each plugin is identified by a unique name, like `store.in` or `exec.in`. Plugins ending with `.in` are internal plugins, built into the Clace binary. Support for external plugins which are loaded dynamically is planned.
+Each plugin is identified by a unique name, like `store.in` or `exec.in`. Plugins ending with `.in` are internal plugins, built into the OpenRun binary. Support for external plugins which are loaded dynamically is planned.
 
 ## Plugin Usage
 
@@ -26,7 +26,7 @@ This adds `http` to the namespace for the app. To make a call to the plugin, fir
     ],
 ```
 
-Run `clace app approve /myapp` to authorize the app to call the `get` and `post` methods on the http plugin.
+Run `openrun app approve /myapp` to authorize the app to call the `get` and `post` methods on the http plugin.
 
 In the app handler code, do
 
@@ -36,7 +36,7 @@ In the app handler code, do
         return ace.response(ret.error, "invalid_challenge_id", code=404)
 ```
 
-At runtime, Clace will check if the `get` call is authorized. If so, the call to the plugin will be performed.
+At runtime, OpenRun will check if the `get` call is authorized. If so, the call to the plugin will be performed.
 
 ## Response Handling
 
@@ -77,9 +77,9 @@ An alternate way to write the error check is
 
 ## Automatic Error Handling
 
-Clace supports automatic error handling, so that the handler functions do not have to check the error status of every plugin API call. The way this is implemented is such that if no explicit error handling is done, then the automatic error handling kicks in. If explicit error handling is done, then automatic error handling is not done. See [bookmarks app](https://github.com/claceio/apps/blob/main/utils/bookmarks/app.star) for an example of how the automatic error handling can be used.
+OpenRun supports automatic error handling, so that the handler functions do not have to check the error status of every plugin API call. The way this is implemented is such that if no explicit error handling is done, then the automatic error handling kicks in. If explicit error handling is done, then automatic error handling is not done. See [bookmarks app](https://github.com/openrundev/apps/blob/main/utils/bookmarks/app.star) for an example of how the automatic error handling can be used.
 
-If the `error_handler` function is defined, then that is called with the error. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the Clace platform will automatically call the `error_handler` function in case of an error. The `error_handler` could be defined as:
+If the `error_handler` function is defined, then that is called with the error. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the OpenRun platform will automatically call the `error_handler` function in case of an error. The `error_handler` could be defined as:
 
 ```python {filename="app.star"}
 def error_handler(req, ret):
@@ -129,7 +129,7 @@ If the handler code is
         store.commit()
 ```
 
-Assume all the API calls had succeeded and then the `commit` fails. Since the `value` is not accessed and there is no plugin API call after the `commit` call, the Clace platform will raise the error after the handler completes since the `commit` had failed.
+Assume all the API calls had succeeded and then the `commit` fails. Since the `value` is not accessed and there is no plugin API call after the `commit` call, the OpenRun platform will raise the error after the handler completes since the `commit` had failed.
 
 ### Overriding Automatic Error Handling
 
@@ -174,30 +174,30 @@ if not ret:
 
 ## Plugin Accounts
 
-Some plugins like `exec.in` do not require any account information. Others like `store.in` need some account information. The account configuration for a plugin is loaded from the Clace config file `clace.toml`. For example, the default configuration for `store.in` is [here](https://github.com/claceio/clace/blob/e5ab0c1139d257c7f02fbe03d060a6bfe1b5f605/internal/system/clace.default.toml#L54), which contains:
+Some plugins like `exec.in` do not require any account information. Others like `store.in` need some account information. The account configuration for a plugin is loaded from the OpenRun config file `openrun.toml`. For example, the default configuration for `store.in` is [here](https://github.com/openrundev/openrun/blob/e5ab0c1139d257c7f02fbe03d060a6bfe1b5f605/internal/system/openrun.default.toml#L54), which contains:
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [plugin."store.in"]
-db_connection = "sqlite:$CL_HOME/clace_app.db"
+db_connection = "sqlite:$OPENRUN_HOME/openrun_app.db"
 ```
 
-Any application using the `store.in` plugin will by default use the `$CL_HOME/clace_app.db` sqlite database. To change the default account config used by apps, update `clace.toml` and restart the Clace server. For example, adding the below will overwrite the default `store.in` config for all apps.
+Any application using the `store.in` plugin will by default use the `$OPENRUN_HOME/openrun_app.db` sqlite database. To change the default account config used by apps, update `openrun.toml` and restart the OpenRun server. For example, adding the below will overwrite the default `store.in` config for all apps.
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [plugin."store.in"]
-db_connection = "sqlite:/tmp/clace_app.db"
+db_connection = "sqlite:/tmp/openrun_app.db"
 ```
 
 ### Account Linking
 
-If specific account config is required for an app, then the app can be linked to a specific account config. First add a new account config by adding in `clace.toml`
+If specific account config is required for an app, then the app can be linked to a specific account config. First add a new account config by adding in `openrun.toml`
 
-```toml {filename="clace.toml"}
+```toml {filename="openrun.toml"}
 [plugin."store.in#tmpaccount"]
-db_connection = "sqlite:/tmp/clace_app.db"
+db_connection = "sqlite:/tmp/openrun_app.db"
 ```
 
-For an app `/myapp` using `store.in`, run `clace account link --promote /myapp store.in tmpaccount`
+For an app `/myapp` using `store.in`, run `openrun account link --promote /myapp store.in tmpaccount`
 
 This links the `myapp` app to use the `tmpaccount` account.
 
@@ -210,8 +210,8 @@ load("http.in#google", "googlehttp")
 ```
 
 then the app will use the `http.in#google` account config by default. This also can be overridden using account links, by
-running `clace account link --promote /myapp http.in#google myaccount`
+running `openrun account link --promote /myapp http.in#google myaccount`
 
 This approach is useful if an app has to access multiple accounts for the same plugin. The account linking approach is recommended for normal scenarios.
 
-Clace apps aim to be portable across installations, without requiring code changes. Using account config allows the app code to be independent of the installation specific account config.
+OpenRun apps aim to be portable across installations, without requiring code changes. Using account config allows the app code to be independent of the installation specific account config.

@@ -8,7 +8,7 @@ The `container.in` plugin provides the `config` API to allow configuring the con
 
 ## Introduction
 
-Clace can build and manage containers for implementing the app backend APIs. The `config` API is used to configure at the app level what configuration is used for the container.
+OpenRun can build and manage containers for implementing the app backend APIs. The `config` API is used to configure at the app level what configuration is used for the container.
 
 ## API
 
@@ -52,7 +52,7 @@ app = ace.app("My App",
        ) 
 ```
 
-A app which runs an command against a specified image (see [image-cmd spec](https://github.com/claceio/appspecs/blob/main/image-cmd/app.star) is
+A app which runs an command against a specified image (see [image-cmd spec](https://github.com/openrundev/appspecs/blob/main/image-cmd/app.star) is
 
 ```python {filename="app.star"}
 load("container.in", "container")

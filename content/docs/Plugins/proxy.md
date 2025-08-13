@@ -8,7 +8,7 @@ The `proxy.in` plugin provides the `config` API to allow proxying of API calls.
 
 ## Introduction
 
-Clace can proxy API calls to external endpoints or to backend APIs implemented in a container. The `config` API is used to configure at the route level what configuration is used for the proxy.
+OpenRun can proxy API calls to external endpoints or to backend APIs implemented in a container. The `config` API is used to configure at the route level what configuration is used for the proxy.
 
 ## API
 

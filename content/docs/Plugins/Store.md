@@ -49,7 +49,7 @@ The type information is read from the schema file and schema types are automatic
 
 ```python {filename="app.star"}
 bookmark = doc.bookmark(
-    url="http://clace.io", tags=["webapps", "tools"])
+    url="http://openrun.dev", tags=["webapps", "tools"])
 ret = store.insert(table.bookmark, bookmark)
 ```
 
@@ -105,7 +105,7 @@ for row in ret.value:
     bookmarks.append(row)
 ```
 
-Iterating till the end of the loop automatically closes the iterator. Returning from a handler without closing an iterator will cause the handler to fail. The iterator is automatically closed by the Clace platform to prevent a resource leak. The API failure is used to indicate to the developer that the code needs to be fixed to explicitly close the iterator.
+Iterating till the end of the loop automatically closes the iterator. Returning from a handler without closing an iterator will cause the handler to fail. The iterator is automatically closed by the OpenRun platform to prevent a resource leak. The API failure is used to indicate to the developer that the code needs to be fixed to explicitly close the iterator.
 
 {{<callout type="warning" >}}
 **Note:** The iterator cannot be directly returned from the handler. A list needs to be created and populated if the entries need to be passed to the template.

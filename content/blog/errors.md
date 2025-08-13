@@ -4,7 +4,7 @@ summary: "Error handling for glue code, how to avoid verbosity while allowing cu
 date: 2024-12-09
 ---
 
-{{< clace-intro >}}
+{{< openrun-intro >}}
 
 ## Background
 
@@ -27,7 +27,7 @@ The ideal scenario in terms of code verbosity is that error handling should be a
 
 ## Is there a third option?
 
-Clace is built to be a platform for building internal tools. Clace is built in Go and uses [Starlark](https://starlark-lang.org/) for app configuration and also for API business logic. Starlark does not support exceptions and does not support multi value returns. This makes error handling difficult. The solution implemented for Clace is an API boundary error checker with the following properties:
+OpenRun is built to be a platform for building internal tools. OpenRun is built in Go and uses [Starlark](https://starlark-lang.org/) for app configuration and also for API business logic. Starlark does not support exceptions and does not support multi value returns. This makes error handling difficult. The solution implemented for OpenRun is an API boundary error checker with the following properties:
 
 - Automatic error handling, no explicit error checks required for every API call
 - Easy way to do explicit error checks when errors are expected
@@ -36,7 +36,7 @@ This gives the best of both worlds. All error conditions are automatically check
 
 ## How does this work?
 
-The [automatic error handling](https://clace.io/docs/plugins/overview/#automatic-error-handling) feature of Clace keeps track of every plugin call's status. If the plugin call fails, the Clace runtime makes sure that return value cannot be accessed, unless an explicit error check was done. If no explicit check is done, the Clace runtime will fail the API, calling the user defined error handler or a generic error handler if none is defined. So for the code
+The [automatic error handling](https://openrun.dev/docs/plugins/overview/#automatic-error-handling) feature of OpenRun keeps track of every plugin call's status. If the plugin call fails, the OpenRun runtime makes sure that return value cannot be accessed, unless an explicit error check was done. If no explicit check is done, the OpenRun runtime will fail the API, calling the user defined error handler or a generic error handler if none is defined. So for the code
 
 ```
     def insert(req):
@@ -49,7 +49,7 @@ The [automatic error handling](https://clace.io/docs/plugins/overview/#automatic
 
 - If begin() fails, the call to insert() will fail since the previous error was not handled (begin's error message is raised).
 - If insert() fails, the value access will fail, so the print will not run
-- If commit() fails, the Clace runtime will first check whether the last plugin failed before handling the API response.
+- If commit() fails, the OpenRun runtime will first check whether the last plugin failed before handling the API response.
 
 Thread locals are used to track errors across plugin API calls. This works since an API handler Starlark function is single threaded. When begin() fails, it sets a thread local. If the error is explicitly checked, like
 
@@ -64,14 +64,14 @@ then the thread local state is cleared. So if the code is doing explicit error c
 
 ## Can this be a generic solution?
 
-The Clace runtime provides all the APIs used by Clace apps by means of plugin calls. This solution can be applied when
+The OpenRun runtime provides all the APIs used by OpenRun apps by means of plugin calls. This solution can be applied when
 
 - All code that can cause errors are provided through a standard API interface
 - Thread locals are feasible for tracking errors
 - There is a standard error handling function which does something useful (could be user defined)
 
-The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by Clace.
+The error check happens at the API boundary (Starlark to Go in this case). If there is code which does excessive CPU usage or memory allocation, that code will run before the automatic error check kicks in. That should not be an issue in practice for glue code as used by OpenRun.
 
 This error handling solution is limited in scope to use cases where glue scripts are being written which make lots of API calls. This provides a shell errexit type feature for regular code. This does not support error handling that needs to happen within user defined code, like one function which returns an error to be handled by another function.
 
-Handling resource leaks is another concern. For Clace, since all resources (transactions, result sets etc) are created through the plugin API, they are automatically closed when an error occurs.
+Handling resource leaks is another concern. For OpenRun, since all resources (transactions, result sets etc) are created through the plugin API, they are automatically closed when an error occurs.

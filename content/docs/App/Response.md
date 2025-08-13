@@ -27,7 +27,7 @@ allows the template to handle the error by doing
 
 <!-- prettier-ignore -->
 ```html
-{{block "clace_body" .}}
+{{block "openrun_body" .}}
 {{if .Data.Error}}
     <div style="color: red">{{.Data.Error}}</div>
 {{else}}
@@ -88,7 +88,7 @@ if challenge.get("Error"):
 
 ## JSON Response
 
-All responses are HTML by default, as required for building a proper Hypermedia client. There are some cases where data needs to be returned to the client in JSON format. The type property can be used for those cases. For example, [this API](https://github.com/claceio/apps/blob/dbec99126329adbcff30824b050ff1d559922bdd/system/memory_usage/app.star#L98) returns JSON
+All responses are HTML by default, as required for building a proper Hypermedia client. There are some cases where data needs to be returned to the client in JSON format. The type property can be used for those cases. For example, [this API](https://github.com/openrundev/apps/blob/dbec99126329adbcff30824b050ff1d559922bdd/system/memory_usage/app.star#L98) returns JSON
 
 ```python {filename="app.star"}
 ace.api("/memory", handler=memory_handler),

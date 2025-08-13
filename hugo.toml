@@ -1,6 +1,6 @@
-baseURL = "https://clace.io/"
+baseURL = "https://openrun.dev/"
 languageCode = "en-us"
-title = "App Deployment Simplified | Clace"
+title = "App Deployment Simplified | OpenRun"
 canonifyURLs = false
 relativeURLs = false
 pluralizeListTitles = false
@@ -24,21 +24,21 @@ noClasses = false
 
 # Default Page Parameters
 [params]
-title = "App Deployment Simplified | Clace"
+title = "App Deployment Simplified | OpenRun"
 description = "Platform for easily developing and deploying secure internal tools. Application server for containerized webapps."
-image = "clace_icon.png"
+image = "openrun_icon.png"
 
 [params.navbar]
 displayTitle = false
 
 [params.navbar.logo]
-path = "clace.png"
-width = 100
+path = "openrun.png"
+width = 200
 height = 100
 
 [params.editurl]
 enable = false
-base = "https://github.com/claceio/docs/edit/main/content"
+base = "https://github.com/openrundev/docs/edit/main/content"
 
 [params.footer]
 displayCopyright = true
@@ -95,7 +95,7 @@ icon = "discord"
 [[menu.main]]
 name = "GitHub"
 weight = 8
-url = "https://github.com/claceio/clace"
+url = "https://github.com/openrundev/openrun"
 
 [menu.main.params]
 icon = "github"
@@ -107,22 +107,22 @@ weight = 1
 
 [[menu.sidebar]]
 name = "Email"
-url = "mailto:contact@clace.io"
+url = "mailto:contact@openrun.dev"
 weight = 1
 
 [[menu.sidebar]]
 name = "GitHub"
-url = "https://github.com/claceio"
+url = "https://github.com/openrundev"
 weight = 2
 
 [[menu.sidebar]]
 name = "Twitter"
-url = "https://twitter.com/akclace"
+url = "https://twitter.com/akopenrun"
 weight = 3
 
 [[menu.sidebar]]
 name = "Blog Feed"
-url = "https://clace.io/blog/index.xml"
+url = "https://openrun.dev/blog/index.xml"
 weight = 4
 
 [[menu.sidebar]]

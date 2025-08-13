@@ -1,20 +1,20 @@
 ---
 title: "Using SQLite as Storage for Web Server Static Content"
-summary: "Why Clace uses a SQLite database instead of the local file system for static files."
+summary: "Why OpenRun uses a SQLite database instead of the local file system for static files."
 date: 2024-10-25
 ---
 
-{{< clace-intro  >}}
+{{< openrun-intro  >}}
 
 ## Background
 
-Clace is built to serve web applications, primarily for internal tools. Clace provides functionality usually handled separately by a web server and an application server. When the development of Clace was started last year, one of the first decisions was how to store the application data (files) and metadata. The app metadata obviously made sense to store in a database, since apps are created dynamically. The app data (static files, app code, config files etc) is usually stored on the file system by most web servers.
+OpenRun is built to serve web applications, primarily for internal tools. OpenRun provides functionality usually handled separately by a web server and an application server. When the development of OpenRun was started last year, one of the first decisions was how to store the application data (files) and metadata. The app metadata obviously made sense to store in a database, since apps are created dynamically. The app data (static files, app code, config files etc) is usually stored on the file system by most web servers.
 
 ## Using SQLite for serving files
 
-For Clace, the decision was made to use [SQLite](https://www.sqlite.org/) for app files storage instead of using the file system. The reasoning was mainly to be able to do atomic version changes. When updating an app, since there could be lots of files being updated, using a database would allow all changes to be done atomically in a transaction. This would prevent broken web pages from being served during a version change.
+For OpenRun, the decision was made to use [SQLite](https://www.sqlite.org/) for app files storage instead of using the file system. The reasoning was mainly to be able to do atomic version changes. When updating an app, since there could be lots of files being updated, using a database would allow all changes to be done atomically in a transaction. This would prevent broken web pages from being served during a version change.
 
-Clace uploads all files to the SQLite database during app creation and updates. Files are uploaded from GitHub or from local disk. Only for [development mode]({{< ref "/docs/applications/lifecycle/#development-apps" >}}), the local file system is used.
+OpenRun uploads all files to the SQLite database during app creation and updates. Files are uploaded from GitHub or from local disk. Only for [development mode]({{< ref "/docs/applications/lifecycle/#development-apps" >}}), the local file system is used.
 
 ## Benefits of using SQLite
 
@@ -24,7 +24,7 @@ The decision to use SQLite for file storage has provided lots of additional bene
 
 - **Deployment Rollbacks**: Another of the transactional benefits is the ability to roll back deployment in case of errors. If multiple apps are being updated, all of them can be rolled back in one go. Rolling back a database transaction is much easier than cleaning up files on the file system.
 
-- **File De-duplication Across Versions**: Clace automatically [versions]({{< ref "docs/applications/overview/#app-listing" >}}) all updates. This can lead to lots of duplicate files. The file data is stored in a table with the schema
+- **File De-duplication Across Versions**: OpenRun automatically [versions]({{< ref "docs/applications/overview/#app-listing" >}}) all updates. This can lead to lots of duplicate files. The file data is stored in a table with the schema
 
 ```sql
 CREATE TABLE files (sha text, compression_type text, content blob, create_time datetime, PRIMARY KEY(sha));
@@ -32,7 +32,7 @@ CREATE TABLE files (sha text, compression_type text, content blob, create_time d
 
 The uncompressed content SHA256 hash is used as the primary key to store the file data. This means that even if multiple versions of an app have the same file, the file contents are stored only once.
 
-- **De-duplication Across Apps** : Each production app in Clace has an [staging app]({{< ref "/docs/applications/lifecycle/#application-types" >}}). Apps can have multiple [previews apps]({{< ref "/docs/applications/lifecycle/#preview-apps" >}}). This can lead to lots of duplication of files. Using the database helps avoid all the duplication. Even across apps, there are files which have the same contents. Files are de-duplicated across apps also.
+- **De-duplication Across Apps** : Each production app in OpenRun has an [staging app]({{< ref "/docs/applications/lifecycle/#application-types" >}}). Apps can have multiple [previews apps]({{< ref "/docs/applications/lifecycle/#preview-apps" >}}). This can lead to lots of duplication of files. Using the database helps avoid all the duplication. Even across apps, there are files which have the same contents. Files are de-duplicated across apps also.
 
 - **Easy Backups**: Using SQLite means that backups are easy. The state of the whole system, metadata and files can be backed up easily using SQLite backup tools like [Litestream](https://litestream.io/).
 
@@ -42,11 +42,11 @@ The uncompressed content SHA256 hash is used as the primary key to store the fil
 
 ## Performance
 
-For Clace, the SQLite database approach provides great performance. There is no equivalent implementation using the file system to compare against, so a direct benchmark test is not done. Based on [benchmarking](https://www.sqlite.org/fasterthanfs.html) done by the SQLite team, SQLite can have better performance than direct file system use for some workloads.
+For OpenRun, the SQLite database approach provides great performance. There is no equivalent implementation using the file system to compare against, so a direct benchmark test is not done. Based on [benchmarking](https://www.sqlite.org/fasterthanfs.html) done by the SQLite team, SQLite can have better performance than direct file system use for some workloads.
 
 ## Multi-Node Support
 
-Clace currently runs on a single node. When multi-node support is added later, the plan is to use a shared Postgres database instead of using local SQLite for metadata and file data storage. This will come with latency issues. The plan is to use a local SQLite database as a file cache to avoid latency while accessing Postgres.
+OpenRun currently runs on a single node. When multi-node support is added later, the plan is to use a shared Postgres database instead of using local SQLite for metadata and file data storage. This will come with latency issues. The plan is to use a local SQLite database as a file cache to avoid latency while accessing Postgres.
 
 ## Why this approach is not more common?
 

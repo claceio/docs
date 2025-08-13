@@ -4,9 +4,9 @@ summary: "Application Servers can make deployments easier, but they have not kep
 date: 2024-11-07
 ---
 
-{{< clace-intro >}}
+{{< openrun-intro >}}
 
-Application Servers can make application deployment easy. AppServers do not support all the features of a PaaS solution but that comes with the benefit of zero config deployments. Especially for internal tools, AppServers are a great alternative to building a deployment solution on top of Kubernetes. Clace is the first AppServer built for use with containers.
+Application Servers can make application deployment easy. AppServers do not support all the features of a PaaS solution but that comes with the benefit of zero config deployments. Especially for internal tools, AppServers are a great alternative to building a deployment solution on top of Kubernetes. OpenRun is the first AppServer built for use with containers.
 
 ## What is an Application Server
 
@@ -50,34 +50,34 @@ A cloud-native application server would include the following features:
 
 The AppServer is not replacing the language specific services. For example, with Python, Gunicorn/Uvicorn would provide the WSGI/ASGI functionality within the container.
 
-## AppServer Features of Clace
+## AppServer Features of OpenRun
 
-Clace is built as a platform for teams to deploy internal tools. As part of that, Clace implements an AppServer to deploy containerized apps. The goal is to make it easy for teams to deploy and manage Streamlit/Gradio type apps for internal users. Clace provides blue-green staged deployment, GitOps, OAuth access control, secrets management etc for the apps.
+OpenRun is built as a platform for teams to deploy internal tools. As part of that, OpenRun implements an AppServer to deploy containerized apps. The goal is to make it easy for teams to deploy and manage Streamlit/Gradio type apps for internal users. OpenRun provides blue-green staged deployment, GitOps, OAuth access control, secrets management etc for the apps.
 
-With Clace, any Containerized app (having a `Dockerfile`) can be installed using a command like
+With OpenRun, any Containerized app (having a `Dockerfile`) can be installed using a command like
 
 ```sh
-clace app create --spec container --approve github.com/<USERID>/<REPO> /myapp
+openrun app create --spec container --approve github.com/<USERID>/<REPO> /myapp
 ```
 
-The app will be available at the /myapp url. For many [frameworks](https://github.com/claceio/appspecs), zero config is required. Not even a `Dockerfile` is required. For example
+The app will be available at the /myapp url. For many [frameworks](https://github.com/openrundev/appspecs), zero config is required. Not even a `Dockerfile` is required. For example
 
 ```sh
-clace app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app
+openrun app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app
 ```
 
 deploys a [Streamlit](https://streamlit.io/) based app.
 
-Each app has a dedicated url, domain based or path based. Clace ensures that no other app can conflict with that path. Clace can currently scale between zero and one instance of the container. More than one is not supported since Clace runs on a single machine (multi-node support is planned). Clace has a CLI interface currently, a [declarative interface](https://github.com/claceio/clace/issues/34) based on the CLI is planned.
+Each app has a dedicated url, domain based or path based. OpenRun ensures that no other app can conflict with that path. OpenRun can currently scale between zero and one instance of the container. More than one is not supported since OpenRun runs on a single machine (multi-node support is planned). OpenRun has a CLI interface currently, a [declarative interface](https://github.com/openrundev/openrun/issues/34) based on the CLI is planned.
 
 <picture  class="responsive-picture" style="display: block; margin-left: auto; margin-right: auto;">
   <source media="(prefers-color-scheme: dark)" srcset="/AppServerDark.png">
   <source media="(prefers-color-scheme: light)" srcset="/AppServerLight.png">
-  <img alt="Clace AppServer" src="/AppServerLight.png">
+  <img alt="OpenRun AppServer" src="/AppServerLight.png">
 </picture>
 
-For use cases where teams are deploying internal tools, Clace can provide a much simpler solution as against using a general purpose PaaS solution.
+For use cases where teams are deploying internal tools, OpenRun can provide a much simpler solution as against using a general purpose PaaS solution.
 
 {{<callout >}}
-Update (Jan 2025): Clace is now listed in the [CNCF Landscape](https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--clace).
+Update (Jan 2025): OpenRun is now listed in the [CNCF Landscape](https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun).
 {{</callout>}}

@@ -4,11 +4,11 @@ summary: "Go supports composition as against inheritance for extending behavior.
 date: 2024-12-24
 ---
 
-{{< clace-intro >}}
+{{< openrun-intro >}}
 
 ## Background
 
-I recently encountered an issue where Server-Sent Events (SSE) stopped working in Clace. SSE are used for live reload functionality in Clace. The problem turned out to be a recent change in Clace which added support for tracking HTTP response status code. This was implemented by implementing a composition over the `http.ResponseWriter` to keep track of the status code. This composition broke the SSE functionality.
+I recently encountered an issue where Server-Sent Events (SSE) stopped working in OpenRun. SSE are used for live reload functionality in OpenRun. The problem turned out to be a recent change in OpenRun which added support for tracking HTTP response status code. This was implemented by implementing a composition over the `http.ResponseWriter` to keep track of the status code. This composition broke the SSE functionality.
 
 ## Composition over Inheritance
 
