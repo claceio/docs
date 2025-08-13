@@ -21,7 +21,7 @@ main() {
     version=${1:-${LATEST_VERSION}}
     target="openrun-${version}-${os}-${arch}"
     openrun_uri="https://github.com/openrundev/openrun/releases/download/$version/${target}.tar.gz"
-    openrun_install="${OPENRUN_HOME:-$HOME/clhome}"
+    openrun_install="${OPENRUN_HOME:-$HOME/openrun}"
 
     bin_dir="$openrun_install/bin"
     tmp_dir="$openrun_install/tmp"
