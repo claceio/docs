@@ -15,7 +15,7 @@ $Version = if ($v) {
 
 $OpenRunInstall = $env:OPENRUN_HOME
 if (!$OpenRunInstall) {
-  $OpenRunInstall = "$Home\clhome"
+  $OpenRunInstall = "$Home\openrun"
 }
 
 $BinDir = "$OpenRunInstall\bin"
