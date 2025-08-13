@@ -6,7 +6,7 @@
 set -e
 
 main() {
-    LATEST_VERSION=$(curl -sS https://api.github.com/repos/claceio/clace/releases/latest | grep tag_name | cut -d '"' -f 4)
+    LATEST_VERSION=$(curl -sS https://api.github.com/repos/openrundev/openrun/releases/latest | grep tag_name | cut -d '"' -f 4)
     os=$(uname -s | tr '[:upper:]' '[:lower:]')
     arch=$(uname -m)
 
@@ -19,28 +19,28 @@ main() {
     fi
 
     version=${1:-${LATEST_VERSION}}
-    target="clace-${version}-${os}-${arch}"
-    clace_uri="https://github.com/claceio/clace/releases/download/$version/${target}.tar.gz"
-    clace_install="${CL_HOME:-$HOME/clhome}"
+    target="openrun-${version}-${os}-${arch}"
+    openrun_uri="https://github.com/openrundev/openrun/releases/download/$version/${target}.tar.gz"
+    openrun_install="${OPENRUN_HOME:-$HOME/clhome}"
 
-    bin_dir="$clace_install/bin"
-    tmp_dir="$clace_install/tmp"
-    exe="$bin_dir/clace"
+    bin_dir="$openrun_install/bin"
+    tmp_dir="$openrun_install/tmp"
+    exe="$bin_dir/openrun"
 
     mkdir -p "$bin_dir"
     mkdir -p "$tmp_dir"
 
-    curl -q --fail --location --progress-bar --output "$tmp_dir/clace.tar.gz" "$clace_uri" || (echo "Error downloading $clace_uri"; exit 1)
+    curl -q --fail --location --progress-bar --output "$tmp_dir/openrun.tar.gz" "$openrun_uri" || (echo "Error downloading $openrun_uri"; exit 1)
     # extract to tmp dir so we don't open existing executable file for writing
-    tar -C "$tmp_dir" -xzf "$tmp_dir/clace.tar.gz"
-    chmod +x "$tmp_dir/${target}/clace"
-    mv -f "$tmp_dir/${target}/clace" "$exe"
-    rm -f "$tmp_dir/clace.tar.gz"
+    tar -C "$tmp_dir" -xzf "$tmp_dir/openrun.tar.gz"
+    chmod +x "$tmp_dir/${target}/openrun"
+    mv -f "$tmp_dir/${target}/openrun" "$exe"
+    rm -f "$tmp_dir/openrun.tar.gz"
 
-    if test ! -s $clace_install/clace.toml; then
+    if test ! -s $openrun_install/openrun.toml; then
         echo ""
         echo "********** Initializing \"admin\" user **********"
-        $exe password > $clace_install/clace.toml 
+        $exe password > $openrun_install/openrun.toml 
         echo "************ Save this password ***************"
     fi
 
@@ -57,8 +57,8 @@ main() {
         echo "$export_cmd" >> "$profile_file"
     fi
 
-    echo "\nStart new shell to get updated PATH with $bin_dir. Run \"clace server start\" to start the server."
-    echo "See https://clace.io/docs/quickstart for the quick start guide."
+    echo "\nStart new shell to get updated PATH with $bin_dir. Run \"openrun server start\" to start the server."
+    echo "See https://openrun.dev/docs/quickstart for the quick start guide."
 }
 
 main "$1"
