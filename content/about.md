@@ -14,9 +14,6 @@ The goal of this project is to make it easy for individuals and teams to develop
 
 A single developer should be able to manage the full application lifecycle: frontend and backend development and production deployment. Deployments should support a GitOps approach, with automatic preview environment to verify changes before making them live. It should be easy, for the original developer or a new one, to make application code changes and deploy - after six months or after six years.
 
-### What's with the name
-
-The name OpenRun is a play on **C**ommand **L**ine **Ace**, since building an UI for command line applications was an initial target use-case. The name is pronounced like _Place_, with a _C_.
 
 ### How is OpenRun implemented?
 
@@ -32,7 +29,7 @@ The name OpenRun is a play on **C**ommand **L**ine **Ace**, since building an UI
 
 ### Current Status
 
-The current status as of Aug 2024 is:
+The current status is:
 
 - Client and server (in a single binary) for service management and configuration.
 - Support for application development with Starlark based configuration.
@@ -55,7 +52,7 @@ The project was started by [Ajay Kidave](https://www.linkedin.com/in/ajayvk/). A
 ### How to stay in touch?
 
 - Star the repo at [github.com/openrundev/openrun](https://github.com/openrundev/openrun)
-- Email at [contact@openrun.dev](mailto:contact@openrun.dev)
-- Follow on [Twitter](https://twitter.com/akopenrun)
+- Email at [contact@clace.io](mailto:contact@clace.io)
+- Follow on [Twitter](https://twitter.com/akclace)
 - Subscribe to the blog [RSS feed](https://openrun.dev/blog/index.xml)
 - Connect on [Discord](https://discord.gg/t2P8pJFsd7)
