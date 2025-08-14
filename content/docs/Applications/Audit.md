@@ -4,7 +4,7 @@ weight: 400
 summary: "Auditing and viewing events"
 ---
 
-OpenRun automatically creates audit events for all operations. See [demo](https://audit.demo.openrun.dev/) for a demo of events viewing.
+OpenRun automatically creates audit events for all operations. See [demo](https://audit.demo.clace.io/) for a demo of events viewing.
 
 ## Introduction
 
@@ -56,13 +56,13 @@ For example, the dictionary app [does](https://github.com/openrundev/apps/blob/4
    ace.audit("word_lookup", args.word)
 ```
 
-This will enable [searching](https://audit.demo.openrun.dev/?operation=word_lookup) the audit events (using the Viewer app) for all operation of type "word_lookup".
+This will enable [searching](https://audit.demo.clace.io/?operation=word_lookup) the audit events (using the Viewer app) for all operation of type "word_lookup".
 
 Only the last call to `ace.audit` from a handler function is logged.
 
 ## Event Viewer
 
-Events can be viewed by admin using the Event Viewer app [code](https://github.com/openrundev/apps/tree/main/openrun/audit_viewer): [demo](https://audit.demo.openrun.dev/). To install the app on your instance, run
+Events can be viewed by admin using the Event Viewer app [code](https://github.com/openrundev/apps/tree/main/openrun/audit_viewer): [demo](https://audit.demo.clace.io/). To install the app on your instance, run
 
 ```sh
 openrun app create --approve github.com/openrundev/apps/openrun/audit_viewer /events

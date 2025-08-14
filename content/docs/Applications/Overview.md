@@ -67,30 +67,30 @@ Use the `app list` command to list apps. If the `--internal` option is used, the
 
 $ openrun app list
 Id                                  Type  Version Auth GitInfo                        Domain:Path                                                  SourceUrl
-app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.openrun.dev:/                                       github.com/openrundev/openrun/examples/memory_usage/
+app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.clace.io:/                                       github.com/openrundev/openrun/examples/memory_usage/
 app_prd_2d3kCZ28w6VIzoXMsT9yldwijxL PROD        3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/                                                 github.com/openrundev/openrun/examples/cowbull
 app_prd_2d3kCjmw8ldQ2LaOd0CLmWXDApq PROD        3 NONE main:9ce5e1adfc28983f7894      /                                                            github.com/openrundev/openrun/examples/demo
-app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.openrun.dev:/                                           github.com/openrundev/openrun/examples/disk_usage/
-app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.openrun.dev:/bookmarks                               github.com/openrundev/apps/utils/bookmarks
+app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.clace.io:/                                           github.com/openrundev/openrun/examples/disk_usage/
+app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.clace.io:/bookmarks                               github.com/openrundev/apps/utils/bookmarks
 
 $ openrun app list -i
 Id                                  Type  Version Auth GitInfo                        Domain:Path                                                  SourceUrl
-app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.openrun.dev:/                                       github.com/openrundev/openrun/examples/memory_usage/
-app_stg_2d3kCRk43FOuIGy979NbBWakRMm STG         3 NONE main:9ce5e1adfc28983f7894      memory.demo.openrun.dev:/_cl_stage                              github.com/openrundev/openrun/examples/memory_usage/
+app_prd_2d3kCRk43FOuIGy979NbBWakRMm PROD        3 NONE main:9ce5e1adfc28983f7894      memory.demo.clace.io:/                                       github.com/openrundev/openrun/examples/memory_usage/
+app_stg_2d3kCRk43FOuIGy979NbBWakRMm STG         3 NONE main:9ce5e1adfc28983f7894      memory.demo.clace.io:/_cl_stage                              github.com/openrundev/openrun/examples/memory_usage/
 app_prd_2d3kCZ28w6VIzoXMsT9yldwijxL PROD        3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/                                                 github.com/openrundev/openrun/examples/cowbull
 app_stg_2d3kCZ28w6VIzoXMsT9yldwijxL STG         3 NONE main:9ce5e1adfc28983f7894      cowbull.co:/_cl_stage                                        github.com/openrundev/openrun/examples/cowbull
 app_prd_2d3kCjmw8ldQ2LaOd0CLmWXDApq PROD        3 NONE main:9ce5e1adfc28983f7894      /                                                            github.com/openrundev/openrun/examples/demo
 app_stg_2d3kCjmw8ldQ2LaOd0CLmWXDApq STG         3 NONE main:9ce5e1adfc28983f7894      /_cl_stage                                                   github.com/openrundev/openrun/examples/demo
-app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.openrun.dev:/                                           github.com/openrundev/openrun/examples/disk_usage/
-app_stg_2d3kKVvSsSgUHqtNGZaD95NuLK3 STG         3 NONE main:9ce5e1adfc28983f7894      du.demo.openrun.dev:/_cl_stage                                  github.com/openrundev/openrun/examples/disk_usage/
-app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.openrun.dev:/bookmarks                               github.com/openrundev/apps/utils/bookmarks
-app_stg_2d6KcZmNwHIB8cSzNCotqBHpeje STG         5 NONE main:ed7545ae739dfe85140a      utils.demo.openrun.dev:/bookmarks_cl_stage                      github.com/openrundev/apps/utils/bookmarks
+app_prd_2d3kKVvSsSgUHqtNGZaD95NuLK3 PROD        3 NONE main:9ce5e1adfc28983f7894      du.demo.clace.io:/                                           github.com/openrundev/openrun/examples/disk_usage/
+app_stg_2d3kKVvSsSgUHqtNGZaD95NuLK3 STG         3 NONE main:9ce5e1adfc28983f7894      du.demo.clace.io:/_cl_stage                                  github.com/openrundev/openrun/examples/disk_usage/
+app_prd_2d6KcZmNwHIB8cSzNCotqBHpeje PROD        5 NONE main:ed7545ae739dfe85140a      utils.demo.clace.io:/bookmarks                               github.com/openrundev/apps/utils/bookmarks
+app_stg_2d6KcZmNwHIB8cSzNCotqBHpeje STG         5 NONE main:ed7545ae739dfe85140a      utils.demo.clace.io:/bookmarks_cl_stage                      github.com/openrundev/apps/utils/bookmarks
 ```
 
 Use the `version list` command to list versions for particular apps. This command works on prod app or staging app specifically.
 
 ```shell
-$ openrun version list utils.demo.openrun.dev:/bookmarks_cl_stage
+$ openrun version list utils.demo.clace.io:/bookmarks_cl_stage
 Active  Version Previous CreateTime                     GitCommit            GitMessage
               1        0 2024-03-01 19:59:27 +0000 UTC  86385ff67deab288c362 Updated bookmarks app
 
@@ -102,7 +102,7 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 =====>        5        4 2024-03-02 00:23:35 +0000 UTC  ed7545ae739dfe85140a Update styling for bookmarks app
 
-$ openrun version list utils.demo.openrun.dev:/bookmarks
+$ openrun version list utils.demo.clace.io:/bookmarks
 Active  Version Previous CreateTime                     GitCommit            GitMessage
               1        0 2024-03-01 19:59:27 +0000 UTC  86385ff67deab288c362 Updated bookmarks app
 
@@ -113,7 +113,7 @@ Active  Version Previous CreateTime                     GitCommit            Git
 
 The `version switch` command can be used to switch versions, up or down or to particular version. The `version revert` command can be used to revert the last change. `app promote` makes the prod app run the same version as the current staging app.
 
-In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `version switch previous utils.demo.openrun.dev:/bookmarks_cl_stage` will change the stage app to version 4. `version switch previous utils.demo.openrun.dev:/bookmarks` will change the prod app to version 2. After that, `app promote utils.demo.openrun.dev:/bookmarks` will change prod to also be at version 4, same as stage. The `version switch` command accepts `previous`, `next` and actual version number as version to switch to.
+In the above listing, the staging app has five versions. Three of those (1,2 and 5) were promoted to prod. `version switch previous utils.demo.clace.io:/bookmarks_cl_stage` will change the stage app to version 4. `version switch previous utils.demo.clace.io:/bookmarks` will change the prod app to version 2. After that, `app promote utils.demo.clace.io:/bookmarks` will change prod to also be at version 4, same as stage. The `version switch` command accepts `previous`, `next` and actual version number as version to switch to.
 
 A star, like `PROD*` in the `app list` output indicates that there are staged changes waiting to be promoted. That will show up any time the prod app is at a different version than the stage app.
 

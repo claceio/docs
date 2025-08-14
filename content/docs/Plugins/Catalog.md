@@ -103,11 +103,11 @@ If `stdout_file` is `True`, then the plugin output `value` is the name for the t
 
 The `fs.in` allows working with local file system. The APIs available are
 
-|        API         | Type |                                  Notes                                  |
-| :----------------: | :--: | :---------------------------------------------------------------------: |
-|      **abs**       | Read |            Returns the absolute path for given relative path            |
-|      **list**      | Read |                    List files in specified directory                    |
-|      **find**      | Read |         Find files under specified directory matching criteria          |
+|        API         | Type |                                   Notes                                   |
+| :----------------: | :--: | :-----------------------------------------------------------------------: |
+|      **abs**       | Read |             Returns the absolute path for given relative path             |
+|      **list**      | Read |                     List files in specified directory                     |
+|      **find**      | Read |          Find files under specified directory matching criteria           |
 | **serve_tmp_file** | Read | Load file metadata to the OpenRun database and make available through API |
 
 ### abs
@@ -166,4 +166,4 @@ The `serve_tmp_file` API creates a metadata entry in the OpenRun database. The f
 
 `ret = fs.serve_tmp_file("/tmp/myfile", single_access=False, expiry_minutes=0)`
 
-See number_lines app [code](https://github.com/openrundev/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.openrun.dev/num_lines) for an example of using this API. Setting `visibility` to `fs.APP` will make the API available to anyone who has access to the app.
+See number_lines app [code](https://github.com/openrundev/apps/blob/main/misc/num_lines/app.star):[demo](https://utils.demo.clace.io/num_lines) for an example of using this API. Setting `visibility` to `fs.APP` will make the API available to anyone who has access to the app.
