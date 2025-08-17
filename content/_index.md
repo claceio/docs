@@ -11,7 +11,7 @@ layout: hextra-home
 
 <div class="hx-mb-10">
 {{< hextra/hero-subtitle >}}
-  Open source alternative to Google Cloud Run and AWS AppRunner.&nbsp;<br class="sm:hx-block hx-hidden"/>Easily deploy internal tools across a team.
+  Open source alternative to Google Cloud Run and AWS App Runner.&nbsp;<br class="sm:hx-block hx-hidden"/>Easily deploy internal tools across a team.
 {{< /hextra/hero-subtitle >}}
 </div>
 
@@ -22,11 +22,11 @@ layout: hextra-home
 
 {{< hextra/feature-grid >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="What is OpenRun?" icon="information-circle" subtitle="OpenRun™ is an application server for teams to deploy internal tools. OpenRun provides declarative GitOps based blue-green deployment, OAuth access controls, TLS certs & secrets management etc.<br><br> Some of the unique features of OpenRun are:<br>➣ Staged deployment, for code and config changes<br>➣ Atomic updates for multiple apps, all or nothing<br>➣ Declarative config sync with automated reconciliation" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="What is OpenRun?" icon="information-circle" subtitle="OpenRun™ is a open source alternative to Google Cloud Run and AWS App Runner. OpenRun provides declarative GitOps based blue-green deployment, OAuth access controls, TLS certs & secrets management.<br><br> Some of the unique features of OpenRun are:<br>➣ Staged deployment, for code and config changes<br>➣ Atomic updates for multiple apps, all or nothing<br>➣ Declarative config sync with automated reconciliation" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="First AppServer for Containerized apps" icon="lightning-bolt" subtitle="OpenRun is the first AppServer built to manage containerized webapps. OpenRun supports:<br>➣ Deploy webapps developed in any language/framework<br>➣ Handle request routing, domain based or path based<br>➣ Manage app lifecycle imperatively (using CLI) or declaratively (through GitOps)" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="First AppServer for Containerized apps" icon="lightning-bolt" subtitle="OpenRun is the first Application Server built for deploying containerized applications. OpenRun supports:<br>➣ Deploying webapps developed in any language/framework<br>➣ Handling request routing, domain based or path based<br>➣ Managing app lifecycle imperatively (using CLI) or declaratively (through GitOps)" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
-<!-- prettier-ignore --> {{< hextra/feature-card title="How is OpenRun implemented" icon="beaker" subtitle="OpenRun is cross-platform, built as a single binary which implements the webserver and AppServer. OpenRun has: <br>➣ Declarative config using Starlark (python-like)<br>➣ SQLite database for metadata persistence (allowing for transactional updates)<br>➣ CLI which uses a unix domain socket for security<br>➣ GitOps driven declarative interface which works with any hosted Git service" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+<!-- prettier-ignore --> {{< hextra/feature-card title="How is OpenRun implemented" icon="beaker" subtitle="OpenRun is cross-platform, built as a single binary which implements the webserver and AppServer. OpenRun has: <br>➣ Declarative config using Starlark (python-like)<br>➣ Single node deployment with SQLite database for metadata<br>➣ Multi node deployment using Postgres database for metadata<br>➣ Kubernetes based deployment option (coming soon)" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
 
@@ -42,7 +42,7 @@ layout: hextra-home
 <div style="padding-inline: 10px; padding-top: 5px; padding-bottom: 20px; font-size: 14px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code1">
 curl -sSL https://openrun.dev/install.sh | sh
 </div>
-<button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code1', this)">⧉</button>
+<button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 14px; cursor: pointer;" onclick="copyCode('code1', this)">⧉</button>
 </div>
 
 <div style="position: relative;">
@@ -50,7 +50,7 @@ curl -sSL https://openrun.dev/install.sh | sh
 <div style="padding-inline: 10px; padding-top: 5px; padding-bottom: 20px; font-size: 14px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code2">
 openrun server start &
 </div>
-<button title="Copy" style="position: absolute; top: 5px; right: 5px;  padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code2', this)">⧉</button>
+<button title="Copy" style="position: absolute; top: 5px; right: 5px;  padding: 10px 10px 1px 10px; font-size: 14px; cursor: pointer;" onclick="copyCode('code2', this)">⧉</button>
 </div>
 
 <div style="font-weight: bold; margin-top: 20px; margin-bottom: 20px; text-align: center;font-size: 24px; color: mintcream;">GitOps in One Command</div>
@@ -60,7 +60,7 @@ openrun server start &
 <div style="padding-inline: 10px; padding-top: 5px; padding-bottom: 20px; font-size: 14px; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;" id="code3">
 openrun sync schedule --approve --promote github.com/openrundev/openrun/examples/utils.star
 </div>
-<button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 12px; cursor: pointer;" onclick="copyCode('code3', this)">⧉</button>
+<button title="Copy" style="position: absolute; top: 5px; right: 5px; padding: 10px 10px 1px 10px; font-size: 14px; cursor: pointer;" onclick="copyCode('code3', this)">⧉</button>
 </div>
 
 <div style="margin-top: 5px; margin-bottom: 5px; text-align: center;font-size: 16px; color: lightgray;">Starts a background sync which automatically creates new apps and updates existing apps, reading latest app config and code from Git.</div>
@@ -118,12 +118,12 @@ function copyCode(codeId, buttonElem) {
 {{< hextra/feature-grid >}}
 
 <!-- prettier-ignore -->
-{{< hextra/feature-card title="Comparison with other solutions" icon="zoom-in" subtitle="Compared to  solutions like Coolify, Dokku etc, OpenRun supports:<br />➣ Declarative GitOps interface, for code and for config<br/>➣ OAuth and auditing features required by teams <br/>➣ Deploying custom apps as against deploying pre-packaged services<br/><br/>Compared to heavyweight solutions built on K8s, OpenRun provides:<br/>➣ Single service as against glueing together CI/CD with ArgoCD/FluxCD and IDPs<br/>➣ Easy OAuth config for app access controls<br/>➣ Simple declarative config for container and web server. No YAML files, no webserver DSLs." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+{{< hextra/feature-card title="Comparison with other solutions" icon="zoom-in" subtitle="Compared to solutions like Coolify, Dokku etc, OpenRun is:<br />➣ Declarative GitOps interface, for code and for config<br/>➣ OAuth access controls and request auditing features<br />➣ Built as a self-hosted Google Cloud Run/AWS App Runner alternative as against full PaaS solution<br/>➣ Single binary, Docker/Podman is only dependency, does not depend on a third party webserver like Traefik/Nginx<br/><br/>Compared to heavyweight solutions built on K8s, OpenRun provides:<br/>➣ Single service as against glueing together CI/CD with ArgoCD/FluxCD and IDPs<br/>➣ Easy OAuth config for app access controls<br/>➣ Simple declarative config, no YAML files, no webserver DSLs." style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 <!-- prettier-ignore -->
-{{< hextra/feature-card title="Built for deploying internal tools" icon="cog" subtitle="OpenRun is built for teams to be able to securely develop and deploy internal tools:<br/>➣ Multiple apps can be updated atomically (all-or-nothing), no broken state after deployment failures.<br/>➣ Built for the full application management lifecycle across a team, not just the initial installation.<br/>➣ Security sand-boxing features which allow operations teams to easily manage applications through GitOps while allowing development teams to freely make code changes.<br/><br/> OpenRun apps can be:<br/>➣ Containerized apps deployed from source<br />➣ Autogenerated form interface for backend Actions<br/>➣ Hypermedia based apps served by OpenRun" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+{{< hextra/feature-card title="Built for deploying internal tools" icon="cog" subtitle="OpenRun is built for teams to be able to securely develop and deploy internal tools:<br/>➣ Multiple apps can be updated atomically (all-or-nothing), no broken state after deployment failures.<br/>➣ Built for the full application management lifecycle, not just the initial installation.<br/>➣ Security sand-boxing features which allow operations teams to easily manage applications through GitOps while allowing development teams to freely make code changes.<br/><br/> OpenRun apps can be:<br/>➣ Containerized apps deployed from source<br />➣ Autogenerated form interface for backend Actions<br/>➣ Hypermedia based apps served by OpenRun" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
-{{< hextra/feature-card title="Common use cases" icon="users" subtitle="OpenRun can be used by teams to:<br/>➣  Deploy web apps built with Streamlit/Gradio/FastHTML/NiceGUI etc<br/>➣ Zero config required for most common frameworks, just specify the spec to use<br />➣ Automate internal operations using Action Jobs, replacing Jenkins and Rundeck<br/>➣ Expose web apps for internal REST APIs, replacing curl and Postman<br><br>The auth and auditing features of OpenRun are built for use by teams. OpenRun can also be used by individuals:<br/>➣ To easily run web apps in development mode locally, without having to set up a dev environment<br/>➣ To host web apps exposed publicly, with OAuth enabled or otherwise" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
+{{< hextra/feature-card title="Common use cases" icon="users" subtitle="OpenRun can be used by teams to:<br/>➣  Deploy web apps with zero config required for most common frameworks like Streamlit/Gradio/FastHTML/NiceGUI etc.<br />➣ Automate internal operations using Action apps, instead of using Jenkins and Rundeck<br/>➣ Expose web apps for internal REST APIs, replacing manual curl commands<br><br>While the auth and auditing features of OpenRun are built for use by teams, OpenRun can also be used by individuals:<br/>➣ To easily run web apps in development mode locally, without having to set up a dev environment<br/>➣ To host web apps exposed publicly, with OAuth enabled or otherwise" style="background: radial-gradient(ellipse at 50% 80%,rgba(89, 67, 7, 0.15),hsla(0,0%,100%,0));" >}}
 
 {{< /hextra/feature-grid >}}
 
