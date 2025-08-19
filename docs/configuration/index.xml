@@ -1,1 +1,698 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenRun Blog</title><link>https://openrun.dev/docs/configuration/</link><description>Recent content from the OpenRun Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 27 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://openrun.dev/docs/configuration/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>App Deployment Simplified | OpenRun – Configuration</title><link>https://openrun.dev/docs/configuration/</link><description>Recent content in Configuration on App Deployment Simplified | OpenRun</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://openrun.dev/docs/configuration/index.xml" rel="self" type="application/rss+xml"/><item><title>Config Overview</title><link>https://openrun.dev/docs/configuration/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/configuration/overview/</guid><description>
+&lt;h2>OpenRun Server&lt;span class="hx:absolute hx:-mt-20" id="openrun-server">&lt;/span>
+&lt;a href="#openrun-server" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The OpenRun server picks up its configuration from the config file at startup. All the parameters have default values, specified in the code at &lt;a href="https://github.com/openrundev/openrun/blob/main/internal/system/openrun.default.toml" target="_blank" rel="noopener">openrun.default.toml&lt;/a>.&lt;/p>
+&lt;p>A user-specified config file can be provided. The environment variable &lt;code>CL_CONFIG_FILE&lt;/code> is used to locate the config file. If not set, it defaults to &lt;code>$OPENRUN_HOME/openrun.toml&lt;/code>.&lt;/p>
+&lt;p>Values in the user specified config take precedence over the default config values in the source code.&lt;/p>
+&lt;h2>Home Directory&lt;span class="hx:absolute hx:-mt-20" id="home-directory">&lt;/span>
+&lt;a href="#home-directory" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>OPENRUN_HOME&lt;/code> environment variable is used to locate the home directory for the OpenRun server. If no value is set, a home directory is determined based on the path of the openrun binary (generally one level above the bin directory where the binary is). This location is used to store:&lt;/p>
+&lt;ul>
+&lt;li>The default config file, &lt;code>$OPENRUN_HOME/openrun.toml&lt;/code>&lt;/li>
+&lt;li>The sqlite database containing the metadata information, default is &lt;code>$OPENRUN_HOME/metadata/openrun.db&lt;/code>&lt;/li>
+&lt;li>The logs for the service, under the &lt;code>logs&lt;/code> folder.&lt;/li>
+&lt;li>The config folder contains the certificates to use for TLS.&lt;/li>
+&lt;li>The run folder contains app specific temporary files.&lt;/li>
+&lt;/ul>
+&lt;h2>OpenRun Client CLI&lt;span class="hx:absolute hx:-mt-20" id="openrun-client-cli">&lt;/span>
+&lt;a href="#openrun-client-cli" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>By default, the OpenRun client uses Unix domain sockets to connect to the OpenRun server. &lt;code>$OPENRUN_HOME&lt;/code> should point to the same location for server and client. If no changes are done for the server defaults, then the client can connect to the server locally without any other configuration being required. See &lt;a href="https://openrun.dev/docs/configuration/security/#admin-api-access" >here&lt;/a> for details about the client configuration.&lt;/p>
+&lt;h2>App Config&lt;span class="hx:absolute hx:-mt-20" id="app-config">&lt;/span>
+&lt;a href="#app-config" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>In &lt;code>openrun.toml&lt;/code>, properties which apply to all apps can be defined under the &lt;code>[app_config]&lt;/code> section. For example&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">app_config&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">audit&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">redact_url&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>sets the redact property to true for all apps. The property can be further configured individually for one or more apps in the app metadata using&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app update-metadata conf --promote &lt;span class="s1">&amp;#39;audit.redact_url=true&amp;#39;&lt;/span> /myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>Config Access from Code&lt;span class="hx:absolute hx:-mt-20" id="config-access-from-code">&lt;/span>
+&lt;a href="#config-access-from-code" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>&lt;a href="https://openrun.dev/docs/develop/#app-parameters" >App Params&lt;/a> are the primary user configurable properties for apps. For cases where properties need to be read from &lt;code>openrun.toml&lt;/code> config file or from env, the config builtin can be used. This is available as &lt;code>config&lt;/code> in app definitions and in &lt;code>params.star&lt;/code>. In app declaration (like &lt;code>app.star&lt;/code>), this is available as &lt;code>ace.config&lt;/code>.&lt;/p>
+&lt;p>The &lt;code>config&lt;/code>/&lt;code>ace.config&lt;/code> builtin supports the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>key&lt;/strong> (string, required) : the config key name&lt;/li>
+&lt;li>&lt;strong>default&lt;/strong> (any, required) : the default value&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>_branch&lt;/code> is a special key which resolves to the git branch from which the app declaration is loaded.&lt;/p>
+&lt;p>In &lt;code>app.star&lt;/code>, a call to config like&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">system_list&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;systems&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;local&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>will fetch the default value. Adding in &lt;code>openrun.toml&lt;/code> config&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">node_config&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">systems&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;local&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;stage&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;test&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>will result in the configured value being available in the code. This allows for installation specific properties, while keeping the source code same across environments.&lt;/p>
+&lt;p>In app declaration, same can be accessed as&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">utils.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">system_list&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">config&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;systems&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;local&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/utils/bookmarks&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;github.com/openrundev/apps/utils/bookmarks&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">params&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;systems&amp;#34;&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">systems_list&lt;/span>&lt;span class="p">})&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>If the app source code needs to be checked out from same branch as the app declaration, then do&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">apps.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">branch&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;_branch&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;main&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">branch&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;/bookmarks&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;github.com/openrundev/apps/utils/bookmarks&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">git_branch&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">branch&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>This creates the app from the same branch as used during the &lt;code>apply&lt;/code>/&lt;code>sync&lt;/code> command.&lt;/p></description></item><item><title>Ports and Certificates</title><link>https://openrun.dev/docs/configuration/networking/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/configuration/networking/</guid><description>
+&lt;h2>HTTP&lt;span class="hx:absolute hx:-mt-20" id="http">&lt;/span>
+&lt;a href="#http" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For HTTP requests, by default the OpenRun service listens on port 25222, on the localhost(127.0.0.1) interface. This means the HTTP port can be accessed from the same machine, it cannot be accessed remotely. To configure this, update the config file&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">http&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">host&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;127.0.0.1&amp;#34;&lt;/span> &lt;span class="c"># bind to localhost by default for HTTP&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">port&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">25222&lt;/span> &lt;span class="c"># default port for HTTP&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>to desired values. Port 0 means bind to any available port. Port -1 means disable HTTP access. Use host as &lt;code>0.0.0.0&lt;/code> to bind to all available interfaces.&lt;/p>
+&lt;h2>HTTPS&lt;span class="hx:absolute hx:-mt-20" id="https">&lt;/span>
+&lt;a href="#https" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For HTTPS requests, the OpenRun service listens on port 25223 by default, on the any(0.0.0.0) interface. This means the HTTPS port can be accessed from the same machine and also remotely. The various HTTPS config settings are:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># HTTPS port binding related Config&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">https&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">host&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span> &lt;span class="c"># bind to all interfaces (if port is &amp;gt;= 0)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">port&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">25223&lt;/span> &lt;span class="c"># port for HTTPS&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">enable_cert_lookup&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="c"># enable looking for domain specific certificate files on disk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">service_email&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span> &lt;span class="c"># email address for registering with Let&amp;#39;s Encrypt. Set a value to enable automatic certs&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">use_staging&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="c"># use Let&amp;#39;s Encrypt staging server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">cert_location&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;$OPENRUN_HOME/config/certificates&amp;#34;&lt;/span> &lt;span class="c"># where to look for existing certificate files&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">storage_location&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;$OPENRUN_HOME/run/certmagic&amp;#34;&lt;/span> &lt;span class="c"># where to cache dynamically created certificates&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Port 0 means bind to any available port. Port -1 means disable HTTPS access.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">ℹ️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Using the HTTPS port is recommended even for the local environment. HTTP/2 works with HTTPS only. Server Sent Events (SSE) are used by OpenRun for live reload of dev apps, &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#listening_for_custom_events" target="_blank" rel="noopener">SSE works best with HTTP/2&lt;/a>. Without HTTP/2, there can be connection limit issues with HTTP causing connections from browser to OpenRun server to hang.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>TLS Certificates&lt;span class="hx:absolute hx:-mt-20" id="tls-certificates">&lt;/span>
+&lt;a href="#tls-certificates" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>In the default configuration, where service_email is empty, certmagic integration is disabled. The certificate handling behavior is:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>$OPENRUN_HOME/config/certificates&lt;/code> is looked up for a crt and key file in the PEM format matching the domain name as passed to the server. If a matching certificate is found, that is used.&lt;/li>
+&lt;li>If no domain specific certificate is found, then the default certificate &lt;code>default.crt&lt;/code> and &lt;code>default.key&lt;/code> are looked up. If found, that is used.&lt;/li>
+&lt;li>If default certificate is not found, then a self-signed default certificate is auto created in the certificates folder.&lt;/li>
+&lt;/ul>
+&lt;p>The intent is to allow custom certificates to be placed in the certificate folder, which will be used. If not found, a self-signed certificate is created and used. For example, if files example.com.crt and example.com.key are found in the certificates folder, those are used for example.com domain.&lt;/p>
+&lt;h2>Redirect from HTTP to HTTPS&lt;span class="hx:absolute hx:-mt-20" id="redirect-from-http-to-https">&lt;/span>
+&lt;a href="#redirect-from-http-to-https" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To enable automatic redirect from HTTP to HTTPS, add &lt;code>redirect_to_https = true&lt;/code> in the &lt;code>http&lt;/code> section of the config. Also, change the &lt;code>host&lt;/code> to &lt;code>0.0.0.0&lt;/code>. For example,&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">http&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">host&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">port&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">80&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">redirect_to_https&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>All requests to the HTTP port will 308 redirect to the HTTPS port.&lt;/p>
+&lt;h2>Dev Env Certificates&lt;span class="hx:absolute hx:-mt-20" id="dev-env-certificates">&lt;/span>
+&lt;a href="#dev-env-certificates" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For local dev environment, using the auto generated certs will result in browser warnings when connecting to the HTTPS port. To avoid this, if &lt;a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener">mkcert&lt;/a> is installed and configured, OpenRun automatically creates a mkcert cert for any new local domain. Ensure that the mkcert installation has been done once.&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">mkcert -install&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>Enable Automatic Signed Certificate&lt;span class="hx:absolute hx:-mt-20" id="enable-automatic-signed-certificate">&lt;/span>
+&lt;a href="#enable-automatic-signed-certificate" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun uses the &lt;a href="https://github.com/caddyserver/certmagic" target="_blank" rel="noopener">certmagic&lt;/a> library for fully-managed TLS certificate issuance and renewal for production deployment. Certmagic is disabled by default. To enable, the pre-requisites are:&lt;/p>
+&lt;ul>
+&lt;li>The https config is using 443 as the port number. Running on privileged ports requires additional &lt;a href="#privileged-ports" >setup&lt;/a>&lt;/li>
+&lt;li>There is an DNS entry created pointing your host name or domain wildcard to the IP address of the host running the OpenRun server. This has to be done in your DNS provider config.&lt;/li>
+&lt;li>Port 443 is reachable from the public internet. This has to be done in your infrastructure provider network settings.&lt;/li>
+&lt;/ul>
+&lt;p>Once the pre-requisites are met, set the &lt;code>service_email&lt;/code> config parameter to your email address. This enables certmagic based certificate creation. The config will look like:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># HTTPS port binding related Config&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">https&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">host&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">port&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">443&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">enable_cert_lookup&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="c"># enable looking for domain specific certificate files on disk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">service_email&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;MY_EMAIL@example.com&amp;#34;&lt;/span> &lt;span class="c"># CHANGE to your email address&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">use_staging&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span> &lt;span class="c"># CHANGE to false for production&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">cert_location&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;$OPENRUN_HOME/config/certificates&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">storage_location&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;$OPENRUN_HOME/run/certmagic&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Test out the certificate creation by sending HTTPS requests to port 443. If the certificate is getting created, change &lt;code>use_staging&lt;/code> to false. Let&amp;rsquo;s Encrypt has strict rate limits, use the staging config to ensure that the pre-requisites are met before using the production config.&lt;/p>
+&lt;p>With this config, certmagic is used to create certificates for all HTTPS requests. Self signed certificates and enable_cert_lookup property are not used when certmagic is enabled.&lt;/p>
+&lt;h2>Default Domain&lt;span class="hx:absolute hx:-mt-20" id="default-domain">&lt;/span>
+&lt;a href="#default-domain" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The config has the default domain set to &lt;code>localhost&lt;/code> by default. The default domain is used for any app which is installed without an explicit domain being specified. This can be changed to the required value when configuring the server.&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">system&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">default_domain&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;localhost&amp;#34;&lt;/span> &lt;span class="c"># default domain for apps&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The list_app app is served at the default domain root level if no app is installed there.&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">system&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">root_serve_list_apps&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;auto&amp;#34;&lt;/span> &lt;span class="c"># &amp;#34;auto&amp;#34; means serve list_apps app for default domain, &amp;#34;disable&amp;#34; means don&amp;#39;t server for any domain,&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>To disable this, set &lt;code>root_serve_list_apps&lt;/code> to &lt;code>disable&lt;/code>. The list apps app uses the default authentication as set for the system. If another domain needs to be used, set the value to that.&lt;/p>
+&lt;p>The list_apps app can be installed explicitly from &lt;code>github.com/openrundev/apps/openrun/list_apps&lt;/code> source path. This allows the app to be installed with required auth settings. The listing shows apps which are available unauthenticated and apps which are using the same auth as the one set for the list_apps app.&lt;/p>
+&lt;h2>Privileged Ports&lt;span class="hx:absolute hx:-mt-20" id="privileged-ports">&lt;/span>
+&lt;a href="#privileged-ports" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>On Linux, binding to low ports is disabled for non-root users. To enable binding to port 80 for HTTP and 443 for HTTPS, run the command&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">sudo setcap &lt;span class="nv">cap_net_bind_service&lt;/span>&lt;span class="o">=&lt;/span>+ep /path/to/openrun_binary&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>This would be required after any new build or update of the OpenRun binary.&lt;/p>
+&lt;h2>Notes&lt;span class="hx:absolute hx:-mt-20" id="notes">&lt;/span>
+&lt;a href="#notes" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;ul>
+&lt;li>Please provide a valid email address in service_email. This allows you to receive expiration emails and also allows the CA to contact you if required.&lt;/li>
+&lt;li>Start the configuration with staging &lt;code>use_staging = true&lt;/code>, change to production config &lt;code>use_staging = false&lt;/code> after ensuring that DNS and networking is working fine.&lt;/li>
+&lt;li>If port 0 is used, the service will bind to any available port. Look at the stdout or logs to find the port used. Clients would have to be updated after every server restarted to point to the new port.&lt;/li>
+&lt;li>Only the &lt;a href="https://github.com/caddyserver/certmagic#tls-alpn-challenge" target="_blank" rel="noopener">TLS-ALPN&lt;/a> challenge is enabled in OpenRun. The HTTP and DNS based challenges are not supported currently.&lt;/li>
+&lt;li>If OpenRun is running behind a load balancer, ensure that the load balancer is doing TLS pass-through. If TLS termination is done in the load balancer, then the automatic certificate management done by OpenRun through certmagic will not work.&lt;/li>
+&lt;/ul></description></item><item><title>Security</title><link>https://openrun.dev/docs/configuration/security/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/configuration/security/</guid><description>
+&lt;p>The default configuration for the OpenRun server is:&lt;/p>
+&lt;ul>
+&lt;li>Application management (admin APIs) are accessible over unix domain sockets only (not accessible remotely). Since UDS enforces file permissions checks, no additional authentication is needed for admin APIs.&lt;/li>
+&lt;li>Admin user account is used to access applications, default &lt;code>auth&lt;/code> for apps is &lt;code>system&lt;/code>&lt;/li>
+&lt;li>The admin user password bcrypt hash has to be added to the server config file, or a random password is generated every time the server is restarted&lt;/li>
+&lt;li>Applications can be changed to not require any authentication, &lt;code>auth&lt;/code> can be &lt;code>none&lt;/code> or use Oauth2 based auth.&lt;/li>
+&lt;li>There is no user management support in OpenRun currently. The system account is present by default (which can be disabled) or OAuth based auth can be used.&lt;/li>
+&lt;/ul>
+&lt;h2>Admin Account Password&lt;span class="hx:absolute hx:-mt-20" id="admin-account-password">&lt;/span>
+&lt;a href="#admin-account-password" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>When the OpenRun server is started, it looks for the entry&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">security&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">admin_password_bcrypt&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span> &lt;span class="c"># the password bcrypt value&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>in the config file. If the value is undefined or empty, then a random password is generated and is used as the admin password for that server session. The password being used is displayed on the stdout of the server startup. This will change on every restart.&lt;/p>
+&lt;p>To configure a value for the admin user password, use the &lt;code>password&lt;/code> helper command:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">openrun password&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>to generate a random password. This will print out the password and its bcrypt value to the screen. Save the password in your password manager and add the bcrypt hash to your config file.&lt;/p>
+&lt;p>To use a particular value for the admin password, run:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">openrun password --prompt&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>This will prompt for the password and print out the bcrypt hash to add to the config file.&lt;/p>
+&lt;h2>Admin API Access&lt;span class="hx:absolute hx:-mt-20" id="admin-api-access">&lt;/span>
+&lt;a href="#admin-api-access" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>By default, the OpenRun client uses Unix domain sockets to connect to the OpenRun server. Admin API calls to manage applications are disabled over HTTP/HTTPS by default. Unix sockets work when the client is on the same machine as the server, the client does not need to pass any credentials to connect over unix sockets.&lt;/p>
+&lt;p>To enable remote API calls, where the client is on a different machine from the server, the server needs to be changed to add the following:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">security&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">admin_over_tcp&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">true&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>If running the OpenRun client from a remote machine, the config options required for the client are:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">server_uri&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;https://&amp;lt;SERVER_HOST&amp;gt;:25223&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">admin_user&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;admin&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">client&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">admin_password&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span> &lt;span class="c"># Change to actual password&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">skip_cert_check&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">false&lt;/span> &lt;span class="c"># Change to true if using self-signed certs&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>All other server related config entries are ignored by the OpenRun client. Note that to connect to a OpenRun server over HTTP remotely, the server needs to be bound to the all interface(0.0.0.0), see &lt;a href="https://openrun.dev/docs/configuration/networking/" >here&lt;/a>.&lt;/p>
+&lt;p>If server_uri is set to the https endpoint and the OpenRun server is running with a self-signed certificate, set &lt;code>skip_cert_check = true&lt;/code> in config to disable the TLS certificate check.&lt;/p>
+&lt;h2>Application Security&lt;span class="hx:absolute hx:-mt-20" id="application-security">&lt;/span>
+&lt;a href="#application-security" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>See &lt;a href="https://openrun.dev/docs/applications/appsecurity/" >appsecurity&lt;/a> for details about the application level sandboxing.&lt;/p>
+&lt;h2>Private Repository Access&lt;span class="hx:absolute hx:-mt-20" id="private-repository-access">&lt;/span>
+&lt;a href="#private-repository-access" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>app create&lt;/code> and &lt;code>app reload&lt;/code> commands can read public GitHub repositories. If the repository is private, to be able to access the repo, the &lt;a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account" target="_blank" rel="noopener">ssh key&lt;/a> or &lt;a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener">personal access token&lt;/a> needs to be specified.&lt;/p>
+&lt;h3>SSH Keys&lt;span class="hx:absolute hx:-mt-20" id="ssh-keys">&lt;/span>
+&lt;a href="#ssh-keys" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>For SSH key, in the &lt;code>openrun.toml&lt;/code> config file, create an entry like:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">git_auth&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">mykey&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">key_file_path&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;/Users/myuser/.ssh/id_rsa&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">password&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;mypassphrase&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>mykey&lt;/code> is the git auth key name, &lt;code>key_file_path&lt;/code> points to the location of a private key file for a user with access to the repository and &lt;code>password&lt;/code> is the passphrase if any for the file.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">ℹ️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Use &lt;code>ssh-keygen -l -f ~/.ssh/id_rsa.pub&lt;/code> (on public key) to check if the fingerprint matches the SHA256 fingerprint shown at &lt;a href="https://github.com/settings/keys" target="_blank" rel="noopener">https://github.com/settings/keys&lt;/a>. To verify the passphrase, use &lt;code>ssh-keygen -y -f ~/.ssh/id_rsa&lt;/code> (on the private key) and type in the passphrase to check if the passphrase is correct.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h3>Personal Access Token&lt;span class="hx:absolute hx:-mt-20" id="personal-access-token">&lt;/span>
+&lt;a href="#personal-access-token" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>For personal access token, set&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">git_auth&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">mypat&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">user_id&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;myid&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">password&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;github_pat_11A7FXXXXXXX&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The &lt;code>user_id&lt;/code> needs to be set to an non-empty value like the github id even though it is ignored for the auth.&lt;/p>
+&lt;p>When running &lt;code>app create&lt;/code>, add &lt;code>--git-auth mykey&lt;/code> or &lt;code>--git-auth mypat&lt;/code> option. The private key specified will be used for accessing the repository. &lt;code>app reload&lt;/code> command will automatically use the same key as specified during the create. To set the default git key to use, add in config:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">security&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">default_git_auth&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;mykey&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>This git key is used for &lt;code>apply&lt;/code> and &lt;code>sync&lt;/code> also. To change the git auth key for an app, run:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">openrun app update-settings git-auth newkey /myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The git auth is not a staged changed, it applies immediately for the staging and prod apps and preview apps.&lt;/p></description></item><item><title>App Authentication</title><link>https://openrun.dev/docs/configuration/authentication/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/configuration/authentication/</guid><description>
+&lt;p>By default, apps are created with the &lt;code>none&lt;/code> authentication type. A &lt;code>system&lt;/code> auth is available which uses &lt;code>admin&lt;/code> as the username. The password is displayed on the screen during the initial setup of the OpenRun server config.&lt;/p>
+&lt;p>To set the auth type, add &lt;code>--auth system&lt;/code> to the app create command. After an app is created, the auth type can be changed by running &lt;code>app update-settings auth system /myapp&lt;/code>.&lt;/p>
+&lt;h2>Default Authentication Type&lt;span class="hx:absolute hx:-mt-20" id="default-authentication-type">&lt;/span>
+&lt;a href="#default-authentication-type" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Any app when created uses the default auth type configured for the server. &lt;code>none&lt;/code> is the default. To change this, add&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">security&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">app_default_auth_type&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;github_prod&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>assuming there is a &lt;code>github_prod&lt;/code> oauth config.&lt;/p>
+&lt;p>Any new app created will use this as the auth unless overridden in the &lt;code>app create&lt;/code> call or using &lt;code>app update&lt;/code>.&lt;/p>
+&lt;h2>Client Cert Authentication (mTLS)&lt;span class="hx:absolute hx:-mt-20" id="client-cert-authentication-mtls">&lt;/span>
+&lt;a href="#client-cert-authentication-mtls" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Apps can be updated to use mutual TLS authentication. To enable this, first set &lt;code>disable_client_certs&lt;/code> to &lt;code>false&lt;/code> in the &lt;code>https&lt;/code> section. Add a &lt;code>client_auth&lt;/code> config entry in server config with the CA certificate to verify against. Multiple entries can be added, the entry name should be &lt;code>cert&lt;/code> or should start with &lt;code>cert_&lt;/code>. For example&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">https&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">disable_client_certs&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">client_auth&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">cert_test1&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">ca_cert_file&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="s2">&amp;#34;/data/certs/ca1.crt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">client_auth&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">cert_test2&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">ca_cert_file&lt;/span>&lt;span class="p">=&lt;/span>&lt;span class="s2">&amp;#34;/data/certs/ca2.crt&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>defines two client_auth configs: &lt;code>cert_test1&lt;/code> using ca1.crt and &lt;code>cert_test2&lt;/code> using ca2.crt. Apps can be updated to use this auth config by running &lt;code>app update-settings auth cert_test1 /myapp&lt;/code> or &lt;code>app update-settings auth cert_test2 /myapp&lt;/code>.&lt;/p>
+&lt;p>Any API call to the app has to pass the client certificates. Using curl, the call would look like:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">curl -k --cert client.crt --key client.key https://localhost:25223/myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>If the client cert has been signed with the root CA defined in /data/certs/ca1.crt, the API call will succeed. Otherwise it fails. HTTP requests are not allowed when client cert authentication is used.&lt;/p>
+&lt;h2>OAuth Authentication&lt;span class="hx:absolute hx:-mt-20" id="oauth-authentication">&lt;/span>
+&lt;a href="#oauth-authentication" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OAuth based authentication is supported for the following providers:&lt;/p>
+&lt;ul>
+&lt;li>github&lt;/li>
+&lt;li>google&lt;/li>
+&lt;li>digitalocean&lt;/li>
+&lt;li>bitbucket&lt;/li>
+&lt;li>amazon&lt;/li>
+&lt;li>azuread&lt;/li>
+&lt;li>microsoftonline&lt;/li>
+&lt;li>gitlab&lt;/li>
+&lt;li>auth0&lt;/li>
+&lt;li>okta&lt;/li>
+&lt;li>oidc&lt;/li>
+&lt;/ul>
+&lt;p>The configuration format for each is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">auth&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">github_test&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">key&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;abcdefgh&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">secret&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;mysecret&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Here, the auth config entry name is &lt;code>github_test&lt;/code>. The entry name can be one of the supported providers, or a supported provider name followed by a &lt;code>_&lt;/code> and a qualifier. The provider name is case sensitive. So &lt;code>github&lt;/code>, &lt;code>google&lt;/code>, &lt;code>github_prod&lt;/code>, &lt;code>google_my_org&lt;/code> etc are valid config names. &lt;code>github-test&lt;/code> and &lt;code>my_org_google&lt;/code> are not valid.&lt;/p>
+&lt;p>The server &lt;code>openrun.toml&lt;/code> can have multiple auth configs defined. One of them can be set to be the default using &lt;code>app_default_auth_type&lt;/code> config. Apps can be configured to use one of &lt;code>system&lt;/code> or &lt;code>none&lt;/code> or a valid auth config name as the &lt;code>auth&lt;/code>. For example, app 1 can use &lt;code>system&lt;/code> and app 2 can use &lt;code>github_test&lt;/code>.&lt;/p>
+&lt;h2>Callback Url&lt;span class="hx:absolute hx:-mt-20" id="callback-url">&lt;/span>
+&lt;a href="#callback-url" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To enable any Oauth provider, the callback url domain has to be specified in the server config. Add&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">security&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">callback_url&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;https://example.com:25223&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>in the &lt;code>openrun.toml&lt;/code>. In the OAuth account, for an entry &lt;code>github_test&lt;/code>, the callback url to use will be &lt;code>https://example.com:25223/_openrun/auth/github_test/callback&lt;/code>.&lt;/p>
+&lt;p>The format for the callback url to use is &lt;code>&amp;lt;CALLBACK_URL&amp;gt;/_openrun/auth/&amp;lt;PROVIDER_ENTRY_NAME&amp;gt;/callback&lt;/code>. The callback url has to exactly match this format.&lt;/p>
+&lt;h2>OAuth Config Details&lt;span class="hx:absolute hx:-mt-20" id="oauth-config-details">&lt;/span>
+&lt;a href="#oauth-config-details" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The config details depend on the provider type. The &lt;code>key&lt;/code> is generally the Client Id and the &lt;code>secret&lt;/code> is the Client Secret. For some providers, additional config config entries are supported. These are:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>google&lt;/strong>: The google provider supports a &lt;code>hosted_domain&lt;/code> option. This is the domain name to verify on the user being logged in. For example, this can be set to &lt;code>openrun.dev&lt;/code>.&lt;/li>
+&lt;li>&lt;strong>okta&lt;/strong>: The Okta provider supports the &lt;code>org_url&lt;/code> config, the tenant url to verify.&lt;/li>
+&lt;li>&lt;strong>auth0&lt;/strong>: The Auth0 provider supports the &lt;code>domain&lt;/code> config.&lt;/li>
+&lt;li>&lt;strong>oidc&lt;/strong>: OIDC supports the &lt;code>discovery_url&lt;/code> config property.&lt;/li>
+&lt;/ul>
+&lt;p>For all the providers, an optional &lt;code>scopes&lt;/code> property is also supported. This is the list of scopes to configure for the OAuth account.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-yellow-100 hx:bg-yellow-50 hx:text-yellow-900 hx:dark:border-yellow-200/30 hx:dark:bg-yellow-700/30 hx:dark:text-yellow-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">⚠️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">The first time a new provider is added, it is important to manually verify an app, to verify if the required authentication restrictions are in place. For example, with google, any valid google user can login, including gmail.com accounts. The &lt;code>hosted_domain&lt;/code> config has to be used to restrict this.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>The OAuth integration internally uses the &lt;a href="https://github.com/markbates/goth" target="_blank" rel="noopener">goth&lt;/a> library, see &lt;a href="https://github.com/markbates/goth/blob/master/examples/main.go" target="_blank" rel="noopener">examples&lt;/a> for implementation details.&lt;/p></description></item><item><title>Secrets Management</title><link>https://openrun.dev/docs/configuration/secrets/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/configuration/secrets/</guid><description>
+&lt;p>OpenRun supports secret management when working with apps. Secrets can be passed to containerized apps through the environment params. Secrets can also be passed to any plugin as argument. For OAuth config, the client secrets can be configured as secret in the config file.&lt;/p>
+&lt;h2>Supported Providers&lt;span class="hx:absolute hx:-mt-20" id="supported-providers">&lt;/span>
+&lt;a href="#supported-providers" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun currently supports AWS Secrets Manager (ASM) and HashiCorp Vault as providers for secrets management. Secrets can also be read from the environment of the OpenRun server, which can be used in development and testing. Secrets can also be read from a local properties file.&lt;/p>
+&lt;h2>AWS Secrets Manager&lt;span class="hx:absolute hx:-mt-20" id="aws-secrets-manager">&lt;/span>
+&lt;a href="#aws-secrets-manager" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To enable ASM, add one or more entries in the &lt;code>openrun.toml&lt;/code> config. The config name should be &lt;code>asm&lt;/code> or should start with &lt;code>asm_&lt;/code>. For example&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">asm&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">asm_prod&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">profile&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;myaccount&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>creates two ASM configs. &lt;code>asm&lt;/code> uses the default profile and &lt;code>asm_prod&lt;/code> uses the &lt;code>myaccount&lt;/code> profile. The default config is read from the home directory ~/.aws/config and ~/.aws/credentials as documented in &lt;a href="https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html" target="_blank" rel="noopener">AWS docs&lt;/a>. The user id under which the OpenRun server was started is looked up for the aws config file.&lt;/p>
+&lt;p>To access a secret in app parameters from &lt;code>asm_prod&lt;/code> config, use &lt;code>--param MYPARAM='{{secret_from &amp;quot;asm_prod&amp;quot; &amp;quot;MY_SECRET_KEY&amp;quot;}}'&lt;/code> as the param value. Use &lt;code>--param MYPARAM='{{secret &amp;quot;MY_SECRET_KEY&amp;quot;}}'&lt;/code> to read from the default provider.&lt;/p>
+&lt;h2>HashiCorp Vault&lt;span class="hx:absolute hx:-mt-20" id="hashicorp-vault">&lt;/span>
+&lt;a href="#hashicorp-vault" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To enable Vault secret provider, add one or more entries in the &lt;code>openrun.toml&lt;/code> config. The config name should be &lt;code>vault&lt;/code> or should start with &lt;code>vault_&lt;/code>. For example&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">vault_local&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">address&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;http://127.0.0.1:8200&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">token&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;abc&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">vault_prod&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">address&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;http://myvault.example.com:8200&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">token&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;def&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>creates two Vault configs. The &lt;code>address&lt;/code> and &lt;code>token&lt;/code> properties are required.&lt;/p>
+&lt;h2>Environment Secrets&lt;span class="hx:absolute hx:-mt-20" id="environment-secrets">&lt;/span>
+&lt;a href="#environment-secrets" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Adding a secret provider with the name &lt;code>env&lt;/code> or starting with &lt;code>env_&lt;/code>, like&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">env&lt;/span>&lt;span class="p">]&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>enables looking up the OpenRun server environment for secrets. This can be accessed like &lt;code>--param MYPARAM='{{secret_from &amp;quot;env&amp;quot; &amp;quot;MY_SECRET_KEY&amp;quot;}}'&lt;/code>. No properties are required in the env provider config. The value of MY_SECRET_KEY in the OpenRun server env wil be passed as the param.&lt;/p>
+&lt;h2>Properties Secrets&lt;span class="hx:absolute hx:-mt-20" id="properties-secrets">&lt;/span>
+&lt;a href="#properties-secrets" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Secrets can be read from a properties file. The config name should be &lt;code>prop&lt;/code> or should start with &lt;code>prop_&lt;/code>. To use this, add&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">prop_test1&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">file_name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;/etc/props.properties&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>file_name&lt;/code> is a required property.&lt;/p>
+&lt;h2>Secrets Usage&lt;span class="hx:absolute hx:-mt-20" id="secrets-usage">&lt;/span>
+&lt;a href="#secrets-usage" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Secrets can be accessed using the syntax &lt;code>{{secret_from &amp;quot;PROVIDER_NAME&amp;quot; &amp;quot;KEY_NAME&amp;quot;}}&lt;/code>. To read from the default provider, use &lt;code>{{secret &amp;quot;KEY_NAME&amp;quot;}}&lt;/code>. The three contexts in which secrets can be accessed are:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>App Params&lt;/strong> : Param values in &lt;code>params.star&lt;/code> or in the &lt;a href="https://openrun.dev/docs/container/overview/#app-environment-params" >app metadata definition&lt;/a> can access the secrets.&lt;/li>
+&lt;li>&lt;strong>Plugin arguments&lt;/strong> : Secrets can be passed as string arguments in calls to &lt;a href="https://openrun.dev/docs/plugins/" >plugin functions&lt;/a>.&lt;/li>
+&lt;li>&lt;strong>Config file&lt;/strong>: Secrets are supported in &lt;code>openrun.toml&lt;/code> config for:
+&lt;ul>
+&lt;li>For client key and secret in &lt;a href="https://openrun.dev/docs/configuration/authentication/#oauth-authentication" >auth config&lt;/a>&lt;/li>
+&lt;li>For password in &lt;a href="https://openrun.dev/docs/configuration/security/#private-repository-access" >git_auth config&lt;/a>&lt;/li>
+&lt;li>For string values in &lt;a href="https://openrun.dev/docs/plugins/overview/#account-linking" >plugin config&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>Secrets are always resolved late. The Starlark code does not get access to the plain text secrets. The secret lookup happens when the call to the plugin API is done. In case of params, the lookup happens when the param is passed to the container.&lt;/p>
+&lt;p>For git_auth config, an example secret usage is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">auth&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">google_prod&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">key&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;mykey.apps.googleusercontent.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">secret&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s1">&amp;#39;{{secret_from &amp;#34;PROVIDER_NAME&amp;#34; &amp;#34;GOOGLE_OAUTH_SECRET&amp;#34;}}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">hosted_domain&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;example.com&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>Plugin Access to Secrets&lt;span class="hx:absolute hx:-mt-20" id="plugin-access-to-secrets">&lt;/span>
+&lt;a href="#plugin-access-to-secrets" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For secrets which are passed to plugins, through app params or plugin arguments, the plugin needs to be authorized to access the secret. The permissions for each plugin are defined in the app definition. For example:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;test&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">routes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">api&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;TEXT&amp;#34;&lt;/span>&lt;span class="p">)],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">permissions&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;exec.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;run&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;ls&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">secrets&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[[&lt;/span>&lt;span class="s2">&amp;#34;c1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;c2&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;TESTENV&amp;#34;&lt;/span>&lt;span class="p">]]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The secrets accessible are specified as a list of list of strings. In this case, the &lt;code>{{secret &amp;quot;c1&amp;quot; &amp;quot;c2&amp;quot;}}&lt;/code> and &lt;code>{{secret &amp;quot;TESTENV&amp;quot;}}&lt;/code> calls are allowed. Additional keys are also permitted.&lt;/p>
+&lt;p>If the key is specified as a string starting with &lt;code>regex:&lt;/code>, then the subsequent part is a regex which is matched against the specified value. For example, &lt;code>ace.permission(&amp;quot;exec.in&amp;quot;, &amp;quot;run&amp;quot;, [&amp;quot;ls&amp;quot;], secrets=[[&amp;quot;regex:TEST_.*&amp;quot;]),&lt;/code> allows accessing any secret starting with &lt;code>TEST_&lt;/code>.&lt;/p>
+&lt;h2>Multiple Keys&lt;span class="hx:absolute hx:-mt-20" id="multiple-keys">&lt;/span>
+&lt;a href="#multiple-keys" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>If the &lt;code>KEY_NAME&lt;/code> is a single string, it is passed as is to the provider. If multiple keys are specified, they are concatenated and passed to the provider. For example, &lt;code>{{secret_from &amp;quot;env&amp;quot; &amp;quot;ABC&amp;quot; &amp;quot;DEF&amp;quot;}}&lt;/code> will get converted to a env lookup for &lt;code>ABC_DEF&lt;/code>. The delimiter used depends on the provider. The defaults are:&lt;/p>
+&lt;ul>
+&lt;li>ASM and Vault : &lt;code>/&lt;/code>&lt;/li>
+&lt;li>Env : &lt;code>_&lt;/code>&lt;/li>
+&lt;li>Properties: &lt;code>.&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>The formatter used to concatenate the keys can be customized by setting the &lt;code>keys_printf&lt;/code> property. For example,&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">prop&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">file_name&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;/etc/mykeys.properties&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">keys_printf&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;%s-%s.%s&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>combines &lt;code>{{secret_from &amp;quot;prop&amp;quot; &amp;quot;ABC&amp;quot; &amp;quot;DEF&amp;quot; &amp;quot;XYZ&amp;quot;}}&lt;/code> as &lt;code>ABC-DEF.XYZ&lt;/code>. This allows the app to work with multiple secret providers without requiring code changes in the app.&lt;/p>
+&lt;h2>Default Provider&lt;span class="hx:absolute hx:-mt-20" id="default-provider">&lt;/span>
+&lt;a href="#default-provider" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>If the provider name is passed as &lt;code>default&lt;/code> or set to empty, a default provider is used. The default provider can be configured in the &lt;code>openrun.toml&lt;/code> as&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">app_config&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">security&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">default_secrets_provider&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;env&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The &lt;code>env&lt;/code> provider is used by default if it is enabled in the config. The default can be changed per app by setting&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app update-metadata conf --promote &lt;span class="s1">&amp;#39;security.default_secrets_provider=&amp;#34;prop_myfile&amp;#34;&amp;#39;&lt;/span> /myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

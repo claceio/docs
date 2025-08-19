@@ -1,1 +1,405 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenRun Blog</title><link>https://openrun.dev/docs/develop/</link><description>Recent content from the OpenRun Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 19 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://openrun.dev/docs/develop/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>App Deployment Simplified | OpenRun – Developing Apps</title><link>https://openrun.dev/docs/develop/</link><description>Recent content in Developing Apps on App Deployment Simplified | OpenRun</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://openrun.dev/docs/develop/index.xml" rel="self" type="application/rss+xml"/><item><title>Templates</title><link>https://openrun.dev/docs/develop/templates/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/develop/templates/</guid><description>
+&lt;p>OpenRun uses &lt;a href="https://pkg.go.dev/html/template@go1.21.2" target="_blank" rel="noopener">Go HTML templates&lt;/a> for returning data to the client. See &lt;a href="https://pkg.go.dev/text/template@go1.21.2" target="_blank" rel="noopener">here&lt;/a> for an overview of the template syntax. &lt;a href="https://gohugo.io/templates/introduction/" target="_blank" rel="noopener">Hugo docs&lt;/a> are a good source for an overview of using go templates.&lt;/p>
+&lt;p>The &lt;a href="http://masterminds.github.io/sprig/" target="_blank" rel="noopener">Sprig template library functions&lt;/a> are included automatically. Two functions from Sprig which are excluded for security considerations are &lt;code>env&lt;/code> and &lt;code>expandenv&lt;/code>.&lt;/p>
+&lt;p>Two extra functions &lt;code>static&lt;/code> and &lt;code>fileNonEmpty&lt;/code> are added for handling static file paths.&lt;/p>
+&lt;h2>static function&lt;span class="hx:absolute hx:-mt-20" id="static-function">&lt;/span>
+&lt;a href="#static-function" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>This function takes a file name and returns the url for a file in the static folder with a sha256 hash included in the file name. This approach is similar to the &lt;a href="https://github.com/benbjohnson/hashfs" target="_blank" rel="noopener">hashfs library&lt;/a>. If the &lt;code>static&lt;/code> folder contains a file &lt;code>file1&lt;/code> with the content &lt;code>file1data&lt;/code>, then a call to &lt;code>static &amp;quot;file&amp;quot;&lt;/code> will return &lt;code>/test/static/file1-ca9e40772ef9119c13100a8258bc38a665a0a1976bf81c96e69a353b6605f5a7&lt;/code>, assuming the app is installed at &lt;code>/test&lt;/code>.&lt;/p>
+&lt;p>The returned file name has a hash based on the file contents. The file server used by OpenRun will serve aggressive cache headers &lt;code>Cache-Control: public, max-age=31536000&lt;/code> when this file is referenced by the browser. When the file contents change, the content hash will change and the file name will change. The files on disk are not renamed, only the filesystem used by the OpenRun server in memory sees the hashed file names.&lt;/p>
+&lt;p>This approach allows for a build-less system with aggressive static asset caching. The usual approach for this requires the static file to be renamed to have the hash value in the file name on disk. This require a build step to do the file renaming. The hashfs approach can avoid the build step. The file hash computation and compression are done once, during app installation in prod mode. There is no runtime penalty for this. In dev mode, the file hashing is done during the api serving.&lt;/p>
+&lt;h2>fileNonEmpty function&lt;span class="hx:absolute hx:-mt-20" id="filenonempty-function">&lt;/span>
+&lt;a href="#filenonempty-function" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The fileNonEmpty function returns a bool, indicating whether a static file with that non-hashed name is present and is not empty. This can be used to conditionally include style files if present.&lt;/p>
+&lt;p>For example&lt;/p>
+&lt;!-- prettier-ignore -->
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">{{ if fileNonEmpty &amp;#34;css/style.css&amp;#34; }}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">link&lt;/span> &lt;span class="na">rel&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;stylesheet&amp;#34;&lt;/span> &lt;span class="na">href&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;{{ static &amp;#34;&lt;/span>&lt;span class="na">css&lt;/span>&lt;span class="err">/&lt;/span>&lt;span class="na">style&lt;/span>&lt;span class="err">.&lt;/span>&lt;span class="na">css&lt;/span>&lt;span class="err">&amp;#34;&lt;/span> &lt;span class="err">}}&amp;#34;&lt;/span> &lt;span class="p">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{{ end }}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;!-- prettier-ignore-end -->
+&lt;p>checks if the &amp;ldquo;css/style.css&amp;rdquo; file is present and not empty. If so, it is linked using the &lt;code>static&lt;/code> function, which returns a hashed file name which can be cached aggressively.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-yellow-100 hx:bg-yellow-50 hx:text-yellow-900 hx:dark:border-yellow-200/30 hx:dark:bg-yellow-700/30 hx:dark:text-yellow-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">⚠️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">The path passed to &lt;code>static&lt;/code> and &lt;code>fileNonEmpty&lt;/code> functions should not include static, it is automatically added. So use &lt;code>{{ static &amp;quot;css/style.css&amp;quot; }}&lt;/code>, not &lt;code>{{ static &amp;quot;static/css/style.css&amp;quot; }}&lt;/code>&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Template File Location&lt;span class="hx:absolute hx:-mt-20" id="template-file-location">&lt;/span>
+&lt;a href="#template-file-location" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Templates are loaded once on app initialization. In dev mode, they are automatically reload on file updates. By default, the app source home directory is searched for template files. This can be changed by adding this directive in the &lt;code>ace.app&lt;/code> config.&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="err">settings=&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;routing&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="nt">&amp;#34;template_locations&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;*.go.html&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;templates/*.go.html&amp;#34;&lt;/span>&lt;span class="p">]}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>the default is &lt;code>[&amp;quot;*.go.html&amp;quot;]&lt;/code>. If additional directories are added, &lt;code>&amp;quot;*.go.html&amp;quot;&lt;/code> still needs to present in the list since generated files are created in the app home directory. Also, all folders in the list need to contains at least one template file. File names have to be unique across folders. Files are referenced by their name, without the folder name, when used in template import directives.&lt;/p>
+&lt;h2>Structured Template Layout&lt;span class="hx:absolute hx:-mt-20" id="structured-template-layout">&lt;/span>
+&lt;a href="#structured-template-layout" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The default in OpenRun is to load all the templates in one parse operation. This is easy to get started with but can result in challenges when the same template block needs to be duplicated in different files. OpenRun also supports a structured template layout. See &lt;a href="https://philipptanlak.com/web-frontends-in-go/#how-i-structure-my-templates" target="_blank" rel="noopener">this blog&lt;/a> for an explanation about the differences between the two layouts. The default in OpenRun is the WordPress layout, all template files are loaded in one go. To use the second, Django layout, use the structured format.&lt;/p>
+&lt;p>If there is a &lt;code>base_templates&lt;/code> folder in the app main folder with one or more &lt;code>*.go.html&lt;/code> files, the structured template layout is used. In the structured layout format, all the base template files are loaded in one parse operation. Each of the files in the app main folder is then individually loaded. Each top level file has access to its own template blocks plus the base templates.&lt;/p>
+&lt;p>This has the advantage that the main templates can have duplicate templates, with no conflicts because they are loaded individually. For example, if there is a &lt;code>base_templates/base.go.html&lt;/code> file with&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> {{block &amp;#34;body&amp;#34; .}} {{end}}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">footer&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">footer&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{{end}}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>and a &lt;code>index.go.html&lt;/code> file with&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">{{define &amp;#34;body&amp;#34;}} My Index Body {{end}} {{- template &amp;#34;full&amp;#34; . -}}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>and a &lt;code>help.go.html&lt;/code> file with&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">{{define &amp;#34;body&amp;#34;}} My Help Body {{end}} {{- template &amp;#34;full&amp;#34; . -}}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>then a route using &lt;code>index.go.html&lt;/code> will get the HTML for the index page and route using &lt;code>help.go.html&lt;/code> with get HTML help page. Although the &lt;code>body&lt;/code> is defined in two template files, there is no conflict since the root level template files are loaded independently.&lt;/p>
+&lt;p>Without structured template layout, if a duplicate block is found, the one to be used depends on the order in which the files are loaded. To change the folders used for base templates, set:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="err">settings=&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;routing&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="nt">&amp;#34;base_templates&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;base_templates&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;template_helpers&amp;#34;&lt;/span>&lt;span class="p">]}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>App Layout&lt;span class="hx:absolute hx:-mt-20" id="app-layout">&lt;/span>
+&lt;a href="#app-layout" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>When using custom layout with &lt;code>custom_layout=True&lt;/code>, the app developer has to create the &lt;code>index.go.html&lt;/code> file. Add a directive like:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">{{ template &amp;#34;openrun_gen_import&amp;#34; . }}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>in the head section to ensure that the auto generated &lt;code>openrun_gen_import&lt;/code> directives are loaded in the . This will include the style files, HTMX library and the live reload functionality in dev mode.&lt;/p>
+&lt;p>In the default layout mode, the auto generated &lt;code>index_gen.go.html&lt;/code> file is used. The app developer has to provide a &lt;code>openrun_body&lt;/code> block. It can be in any template file, the convention is to use &lt;code>app.go.html&lt;/code>. For example:&lt;/p>
+&lt;!-- prettier-ignore -->
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">{{block &amp;#34;openrun_body&amp;#34; .}}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Data is {{.Data}}
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">{{end}}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;!-- prettier-ignore-end -->
+&lt;p>The &lt;code>.Data&lt;/code> binding has the data as returned by the handler function for the route.&lt;/p>
+&lt;p>shared across both apps.&lt;/p>
+&lt;h2>Static Root Files&lt;span class="hx:absolute hx:-mt-20" id="static-root-files">&lt;/span>
+&lt;a href="#static-root-files" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>static&lt;/code> folder is used for file which are served under the &lt;code>/static&lt;/code> path. Content based hashing is supported for these files.&lt;/p>
+&lt;p>For files which need to be served under the root level, the &lt;code>static_root&lt;/code> folder is used. Files in this folder are served at the root path. For example, if an app is installed at &lt;code>example.com:&lt;/code> and a robots.txt file needs to be served, a file &lt;code>static_root/robots.txt&lt;/code> can be added to the app. This will be automatically served at &lt;code>example.com/robots.txt&lt;/code>. Note that the static folder path is stripped from the route name. The file name should not conflict with any of the API routes defined in the app. Nested folders are looked up in the static root folder.&lt;/p>
+&lt;p>Content based hashing is not supported for static root files. These files are expected to be used for well known files like &lt;code>favicon.ico&lt;/code>. Most regular static file serving use cases should use the &lt;code>static&lt;/code> folder, not the &lt;code>static_root&lt;/code> folder.&lt;/p></description></item><item><title>Styling</title><link>https://openrun.dev/docs/develop/styling/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/develop/styling/</guid><description>
+&lt;p>OpenRun supports working with Classless CSS libraries and also with TailwindCSS and DaisyUI. To use this, add the directive&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">style&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;daisyui&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>in the app definition. The fields in the &lt;code>ace.style&lt;/code> structure are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">Property&lt;/th>
+&lt;th style="text-align: center">Optional&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Default&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">library&lt;/td>
+&lt;td style="text-align: center">false&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;td style="text-align: center">The library to use, url to classless library, &amp;ldquo;tailwindcss&amp;rdquo; or &amp;ldquo;daisyui&amp;rdquo;&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">themes&lt;/td>
+&lt;td style="text-align: center">true&lt;/td>
+&lt;td style="text-align: center">string[]&lt;/td>
+&lt;td style="text-align: center">[]&lt;/td>
+&lt;td style="text-align: center">The daisyui themes to include&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">disable_watcher&lt;/td>
+&lt;td style="text-align: center">true&lt;/td>
+&lt;td style="text-align: center">bool&lt;/td>
+&lt;td style="text-align: center">false&lt;/td>
+&lt;td style="text-align: center">Whether to disable the tailwind watcher process startup in dev mode&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">light&lt;/td>
+&lt;td style="text-align: center">true&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">emerald&lt;/td>
+&lt;td style="text-align: center">The DaisyUI theme to use in light mode for Actions&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">dark&lt;/td>
+&lt;td style="text-align: center">true&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">night&lt;/td>
+&lt;td style="text-align: center">The DaisyUI theme to use in dark mode for Actions&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2>Classless CSS&lt;span class="hx:absolute hx:-mt-20" id="classless-css">&lt;/span>
+&lt;a href="#classless-css" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>If the library property is a url, it should point to a publicly accessible style file. The style file is downloaded into the &lt;code>static/gen/css/style.css&lt;/code> file. The file is automatically included as part of the &lt;code>openrun_gen_import&lt;/code> template.&lt;/p>
+&lt;p>For example,&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">style&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;https://unpkg.com/mvp.css@1.14.0/mvp.css&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>imports the &lt;a href="https://andybrewer.github.io/mvp/" target="_blank" rel="noopener">MVP.css&lt;/a> library. Since this is classless, no changes are required in the HTML templates.&lt;/p>
+&lt;h2>TailwindCSS&lt;span class="hx:absolute hx:-mt-20" id="tailwindcss">&lt;/span>
+&lt;a href="#tailwindcss" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To use TailwindCSS, in app settings, add&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">style&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;tailwindcss&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Tailwind CSS works by scanning the HTML files for class names, generating the corresponding styles and then writing them to a static CSS file. A watcher process is started when an app using Tailwind is loaded in dev mode. The output of the watcher is written to &lt;code>static/gen/css/style.css&lt;/code> file. This file is automatically included as part of the &lt;code>openrun_gen_import&lt;/code> template.&lt;/p>
+&lt;p>To ensure that the tailwind watcher is started, the tailwind CLI needs to be installed manually. The &lt;a href="https://tailwindcss.com/blog/standalone-cli" target="_blank" rel="noopener">standalone CLI&lt;/a> can be used. If using DaisyUI, use this &lt;a href="https://github.com/dobicinaitis/tailwind-cli-extra" target="_blank" rel="noopener">custom build&lt;/a> of the standalone CLI with DaisyUI included.&lt;/p>
+&lt;p>The OpenRun server config file has the following entries:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">system&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">tailwindcss_command&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;npx tailwindcss&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">file_watcher_debounce_millis&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">300&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>tailwindcss_command&lt;/code> is the command use to start the watcher. If the standalone version is being used change to&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">system&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">tailwindcss_command&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;/path/to/tailwindcss&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>file_watcher_debounce_millis&lt;/code> is used to prevent repeated reloads of the application files during dev mode. On slower machine, this value might have to be increased, but setting it too high will cause the reload to be slower.&lt;/p>
+&lt;h2>DaisyUI&lt;span class="hx:absolute hx:-mt-20" id="daisyui">&lt;/span>
+&lt;a href="#daisyui" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To use &lt;a href="https://daisyui.com/" target="_blank" rel="noopener">DaisyUI&lt;/a>, in app settings, add&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">style&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">style&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;daisyui&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">themes&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;dark&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Change to the preferred &lt;a href="https://daisyui.com/docs/themes/" target="_blank" rel="noopener">theme&lt;/a>. DaisyUI is a good option to use to get great default styling for components, with the full flexibility of Tailwind. To use DaisyUI, use the npm version of Tailwind or use this &lt;a href="https://github.com/dobicinaitis/tailwind-cli-extra" target="_blank" rel="noopener">custom version&lt;/a> of the standalone CLI with DaisyUI included. OpenRun takes care of creating the config files. Using the CDN version of DaisyUI or Tailwind is not recommended since that will cause the style files to be large.&lt;/p>
+&lt;p>If using &lt;a href="https://openrun.dev/docs/actions/" >Actions&lt;/a>, DaisyUI styles are automatically included. The themes can be customized using the &lt;code>light&lt;/code> and &lt;code>dark&lt;/code> property.&lt;/p></description></item><item><title>JavaScript</title><link>https://openrun.dev/docs/develop/javascript/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/develop/javascript/</guid><description>
+&lt;p>OpenRun supports importing JavaScript libraries as &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank" rel="noopener">JavaScript Modules&lt;/a> . To use this feature, add&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libraries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">library&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;d3&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;7.8.5&amp;#34;&lt;/span>&lt;span class="p">)]&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>in the app definition. The fields in the &lt;code>ace.library&lt;/code> structure are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">Property&lt;/th>
+&lt;th style="text-align: center">Optional&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Default&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">name&lt;/td>
+&lt;td style="text-align: center">false&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;td style="text-align: center">The name of the library to import&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">version&lt;/td>
+&lt;td style="text-align: center">false&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;td style="text-align: center">The version of the library&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">args&lt;/td>
+&lt;td style="text-align: center">true&lt;/td>
+&lt;td style="text-align: center">string[]&lt;/td>
+&lt;td style="text-align: center">[]&lt;/td>
+&lt;td style="text-align: center">Arguments to pass to esbuild&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The args array uses the &lt;a href="https://pkg.go.dev/github.com/evanw/esbuild/pkg/cli" target="_blank" rel="noopener">esbuild cli syntax&lt;/a>. For example, passing args as &lt;code>[&amp;quot;--minify&amp;quot;]&lt;/code> will enable minification for the imported module.&lt;/p>
+&lt;p>To directly download a library from a CDN to the static folder, add the url directly. For example,&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libraries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;https://unpkg.com/jquery@3.3.1/dist/jquery.min.js&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The HTMX library and its SSE extension are automatically downloaded.&lt;/p>
+&lt;h2>JavaScript Modules&lt;span class="hx:absolute hx:-mt-20" id="javascript-modules">&lt;/span>
+&lt;a href="#javascript-modules" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>JavaScript modules (also called ESM or ECMAScript Modules) are a way to import Javascript libraries dynamically, providing a unique namespace for all functions. Modules, once imported, can be used in the client code without requiring any build steps. See &lt;a href="https://jvns.ca/blog/2023/02/16/writing-javascript-without-a-build-system/" target="_blank" rel="noopener">jvns.ca&lt;/a> and &lt;a href="https://simonwillison.net/2023/May/2/download-esm/" target="_blank" rel="noopener">simonwillison.net&lt;/a> for notes about this approach. OpenRun tries to provide an easy interface to modules, converting npm packages to module format so that subsequent code changes do not require any build steps.&lt;/p>
+&lt;h2>Workflow&lt;span class="hx:absolute hx:-mt-20" id="workflow">&lt;/span>
+&lt;a href="#workflow" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The workflow when using modules in OpenRun for an app in dev mode is:&lt;/p>
+&lt;ul>
+&lt;li>Ensure &lt;a href="https://nodejs.org/en/download" target="_blank" rel="noopener">nodejs&lt;/a> is installed&lt;/li>
+&lt;li>Using npm, install package you want to use a modules. for example &lt;code>npm install d3&lt;/code>&lt;/li>
+&lt;li>Add the ace.library entry in the app config. OpenRun will automatically run esbuild and import the package as a module into &lt;code>static/gen/esm&lt;/code>&lt;/li>
+&lt;li>Add an importmap in the head section of the html. Like &lt;a href="https://github.com/openrundev/openrun/blob/8b7f0d7d0c692e0ca3c6a74e97d1913031b954a1/examples/memory_usage/index.go.html#L10" target="_blank" rel="noopener">here&lt;/a>.
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">script&lt;/span> &lt;span class="na">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">&amp;#34;importmap&amp;#34;&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;imports&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;d3&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;{{ static &amp;#34;&lt;/span>&lt;span class="nx">gen&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">esm&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">d3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">7.8&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="mf">5.&lt;/span>&lt;span class="nx">js&lt;/span>&lt;span class="s2">&amp;#34;}}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;/li>
+&lt;li>Use the library as required in your client. Like &lt;a href="https://github.com/openrundev/openrun/blob/8b7f0d7d0c692e0ca3c6a74e97d1913031b954a1/examples/memory_usage/static/js/app.js#L4" target="_blank" rel="noopener">here&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kr">import&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="nx">as&lt;/span> &lt;span class="nx">d3&lt;/span> &lt;span class="nx">from&lt;/span> &lt;span class="s2">&amp;#34;d3&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Creating the module is a one time step. The generated module can be checked into source code. On a new machine, to make code changes to the app, you do not need nodejs or npm to be installed.&lt;/p>
+&lt;p>For production deployment, no changes are required. Checkout the git repo containing the source code and create a OpenRun app. OpenRun will serve the static assets over HTTP/2 with content hash based caching. The assets are compressed for serving, there is no need usually for mimifying the modules.&lt;/p>
+&lt;h2>Esbuild Config&lt;span class="hx:absolute hx:-mt-20" id="esbuild-config">&lt;/span>
+&lt;a href="#esbuild-config" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun includes esbuild, there is no need to install esbuild manually. The OpenRun server config has the entry&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">system&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">node_path&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The node_path property is used by esbuild, these paths are searched for packages in addition to the node_modules directories in all parent directories. See &lt;a href="https://esbuild.github.io/api/#node-paths" target="_blank" rel="noopener">esbuild docs&lt;/a> for details. Paths should be separated with : on Unix and ; on Windows.&lt;/p>
+&lt;p>If you install the npm packages in your home directory, esbuild will pick up those without any additional configuration. Since each OpenRun project is importing the npm package as a module, you do not need to maintain separate node_modules for each OpenRun project.&lt;/p>
+&lt;p>If you do not want esbuild to create modules, set the node_path property in the server config to &lt;code>disable&lt;/code>. You will have to manually download the module file into the static folder.&lt;/p>
+&lt;h2>Notes&lt;span class="hx:absolute hx:-mt-20" id="notes">&lt;/span>
+&lt;a href="#notes" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;ul>
+&lt;li>The version number specified in the &lt;code>ace.library&lt;/code> is used to create the file name under &lt;code>static/gen/esm&lt;/code>. The actual package version depends on what was install using npm. Ensure that the same version is installed by npm as specified in the library config.&lt;/li>
+&lt;li>Only the &lt;code>minify&lt;/code> option for esbuild has been tested with OpenRun. Other options like chunking the files might not work currently.&lt;/li>
+&lt;li>The JavaScript support is for running JS on the browser. There is no support for running JavaScript on the OpenRun server, the server runs only Go code and starlark applications.&lt;/li>
+&lt;li>If an library url is specified, that is downloaded directly. There is no need for npm package in that case.&lt;/li>
+&lt;/ul></description></item></channel></rss>

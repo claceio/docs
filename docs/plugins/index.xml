@@ -1,1 +1,939 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenRun Blog</title><link>https://openrun.dev/docs/plugins/</link><description>Recent content from the OpenRun Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 18 Feb 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://openrun.dev/docs/plugins/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>App Deployment Simplified | OpenRun – Plugins</title><link>https://openrun.dev/docs/plugins/</link><description>Recent content in Plugins on App Deployment Simplified | OpenRun</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://openrun.dev/docs/plugins/index.xml" rel="self" type="application/rss+xml"/><item><title>Plugin Overview</title><link>https://openrun.dev/docs/plugins/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/plugins/overview/</guid><description>
+&lt;p>Plugins provide an API for OpenRun Starlark code to call out to external systems. Plugins are implemented in Go. Every plugin API calls needs to be in the approved list for it to be permitted. See &lt;a href="https://openrun.dev/docs/applications/appsecurity/#sample-application/" >security&lt;/a> for an overview of the security model.&lt;/p>
+&lt;p>Each plugin is identified by a unique name, like &lt;code>store.in&lt;/code> or &lt;code>exec.in&lt;/code>. Plugins ending with &lt;code>.in&lt;/code> are internal plugins, built into the OpenRun binary. Support for external plugins which are loaded dynamically is planned.&lt;/p>
+&lt;h2>Plugin Usage&lt;span class="hx:absolute hx:-mt-20" id="plugin-usage">&lt;/span>
+&lt;a href="#plugin-usage" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To use a plugin, load it using&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;http.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;http&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>This adds &lt;code>http&lt;/code> to the namespace for the app. To make a call to the plugin, first add the permissions to the app config.&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">permissions&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;http.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;get&amp;#34;&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;http.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;post&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Run &lt;code>openrun app approve /myapp&lt;/code> to authorize the app to call the &lt;code>get&lt;/code> and &lt;code>post&lt;/code> methods on the http plugin.&lt;/p>
+&lt;p>In the app handler code, do&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">SERVICE_URL&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;/api/challenge/&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">challenge_id&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;invalid_challenge_id&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">code&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">404&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>At runtime, OpenRun will check if the &lt;code>get&lt;/code> call is authorized. If so, the call to the plugin will be performed.&lt;/p>
+&lt;h2>Response Handling&lt;span class="hx:absolute hx:-mt-20" id="response-handling">&lt;/span>
+&lt;a href="#response-handling" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>All plugin API calls return a &lt;code>plugin_response&lt;/code> structure. The fields in this are&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>error&lt;/code> The error message string, empty string if no error&lt;/li>
+&lt;li>&lt;code>error_code&lt;/code> The error code integer, zero if no error&lt;/li>
+&lt;li>&lt;code>value&lt;/code> The actual return value for the plugin API call. The datatype for this depends on the API, check the API documentation for details.&lt;/li>
+&lt;/ul>
+&lt;p>To check the error status of an API call:&lt;/p>
+&lt;ul>
+&lt;li>Check boolean value for the return. If false, that indicates an error which can be returned.&lt;/li>
+&lt;li>If no error, get the &lt;code>value&lt;/code> property and continue with processing&lt;/li>
+&lt;/ul>
+&lt;p>For example,&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;https://localhost:9999/test&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># error condition&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;error_block&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># success&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="c1"># ret.value is the return value. The http plugin response has a json() function&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>An alternate way to write the error check is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;https://localhost:9999/test&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># error condition&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;error_block&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Success&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">())&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>Automatic Error Handling&lt;span class="hx:absolute hx:-mt-20" id="automatic-error-handling">&lt;/span>
+&lt;a href="#automatic-error-handling" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun supports automatic error handling, so that the handler functions do not have to check the error status of every plugin API call. The way this is implemented is such that if no explicit error handling is done, then the automatic error handling kicks in. If explicit error handling is done, then automatic error handling is not done. See &lt;a href="https://github.com/openrundev/apps/blob/main/utils/bookmarks/app.star" target="_blank" rel="noopener">bookmarks app&lt;/a> for an example of how the automatic error handling can be used.&lt;/p>
+&lt;p>If the &lt;code>error_handler&lt;/code> function is defined, then that is called with the error. The manual error checking works the same as mentioned above. But if no manual error checking is done, then the OpenRun platform will automatically call the &lt;code>error_handler&lt;/code> function in case of an error. The &lt;code>error_handler&lt;/code> could be defined as:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">error_handler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">req&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">req&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">IsPartial&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;error&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">retarget&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;#error_div&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">reswap&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;innerHTML&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;error.go.html&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>When no explicit error checks are done, the automatic error handling happens in these three cases:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Value Access&lt;/strong> When the response &lt;code>value&lt;/code> is accessed&lt;/li>
+&lt;li>&lt;strong>Next API call&lt;/strong> When the next plugin API call happens (to any plugin function)&lt;/li>
+&lt;li>&lt;strong>Handler Return&lt;/strong> When the handler function returns&lt;/li>
+&lt;/ul>
+&lt;h3>Value Access&lt;span class="hx:absolute hx:-mt-20" id="value-access">&lt;/span>
+&lt;a href="#value-access" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>If the handler code is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;https://localhost:9999/test&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">())&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>If the &lt;code>get&lt;/code> API had succeeded, then the &lt;code>value&lt;/code> property access will work as usual. But if the &lt;code>get&lt;/code> API had failed, then the &lt;code>value&lt;/code> access will fail and the &lt;code>error_handler&lt;/code> will be called with the original request and the error response.&lt;/p>
+&lt;h3>Next API Call&lt;span class="hx:absolute hx:-mt-20" id="next-api-call">&lt;/span>
+&lt;a href="#next-api-call" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>If the &lt;code>value&lt;/code> is not being accessed, then the next plugin call will raise the error. For example, if the handler code is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">begin&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">bookmark&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">select_one&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">table&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;url&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="p">})&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The response of the &lt;code>begin&lt;/code> API is not checked. When the next &lt;code>select_one&lt;/code> API is called, if the previous &lt;code>begin&lt;/code> had failed, the &lt;code>select_one&lt;/code> API will raise the previous API call&amp;rsquo;s error, the &lt;code>select_one&lt;/code> will not run.&lt;/p>
+&lt;h3>Handler Return&lt;span class="hx:absolute hx:-mt-20" id="handler-return">&lt;/span>
+&lt;a href="#handler-return" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>If the handler code is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="k">def&lt;/span> &lt;span class="nf">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">req&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">begin&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">book&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">doc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;abc&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">table&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">book&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">commit&lt;/span>&lt;span class="p">()&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Assume all the API calls had succeeded and then the &lt;code>commit&lt;/code> fails. Since the &lt;code>value&lt;/code> is not accessed and there is no plugin API call after the &lt;code>commit&lt;/code> call, the OpenRun platform will raise the error after the handler completes since the &lt;code>commit&lt;/code> had failed.&lt;/p>
+&lt;h3>Overriding Automatic Error Handling&lt;span class="hx:absolute hx:-mt-20" id="overriding-automatic-error-handling">&lt;/span>
+&lt;a href="#overriding-automatic-error-handling" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>The automatic error handling is great for handling the unusual error scenarios. For the error scenarios which are common, like a database uniqueness check failure, the error handing can be done explicitly in the handler code. If the handler code is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">table&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">new_bookmark&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;error.go.html&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>The automatic error handling will not be invoked in this case since the &lt;code>ret.error&lt;/code> is being checked. Checking the truth status of &lt;code>ret&lt;/code> also will disable the automatic error handling:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">table&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">new_bookmark&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="n">error&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">ret&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;error.go.html&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">ℹ️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">&lt;strong>Note:&lt;/strong> When developing a new app, first define the &lt;code>error_handler&lt;/code> and test it for the partial and full page scenarios. All subsequent handler code does not need to handle errors unless specific handling is required. If no &lt;code>error_handler&lt;/code> is defined, a generic error message screen is returned. If is recommended to define a custom &lt;code>error_handler&lt;/code>.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Returning Errors from Functions&lt;span class="hx:absolute hx:-mt-20" id="returning-errors-from-functions">&lt;/span>
+&lt;a href="#returning-errors-from-functions" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For returning error values within Starlark code, a convenience &lt;code>ace.output&lt;/code> struct is available. If you have a function in Starlark which can return success or an error, use &lt;code>ace.output&lt;/code>.&lt;/p>
+&lt;p>The fields in the &lt;code>ace.output&lt;/code> structure are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">Property&lt;/th>
+&lt;th style="text-align: center">Optional&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Default&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">value&lt;/td>
+&lt;td style="text-align: center">true&lt;/td>
+&lt;td style="text-align: center">any&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;td style="text-align: center">The return value&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">error&lt;/td>
+&lt;td style="text-align: center">true&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;td style="text-align: center">The error message&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>If a function &lt;code>f1&lt;/code> returns an error value, using &lt;code>return ace.output(error=&amp;quot;mymessage&amp;quot;)&lt;/code>, the caller will automatically fail when it tries to access the return value using &lt;code>f1().value&lt;/code>. To do custom error handling, do&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;pre>&lt;code>ret = f1()
+if not ret:
+return &amp;#34;Call failed: &amp;#34; &amp;#43; ret.error&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>Plugin Accounts&lt;span class="hx:absolute hx:-mt-20" id="plugin-accounts">&lt;/span>
+&lt;a href="#plugin-accounts" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Some plugins like &lt;code>exec.in&lt;/code> do not require any account information. Others like &lt;code>store.in&lt;/code> need some account information. The account configuration for a plugin is loaded from the OpenRun config file &lt;code>openrun.toml&lt;/code>. For example, the default configuration for &lt;code>store.in&lt;/code> is &lt;a href="https://github.com/openrundev/openrun/blob/e5ab0c1139d257c7f02fbe03d060a6bfe1b5f605/internal/system/openrun.default.toml#L54" target="_blank" rel="noopener">here&lt;/a>, which contains:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">plugin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="s2">&amp;#34;store.in&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">db_connection&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;sqlite:$OPENRUN_HOME/openrun_app.db&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Any application using the &lt;code>store.in&lt;/code> plugin will by default use the &lt;code>$OPENRUN_HOME/openrun_app.db&lt;/code> sqlite database. To change the default account config used by apps, update &lt;code>openrun.toml&lt;/code> and restart the OpenRun server. For example, adding the below will overwrite the default &lt;code>store.in&lt;/code> config for all apps.&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">plugin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="s2">&amp;#34;store.in&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">db_connection&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;sqlite:/tmp/openrun_app.db&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h3>Account Linking&lt;span class="hx:absolute hx:-mt-20" id="account-linking">&lt;/span>
+&lt;a href="#account-linking" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>If specific account config is required for an app, then the app can be linked to a specific account config. First add a new account config by adding in &lt;code>openrun.toml&lt;/code>&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">plugin&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="s2">&amp;#34;store.in#tmpaccount&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">db_connection&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;sqlite:/tmp/openrun_app.db&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>For an app &lt;code>/myapp&lt;/code> using &lt;code>store.in&lt;/code>, run &lt;code>openrun account link --promote /myapp store.in tmpaccount&lt;/code>&lt;/p>
+&lt;p>This links the &lt;code>myapp&lt;/code> app to use the &lt;code>tmpaccount&lt;/code> account.&lt;/p>
+&lt;h3>Named Account&lt;span class="hx:absolute hx:-mt-20" id="named-account">&lt;/span>
+&lt;a href="#named-account" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>In addition to using account linking, the plugin code itself can point to specific accounts. For example, if the app code has&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;http.in#google&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;googlehttp&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>then the app will use the &lt;code>http.in#google&lt;/code> account config by default. This also can be overridden using account links, by
+running &lt;code>openrun account link --promote /myapp http.in#google myaccount&lt;/code>&lt;/p>
+&lt;p>This approach is useful if an app has to access multiple accounts for the same plugin. The account linking approach is recommended for normal scenarios.&lt;/p>
+&lt;p>OpenRun apps aim to be portable across installations, without requiring code changes. Using account config allows the app code to be independent of the installation specific account config.&lt;/p></description></item><item><title>Plugin Catalog</title><link>https://openrun.dev/docs/plugins/catalog/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/plugins/catalog/</guid><description>
+&lt;p>The page lists the available plugins and their API details.&lt;/p>
+&lt;h2>Database Storage&lt;span class="hx:absolute hx:-mt-20" id="database-storage">&lt;/span>
+&lt;a href="#database-storage" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>store.in&lt;/code> plugin supports a document store interface for writing data to SQLite. See &lt;a href="https://openrun.dev/docs/plugins/store/" >store&lt;/a> for details.&lt;/p>
+&lt;h2>Container Config&lt;span class="hx:absolute hx:-mt-20" id="container-config">&lt;/span>
+&lt;a href="#container-config" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>container.in&lt;/code> plugin supports configuring for using a container for deploying backend APIs. See &lt;a href="https://openrun.dev/docs/plugins/container/" >container&lt;/a> for details.&lt;/p>
+&lt;h2>Proxy Config&lt;span class="hx:absolute hx:-mt-20" id="proxy-config">&lt;/span>
+&lt;a href="#proxy-config" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>proxy.in&lt;/code> plugin supports proxying API calls to deploying backend APIs. See &lt;a href="https://openrun.dev/docs/plugins/proxy/" >proxy&lt;/a> for details.&lt;/p>
+&lt;h2>HTTP Plugin&lt;span class="hx:absolute hx:-mt-20" id="http-plugin">&lt;/span>
+&lt;a href="#http-plugin" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>get,head,options,post,put,delete,patch&lt;span class="hx:absolute hx:-mt-20" id="getheadoptionspostputdeletepatch">&lt;/span>
+&lt;a href="#getheadoptionspostputdeletepatch" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>The &lt;code>http.in&lt;/code> plugin supports making HTTP API calls. The APIs available are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">API&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>get&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">HTTP Get request&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>head&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">HTTP Head request&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>options&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">HTTP Options request&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>post&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">HTTP Post request&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>put&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">HTTP Put request&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>delete&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">HTTP Delete request&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>patch&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">HTTP Patch request&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>All the API&amp;rsquo;s support the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>url&lt;/strong> (string, required) : the url to send the request to&lt;/li>
+&lt;li>&lt;strong>params&lt;/strong> (dict, optional) : url params to send&lt;/li>
+&lt;li>&lt;strong>headers&lt;/strong> (dict, optional) : HTTP headers to send&lt;/li>
+&lt;li>&lt;strong>body&lt;/strong> (string, optional) : body to send&lt;/li>
+&lt;li>&lt;strong>form_body&lt;/strong> (dict, optional) : form body to send&lt;/li>
+&lt;li>&lt;strong>form_encoding&lt;/strong> (string, optional) : the form encoding to use, &lt;code>application/x-www-form-urlencoded&lt;/code> (default) or &lt;code>multipart/form-data&lt;/code>&lt;/li>
+&lt;li>&lt;strong>json_body&lt;/strong> (object, optional) : the object to send as json encoded body&lt;/li>
+&lt;li>&lt;strong>auth_basic&lt;/strong> (tuple(string, string), optional): HTTP basic auth username and password&lt;/li>
+&lt;li>&lt;strong>auth_signature&lt;/strong> (string, optional): Signature auth type&lt;/li>
+&lt;li>&lt;strong>error_on_fail&lt;/strong> (bool, optional): Whether to fail on non-2xx status code, default true&lt;/li>
+&lt;/ul>
+&lt;p>The response for all API&amp;rsquo;s (&lt;code>value&lt;/code> within &lt;code>plugin_response&lt;/code>) contains following properties:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>url&lt;/strong> (string): the url the response is for&lt;/li>
+&lt;li>&lt;strong>status_code&lt;/strong> (int): the HTTP status code&lt;/li>
+&lt;li>&lt;strong>headers&lt;/strong> (dict): the output headers&lt;/li>
+&lt;li>&lt;strong>encoding&lt;/strong> (string): the transfer encoding header&lt;/li>
+&lt;li>&lt;strong>body()&lt;/strong> (string) : the response body as a string&lt;/li>
+&lt;li>&lt;strong>json()&lt;/strong> (object) : the response body un-marshalled as a json&lt;/li>
+&lt;/ul>
+&lt;p>If the API calls fails to go through then the plugin response &lt;code>error&lt;/code> property will be set. If the API returns non 2xx status code, error is set (unless &lt;code>error_on_fail&lt;/code> is False). The &lt;code>status_code&lt;/code> will indicate whether the API succeeded on the server. To make an API call and parse the response as JSON, do&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;http://localhost:9999/test&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">()&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>Exec Plugin&lt;span class="hx:absolute hx:-mt-20" id="exec-plugin">&lt;/span>
+&lt;a href="#exec-plugin" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;h3>run&lt;span class="hx:absolute hx:-mt-20" id="run">&lt;/span>
+&lt;a href="#run" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>The &lt;code>exec.in&lt;/code> plugin allows running external commands, starting a new process for the specified command. The APIs available are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">API&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>run&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read/Write&lt;/td>
+&lt;td style="text-align: center">Runs the command as a new process&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The API supports the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>path&lt;/strong> (string, required) : the command to run&lt;/li>
+&lt;li>&lt;strong>args&lt;/strong> (list of strings, optional) : arguments to pass to the cmd&lt;/li>
+&lt;li>&lt;strong>env&lt;/strong> (list of strings, optional) : the env to pass to the cmd, in the form &lt;code>key=value&lt;/code>&lt;/li>
+&lt;li>&lt;strong>process_partial&lt;/strong> (bool, optional) : whether to process the output when there is a failure&lt;/li>
+&lt;li>&lt;strong>stdout_file&lt;/strong> (bool, optional) : whether to send the stdout for the process to a temporary file on disk&lt;/li>
+&lt;li>&lt;strong>parse&lt;/strong> (string, optional) : Whether to parse the stdout. Supported options are &lt;code>json&lt;/code> and &lt;code>jsonlines&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>The default response (when &lt;code>stdout_file&lt;/code> is &lt;code>False&lt;/code>) for the &lt;code>exec&lt;/code> API (&lt;code>value&lt;/code> within &lt;code>plugin_response&lt;/code>) is of type list of strings. The stdout is scanned and split on newlines. The list of lines is returned. For example&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">exec&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;ls&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;-l&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">process_partial&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;Error&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">line&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Process lines&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-yellow-100 hx:bg-yellow-50 hx:text-yellow-900 hx:dark:border-yellow-200/30 hx:dark:bg-yellow-700/30 hx:dark:text-yellow-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">⚠️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">&lt;strong>Note:&lt;/strong> Only first 100MB of the command stdout output is scanned currently, the rest is discarded.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;p>If &lt;code>stdout_file&lt;/code> is &lt;code>True&lt;/code>, then the plugin output &lt;code>value&lt;/code> is the name for the temp file to which the output was written. There is no size limit on this file output. The user is responsible for deleting this file.&lt;/p>
+&lt;h2>FS Plugin&lt;span class="hx:absolute hx:-mt-20" id="fs-plugin">&lt;/span>
+&lt;a href="#fs-plugin" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>fs.in&lt;/code> allows working with local file system. The APIs available are&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">API&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>abs&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">Returns the absolute path for given relative path&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>list&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">List files in specified directory&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>find&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">Find files under specified directory matching criteria&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>serve_tmp_file&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">Load file metadata to the OpenRun database and make available through API&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3>abs&lt;span class="hx:absolute hx:-mt-20" id="abs">&lt;/span>
+&lt;a href="#abs" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>The &lt;code>abs&lt;/code> API supports the following parameter:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>path&lt;/strong> (string, required) : the file path&lt;/li>
+&lt;/ul>
+&lt;p>The response for the API (&lt;code>value&lt;/code> within &lt;code>plugin_response&lt;/code>) is of type string, the absolute path for given path.&lt;/p>
+&lt;h3>list&lt;span class="hx:absolute hx:-mt-20" id="list">&lt;/span>
+&lt;a href="#list" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>The &lt;code>list&lt;/code> API supports the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>path&lt;/strong> (string, required) : the directory path&lt;/li>
+&lt;li>&lt;strong>recursive_size&lt;/strong> (bool, optional, default false) : whether to include the recursive size of sub-directories&lt;/li>
+&lt;li>&lt;strong>ignore_errors&lt;/strong> (bool, optional, default false) : whether to ignore errors when accessing entries&lt;/li>
+&lt;/ul>
+&lt;p>The response for the API is a list of type &lt;code>FileInfo&lt;/code>. The &lt;code>FileInfo&lt;/code> struct contains the fields:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>name&lt;/strong> (string) : the file name&lt;/li>
+&lt;li>&lt;strong>size&lt;/strong> (int) : the file size in bytes, rounded up to 4K&lt;/li>
+&lt;li>&lt;strong>is_dir&lt;/strong> (bool) : is it a directory&lt;/li>
+&lt;li>&lt;strong>mode&lt;/strong> (int) : file mode info&lt;/li>
+&lt;/ul>
+&lt;h3>find&lt;span class="hx:absolute hx:-mt-20" id="find">&lt;/span>
+&lt;a href="#find" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>The &lt;code>find&lt;/code> API supports the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>path&lt;/strong> (string, required) : the directory path&lt;/li>
+&lt;li>&lt;strong>name&lt;/strong> (string, optional) : the file name glob pattern to match&lt;/li>
+&lt;li>&lt;strong>limit&lt;/strong> (int, optional, default 10K, max 100K) : the limit on number of entries to return&lt;/li>
+&lt;li>&lt;strong>min_size&lt;/strong> (int, optional) : the minimum file size in bytes to look for&lt;/li>
+&lt;li>&lt;strong>ignore_errors&lt;/strong> (bool, optional, default false) : whether to ignore errors when accessing entries&lt;/li>
+&lt;/ul>
+&lt;p>The response for the &lt;code>find&lt;/code> API is a list of type &lt;code>FileInfo&lt;/code>, same as returned by &lt;code>list&lt;/code>.&lt;/p>
+&lt;h3>serve_tmp_file&lt;span class="hx:absolute hx:-mt-20" id="serve_tmp_file">&lt;/span>
+&lt;a href="#serve_tmp_file" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h3>&lt;p>The &lt;code>serve_tmp_file&lt;/code> API supports the following parameters:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>path&lt;/strong> (string, required) : the file path to serve&lt;/li>
+&lt;li>&lt;strong>name&lt;/strong> (string, optional, default basename of path) : the file name to use (when serving the API)&lt;/li>
+&lt;li>&lt;strong>visibility&lt;/strong> (string, optional, default &lt;code>fs.USER&lt;/code>) : the API access level for the file (&lt;code>fs.USER&lt;/code> or &lt;code>fs.APP&lt;/code>)&lt;/li>
+&lt;li>&lt;strong>mime_type&lt;/strong> (string, optional, default &lt;code>application/octet-stream&lt;/code>) : the mime type to use when serving the file&lt;/li>
+&lt;li>&lt;strong>expiry_minutes&lt;/strong> (int, optional, default 60 minutes) : how long to keep the file metadata, set to zero for no deletion&lt;/li>
+&lt;li>&lt;strong>single_access&lt;/strong> (bool, optional, default &lt;code>True&lt;/code>) : whether to serve the file just once and then automatically delete it&lt;/li>
+&lt;/ul>
+&lt;p>The response for the &lt;code>serve_tmp_file&lt;/code> API is a dict with the fields:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>id&lt;/strong> (string) : the id of the metadata entry&lt;/li>
+&lt;li>&lt;strong>url&lt;/strong> (string) : the url path (without domain) for downloading the file&lt;/li>
+&lt;li>&lt;strong>name&lt;/strong> (string) : the file name&lt;/li>
+&lt;/ul>
+&lt;p>The &lt;code>serve_tmp_file&lt;/code> API creates a metadata entry in the OpenRun database. The file can be served through an API using this entry. The default behavior is the file is accessible only to the user who created it. First download of the file will serve the file and automatically deletes the file. The file is deleted after 60 minutes in case there is no API access before that. Deleting the metadata entry removes the database entry and &lt;strong>also deletes the file from disk&lt;/strong>. If the file should not be deleted, do:&lt;/p>
+&lt;p>&lt;code>ret = fs.serve_tmp_file(&amp;quot;/tmp/myfile&amp;quot;, single_access=False, expiry_minutes=0)&lt;/code>&lt;/p>
+&lt;p>See number_lines app &lt;a href="https://github.com/openrundev/apps/blob/main/misc/num_lines/app.star" target="_blank" rel="noopener">code&lt;/a>:&lt;a href="https://utils.demo.clace.io/num_lines" target="_blank" rel="noopener">demo&lt;/a> for an example of using this API. Setting &lt;code>visibility&lt;/code> to &lt;code>fs.APP&lt;/code> will make the API available to anyone who has access to the app.&lt;/p></description></item><item><title>Store Plugin</title><link>https://openrun.dev/docs/plugins/store/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/plugins/store/</guid><description>
+&lt;p>The &lt;code>store.in&lt;/code> plugin provides a document store interface to work with SQLite tables (PostgreSQL support is coming soon). The goal for the store plugin is to support a full managed interface, creating the app automatically creates the tables required for the app.&lt;/p>
+&lt;h2>Introduction&lt;span class="hx:absolute hx:-mt-20" id="introduction">&lt;/span>
+&lt;a href="#introduction" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>store.in&lt;/code> plugins automatically creates tables with the specified schema. The tables are created on first load unless they are already present. The tables are linked to the app. The tables use a document store interface. The data is stored as JSON(B) data types. To query the data, a structured interface is used similar to the one provided by MongoDB. The advantage of this approach is that SQL injection is not possible, even if the application code is incorrectly written.&lt;/p>
+&lt;h2>Schema Definition&lt;span class="hx:absolute hx:-mt-20" id="schema-definition">&lt;/span>
+&lt;a href="#schema-definition" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The schema for the app is specified in the &lt;code>schema.star&lt;/code> file in the root directory of the app code. The format of this file is like:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;bookmark&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fields&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">field&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;url&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">STRING&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">field&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;tags&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">LIST&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">indexes&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">index&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="s2">&amp;#34;url&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">unique&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;tag&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fields&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">field&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;tag&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">STRING&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">field&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;urls&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">LIST&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">indexes&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">index&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="s2">&amp;#34;tag&amp;#34;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">unique&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">])&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Multiple types can be specified. Each type has a name, list of fields and list of indexes. Each field has a name and a type, the valid types are &lt;code>INT&lt;/code>, &lt;code>STRING&lt;/code>, &lt;code>BOOLEAN&lt;/code>, &lt;code>LIST&lt;/code> and &lt;code>DICT&lt;/code>.&lt;/p>
+&lt;p>Each type maps to one table in the underlying database. Indexes can be created on the fields. Each index is specified as list of field names. Adding &lt;code>:desc&lt;/code> to the field name changes the index to be sorted descending instead of default ascending. Setting &lt;code>unique&lt;/code> property to &lt;code>True&lt;/code> makes it an unique index.&lt;/p>
+&lt;h2>Schema Design&lt;span class="hx:absolute hx:-mt-20" id="schema-design">&lt;/span>
+&lt;a href="#schema-design" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>SQL tables are used as underlying storage, but joins are not supported by the &lt;code>store.in&lt;/code> interface. The schema design to use would be same as schema used for a &lt;a href="https://www.mongodb.com/developer/products/mongodb/mongodb-schema-design-best-practices/" target="_blank" rel="noopener">document database&lt;/a>. Since &lt;code>LIST&lt;/code> and &lt;code>DICT&lt;/code> data types are supported, de-normalized schema is recommended instead of normalized schema.&lt;/p>
+&lt;h2>Store Types&lt;span class="hx:absolute hx:-mt-20" id="store-types">&lt;/span>
+&lt;a href="#store-types" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The type information is read from the schema file and schema types are automatically created for the app. The &lt;code>doc&lt;/code> namespace has type objects for each type. For the previous example, the two types created are &lt;code>doc.bookmark&lt;/code> and &lt;code>doc.tag&lt;/code>. The &lt;code>table&lt;/code> namespace also has entry populated which reference the table names for the type. For the previous example, the two table names available are &lt;code>table.bookmark&lt;/code> and &lt;code>table.tag&lt;/code>. This allows creating objects and persisting them using the store API by doing:&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">bookmark&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">doc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;http://openrun.dev&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">tags&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;webapps&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;tools&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">insert&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">table&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">bookmark&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;h2>Store APIs&lt;span class="hx:absolute hx:-mt-20" id="store-apis">&lt;/span>
+&lt;a href="#store-apis" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The API&amp;rsquo;s in the &lt;code>store.in&lt;/code> plugin and their arguments and response are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">API&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Args&lt;/th>
+&lt;th style="text-align: center">Response Value&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>begin&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">-&lt;/td>
+&lt;td style="text-align: center">-&lt;/td>
+&lt;td style="text-align: center">Begin a new transaction&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>commit&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">-&lt;/td>
+&lt;td style="text-align: center">-&lt;/td>
+&lt;td style="text-align: center">Commit active transaction&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>rollback&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">-&lt;/td>
+&lt;td style="text-align: center">-&lt;/td>
+&lt;td style="text-align: center">Rollback active transaction&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>select_by_id&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> id : int&lt;/td>
+&lt;td style="text-align: center">doc&lt;/td>
+&lt;td style="text-align: center">Select one record by id&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>select&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> filter : dict &lt;br> sort : list string &lt;br> offset : int &lt;br> limit : int (default 10,000)&lt;/td>
+&lt;td style="text-align: center">doc iterator&lt;/td>
+&lt;td style="text-align: center">Select by filter&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>select_one&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> filter : dict&lt;/td>
+&lt;td style="text-align: center">doc&lt;/td>
+&lt;td style="text-align: center">Select one by filter&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>count&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> filter : dict&lt;/td>
+&lt;td style="text-align: center">int&lt;/td>
+&lt;td style="text-align: center">Count entries by filter&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>insert&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> entry : doc&lt;/td>
+&lt;td style="text-align: center">id : int&lt;/td>
+&lt;td style="text-align: center">Insert a document&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>update&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> entry : doc&lt;/td>
+&lt;td style="text-align: center">count : int&lt;/td>
+&lt;td style="text-align: center">Update a document&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>delete_by_id&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> id : int&lt;/td>
+&lt;td style="text-align: center">count : int&lt;/td>
+&lt;td style="text-align: center">Delete one document by id&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>delete&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Write&lt;/td>
+&lt;td style="text-align: center">table: string &lt;br> filter : dict&lt;/td>
+&lt;td style="text-align: center">count : int&lt;/td>
+&lt;td style="text-align: center">Delete multiple docs by filter&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2>Transactions&lt;span class="hx:absolute hx:-mt-20" id="transactions">&lt;/span>
+&lt;a href="#transactions" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The transaction handling APIs &lt;code>begin&lt;/code>, &lt;code>commit&lt;/code> and &lt;code>rollback&lt;/code> take no arguments. All the other APIs take the table name as the first argument. The transaction created by the &lt;code>begin&lt;/code> is saved in a thread local, there is no need to pass the transaction manually to subsequent API calls. The transaction &lt;code>rollback&lt;/code> is automatically done at the end of the API handler if &lt;code>commit&lt;/code> is not done explicitly.&lt;/p>
+&lt;h2>Automatic Fields&lt;span class="hx:absolute hx:-mt-20" id="automatic-fields">&lt;/span>
+&lt;a href="#automatic-fields" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>All tables have some fields added automatically. These are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">Field&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">_id&lt;/td>
+&lt;td style="text-align: center">int&lt;/td>
+&lt;td style="text-align: center">Primary key&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">_version&lt;/td>
+&lt;td style="text-align: center">int&lt;/td>
+&lt;td style="text-align: center">Schema version&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">_created_by&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">User id&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">_updated_by&lt;/td>
+&lt;td style="text-align: center">string&lt;/td>
+&lt;td style="text-align: center">User id&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">_created_at&lt;/td>
+&lt;td style="text-align: center">timestamp&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">_updated_at&lt;/td>
+&lt;td style="text-align: center">timestamp&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>These fields can be accessed like regular user defined field in the store APIs. So &lt;code>bookmark._id&lt;/code> can be used the way &lt;code>bookmark.url&lt;/code> is used in all the APIs.&lt;/p>
+&lt;h2>Iterators&lt;span class="hx:absolute hx:-mt-20" id="iterators">&lt;/span>
+&lt;a href="#iterators" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>select&lt;/code> API returns a document iterator. Use a regular python &lt;code>for&lt;/code> loop to iterate on the entries. For example,&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">ret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">store&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">select&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">table&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bookmark&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{},&lt;/span> &lt;span class="n">limit&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sort&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;_created_at:desc&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">response&lt;/span>&lt;span class="p">({&lt;/span>&lt;span class="s2">&amp;#34;error&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">error&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="s2">&amp;#34;error&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">bookmarks&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">row&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">ret&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">bookmarks&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">row&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Iterating till the end of the loop automatically closes the iterator. Returning from a handler without closing an iterator will cause the handler to fail. The iterator is automatically closed by the OpenRun platform to prevent a resource leak. The API failure is used to indicate to the developer that the code needs to be fixed to explicitly close the iterator.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-yellow-100 hx:bg-yellow-50 hx:text-yellow-900 hx:dark:border-yellow-200/30 hx:dark:bg-yellow-700/30 hx:dark:text-yellow-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">⚠️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">&lt;strong>Note:&lt;/strong> The iterator cannot be directly returned from the handler. A list needs to be created and populated if the entries need to be passed to the template.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Select Limits and Sort&lt;span class="hx:absolute hx:-mt-20" id="select-limits-and-sort">&lt;/span>
+&lt;a href="#select-limits-and-sort" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For the &lt;code>select&lt;/code> API, a limit of 10,000 is set as the default limit value. The API can pass a different limit value if required. The maximum value allowed for the limit is 100,000. Passing a limit beyond that will result in an API failure.&lt;/p>
+&lt;p>The sort argument can be used to sort the result for the &lt;code>select&lt;/code> API. The argument is a list of strings. For example, &lt;code>[&amp;quot;age&amp;quot;, &amp;quot;city&amp;quot;]&lt;/code> is sorted on age and city ascending. &lt;code>[&amp;quot;age&amp;quot;, &amp;quot;city:desc&amp;quot;]&lt;/code> is sorted on age ascending and city descending.&lt;/p>
+&lt;h2>Filter&lt;span class="hx:absolute hx:-mt-20" id="filter">&lt;/span>
+&lt;a href="#filter" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>select&lt;/code>, &lt;code>select_one&lt;/code>, &lt;code>count&lt;/code> and &lt;code>delete&lt;/code> APIs take a filter parameter. The filter has to be specified as a dict. The format of the filter is similar to the format used by MongoDB. The advantage of this over a SQL expression is that there is no possibility of SQL injection, even with an improperly written application.&lt;/p>
+&lt;p>The filter is specified as a list diction, the keys are the names of the field to apply the condition on. The value can be a value, in which case it is treated as a equality match. If the value is an diction, then the it is treated as a expression to apply on the specified field.&lt;/p>
+&lt;p>For example, a filter &lt;code>{&amp;quot;age&amp;quot;: 30}&lt;/code> is equivalent to sql where clause &lt;code>age = ?&lt;/code> with the parameter bound to 30. Filter &lt;code>{&amp;quot;age&amp;quot;: 30, &amp;quot;city&amp;quot;: &amp;quot;New York&amp;quot;, &amp;quot;state&amp;quot;: &amp;quot;California&amp;quot;}&lt;/code> is same as sql &lt;code>age = ? AND city = ? AND state = ?&lt;/code>, with the appropriate bindings. To express an or condition, do filter as &lt;code>{&amp;quot;age&amp;quot;: 30, &amp;quot;$or&amp;quot;: [{&amp;quot;city&amp;quot;: &amp;quot;New York&amp;quot;}, {&amp;quot;state&amp;quot;: &amp;quot;California&amp;quot;}]}&lt;/code>. That translates to &lt;code>age = ? AND ( city = ? OR state = ? )&lt;/code>&lt;/p>
+&lt;p>To express an inequality condition, do &lt;code>{&amp;quot;age&amp;quot;: {&amp;quot;$gt&amp;quot;: 30}}&lt;/code> which becomes &lt;code>age &amp;gt; ?&lt;/code>.&lt;/p>
+&lt;p>The logical operators supported are &lt;code>$AND&lt;/code> and &lt;code>$OR&lt;/code>, case insensitive.&lt;/p>
+&lt;p>The filter operators supported (case insensitive) are&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">Filter&lt;/th>
+&lt;th style="text-align: center">SQL&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">$GT&lt;/td>
+&lt;td style="text-align: center">&amp;gt;&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">$LT&lt;/td>
+&lt;td style="text-align: center">&amp;lt;&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">$GTE&lt;/td>
+&lt;td style="text-align: center">&amp;gt;=&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">$LTE&lt;/td>
+&lt;td style="text-align: center">&amp;lt;=&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">$EQ&lt;/td>
+&lt;td style="text-align: center">=&lt;/td>
+&lt;td style="text-align: center">Default when value is not a dict&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">$NE&lt;/td>
+&lt;td style="text-align: center">!=&lt;/td>
+&lt;td style="text-align: center">&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: center">$LIKE&lt;/td>
+&lt;td style="text-align: center">like&lt;/td>
+&lt;td style="text-align: center">Value has to be passed with % added, &lt;br> it is not added automatically. For example &lt;code>&amp;quot;%test%&amp;quot;&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Container Plugin</title><link>https://openrun.dev/docs/plugins/container/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/plugins/container/</guid><description>
+&lt;p>The &lt;code>container.in&lt;/code> plugin provides the &lt;code>config&lt;/code> API to allow configuring the container backend.&lt;/p>
+&lt;h2>Introduction&lt;span class="hx:absolute hx:-mt-20" id="introduction">&lt;/span>
+&lt;a href="#introduction" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun can build and manage containers for implementing the app backend APIs. The &lt;code>config&lt;/code> API is used to configure at the app level what configuration is used for the container.&lt;/p>
+&lt;h2>API&lt;span class="hx:absolute hx:-mt-20" id="api">&lt;/span>
+&lt;a href="#api" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>container.in&lt;/code> plugin has just one main api, &lt;code>config&lt;/code>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">API&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>config&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">Configures the container details for the app&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The &lt;code>config&lt;/code> API supports the following parameter:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>src&lt;/strong> (string, optional) : the source for containerfile, &lt;code>auto&lt;/code> by default&lt;/li>
+&lt;li>&lt;strong>port&lt;/strong> (int, optional) : the port number exposed from the container&lt;/li>
+&lt;li>&lt;strong>scheme&lt;/strong> (string, optional) : the url scheme, &lt;code>http&lt;/code> by default&lt;/li>
+&lt;li>&lt;strong>health&lt;/strong> (string, optional) : the health check API, &lt;code>/&lt;/code> by default&lt;/li>
+&lt;li>&lt;strong>lifetime&lt;/strong> (string, optional) : the lifetime for the container, default is to start a service when app is initialize. Set to &lt;code>container.COMMAND&lt;/code> to allow running commands against the container using &lt;code>container.run&lt;/code> without starting a service.&lt;/li>
+&lt;li>&lt;strong>build_dir&lt;/strong> (string, optional) : the build directory for the build, &lt;code>/&lt;/code> by default&lt;/li>
+&lt;/ul>
+&lt;p>When the &lt;code>src&lt;/code> is auto, the container file is auto detected. It checks for presence of either &lt;code>Containerfile&lt;/code> or &lt;code>Dockerfile&lt;/code>. If the value begins with &lt;code>image:&lt;/code>, the subsequent portion is treated as the image to download. No image build is done in that case. Any other value for &lt;code>src&lt;/code> is treated as the file name to use as the container file.&lt;/p>
+&lt;p>&lt;code>port&lt;/code> can be specified in the container file, using a EXPOSE directive. If a value other than zero is specified in the config, that takes precedence over the value in the Expose.&lt;/p>
+&lt;p>The container plugin also supports the &lt;a href="https://openrun.dev/docs/plugins/catalog/#run" >&lt;code>run&lt;/code>&lt;/a> API, same as the &lt;code>exec&lt;/code> plugin. This allows running a command inside a container.&lt;/p>
+&lt;p>A sample program using the container &lt;code>config&lt;/code> is&lt;/p>
+&lt;!-- prettier-ignore -->
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;proxy.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;proxy&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;container.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;My App&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">routes&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">proxy&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">proxy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">container&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">AUTO&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">permissions&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;proxy.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;config&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;container.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;config&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">AUTO&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span> &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>A app which runs an command against a specified image (see &lt;a href="https://github.com/openrundev/appspecs/blob/main/image-cmd/app.star" target="_blank" rel="noopener">image-cmd spec&lt;/a> is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;container.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;container&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">run&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dry_run&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">split&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34; &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">split&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">split&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">:],&lt;/span> &lt;span class="n">parse_json&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">args&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">value&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Command output&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">app_name&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34; : &amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span> &lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">actions&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">action&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Run Command using &amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">run&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">description&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Run specified command in container&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">hidden&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;secrets&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;app_name&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;image&amp;#34;&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">container&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;image:&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">lifetime&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">container&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">COMMAND&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">permissions&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;container.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;config&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;image:&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">secrets&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">secrets&lt;/span>&lt;span class="p">),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;container.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;run&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">secrets&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">secrets&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;!-- prettier-ignore-end --></description></item><item><title>Proxy Plugin</title><link>https://openrun.dev/docs/plugins/proxy/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/plugins/proxy/</guid><description>
+&lt;p>The &lt;code>proxy.in&lt;/code> plugin provides the &lt;code>config&lt;/code> API to allow proxying of API calls.&lt;/p>
+&lt;h2>Introduction&lt;span class="hx:absolute hx:-mt-20" id="introduction">&lt;/span>
+&lt;a href="#introduction" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun can proxy API calls to external endpoints or to backend APIs implemented in a container. The &lt;code>config&lt;/code> API is used to configure at the route level what configuration is used for the proxy.&lt;/p>
+&lt;h2>API&lt;span class="hx:absolute hx:-mt-20" id="api">&lt;/span>
+&lt;a href="#api" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>proxy.in&lt;/code> plugin has just one api, &lt;code>config&lt;/code>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: center">API&lt;/th>
+&lt;th style="text-align: center">Type&lt;/th>
+&lt;th style="text-align: center">Notes&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: center">&lt;strong>config&lt;/strong>&lt;/td>
+&lt;td style="text-align: center">Read&lt;/td>
+&lt;td style="text-align: center">Configures the proxy details for the route&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The &lt;code>config&lt;/code> API supports the following parameter:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>url&lt;/strong> (string, required) : The url to proxy to. Use &lt;code>container.URL&lt;/code> to proxy to backend container&lt;/li>
+&lt;li>&lt;strong>strip_path&lt;/strong> (string, optional) : extra path values to strip from the proxied API call&lt;/li>
+&lt;li>&lt;strong>preserve_host&lt;/strong> (bool, optional) : whether to preserve the Host header. Default false, the Host header is set to the target host value&lt;/li>
+&lt;li>&lt;strong>strip_app&lt;/strong> (bool, optional) : whether to strip the app path from the proxied API call. Default true.&lt;/li>
+&lt;/ul>
+&lt;h2>Example&lt;span class="hx:absolute hx:-mt-20" id="example">&lt;/span>
+&lt;a href="#example" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>This is an example app which proxies data to google.com. This app has to be installed at the root level, since google does not use relative paths.&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">app.star&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">load&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;proxy.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;proxy&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;Proxy App&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">routes&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">proxy&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">proxy&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">config&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;https://www.google.com&amp;#34;&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">],&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">permissions&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ace&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">permission&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;proxy.in&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;config&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="n">param&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="p">]),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

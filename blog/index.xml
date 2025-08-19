@@ -1,119 +1,105 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenRun Blog</title><link>https://openrun.dev/blog/</link><description>Recent content from the OpenRun Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 17 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://openrun.dev/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>App-Level Isolation in Web Server Config</title><link>https://openrun.dev/blog/webserver/</link><pubDate>Fri, 17 Jan 2025 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/webserver/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>App Deployment Simplified | OpenRun – Blog</title><link>https://openrun.dev/blog/</link><description>Recent content in Blog on App Deployment Simplified | OpenRun</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 17 Jan 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://openrun.dev/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>App-Level Isolation in Web Server Config</title><link>https://openrun.dev/blog/webserver/</link><pubDate>Fri, 17 Jan 2025 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/webserver/</guid><description>
 &lt;div
-class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+class="hx:overflow-x-auto hx:md:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 ltr:hx:pr-4 rtl:hx:pl-4 contrast-more:hx:border-current contrast-more:dark:hx:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="ltr:hx:pl-3 ltr:hx:pr-2 rtl:hx:pr-3 rtl:hx:pl-2">
 &lt;div
-class="hx-select-none hx-text-xl"
+class="hx:select-none hx:text-xl"
 style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 📎
 &lt;/div>
 &lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mx-4 hx:leading-7 first:hx:mt-0">
 OpenRun is an
-&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a> platform for
-developing internal tools and deploying them across a team. OpenRun can
-auto-generate an UI for backend &lt;a href="../../docs/actions/">actions&lt;/a>.
-OpenRun is the first internal tools platform built for
-&lt;a href="https://htmx.org/essays/hypermedia-driven-applications/"
->Hypermedia Driven Applications&lt;/a
->
-and first internal tools platform on the
-&lt;a
-href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun">
-CNCF landscape&lt;/a
->.
+&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a>
+alternative to Google Cloud Run and AWS App Runner. OpenRun is built for
+teams to easily deploy internal tools. OpenRun supports zero-config
+deployment of apps built with frameworks like Streamlit, Gradio, FastHTML,
+NiceGUI etc.
 &lt;br />
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;h2>Background&lt;span class="hx-absolute -hx-mt-20" id="background">&lt;/span>
+&lt;h2>Background&lt;span class="hx:absolute hx:-mt-20" id="background">&lt;/span>
 &lt;a href="#background" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun is a platform for developing and deploying internal tools. OpenRun provides functionality usually handled separately by a web server and an application server. The web server part of OpenRun is built such that there is complete isolation between app-level routing rules. Creating a new app or updating an existing app cannot break other apps. This post goes into details about how this is done and why it is useful.&lt;/p>
-&lt;h2>Web Server Overview&lt;span class="hx-absolute -hx-mt-20" id="web-server-overview">&lt;/span>
+&lt;h2>Web Server Overview&lt;span class="hx:absolute hx:-mt-20" id="web-server-overview">&lt;/span>
 &lt;a href="#web-server-overview" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>A Web Server is software that accepts HTTP/HTTPS requests and routes them appropriately. Web Servers provide features like URL rewrites, reverse proxying, header manipulation, static file serving, and WebSocket connection handling. Web Servers can accept connections on multiple ports. A common pattern is that all requests are received on port 80 (for HTTP) and 443 (for HTTPS) and routing is done based on request domain (from the Host HTTP header) and path (from the url). Apache, Nginx, and Caddy are popular web servers.&lt;/p>
-&lt;h2>Updating Routing Rules&lt;span class="hx-absolute -hx-mt-20" id="updating-routing-rules">&lt;/span>
+&lt;h2>Updating Routing Rules&lt;span class="hx:absolute hx:-mt-20" id="updating-routing-rules">&lt;/span>
 &lt;a href="#updating-routing-rules" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Most web servers use a config file for specifying the rules for request routing. The config file is generally a DSL which specifies the API rules. Some servers like Caddy support JSON input. Encapsulating or grouping together rules related to an app is supported, but this encapsulation is not enforced. For updating the rules, the approach is to update the file on disk and send a reload request to the web server. Even for API based updates, the approach is usually to send the whole config contents, partial updates are not supported.&lt;/p>
 &lt;p>The issue with this approach is that if there are multiple apps, updating the rules for one app can break other apps. There is no enforcement of isolation across apps. This results in app developers trying to avoid updating the web server, doing more in the application server when it would have been more efficiently done in the web server.&lt;/p>
-&lt;h2>App-Level Isolation&lt;span class="hx-absolute -hx-mt-20" id="app-level-isolation">&lt;/span>
+&lt;h2>App-Level Isolation&lt;span class="hx:absolute hx:-mt-20" id="app-level-isolation">&lt;/span>
 &lt;a href="#app-level-isolation" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The goal of app-level isolation is for developers to confidently update web server routing rules, being sure that a broken update will not impact other apps.&lt;/p>
 &lt;p>To enforce isolation across apps, web servers first need a concept of an app. There needs to be a way to say which rules are for which app. Each update has to be scoped to be for a particular app. If there are rules which conflict with another app, those rules need to be rejected.&lt;/p>
-&lt;h2>OpenRun Approach&lt;span class="hx-absolute -hx-mt-20" id="openrun-approach">&lt;/span>
+&lt;h2>OpenRun Approach&lt;span class="hx:absolute hx:-mt-20" id="openrun-approach">&lt;/span>
 &lt;a href="#openrun-approach" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun has the concept of an app where each app is &lt;a href="https://openrun.dev/docs/applications/routing/" >installed&lt;/a> for a path within a domain. If app A is installed at &lt;code>appA.example.com:/&lt;/code>, then that domain is completely dedicated for that app. An app installed at &lt;code>appB.example.com:/test&lt;/code> owns the &lt;code>/test/*&lt;/code> namespace for domain &lt;code>appB.example.com&lt;/code>, no other app can use that namespace.&lt;/p>
 &lt;p>This approach has the benefit that each app gets a dedicated namespace. Within that namespace, the app can do whatever it wants, without interfering with other apps. At app installation time, a check is done whether the domain path being requested is available. If some other app is using that path, the new app installation is rejected. A SQLite database is used to &lt;a href="https://openrun.dev/blog/sqlite/" >store app metadata&lt;/a>, so API driven app updates do not conflict with each other.&lt;/p>
 &lt;p>Within the app, rules are defined using &lt;a href="https://starlark-lang.org/" target="_blank" rel="noopener">Starlark&lt;/a>. This avoids the need to learn a new DSL. The &lt;a href="https://openrun.dev/docs/app/routing/" >routing&lt;/a> config is read at app initialization only and the actual &lt;a href="https://openrun.dev/docs/app/overview/#sample-starlark-app" >handler&lt;/a> logic can be expressed alongside the routing rules. For &lt;a href="https://openrun.dev/docs/container/overview/" >containerized apps&lt;/a>, the routing rule specifies the revery proxy url. Reloading an app updates its config, without impacting other apps.&lt;/p>
-&lt;h2>Conclusion&lt;span class="hx-absolute -hx-mt-20" id="conclusion">&lt;/span>
-&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>By enforcing app-level isolation in routing rules, OpenRun allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others. Some webserver routing use cases which are more complex cannot use this approach, but this is useful for app deployment scenarios.&lt;/p></description></item><item><title>Go Composition does not compose well with Implicit Interfaces</title><link>https://openrun.dev/blog/go-composition/</link><pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/go-composition/</guid><description>
+&lt;h2>Conclusion&lt;span class="hx:absolute hx:-mt-20" id="conclusion">&lt;/span>
+&lt;a href="#conclusion" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>By enforcing app-level isolation in routing rules, OpenRun allows each app to manage its own domain and path namespace without risking conflicts or breakages. This approach encourages developers to utilize efficient web server–level routing features, confident that changes in one app won’t disrupt others. Some webserver routing use cases which are more complex cannot use this approach, but this is useful for app deployment scenarios.&lt;/p></description></item><item><title>Go Composition does not work well with Implicit Interfaces</title><link>https://openrun.dev/blog/go-composition/</link><pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/go-composition/</guid><description>
 &lt;div
-class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+class="hx:overflow-x-auto hx:md:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 ltr:hx:pr-4 rtl:hx:pl-4 contrast-more:hx:border-current contrast-more:dark:hx:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="ltr:hx:pl-3 ltr:hx:pr-2 rtl:hx:pr-3 rtl:hx:pl-2">
 &lt;div
-class="hx-select-none hx-text-xl"
+class="hx:select-none hx:text-xl"
 style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 📎
 &lt;/div>
 &lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mx-4 hx:leading-7 first:hx:mt-0">
 OpenRun is an
-&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a> platform for
-developing internal tools and deploying them across a team. OpenRun can
-auto-generate an UI for backend &lt;a href="../../docs/actions/">actions&lt;/a>.
-OpenRun is the first internal tools platform built for
-&lt;a href="https://htmx.org/essays/hypermedia-driven-applications/"
->Hypermedia Driven Applications&lt;/a
->
-and first internal tools platform on the
-&lt;a
-href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun">
-CNCF landscape&lt;/a
->.
+&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a>
+alternative to Google Cloud Run and AWS App Runner. OpenRun is built for
+teams to easily deploy internal tools. OpenRun supports zero-config
+deployment of apps built with frameworks like Streamlit, Gradio, FastHTML,
+NiceGUI etc.
 &lt;br />
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;h2>Background&lt;span class="hx-absolute -hx-mt-20" id="background">&lt;/span>
+&lt;h2>Background&lt;span class="hx:absolute hx:-mt-20" id="background">&lt;/span>
 &lt;a href="#background" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>I recently encountered an issue where Server-Sent Events (SSE) stopped working in OpenRun. SSE are used for live reload functionality in OpenRun. The problem turned out to be a recent change in OpenRun which added support for tracking HTTP response status code. This was implemented by implementing a composition over the &lt;code>http.ResponseWriter&lt;/code> to keep track of the status code. This composition broke the SSE functionality.&lt;/p>
-&lt;h2>Composition over Inheritance&lt;span class="hx-absolute -hx-mt-20" id="composition-over-inheritance">&lt;/span>
+&lt;h2>Composition over Inheritance&lt;span class="hx:absolute hx:-mt-20" id="composition-over-inheritance">&lt;/span>
 &lt;a href="#composition-over-inheritance" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Go supports &lt;a href="https://go.dev/doc/effective_go#embedding" target="_blank" rel="noopener">embedding&lt;/a>, which can be used to implement Composition (has-a relationship) rather than inheritance (is-a relationship). Composition has some &lt;a href="https://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits" target="_blank" rel="noopener">benefits&lt;/a> over inheritance. Embedding in Go allows the use of composition without requiring forwarding methods.&lt;/p>
-&lt;h2>Implicit Interfaces&lt;span class="hx-absolute -hx-mt-20" id="implicit-interfaces">&lt;/span>
+&lt;h2>Implicit Interfaces&lt;span class="hx:absolute hx:-mt-20" id="implicit-interfaces">&lt;/span>
 &lt;a href="#implicit-interfaces" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Interfaces in Go are implemented &lt;a href="https://go.dev/tour/methods/10" target="_blank" rel="noopener">implicitly&lt;/a>. This is a powerful feature, allowing interfaces to be added when required later. Interfaces can even be created for types in different packages. This allows clients to control how types are used rather than depending on how the types were originally defined.&lt;/p>
-&lt;h2>Stdlib Implicit Interfaces&lt;span class="hx-absolute -hx-mt-20" id="stdlib-implicit-interfaces">&lt;/span>
+&lt;h2>Stdlib Implicit Interfaces&lt;span class="hx:absolute hx:-mt-20" id="stdlib-implicit-interfaces">&lt;/span>
 &lt;a href="#stdlib-implicit-interfaces" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Go stdlib uses implicit interfaces to implement optimizations (like &lt;a href="https://pkg.go.dev/io#WriterTo" target="_blank" rel="noopener">io.WriterTo&lt;/a> and &lt;a href="https://pkg.go.dev/io#ReaderFrom" target="_blank" rel="noopener">io.ReaderFrom&lt;/a>) and custom behaviors (like &lt;a href="https://pkg.go.dev/fmt#Stringer" target="_blank" rel="noopener">fmt.Stringer&lt;/a>). Other similar interfaces are http.Hijacker, http.Pusher, and io.Closer.&lt;/p>
-&lt;h2>Composition breaks Implicit Interfaces&lt;span class="hx-absolute -hx-mt-20" id="composition-breaks-implicit-interfaces">&lt;/span>
+&lt;h2>Composition breaks Implicit Interfaces&lt;span class="hx:absolute hx:-mt-20" id="composition-breaks-implicit-interfaces">&lt;/span>
 &lt;a href="#composition-breaks-implicit-interfaces" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The reason for the issue encountered is an implicit interface &lt;a href="https://pkg.go.dev/net/http#Flusher" target="_blank" rel="noopener">http.Flusher&lt;/a> implemented by most implementations of &lt;a href="https://pkg.go.dev/net/http#ResponseWriter" target="_blank" rel="noopener">http.ResponseWriter&lt;/a>. Adding a composition over &lt;code>http.ResponseWriter&lt;/code> causes this implicit interface to no longer be implemented.&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">CustomWriter&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">statusCode&lt;/span> &lt;span class="kt">int&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>Here, &lt;code>CustomWriter&lt;/code> no longer implements &lt;code>http.Flusher&lt;/code>, even if the underlying &lt;code>http.ResponseWriter&lt;/code> implementation did. SSE was supported for flushable writers only, so adding the composition broke SSE. The fix is to have the composing struct explicitly implement &lt;code>http.Flusher&lt;/code>. See &lt;a href="https://go.dev/play/p/IQ4qtCzjaTC" target="_blank" rel="noopener">go playground&lt;/a> to see an example.&lt;/p>
-&lt;h2>Fixing the issue&lt;span class="hx-absolute -hx-mt-20" id="fixing-the-issue">&lt;/span>
-&lt;a href="#fixing-the-issue" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;h2>Fixing the issue&lt;span class="hx:absolute hx:-mt-20" id="fixing-the-issue">&lt;/span>
+&lt;a href="#fixing-the-issue" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">cw&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">CustomWriter&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nf">Flush&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="nx">flusher&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">ok&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">cw&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>&lt;span class="p">.(&lt;/span>&lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Flusher&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="nx">ok&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">flusher&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Flush&lt;/span>&lt;span class="p">()&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>Adding a &lt;code>Flush&lt;/code> function is a fix, but an issue with this is that if the caller had support for non-flushable writers, that behavior is lost. A better fix is to have two implementation, one flushable and another non flushable. The appropriate one should be used based on whether the underlying writer implements flusher. This way, the original behavior is not changed by adding the composition.&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 &lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">FlushableWriter&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Flusher&lt;/span>
@@ -127,93 +113,82 @@ title="Copy code"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">type&lt;/span> &lt;span class="nx">CustomWriter&lt;/span> &lt;span class="kd">struct&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">http&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ResponseWriter&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">statusCode&lt;/span> &lt;span class="kt">int&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>Some HTTP routers like &lt;a href="https://go-chi.io/#/README" target="_blank" rel="noopener">Chi&lt;/a> have &lt;a href="https://pkg.go.dev/github.com/go-chi/chi/middleware#NewWrapResponseWriter" target="_blank" rel="noopener">middleware&lt;/a> which implement the required implicit interfaces.&lt;/p>
-&lt;h2>How to avoid this issue&lt;span class="hx-absolute -hx-mt-20" id="how-to-avoid-this-issue">&lt;/span>
+&lt;h2>How to avoid this issue&lt;span class="hx:absolute hx:-mt-20" id="how-to-avoid-this-issue">&lt;/span>
 &lt;a href="#how-to-avoid-this-issue" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Go type system does not have a way to catch such issues are compile time. At runtime, the issue can show up as a performance degradation (if the implicit interface is used as an performance optimization) or as a unexpected behavior (if custom behavior is implemented using the implicit interface).&lt;/p>
 &lt;p>It would have helped if the documentation for &lt;a href="https://pkg.go.dev/net/http#ResponseWriter" target="_blank" rel="noopener">http.ResponseWriter&lt;/a> had mentioned the &lt;code>http.Flusher&lt;/code> interface and when it is used. This is feasible when the types are in the same package.&lt;/p>
 &lt;p>The takeaway is that if using composition over types which could have implicit interfaces, it is important to look at whether any of those implicit interfaces have to be explicitly implemented by the composing type.&lt;/p>
-&lt;div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-orange-100 hx-bg-orange-50 hx-text-orange-800 dark:hx-border-orange-400/30 dark:hx-bg-orange-400/20 dark:hx-text-orange-300">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">&lt;div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
-💬
-&lt;/div>&lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
-Discussion thread on &lt;a href="https://www.reddit.com/r/golang/comments/1hm54r4/go_composition_can_break_implicit_interfaces/" target="_blank" rel="noopener">Reddit&lt;/a>
-&lt;/div>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-orange-100 hx:bg-orange-50 hx:text-orange-800 hx:dark:border-orange-400/30 hx:dark:bg-orange-400/20 hx:dark:text-orange-300">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">💬&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Discussion thread on &lt;a href="https://www.reddit.com/r/golang/comments/1hm54r4/go_composition_can_break_implicit_interfaces/" target="_blank" rel="noopener">Reddit&lt;/a>&lt;/div>
 &lt;/div>
 &lt;/div></description></item><item><title>Errors and Exceptions: Is there a third option?</title><link>https://openrun.dev/blog/errors/</link><pubDate>Mon, 09 Dec 2024 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/errors/</guid><description>
 &lt;div
-class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+class="hx:overflow-x-auto hx:md:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 ltr:hx:pr-4 rtl:hx:pl-4 contrast-more:hx:border-current contrast-more:dark:hx:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="ltr:hx:pl-3 ltr:hx:pr-2 rtl:hx:pr-3 rtl:hx:pl-2">
 &lt;div
-class="hx-select-none hx-text-xl"
+class="hx:select-none hx:text-xl"
 style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 📎
 &lt;/div>
 &lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mx-4 hx:leading-7 first:hx:mt-0">
 OpenRun is an
-&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a> platform for
-developing internal tools and deploying them across a team. OpenRun can
-auto-generate an UI for backend &lt;a href="../../docs/actions/">actions&lt;/a>.
-OpenRun is the first internal tools platform built for
-&lt;a href="https://htmx.org/essays/hypermedia-driven-applications/"
->Hypermedia Driven Applications&lt;/a
->
-and first internal tools platform on the
-&lt;a
-href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun">
-CNCF landscape&lt;/a
->.
+&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a>
+alternative to Google Cloud Run and AWS App Runner. OpenRun is built for
+teams to easily deploy internal tools. OpenRun supports zero-config
+deployment of apps built with frameworks like Streamlit, Gradio, FastHTML,
+NiceGUI etc.
 &lt;br />
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;h2>Background&lt;span class="hx-absolute -hx-mt-20" id="background">&lt;/span>
+&lt;h2>Background&lt;span class="hx:absolute hx:-mt-20" id="background">&lt;/span>
 &lt;a href="#background" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Most programming languages handle error conditions either by supporting error values or by means of exceptions. Error return value support varies, with some statically typed languages enforcing that the error conditions be handled. With exceptions, the invoker can either catch and handle it or it automatically gets thrown up the stack. The purpose of error handling is to allow an invoker to either handle the issue or allow the invoker to return the error to the caller.&lt;/p>
 &lt;p>Exceptions have the advantage of the error handling being automatic. Error values have the advantage of requiring more explicit error handling, at the cost of verbosity.&lt;/p>
-&lt;h2>Error handling for Glue code&lt;span class="hx-absolute -hx-mt-20" id="error-handling-for-glue-code">&lt;/span>
+&lt;h2>Error handling for Glue code&lt;span class="hx:absolute hx:-mt-20" id="error-handling-for-glue-code">&lt;/span>
 &lt;a href="#error-handling-for-glue-code" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For code which is gluing together multiple API&amp;rsquo;s, error handling can be tedious. Some languages have specific support for this. The most famous example is the &lt;a href="https://www.baeldung.com/linux/bash-script-raise-error" target="_blank" rel="noopener">errexit&lt;/a> setting &lt;code>set -e&lt;/code> in shell scripts. This will automatically check each command for error return status and fail the script if an error occurs.&lt;/p>
-&lt;h2>Trade-Offs&lt;span class="hx-absolute -hx-mt-20" id="trade-offs">&lt;/span>
+&lt;h2>Trade-Offs&lt;span class="hx:absolute hx:-mt-20" id="trade-offs">&lt;/span>
 &lt;a href="#trade-offs" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The two main trade-offs we are handling are:&lt;/p>
 &lt;ul>
 &lt;li>Exceptions are automatically checked, but they result in error handling being done away from the code which actually failed.&lt;/li>
 &lt;li>Error values need to be checked explicitly, but the error handling code is local to where the error occurred. In most languages, it is easy to miss checking for errors (Rust being one exception with the Result type)&lt;/li>
 &lt;/ul>
 &lt;p>The ideal scenario in terms of code verbosity is that error handling should be automatic. The ideal scenario in terms of proper error handling is that the explicit error checks should be easy for the invoker, else the automatic error handling kicks in.&lt;/p>
-&lt;h2>Is there a third option?&lt;span class="hx-absolute -hx-mt-20" id="is-there-a-third-option">&lt;/span>
+&lt;h2>Is there a third option?&lt;span class="hx:absolute hx:-mt-20" id="is-there-a-third-option">&lt;/span>
 &lt;a href="#is-there-a-third-option" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun is built to be a platform for building internal tools. OpenRun is built in Go and uses &lt;a href="https://starlark-lang.org/" target="_blank" rel="noopener">Starlark&lt;/a> for app configuration and also for API business logic. Starlark does not support exceptions and does not support multi value returns. This makes error handling difficult. The solution implemented for OpenRun is an API boundary error checker with the following properties:&lt;/p>
 &lt;ul>
 &lt;li>Automatic error handling, no explicit error checks required for every API call&lt;/li>
 &lt;li>Easy way to do explicit error checks when errors are expected&lt;/li>
 &lt;/ul>
 &lt;p>This gives the best of both worlds. All error conditions are automatically checked like exceptions. When explicit error checks are required, they are easy to do like error values.&lt;/p>
-&lt;h2>How does this work?&lt;span class="hx-absolute -hx-mt-20" id="how-does-this-work">&lt;/span>
+&lt;h2>How does this work?&lt;span class="hx:absolute hx:-mt-20" id="how-does-this-work">&lt;/span>
 &lt;a href="#how-does-this-work" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;a href="https://openrun.dev/docs/plugins/overview/#automatic-error-handling" target="_blank" rel="noopener">automatic error handling&lt;/a> feature of OpenRun keeps track of every plugin call&amp;rsquo;s status. If the plugin call fails, the OpenRun runtime makes sure that return value cannot be accessed, unless an explicit error check was done. If no explicit check is done, the OpenRun runtime will fail the API, calling the user defined error handler or a generic error handler if none is defined. So for the code&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;pre>&lt;code> def insert(req):
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;pre>&lt;code> def insert(req):
 store.begin()
 book = doc.bookmark(&amp;#34;abc&amp;#34;, [])
 ret = store.insert(table.bookmark, book)
 print(ret.value)
-store.commit()&lt;/code>&lt;/pre>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+store.commit()&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
@@ -223,22 +198,22 @@ title="Copy code"
 &lt;li>If commit() fails, the OpenRun runtime will first check whether the last plugin failed before handling the API response.&lt;/li>
 &lt;/ul>
 &lt;p>Thread locals are used to track errors across plugin API calls. This works since an API handler Starlark function is single threaded. When begin() fails, it sets a thread local. If the error is explicitly checked, like&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;pre>&lt;code>ret = store.begin()
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;pre>&lt;code>ret = store.begin()
 if ret.error:
 pass
-print(ret.value)&lt;/code>&lt;/pre>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+print(ret.value)&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>then the thread local state is cleared. So if the code is doing explicit error checks, the automatic error handling is disabled.&lt;/p>
-&lt;h2>Can this be a generic solution?&lt;span class="hx-absolute -hx-mt-20" id="can-this-be-a-generic-solution">&lt;/span>
+&lt;h2>Can this be a generic solution?&lt;span class="hx:absolute hx:-mt-20" id="can-this-be-a-generic-solution">&lt;/span>
 &lt;a href="#can-this-be-a-generic-solution" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The OpenRun runtime provides all the APIs used by OpenRun apps by means of plugin calls. This solution can be applied when&lt;/p>
 &lt;ul>
 &lt;li>All code that can cause errors are provided through a standard API interface&lt;/li>
@@ -249,38 +224,31 @@ title="Copy code"
 &lt;p>This error handling solution is limited in scope to use cases where glue scripts are being written which make lots of API calls. This provides a shell errexit type feature for regular code. This does not support error handling that needs to happen within user defined code, like one function which returns an error to be handled by another function.&lt;/p>
 &lt;p>Handling resource leaks is another concern. For OpenRun, since all resources (transactions, result sets etc) are created through the plugin API, they are automatically closed when an error occurs.&lt;/p></description></item><item><title>Missed Connections: AppServers in the Containerized Landscape</title><link>https://openrun.dev/blog/appserver/</link><pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/appserver/</guid><description>
 &lt;div
-class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+class="hx:overflow-x-auto hx:md:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 ltr:hx:pr-4 rtl:hx:pl-4 contrast-more:hx:border-current contrast-more:dark:hx:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="ltr:hx:pl-3 ltr:hx:pr-2 rtl:hx:pr-3 rtl:hx:pl-2">
 &lt;div
-class="hx-select-none hx-text-xl"
+class="hx:select-none hx:text-xl"
 style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 📎
 &lt;/div>
 &lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mx-4 hx:leading-7 first:hx:mt-0">
 OpenRun is an
-&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a> platform for
-developing internal tools and deploying them across a team. OpenRun can
-auto-generate an UI for backend &lt;a href="../../docs/actions/">actions&lt;/a>.
-OpenRun is the first internal tools platform built for
-&lt;a href="https://htmx.org/essays/hypermedia-driven-applications/"
->Hypermedia Driven Applications&lt;/a
->
-and first internal tools platform on the
-&lt;a
-href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun">
-CNCF landscape&lt;/a
->.
+&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a>
+alternative to Google Cloud Run and AWS App Runner. OpenRun is built for
+teams to easily deploy internal tools. OpenRun supports zero-config
+deployment of apps built with frameworks like Streamlit, Gradio, FastHTML,
+NiceGUI etc.
 &lt;br />
 &lt;/div>
 &lt;/div>
 &lt;/div>
 &lt;p>Application Servers can make application deployment easy. AppServers do not support all the features of a PaaS solution but that comes with the benefit of zero config deployments. Especially for internal tools, AppServers are a great alternative to building a deployment solution on top of Kubernetes. OpenRun is the first AppServer built for use with containers.&lt;/p>
-&lt;h2>What is an Application Server&lt;span class="hx-absolute -hx-mt-20" id="what-is-an-application-server">&lt;/span>
+&lt;h2>What is an Application Server&lt;span class="hx:absolute hx:-mt-20" id="what-is-an-application-server">&lt;/span>
 &lt;a href="#what-is-an-application-server" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>An &lt;a href="https://en.wikipedia.org/wiki/Application_server" target="_blank" rel="noopener">Application Server&lt;/a> is a service that makes it easy to deploy applications and provides common features required by most apps. This includes implementing connection handling (HTTP request routing), deployment and versioning, logging, monitoring and authentication features.&lt;/p>
 &lt;p>Many application servers are programming language &lt;a href="https://en.wikipedia.org/wiki/List_of_application_servers" target="_blank" rel="noopener">specific&lt;/a>. In the Java and .Net ecosystems, class loader level isolation is used to implement app servers. The request processing model of PHP also makes app servers suitable for serving PHP apps. For interpreted languages like Python and Ruby, there are some app servers which provide cross language support. App server support is limited for compiled languages. This article will focus on app servers which support multiple languages, since those are more widely usable.&lt;/p>
-&lt;h2>Multi-Language AppServers&lt;span class="hx-absolute -hx-mt-20" id="multi-language-appservers">&lt;/span>
+&lt;h2>Multi-Language AppServers&lt;span class="hx:absolute hx:-mt-20" id="multi-language-appservers">&lt;/span>
 &lt;a href="#multi-language-appservers" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Some of the prominent multi-language app servers are:&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://unit.nginx.org/" target="_blank" rel="noopener">NGINX Unit&lt;/a>: Nginx Unit is a different application from the regular Nginx web server. Unit is configured through &lt;a href="https://unit.nginx.org/controlapi/" target="_blank" rel="noopener">JSON based APIs&lt;/a>. Packaging apps to work with Unit is not straightforward. For example, see &lt;a href="https://unit.nginx.org/howto/samples/#sample-java" target="_blank" rel="noopener">Unit Java sample&lt;/a>.&lt;/li>
@@ -288,14 +256,14 @@ CNCF landscape&lt;/a
 &lt;li>&lt;a href="https://www.phusionpassenger.com/" target="_blank" rel="noopener">Phusion Passenger&lt;/a>: Phusion Passenger primarily supports Ruby, Python and Javascript. Passenger 6 added support for &lt;a href="https://www.phusionpassenger.com/docs/advanced_guides/gls/" target="_blank" rel="noopener">generic apps&lt;/a>. This requires changing the app to pass the port to use on its command line. For example, &lt;a href="https://www.phusionpassenger.com/docs/advanced_guides/gls/java.html" target="_blank" rel="noopener">Passenger Java&lt;/a>.&lt;/li>
 &lt;/ul>
 &lt;p>These projects either run the app in-process or use a process model to run each application separately. The in-process model has issues with ensuring stability of apps when another app misbehaves. Even with the multi-process model, complete isolation across apps is not supported.&lt;/p>
-&lt;h2>AppServers Miss the Cloud-Native Train&lt;span class="hx-absolute -hx-mt-20" id="appservers-miss-the-cloud-native-train">&lt;/span>
+&lt;h2>AppServers Miss the Cloud-Native Train&lt;span class="hx:absolute hx:-mt-20" id="appservers-miss-the-cloud-native-train">&lt;/span>
 &lt;a href="#appservers-miss-the-cloud-native-train" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Since the initial release of Docker in 2013, containers have become very popular for application deployment. Containers have the advantage of encapsulating the application runtime and dependencies in an easily deployable image. Being able to set resource limits on CPU/memory/disk usage enables isolation across applications.&lt;/p>
 &lt;p>No application server currently supports running apps within containers. App servers are missing from the crowded cloud native &lt;a href="https://landscape.cncf.io/" target="_blank" rel="noopener">landscape&lt;/a> (possibly the only infrastructure software component missing there).&lt;/p>
-&lt;h2>PaaS vs AppServers&lt;span class="hx-absolute -hx-mt-20" id="paas-vs-appservers">&lt;/span>
+&lt;h2>PaaS vs AppServers&lt;span class="hx:absolute hx:-mt-20" id="paas-vs-appservers">&lt;/span>
 &lt;a href="#paas-vs-appservers" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Most of the recent innovation in the container orchestration space have focussed on providing support for hosting the complete software stack. This includes deploying stateless applications, stateful databases, object stores and any other type of application. The goal has been to build Platform-As-A-Service solutions (PaaS). Kubernetes is built as a &lt;a href="https://www.opensourcerers.org/2021/12/06/kubernetes-is-a-platform-for-building-platforms/" target="_blank" rel="noopener">platform for building platforms&lt;/a>. Even beyond Kubernetes, most container deployment platforms focus on trying to provide a complete PaaS solution. Since the scope of applicable use cases is large, even the simplest use case requires complex configuration with a PaaS solution.&lt;/p>
 &lt;p>AppServers by definition are simpler. They support deploying stateless applications. Given the source code for a service, an AppServer can run the service and give an HTTP endpoint to access the service. AppServer can provide a standardized deployment approach, irrespective of the language/framework. AppServers do not support deploying databases or queues or object stores.&lt;/p>
 &lt;p>Many teams choose managed services (like AWS RDS or MSK) for data persistence. If the stateful applications are externally managed, then AppServers can be used for deploying the stateless applications. This avoids the complexity of having to maintain PaaS configurations.&lt;/p>
-&lt;h2>Cloud-Native AppServer Features&lt;span class="hx-absolute -hx-mt-20" id="cloud-native-appserver-features">&lt;/span>
+&lt;h2>Cloud-Native AppServer Features&lt;span class="hx:absolute hx:-mt-20" id="cloud-native-appserver-features">&lt;/span>
 &lt;a href="#cloud-native-appserver-features" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>A cloud-native application server would include the following features:&lt;/p>
 &lt;ul>
 &lt;li>&lt;strong>Container-Based&lt;/strong>: Uses containers for application deployment, with isolation across apps.&lt;/li>
@@ -305,29 +273,29 @@ CNCF landscape&lt;/a
 &lt;li>&lt;strong>Declarative Configuration&lt;/strong>: All configuration is applied declaratively as opposed to being imperative.&lt;/li>
 &lt;/ul>
 &lt;p>The AppServer is not replacing the language specific services. For example, with Python, Gunicorn/Uvicorn would provide the WSGI/ASGI functionality within the container.&lt;/p>
-&lt;h2>AppServer Features of OpenRun&lt;span class="hx-absolute -hx-mt-20" id="appserver-features-of-openrun">&lt;/span>
+&lt;h2>AppServer Features of OpenRun&lt;span class="hx:absolute hx:-mt-20" id="appserver-features-of-openrun">&lt;/span>
 &lt;a href="#appserver-features-of-openrun" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun is built as a platform for teams to deploy internal tools. As part of that, OpenRun implements an AppServer to deploy containerized apps. The goal is to make it easy for teams to deploy and manage Streamlit/Gradio type apps for internal users. OpenRun provides blue-green staged deployment, GitOps, OAuth access control, secrets management etc for the apps.&lt;/p>
 &lt;p>With OpenRun, any Containerized app (having a &lt;code>Dockerfile&lt;/code>) can be installed using a command like&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app create --spec container --approve github.com/&amp;lt;USERID&amp;gt;/&amp;lt;REPO&amp;gt; /myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app create --spec container --approve github.com/&amp;lt;USERID&amp;gt;/&amp;lt;REPO&amp;gt; /myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>The app will be available at the /myapp url. For many &lt;a href="https://github.com/openrundev/appspecs" target="_blank" rel="noopener">frameworks&lt;/a>, zero config is required. Not even a &lt;code>Dockerfile&lt;/code> is required. For example&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
@@ -339,48 +307,39 @@ title="Copy code"
 &lt;img alt="OpenRun AppServer" src="https://openrun.dev/AppServerLight.png">
 &lt;/picture>
 &lt;p>For use cases where teams are deploying internal tools, OpenRun can provide a much simpler solution as against using a general purpose PaaS solution.&lt;/p>
-&lt;div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-orange-100 hx-bg-orange-50 hx-text-orange-800 dark:hx-border-orange-400/30 dark:hx-bg-orange-400/20 dark:hx-text-orange-300">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">&lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
-Update (Jan 2025): OpenRun is now listed in the &lt;a href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun" target="_blank" rel="noopener">CNCF Landscape&lt;/a>.
-&lt;/div>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-orange-100 hx:bg-orange-50 hx:text-orange-800 hx:dark:border-orange-400/30 hx:dark:bg-orange-400/20 hx:dark:text-orange-300">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Update (Jan 2025): OpenRun is now listed in the &lt;a href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun" target="_blank" rel="noopener">CNCF Landscape&lt;/a>.&lt;/div>
 &lt;/div>
 &lt;/div></description></item><item><title>Using SQLite as Storage for Web Server Static Content</title><link>https://openrun.dev/blog/sqlite/</link><pubDate>Fri, 25 Oct 2024 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/sqlite/</guid><description>
 &lt;div
-class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+class="hx:overflow-x-auto hx:md:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 ltr:hx:pr-4 rtl:hx:pl-4 contrast-more:hx:border-current contrast-more:dark:hx:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="ltr:hx:pl-3 ltr:hx:pr-2 rtl:hx:pr-3 rtl:hx:pl-2">
 &lt;div
-class="hx-select-none hx-text-xl"
+class="hx:select-none hx:text-xl"
 style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 📎
 &lt;/div>
 &lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mx-4 hx:leading-7 first:hx:mt-0">
 OpenRun is an
-&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a> platform for
-developing internal tools and deploying them across a team. OpenRun can
-auto-generate an UI for backend &lt;a href="../../docs/actions/">actions&lt;/a>.
-OpenRun is the first internal tools platform built for
-&lt;a href="https://htmx.org/essays/hypermedia-driven-applications/"
->Hypermedia Driven Applications&lt;/a
->
-and first internal tools platform on the
-&lt;a
-href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun">
-CNCF landscape&lt;/a
->.
+&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a>
+alternative to Google Cloud Run and AWS App Runner. OpenRun is built for
+teams to easily deploy internal tools. OpenRun supports zero-config
+deployment of apps built with frameworks like Streamlit, Gradio, FastHTML,
+NiceGUI etc.
 &lt;br />
 &lt;/div>
 &lt;/div>
 &lt;/div>
-&lt;h2>Background&lt;span class="hx-absolute -hx-mt-20" id="background">&lt;/span>
+&lt;h2>Background&lt;span class="hx:absolute hx:-mt-20" id="background">&lt;/span>
 &lt;a href="#background" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun is built to serve web applications, primarily for internal tools. OpenRun provides functionality usually handled separately by a web server and an application server. When the development of OpenRun was started last year, one of the first decisions was how to store the application data (files) and metadata. The app metadata obviously made sense to store in a database, since apps are created dynamically. The app data (static files, app code, config files etc) is usually stored on the file system by most web servers.&lt;/p>
-&lt;h2>Using SQLite for serving files&lt;span class="hx-absolute -hx-mt-20" id="using-sqlite-for-serving-files">&lt;/span>
+&lt;h2>Using SQLite for serving files&lt;span class="hx:absolute hx:-mt-20" id="using-sqlite-for-serving-files">&lt;/span>
 &lt;a href="#using-sqlite-for-serving-files" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For OpenRun, the decision was made to use &lt;a href="https://www.sqlite.org/" target="_blank" rel="noopener">SQLite&lt;/a> for app files storage instead of using the file system. The reasoning was mainly to be able to do atomic version changes. When updating an app, since there could be lots of files being updated, using a database would allow all changes to be done atomically in a transaction. This would prevent broken web pages from being served during a version change.&lt;/p>
 &lt;p>OpenRun uploads all files to the SQLite database during app creation and updates. Files are uploaded from GitHub or from local disk. Only for &lt;a href="https://openrun.dev/docs/applications/lifecycle/#development-apps" >development mode&lt;/a>, the local file system is used.&lt;/p>
-&lt;h2>Benefits of using SQLite&lt;span class="hx-absolute -hx-mt-20" id="benefits-of-using-sqlite">&lt;/span>
+&lt;h2>Benefits of using SQLite&lt;span class="hx:absolute hx:-mt-20" id="benefits-of-using-sqlite">&lt;/span>
 &lt;a href="#benefits-of-using-sqlite" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The decision to use SQLite for file storage has provided lots of additional benefits (some unanticipated).&lt;/p>
 &lt;ul>
 &lt;li>
@@ -393,14 +352,14 @@ CNCF landscape&lt;/a
 &lt;p>&lt;strong>File De-duplication Across Versions&lt;/strong>: OpenRun automatically &lt;a href="https://openrun.dev/docs/applications/overview/#app-listing" >versions&lt;/a> all updates. This can lead to lots of duplicate files. The file data is stored in a table with the schema&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">CREATE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">TABLE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">files&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sha&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">text&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">compression_type&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">text&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">content&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">blob&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">create_time&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">datetime&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">PRIMARY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">KEY&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sha&lt;/span>&lt;span class="p">));&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="line">&lt;span class="cl">&lt;span class="k">CREATE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">TABLE&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">files&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sha&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">text&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">compression_type&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">text&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">content&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">blob&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">create_time&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">datetime&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">PRIMARY&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">KEY&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">sha&lt;/span>&lt;span class="p">));&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
@@ -419,46 +378,35 @@ title="Copy code"
 &lt;p>&lt;strong>Compression&lt;/strong>: The file contents are saved &lt;a href="https://en.wikipedia.org/wiki/Brotli" target="_blank" rel="noopener">Brotli&lt;/a> compressed in the SQLite table. The database approach has the advantage that contents can be saved in multiple formats easily. GZip compressed data and uncompressed data can be added by just adding a column in the &lt;code>files&lt;/code> table.&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;h2>Performance&lt;span class="hx-absolute -hx-mt-20" id="performance">&lt;/span>
+&lt;h2>Performance&lt;span class="hx:absolute hx:-mt-20" id="performance">&lt;/span>
 &lt;a href="#performance" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For OpenRun, the SQLite database approach provides great performance. There is no equivalent implementation using the file system to compare against, so a direct benchmark test is not done. Based on &lt;a href="https://www.sqlite.org/fasterthanfs.html" target="_blank" rel="noopener">benchmarking&lt;/a> done by the SQLite team, SQLite can have better performance than direct file system use for some workloads.&lt;/p>
-&lt;h2>Multi-Node Support&lt;span class="hx-absolute -hx-mt-20" id="multi-node-support">&lt;/span>
+&lt;h2>Multi-Node Support&lt;span class="hx:absolute hx:-mt-20" id="multi-node-support">&lt;/span>
 &lt;a href="#multi-node-support" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun currently runs on a single node. When multi-node support is added later, the plan is to use a shared Postgres database instead of using local SQLite for metadata and file data storage. This will come with latency issues. The plan is to use a local SQLite database as a file cache to avoid latency while accessing Postgres.&lt;/p>
-&lt;h2>Why this approach is not more common?&lt;span class="hx-absolute -hx-mt-20" id="why-this-approach-is-not-more-common">&lt;/span>
+&lt;h2>Why this approach is not more common?&lt;span class="hx:absolute hx:-mt-20" id="why-this-approach-is-not-more-common">&lt;/span>
 &lt;a href="#why-this-approach-is-not-more-common" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>One of the reasons most web servers use the file system is convenience. File updates can be done using any file system tool: rsync, tar etc work for copying files over. The other reason is probably historical: file systems are what were used before there were good in-process relational databases available. Using a database means some kind of API interface is required for uploading files, which is not always feasible.&lt;/p>
-&lt;div class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-orange-100 hx-bg-orange-50 hx-text-orange-800 dark:hx-border-orange-400/30 dark:hx-bg-orange-400/20 dark:hx-text-orange-300">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">&lt;div class="hx-select-none hx-text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
-💬
-&lt;/div>&lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
-Discussion thread on &lt;a href="https://news.ycombinator.com/item?id=41963996" target="_blank" rel="noopener">Hacker News&lt;/a>
-&lt;/div>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-orange-100 hx:bg-orange-50 hx:text-orange-800 hx:dark:border-orange-400/30 hx:dark:bg-orange-400/20 hx:dark:text-orange-300">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">💬&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">Discussion thread on &lt;a href="https://news.ycombinator.com/item?id=41963996" target="_blank" rel="noopener">Hacker News&lt;/a>&lt;/div>
 &lt;/div>
 &lt;/div></description></item><item><title>Introducing OpenRun</title><link>https://openrun.dev/blog/intro/</link><pubDate>Wed, 01 Nov 2023 00:00:00 +0000</pubDate><guid>https://openrun.dev/blog/intro/</guid><description>
 &lt;div
-class="hx-overflow-x-auto hx-mt-6 hx-flex hx-rounded-lg hx-border hx-py-2 ltr:hx-pr-4 rtl:hx-pl-4 contrast-more:hx-border-current contrast-more:dark:hx-border-current hx-border-blue-200 hx-bg-blue-100 hx-text-blue-900 dark:hx-border-blue-200/30 dark:hx-bg-blue-900/30 dark:hx-text-blue-200">
-&lt;div class="ltr:hx-pl-3 ltr:hx-pr-2 rtl:hx-pr-3 rtl:hx-pl-2">
+class="hx:overflow-x-auto hx:md:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 ltr:hx:pr-4 rtl:hx:pl-4 contrast-more:hx:border-current contrast-more:dark:hx:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="ltr:hx:pl-3 ltr:hx:pr-2 rtl:hx:pr-3 rtl:hx:pl-2">
 &lt;div
-class="hx-select-none hx-text-xl"
+class="hx:select-none hx:text-xl"
 style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
 📎
 &lt;/div>
 &lt;/div>
-&lt;div class="hx-w-full hx-min-w-0 hx-leading-7">
-&lt;div class="hx-mt-6 hx-leading-7 first:hx-mt-0">
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mx-4 hx:leading-7 first:hx:mt-0">
 OpenRun is an
-&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a> platform for
-developing internal tools and deploying them across a team. OpenRun can
-auto-generate an UI for backend &lt;a href="../../docs/actions/">actions&lt;/a>.
-OpenRun is the first internal tools platform built for
-&lt;a href="https://htmx.org/essays/hypermedia-driven-applications/"
->Hypermedia Driven Applications&lt;/a
->
-and first internal tools platform on the
-&lt;a
-href="https://landscape.cncf.io/?item=app-definition-and-development--application-definition-image-build--openrun">
-CNCF landscape&lt;/a
->.
+&lt;a href="https://github.com/openrundev/openrun">open source&lt;/a>
+alternative to Google Cloud Run and AWS App Runner. OpenRun is built for
+teams to easily deploy internal tools. OpenRun supports zero-config
+deployment of apps built with frameworks like Streamlit, Gradio, FastHTML,
+NiceGUI etc.
 &lt;br />
 &lt;/div>
 &lt;/div>
@@ -469,16 +417,16 @@ CNCF landscape&lt;/a
 &lt;li>Simplify ongoing maintenance of such apps by removing build and dependency related issues. Updating an app after six months or six years should just work.&lt;/li>
 &lt;li>Provide portable and flexible deployment options, easy to use on developer machines and also on a shared server across teams.&lt;/li>
 &lt;/ul>
-&lt;h2>Use-cases&lt;span class="hx-absolute -hx-mt-20" id="use-cases">&lt;/span>
+&lt;h2>Use-cases&lt;span class="hx:absolute hx:-mt-20" id="use-cases">&lt;/span>
 &lt;a href="#use-cases" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun is built to solve two different types of use-cases:&lt;/p>
 &lt;ul>
 &lt;li>Custom applications: With fully customizable UI, this would be similar to solutions like &lt;a href="https://retool.com/" target="_blank" rel="noopener">Retool&lt;/a>. A low-code approach is used, with a focus on &lt;a href="https://hypermedia.systems/hypermedia-reintroduction/" target="_blank" rel="noopener">Hypermedia driven applications&lt;/a>.&lt;/li>
 &lt;li>Actions: This would be similar to solutions like &lt;a href="https://www.rundeck.com/" target="_blank" rel="noopener">Rundeck&lt;/a>. A way to automate internal applications, with a form based interface, with support for triggered and scheduled execution.&lt;/li>
 &lt;/ul>
 &lt;p>One of the aims of OpenRun is to make it possible for everyone, especially backend engineers, to develop and use simple web interfaces. For use-cases where a CLI was developed previously, a OpenRun based UI could be built. The backend service could invoke the CLI command or directly call the internal API which need to be exposed. Development and use of simple web interfaces for all types of use-cases should be made easier with OpenRun.&lt;/p>
-&lt;h2>How does it work?&lt;span class="hx-absolute -hx-mt-20" id="how-does-it-work">&lt;/span>
+&lt;h2>How does it work?&lt;span class="hx:absolute hx:-mt-20" id="how-does-it-work">&lt;/span>
 &lt;a href="#how-does-it-work" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun applications are configured in &lt;a href="https://github.com/google/starlark-go" target="_blank" rel="noopener">Starlark&lt;/a>, which uses a subset of Python syntax. The API routes are defined to be Hypermedia first, using HTML templates to drive the UI interactions. Templates are written using Go HTML templates. &lt;a href="https://htmx.org/" target="_blank" rel="noopener">HTMX&lt;/a> is used for server interactions. The backend code runs in a security sandbox and every access to plugins need to be explicitly permitted. Application updates can be done with no build step required. OpenRun integrates with TailwindCSS/DaisyUI for styling and has &lt;a href="https://esbuild.github.io" target="_blank" rel="noopener">esbuild&lt;/a> built-in for &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules" target="_blank" rel="noopener">ESM&lt;/a> support.&lt;/p>
-&lt;h2>Security&lt;span class="hx-absolute -hx-mt-20" id="security">&lt;/span>
+&lt;h2>Security&lt;span class="hx:absolute hx:-mt-20" id="security">&lt;/span>
 &lt;a href="#security" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The Starlark backend code for OpenRun runs in a sandbox, all external interactions need to go through plugins. The OpenRun platform implements a security sandbox at the plugin boundary. Applications define what operations they need to be able to perform. The platform enforces these permissions at runtime.&lt;/p>
 &lt;p>This &lt;a href="https://openrun.dev/docs/applications/appsecurity/" >security model&lt;/a> enables the following:&lt;/p>
 &lt;ul>
@@ -487,34 +435,34 @@ CNCF landscape&lt;/a
 &lt;li>Application developers can use LLM powered automated code generation tools without worrying about the side-effects of the code. If the generated code tries to perform any operation not previously approved, it will fail.&lt;/li>
 &lt;/ul>
 &lt;p>The sandbox will ensure that the apps can do only authorized operations. This makes OpenRun an ideal target for LLM (like GPT) generated applications. The OpenRun platform will add the authentication/authorization, gitops based deployment and operational monitoring features on top of the generated app.&lt;/p>
-&lt;h2>Current Status&lt;span class="hx-absolute -hx-mt-20" id="current-status">&lt;/span>
+&lt;h2>Current Status&lt;span class="hx:absolute hx:-mt-20" id="current-status">&lt;/span>
 &lt;a href="#current-status" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun is in a beta state currently. Custom application support is functional. Support for loading plugins dynamically is in progress. You can try out OpenRun (on OSX, Linux or Windows with WSL) by doing:&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">curl -sSL https://openrun.dev/install.sh &lt;span class="p">|&lt;/span> sh&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">curl -sSL https://openrun.dev/install.sh &lt;span class="p">|&lt;/span> sh&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>Start a new terminal (to get the updated env) and run &lt;code>openrun server start&lt;/code> to start the OpenRun service.&lt;/p>
 &lt;p>To install apps declaratively, run&lt;/p>
-&lt;div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-&lt;pre>&lt;code>openrun apply --approve github.com/openrundev/openrun/examples/utils.star all&lt;/code>&lt;/pre>&lt;div class="hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0">
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;pre>&lt;code>openrun apply --approve github.com/openrundev/openrun/examples/utils.star all&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
 &lt;button
-class="hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50"
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
 title="Copy code"
 >
-&lt;div class="copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
-&lt;div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4">&lt;/div>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
 &lt;/button>
 &lt;/div>
 &lt;/div>
 &lt;p>Open https://localhost:25223 to see app listing. See &lt;a href="https://openrun.dev/docs/installation/" >installation&lt;/a> for details.&lt;/p>
-&lt;h2>Follow Along&lt;span class="hx-absolute -hx-mt-20" id="follow-along">&lt;/span>
+&lt;h2>Follow Along&lt;span class="hx:absolute hx:-mt-20" id="follow-along">&lt;/span>
 &lt;a href="#follow-along" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>You can keep in touch by these means:&lt;/p>
 &lt;ul>
 &lt;li>Star the repo at &lt;a href="https://github.com/openrundev/openrun" target="_blank" rel="noopener">github.com/openrundev/openrun&lt;/a>&lt;/li>

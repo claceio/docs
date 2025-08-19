@@ -1,1 +1,366 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenRun Blog</title><link>https://openrun.dev/docs/container/</link><description>Recent content from the OpenRun Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="https://openrun.dev/docs/container/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>App Deployment Simplified | OpenRun – Containerized Apps</title><link>https://openrun.dev/docs/container/</link><description>Recent content in Containerized Apps on App Deployment Simplified | OpenRun</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://openrun.dev/docs/container/index.xml" rel="self" type="application/rss+xml"/><item><title>Container Overview</title><link>https://openrun.dev/docs/container/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/container/overview/</guid><description>
+&lt;p>OpenRun builds the image and manages the container lifecycle for containerized apps. OpenRun fetches the source code, creates the image, starts the container, does health checks on the container and stops the container when idle. Appspecs allow existing source code to be used with OpenRun with no code changes required.&lt;/p>
+&lt;h2>App Specs&lt;span class="hx:absolute hx:-mt-20" id="app-specs">&lt;/span>
+&lt;a href="#app-specs" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun app specs are defined at &lt;a href="https://github.com/openrundev/appspecs" target="_blank" rel="noopener">https://github.com/openrundev/appspecs&lt;/a>. Most specs use containers, the &lt;code>proxy&lt;/code> spec is an exception.&lt;/p>
+&lt;p>The &lt;code>image&lt;/code> spec specifies the image to use. for example&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">openrun app create --spec image --approve --param &lt;span class="nv">image&lt;/span>&lt;span class="o">=&lt;/span>nginx &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --param &lt;span class="nv">port&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">80&lt;/span> - nginxapp.localhost:/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>downloads the nginx image, starts it and proxies any request to &lt;code>https://nginxapp.localhost:25223&lt;/code> to the nginx container&amp;rsquo;s port 80. The container is started on the first API call, and it is stopped automatically when there are no API calls for 180 seconds.&lt;/p>
+&lt;p>For all other specs, the &lt;code>Containerfile&lt;/code> is defined in the spec. For example, for the &lt;code>python-streamlit&lt;/code> spec, the Containerfile is &lt;a href="https://github.com/openrundev/appspecs/blob/main/python-streamlit/Containerfile" target="_blank" rel="noopener">here&lt;/a>. Running&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">openrun app create --spec python-streamlit --branch master &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --approve github.com/streamlit/streamlit-example /streamlit_app&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>will create an app at &lt;code>https://localhost:25223/streamlit_app&lt;/code>. On the first API call to the app, the image is built from the defined spec and the container is started. The &lt;code>python-gradio&lt;/code> spec does the same for gradio apps.&lt;/p>
+&lt;h2>App Specs Listing&lt;span class="hx:absolute hx:-mt-20" id="app-specs-listing">&lt;/span>
+&lt;a href="#app-specs-listing" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The specs defined currently are:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align: left">Spec Name&lt;/th>
+&lt;th style="text-align: left">Required Params&lt;/th>
+&lt;th style="text-align: left">Optional Params&lt;/th>
+&lt;th style="text-align: left">Supports Path Routing&lt;/th>
+&lt;th style="text-align: left">Notes&lt;/th>
+&lt;th style="text-align: left">Example&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align: left">container&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>port&lt;/b> : The port number within container, optional if EXPOSE directive is present&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Depends on app&lt;/td>
+&lt;td style="text-align: left">Requires app code to have a Containerfile/Dockerfile&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">image&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>image&lt;/b>: The image to use for the container&lt;/li> &lt;li>&lt;b>port&lt;/b> : The port number within container&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">Depends on app&lt;/td>
+&lt;td style="text-align: left">No source url required when creating app, use - as url&lt;/td>
+&lt;td style="text-align: left">&lt;code>openrun app create --spec image --approve --param image=nginx --param port=80 - nginxapp.localhost:/&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">proxy&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>url&lt;/b>: The url to which requests should be proxied&lt;/li> &lt;/ul>&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">No&lt;/td>
+&lt;td style="text-align: left">No source url required when creating app, use - as url&lt;/td>
+&lt;td style="text-align: left">&lt;code>openrun app create --spec proxy --approve -param url=https://openrun.dev - proxyapp.localhost:/&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">python-wsgi&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>APP_MODULE&lt;/b>: The module:app for the WSGI app. Defaults to app:app, meaning app in app.py&lt;/li> &lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Depends on app&lt;/td>
+&lt;td style="text-align: left">Runs Web Server Gateway Interface (WSGI) apps using gunicorn&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">python-asgi&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>APP_MODULE&lt;/b>: The module:app for the ASGI app. Defaults to app:app, meaning app in app.py&lt;/li> &lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Depends on app&lt;/td>
+&lt;td style="text-align: left">Runs Asynchronous Server Gateway Interface (ASGI) apps using uvicorn&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">python-flask&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>port&lt;/b> : The port number within container. If EXPOSE directive is present, that is used. Defaults to 5000&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Depends on app&lt;/td>
+&lt;td style="text-align: left">Runs app using flask dev server&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">python-streamlit&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>app_file&lt;/b> : The file name of the streamlit app to run. Default streamlit_app.py&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Yes&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;code>openrun app create --spec python-streamlit --branch master --approve github.com/streamlit/streamlit-example /streamlit_app&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">python-streamlit-poetry&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>app_file&lt;/b> : The file name of the streamlit app to run. Default streamlit_app.py&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Yes&lt;/td>
+&lt;td style="text-align: left">Installs packages using poetry&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">python-fasthtml&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>APP_MODULE&lt;/b>: The module:app for the ASGI app. Defaults to app:app, meaning app in app.py&lt;/li> &lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Depends on app&lt;/td>
+&lt;td style="text-align: left">Runs app using uvicorn&lt;/td>
+&lt;td style="text-align: left">&lt;code>openrun app create --approve --spec python-fasthtml --param APP_MODULE=basic_ws:app https://github.com/AnswerDotAI/fasthtml/examples fasthtmlapp.localhost:/&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">python-gradio&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>app_file&lt;/b> : The file name of the gradio app to run. Default run.py&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Yes&lt;/td>
+&lt;td style="text-align: left">&lt;/td>
+&lt;td style="text-align: left">&lt;code>openrun app create --spec python-gradio --approve github.com/gradio-app/gradio/demo/blocks_flag /gradio_app&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align: left">go&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>port&lt;/b> : The port number within container&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">&lt;ul>&lt;li>&lt;b>MAIN_PACKAGE&lt;/b> : The go module to build, default &amp;ldquo;.&amp;rdquo;. Pass as a &lt;code>--carg&lt;/code> instead of &lt;code>--param&lt;/code>.&lt;/li>&lt;li>&lt;b>APP_ARGS&lt;/b> : Args to pass to the app&lt;/li>&lt;/ul>&lt;/td>
+&lt;td style="text-align: left">Depends on app&lt;/td>
+&lt;td style="text-align: left">CGO is disabled; go.mod has to be present; app should bind to 0.0.0.0&lt;/td>
+&lt;td style="text-align: left">&lt;code>openrun app create --approve --spec go --param port=8080 --param APP_ARGS=&amp;quot;-addr 0.0.0.0:8080&amp;quot; --branch master github.com/golang/example/helloserver /goapp&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2>App Environment Params&lt;span class="hx:absolute hx:-mt-20" id="app-environment-params">&lt;/span>
+&lt;a href="#app-environment-params" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>For containerized apps, all params specified for the app (including ones specified in &lt;code>params.star&lt;/code> spec) are passed to the container at runtime as environment parameters. &lt;code>CL_APP_PATH&lt;/code> is a special param passed to the container with the app installation path (without the domain name). &lt;code>PORT&lt;/code> is also set with the value of the port number the app is expected to bind to within the container.&lt;/p>
+&lt;p>For example, the command&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app create --approve --spec python-fasthtml &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --param &lt;span class="nv">APP_MODULE&lt;/span>&lt;span class="o">=&lt;/span>basic_ws:app &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://github.com/AnswerDotAI/fasthtml/examples fasthtmlapp.localhost:/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>creates a FastHTML based app. The &lt;code>APP_MODULE&lt;/code> env param is passed to the Container and passed to the startup command line in the &lt;a href="https://github.com/openrundev/appspecs/blob/a06a59a91d99520e271c6f3df68b6fb8292dbf50/python-fasthtml/Containerfile#L41" target="_blank" rel="noopener">Containerfile&lt;/a>.&lt;/p>
+&lt;p>To update params, run&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun param update APP_MODULE basic_app:app fasthtmlapp.localhost:/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Param updates are staged, they can be promoted after verification. To delete a param, pass &lt;code>-&lt;/code> as the value to the update. Use &lt;code>openrun param list&lt;/code> to view app params.&lt;/p>
+&lt;p>Params can be set to secrets, by setting the value as &lt;code>{{secret &amp;quot;vault_prod&amp;quot; &amp;quot;MY_KEY_NAME&amp;quot;}}&lt;/code>. The secret is resolved when the container is started and the value is passed to the container in its env.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">ℹ️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">&lt;strong>Note:&lt;/strong> Staged param updates are a powerful mechanism to ensure that config changes do not break your apps. For example, if BUCKET_NAME is a param pointing to a S3 bucket, the param change can be staged. The staging app can be tested to ensure that the new bucket is functional and there are no IAM/key related errors. Once the staging app is working, the app can be promoted. Code changes are easy to test, but config changes can cause env specific errors. Configuration related issues are a common cause of outages during deployment. OpenRun enables you to avoid such errors.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Container Build Args&lt;span class="hx:absolute hx:-mt-20" id="container-build-args">&lt;/span>
+&lt;a href="#container-build-args" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>If the Containerfile has an argument, the arg can be passed during the app create. Most python specs have the python version as an argument, For example, &lt;a href="https://github.com/openrundev/appspecs/blob/a06a59a91d99520e271c6f3df68b6fb8292dbf50/python-fasthtml/Containerfile#L2" target="_blank" rel="noopener">https://github.com/openrundev/appspecs/blob/a06a59a91d99520e271c6f3df68b6fb8292dbf50/python-fasthtml/Containerfile#L2&lt;/a> sets&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;pre>&lt;code>ARG PYTHON_VERSION=3.12.5-slim&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>To change this during app creation, pass &lt;code>--carg PYTHON_VERSION=3.11.1&lt;/code>. For example,&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app create --approve --spec python-fasthtml &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --param &lt;span class="nv">APP_MODULE&lt;/span>&lt;span class="o">=&lt;/span>basic_ws:app &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --carg &lt;span class="nv">PYTHON_VERSION&lt;/span>&lt;span class="o">=&lt;/span>3.11.1 &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://github.com/AnswerDotAI/fasthtml/examples fasthtmlapp.localhost:/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>To update args, run&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app update-metadata carg &lt;span class="nv">PYTHON_VERSION&lt;/span>&lt;span class="o">=&lt;/span>3.11.2 fasthtmlapp.localhost:/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Like all metadata updates, arg updates are staged. Pass &lt;code>--promote&lt;/code> to promote immediately or run &lt;code>app promote&lt;/code> to promote from stage to prod.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">ℹ️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">&lt;strong>Note:&lt;/strong> The slim images are smaller, but they lack some debugging tools. The regular image can be used during development.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Container Options&lt;span class="hx:absolute hx:-mt-20" id="container-options">&lt;/span>
+&lt;a href="#container-options" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To set CPU and memory limits and other options for the container, pass &lt;code>--copt optkey[=optvalue]&lt;/code> to the app create command. For example, &lt;code>--copt cpu-shares=1000&lt;/code>&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app create --approve --spec python-fasthtml &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --param &lt;span class="nv">APP_MODULE&lt;/span>&lt;span class="o">=&lt;/span>basic_ws:app &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --copt cpu-shares&lt;span class="o">=&lt;/span>&lt;span class="m">1000&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://github.com/AnswerDotAI/fasthtml/examples fasthtmlapp.localhost:/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>sets the CPU shares for the container to 1000.&lt;/p>
+&lt;p>To update container options, run&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app update-metadata copt cpu-shares&lt;span class="o">=&lt;/span>&lt;span class="m">500&lt;/span> fasthtmlapp.localhost:/&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>Like all metadata updates, option updates are staged. Pass &lt;code>--promote&lt;/code> to promote immediately or run &lt;code>app promote&lt;/code> to promote from stage to prod.&lt;/p>
+&lt;div class="hx:overflow-x-auto hx:mt-6 hx:flex hx:rounded-lg hx:border hx:py-2 hx:ltr:pr-4 hx:rtl:pl-4 hx:contrast-more:border-current hx:contrast-more:dark:border-current hx:border-blue-200 hx:bg-blue-100 hx:text-blue-900 hx:dark:border-blue-200/30 hx:dark:bg-blue-900/30 hx:dark:text-blue-200">
+&lt;div class="hx:ltr:pl-3 hx:ltr:pr-2 hx:rtl:pr-3 hx:rtl:pl-2">&lt;div class="hx:select-none hx:text-xl" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">ℹ️&lt;/div>&lt;/div>
+&lt;div class="hx:w-full hx:min-w-0 hx:leading-7">
+&lt;div class="hx:mt-6 hx:leading-7 hx:first:mt-0">&lt;strong>Note:&lt;/strong> By default there are no limits set for the containers. That allows for full utilization of system resources. To avoid individual apps from utilizing too much of the system resources, CPU/memory limits can be set.&lt;/div>
+&lt;/div>
+&lt;/div>
+&lt;h2>Volumes&lt;span class="hx:absolute hx:-mt-20" id="volumes">&lt;/span>
+&lt;a href="#volumes" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>OpenRun automatically manages volumes for containers. Volumes definitions are picked from:&lt;/p>
+&lt;ul>
+&lt;li>The &lt;code>Dockerfile&lt;/code>/&lt;code>Containerfile&lt;/code> in the source or spec&lt;/li>
+&lt;li>The container config in the app definition &lt;code>app.star&lt;/code>&lt;/li>
+&lt;li>The app metadata, &lt;code>container-volume&lt;/code>/&lt;code>cvol&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>For named and unnamed volumes, OpenRun creates a unique named volume for each app. This volume is mounted across app updates.&lt;/p>
+&lt;p>Bind mounts are supported for mounting secrets into the container. If the source has a template file &lt;code>secret.tmpl&lt;/code> which needs to be loaded into the container at &lt;code>/app/secret.ini&lt;/code>, a volume can be defined like &lt;code>cl_secret:secret.tmpl:/app/secret.ini&lt;/code>. The template file is passed the environment params and the generated file is bound into the container. For example, if the template file contains&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">secret.tmpl&lt;/div>&lt;div>&lt;pre>&lt;code>[DEFAULT]
+{{range $k, $v := .params}}
+{{- $k -}} = {{- $v }}
+{{end}}&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>the params are generated in the ini file format. See &lt;a href="https://github.com/openrundev/appspecs/blob/main/python-streamlit/app.star#L10" target="_blank" rel="noopener">streamlit spec&lt;/a> for an example of using this.&lt;/p>
+&lt;p>To define the volume in the app config, add&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div class="hextra-code-filename not-prose" dir="auto">secret.tmpl&lt;/div>&lt;div>&lt;pre>&lt;code> container=container.config(container.AUTO, port=param.port, volumes=[
+&amp;#34;cl_secret:secret.tmpl:/app/secret.ini&amp;#34;,
+]),&lt;/code>&lt;/pre>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>To set the volume info in the app metadata, run&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app update-metadata cvol --promote &lt;span class="s2">&amp;#34;cl_secret:secret.tmpl:/app/secret.ini&amp;#34;&lt;/span> /APPPATH&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>multiple values are supported for &lt;code>cvol&lt;/code>.&lt;/p></description></item><item><title>Container Config</title><link>https://openrun.dev/docs/container/config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://openrun.dev/docs/container/config/</guid><description>
+&lt;p>The default configuration for the OpenRun server is defined &lt;a href="https://github.com/openrundev/openrun/blob/main/internal/system/openrun.default.toml" target="_blank" rel="noopener">here&lt;/a>. The container related config settings are&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">app_config&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Health check Config&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">health_url&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">health_attempts_after_startup&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">30&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">health_timeout_secs&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Idle Shutdown Config&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">idle_shutdown_secs&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">180&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">idle_shutdown_dev_apps&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="kc">false&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Status check Config&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">status_check_interval_secs&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">status_health_attempts&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">3&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>A health check is done on the container after container is started. If the health check fails 30 times, the container is assumed to be down.&lt;/p>
+&lt;p>In the running state, a status check is done on the app every five seconds. If three of those checks fail, then the container is assumed to be down.&lt;/p>
+&lt;p>If an app does not receive any API request for 180 seconds, the app is assumed to be idle and the container is stopped. The idle shutdown does not apply for dev apps, only for prod mode apps.&lt;/p>
+&lt;h2>Changing Config&lt;span class="hx:absolute hx:-mt-20" id="changing-config">&lt;/span>
+&lt;a href="#changing-config" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The &lt;code>openrun.toml&lt;/code> can be updated to have a different value for any of the properties. After the server restart, the config change will apply for all apps.&lt;/p>
+&lt;p>To apply the config at the app level, the app metadata can be updated. For example the command&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">openrun app update-metadata conf --promote container.idle_shutdown_secs&lt;span class="o">=&lt;/span>&lt;span class="m">600&lt;/span> /myapp&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>changes the idle timeout for the &lt;code>/myapp&lt;/code> app to 600 secs. Without the &lt;code>--promote&lt;/code> option, the change will be staged and can be verified on the staging app. App metadata level setting take precedence over the defaults in the &lt;code>openrun.toml&lt;/code>. Using &lt;code>all&lt;/code> as the app name will apply the change for all current apps (but not for any new apps created later).&lt;/p>
+&lt;h2>Docker/Podman&lt;span class="hx:absolute hx:-mt-20" id="dockerpodman">&lt;/span>
+&lt;a href="#dockerpodman" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>The default for the container command to use is&lt;/p>
+&lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
+&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">system&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">container_command&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;auto&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-0">
+&lt;button
+class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
+title="Copy code"
+>
+&lt;div class="hextra-copy-icon hx:group-[.copied]/copybtn:hidden hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;div class="hextra-success-icon hx:hidden hx:group-[.copied]/copybtn:block hx:pointer-events-none hx:h-4 hx:w-4">&lt;/div>
+&lt;/button>
+&lt;/div>
+&lt;/div>
+&lt;p>&lt;code>auto&lt;/code> means that OpenRun will look for &lt;code>podman&lt;/code> in the path. If found, it will use that. Else it will use &lt;code>docker&lt;/code> as the container manager command. If the value for &lt;code>container_command&lt;/code> is set to any other value, that will be used as the command to use.&lt;/p>
+&lt;p>Orbstack implements the Docker CLI interface, so Orbstack also works fine with OpenRun.&lt;/p></description></item></channel></rss>
