@@ -1,7 +1,6 @@
 ---
 title: "Config Overview"
 weight: 100
-date: 2023-10-05
 summary: "Overview of OpenRun configuration, at the server level and client level and the $OPENRUN_HOME location for files"
 ---
 

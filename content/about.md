@@ -1,7 +1,6 @@
 ---
 title: "About"
 summary: "About OpenRun"
-date: 2023-10-05
 ---
 
 ### What is OpenRun?
@@ -13,7 +12,6 @@ OpenRun is an Apache-2.0 licensed project building a web app development and dep
 The goal of this project is to make it easy for individuals and teams to develop and manage lightweight full stack applications in a secure manner. OpenRun aims to make it easy to install and manage secure self-hosted web applications with minimal operational overhead. Easy integrations to enable SSO/SAML based authentication and authorization controls, audit logs and integration with secrets manager for managing credentials are goals.
 
 A single developer should be able to manage the full application lifecycle: frontend and backend development and production deployment. Deployments should support a GitOps approach, with automatic preview environment to verify changes before making them live. It should be easy, for the original developer or a new one, to make application code changes and deploy - after six months or after six years.
-
 
 ### How is OpenRun implemented?
 

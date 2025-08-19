@@ -8,6 +8,9 @@ plainIdAnchors = true
 defaultContentLanguage = "en"
 enableInlineShortcodes = true
 
+[outputs]
+home = ["html", "llms"]
+
 [[module.imports]]
 path = 'github.com/imfing/hextra'
 

@@ -1,7 +1,6 @@
 ---
 title: "Plugin Overview"
 weight: 100
-date: 2024-02-18
 summary: "Overview of how plugins work, how to use them"
 ---
 

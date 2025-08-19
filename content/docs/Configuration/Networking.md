@@ -1,7 +1,6 @@
 ---
 title: "Ports and Certificates"
 weight: 200
-date: 2023-10-05
 summary: "OpenRun uses unix domain sockets for client CLI requests. HTTP and HTTPS are used for application requests. Automatic signed certificate creation is supported for HTTPS."
 ---
 

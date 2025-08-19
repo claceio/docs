@@ -3,19 +3,19 @@ title: OpenRun
 layout: hextra-home
 ---
 
-<div class="hx-mt-6 hx-mb-6" style="background: #277A9F; background: linear-gradient(180deg, #277A9F, #359ece); color: transparent; background-clip: text; -webkit-background-clip: text;">
+<div class="hx:mb-4" style="background: #277A9F; background: linear-gradient(180deg, #277A9F, #359ece); color: transparent; background-clip: text; -webkit-background-clip: text;">
 {{< hextra/hero-headline >}}
   App Deployment Simplified.
 {{< /hextra/hero-headline >}}
 </div>
 
-<div class="hx-mb-10">
+<div class="hx:mb-6">
 {{< hextra/hero-subtitle >}}
-  Open source alternative to Google Cloud Run and AWS App Runner.&nbsp;<br class="sm:hx-block hx-hidden"/>Easily deploy internal tools across a team.
+  Open source alternative to Google Cloud Run and AWS App Runner.&nbsp;<br class="hx:sm:block hx:hidden"/>Easily deploy internal tools across a team.
 {{< /hextra/hero-subtitle >}}
 </div>
 
-<div class="hx-mb-4">
+<div class="hx:mb-4">
 {{< hextra/hero-button style="border-radius: 8px;" text="Get Started" link="docs/quickstart" >}}
 {{< hextra/hero-button style="border-radius: 8px; padding: 12px 40px;" text="Demo" link="https://apps.demo.clace.io" >}}
 </div>

@@ -1,7 +1,6 @@
 ---
 title: "Response"
 weight: 400
-date: 2023-10-06
 summary: "The response from the handler function, custom response and redirects"
 ---
 

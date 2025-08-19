@@ -1,7 +1,6 @@
 ---
 title: "Application Routing"
 weight: 100
-date: 2023-10-05
 summary: "Details about request routing across OpenRun applications using path and domain"
 ---
 

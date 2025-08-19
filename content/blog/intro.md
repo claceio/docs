@@ -2,7 +2,6 @@
 title: "Introducing OpenRun"
 summary: "OpenRun: Platform for managing internal tools"
 date: 2023-11-01
-draft: false
 ---
 
 {{< openrun-intro  >}}

@@ -1,7 +1,6 @@
 ---
 title: "Plugin Catalog"
 weight: 200
-date: 2024-02-18
 summary: "Catalog of OpenRun Plugins"
 ---
 

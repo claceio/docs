@@ -2,7 +2,6 @@
 title: "Quick Start"
 weight: 50
 summary: "Quick Start guide on using OpenRun"
-date: 2024-02-03
 ---
 
 OpenRun is an Apache-2.0 licensed project building a web app development and deployment platform for internal tools. OpenRun is built in Go and runs on Linux, macOS and Windows.

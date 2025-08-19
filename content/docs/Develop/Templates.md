@@ -1,7 +1,6 @@
 ---
 title: "Templates"
 weight: 500
-date: 2023-10-06
 summary: "HTML templates functions, static file handling and customizations"
 ---
 

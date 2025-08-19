@@ -1,7 +1,6 @@
 ---
 title: "App Management Overview"
 weight: 50
-date: 2024-03-03
 summary: "Overview of managing OpenRun applications"
 ---
 

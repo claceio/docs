@@ -1,7 +1,6 @@
 ---
 title: "Request"
 weight: 300
-date: 2023-10-06
 summary: "The Request structure passed into the handler function, handling argument and post data"
 ---
 

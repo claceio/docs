@@ -1,7 +1,6 @@
 ---
 title: "Routing"
 weight: 200
-date: 2023-10-06
 summary: "Defining API routes, handling pages and fragments"
 ---
 

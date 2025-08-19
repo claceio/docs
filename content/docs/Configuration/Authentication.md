@@ -1,7 +1,6 @@
 ---
 title: "App Authentication"
 weight: 400
-date: 2024-03-27
 summary: "Details about authentication mechanisms for app access, including OAuth based auth"
 ---
 

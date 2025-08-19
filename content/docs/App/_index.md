@@ -1,7 +1,6 @@
 ---
 title: "Hypermedia Apps"
 weight: 400
-date: 2023-10-05
 summary: "Developing Hypermedia driven applications, managing API routes and HTML templates"
 ---
 

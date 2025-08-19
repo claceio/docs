@@ -1,7 +1,6 @@
 ---
 title: "Application Lifecycle"
 weight: 200
-date: 2024-01-01
 summary: "Lifecycle for OpenRun applications, pushing changes live safely"
 ---
 

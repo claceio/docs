@@ -1,5 +1,5 @@
 ---
-title: "Go Composition does not compose well with Implicit Interfaces"
+title: "Go Composition does not work well with Implicit Interfaces"
 summary: "Go supports composition as against inheritance for extending behavior. Composition can break code which uses implicit interfaces."
 date: 2024-12-24
 ---

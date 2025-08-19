@@ -1,7 +1,6 @@
 ---
 title: "Styling"
 weight: 600
-date: 2023-10-19
 summary: "CSS Styling, TailwindCSS, DaisyUI"
 ---
 

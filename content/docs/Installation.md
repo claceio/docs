@@ -2,7 +2,6 @@
 title: "Installation"
 weight: 100
 summary: "How to install OpenRun and do initial setup"
-date: 2023-10-05
 ---
 
 ## Install Release Build

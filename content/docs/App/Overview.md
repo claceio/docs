@@ -1,7 +1,6 @@
 ---
 title: "Overview"
 weight: 100
-date: 2023-10-06
 summary: "Overview of the OpenRun application development model"
 ---
 
