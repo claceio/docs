@@ -1,6 +1,6 @@
-Output screen.gif
-#Set Theme "Hipster Green"
-Set Theme { "name": "Custom", "background": "#f0ede6", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
+Output intro_dark_small.gif
+Set Theme "Hipster Green"
+#Set Theme { "name": "Custom", "background": "#f0ede6", "foreground": "#007700", "selectionBackground": "#3d3c58", "cursorAccent": "#b3b0d6", "cursor": "#b3b0d6" }
 
 Set FontSize 32
 Set Width 1200
@@ -21,12 +21,12 @@ Sleep 2
 Enter 2
 
 Type "# List installed apps" Sleep 400ms Enter
-Type "openrun app list -f basic" Sleep 400ms Enter
+Type "openrun app list" Sleep 400ms Enter
 Sleep 2
 Enter 2
 
 Type "# -i option shows internal apps" Sleep 400ms Enter
-Type "openrun app list -i -f basic" Sleep 400ms Enter
+Type "openrun app list -i" Sleep 400ms Enter
 Sleep 2
 Type "# Stage at https://localhost:25223/du_cl_stage" Enter
 Sleep 1 Enter 2
@@ -35,19 +35,24 @@ Type "# reload fetches latest code from github" Sleep 400ms Enter
 Type "openrun app reload /du" Sleep 400ms Enter
 Sleep 3 Enter 2
 
-Type "openrun app list -i -f basic" Enter 
+Type "# ** Enable GitOps in one command **" Sleep 400ms Enter
+Sleep 2 Enter 2
+Type "openrun sync schedule --approve --promote github.com/openrundev/openrun/examples/utils.star" Sleep 400ms Enter
+Sleep 3 Enter 2
+Type "# This creates an automated background sync" Sleep 400ms Enter
+Type "# New apps are auto created from config" Sleep 400ms Enter
+Type "# Existing apps get auto code/config updates" Sleep 400ms Enter
+Type "openrun sync list" Sleep 400ms  Enter
+Sleep 2 Enter 2
+
+Type "openrun app list" Sleep 400ms Enter
 Sleep 3 Enter 2
 
-Type "# Promote version 2 to prod if stage looks good" Sleep 400ms Enter
-Type "openrun app promote /du" Sleep 400ms  Enter
-Sleep 3 Enter 2
+Type "# OpenRun - App deployment simplified" Sleep 400ms  Enter
+Type "# Easily deploy internal tools across a team." Sleep 400ms  Enter 2
+Type "# Cross-platform, works on Linux/Windows/OSX" Sleep 400ms Enter
+Sleep 4
 
-Type "openrun version list -f basic /du" Sleep 400ms Enter
-Sleep 3 Enter 2
-
-Type "openrun app list -i -f basic" Sleep 400ms Enter
-Sleep 3 Enter 2
-Type "# Prod and stage are in sync now" Enter
-Type "# All code and config changes staged by default" Enter
-Type "# No more scrambling to revert broken prod apps!!" Enter
-Sleep 6
+Hide
+Type 'openrun server stop && rm -rf metadata/*' Enter
+Show
