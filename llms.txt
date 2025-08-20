@@ -1,4 +1,4 @@
-# App Deployment Simplified | OpenRun
+# OpenRun - App Deployment Simplified
 
 > Open source alternative to Google Cloud Run and AWS App Runner.
 
@@ -58,5 +58,5 @@
 - [Features](https://openrun.dev/features/): OpenRun Features
 
 ---
-Generated on 2025-08-19 19:21:29 UTC
+Generated on 2025-08-20 19:36:58 UTC
 Site: https://openrun.dev/
