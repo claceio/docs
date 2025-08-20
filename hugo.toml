@@ -1,6 +1,6 @@
 baseURL = "https://openrun.dev/"
 languageCode = "en-us"
-title = "App Deployment Simplified | OpenRun"
+title = "OpenRun - App Deployment Simplified"
 canonifyURLs = false
 relativeURLs = false
 pluralizeListTitles = false
@@ -27,7 +27,7 @@ noClasses = false
 
 # Default Page Parameters
 [params]
-title = "App Deployment Simplified | OpenRun"
+title = "OpenRun - App Deployment Simplified"
 description = "Open source alternative to Google Cloud Run and AWS App Runner."
 image = "openrun_icon.png"
 
