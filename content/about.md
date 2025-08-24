@@ -5,7 +5,7 @@ summary: "About OpenRun"
 
 ### What is OpenRun?
 
-OpenRun is an Apache-2.0 licensed project building a web app development and deployment platform for internal tools. OpenRun allows easy and secure hosting of multiple web apps, in any language/framework, on a single machine. OpenRun is cross-platform (Linux/Windows/OSX) and provides a GitOps workflow for managing web apps.
+OpenRun (previously called Clace) is an Apache-2.0 licensed project building a web app development and deployment platform for internal tools. OpenRun is an open source alternative to Google Cloud Run and AWS App Runner. OpenRun is cross-platform (Linux/Windows/OSX) and provides a GitOps workflow for managing web apps.
 
 ### Project Goals
 
