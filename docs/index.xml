@@ -3053,7 +3053,7 @@ title="Copy code"
 &lt;li>Application management (admin APIs) are accessible over unix domain sockets only (not accessible remotely). Since UDS enforces file permissions checks, no additional authentication is needed for admin APIs.&lt;/li>
 &lt;li>Admin user account is used to access applications, default &lt;code>auth&lt;/code> for apps is &lt;code>system&lt;/code>&lt;/li>
 &lt;li>The admin user password bcrypt hash has to be added to the server config file, or a random password is generated every time the server is restarted&lt;/li>
-&lt;li>Applications can be changed to not require any authentication, &lt;code>auth&lt;/code> can be &lt;code>none&lt;/code> or use Oauth2 based auth.&lt;/li>
+&lt;li>Applications can be changed to not require any authentication, &lt;code>auth&lt;/code> can be &lt;code>none&lt;/code> or use OAuth2 based auth.&lt;/li>
 &lt;li>There is no user management support in OpenRun currently. The system account is present by default (which can be disabled) or OAuth based auth can be used.&lt;/li>
 &lt;/ul>
 &lt;h2>Admin Account Password&lt;span class="hx:absolute hx:-mt-20" id="admin-account-password">&lt;/span>
@@ -3771,7 +3771,7 @@ title="Copy code"
 &lt;/button>
 &lt;/div>
 &lt;/div>
-&lt;p>assuming there is a &lt;code>github_prod&lt;/code> oauth config.&lt;/p>
+&lt;p>assuming there is a &lt;code>github_prod&lt;/code> OAuth config.&lt;/p>
 &lt;p>Any new app created will use this as the auth unless overridden in the &lt;code>app create&lt;/code> call or using &lt;code>app update&lt;/code>.&lt;/p>
 &lt;h2>Client Cert Authentication (mTLS)&lt;span class="hx:absolute hx:-mt-20" id="client-cert-authentication-mtls">&lt;/span>
 &lt;a href="#client-cert-authentication-mtls" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>Apps can be updated to use mutual TLS authentication. To enable this, first set &lt;code>disable_client_certs&lt;/code> to &lt;code>false&lt;/code> in the &lt;code>https&lt;/code> section. Add a &lt;code>client_auth&lt;/code> config entry in server config with the CA certificate to verify against. Multiple entries can be added, the entry name should be &lt;code>cert&lt;/code> or should start with &lt;code>cert_&lt;/code>. For example&lt;/p>
@@ -3839,7 +3839,7 @@ title="Copy code"
 &lt;p>Here, the auth config entry name is &lt;code>github_test&lt;/code>. The entry name can be one of the supported providers, or a supported provider name followed by a &lt;code>_&lt;/code> and a qualifier. The provider name is case sensitive. So &lt;code>github&lt;/code>, &lt;code>google&lt;/code>, &lt;code>github_prod&lt;/code>, &lt;code>google_my_org&lt;/code> etc are valid config names. &lt;code>github-test&lt;/code> and &lt;code>my_org_google&lt;/code> are not valid.&lt;/p>
 &lt;p>The server &lt;code>openrun.toml&lt;/code> can have multiple auth configs defined. One of them can be set to be the default using &lt;code>app_default_auth_type&lt;/code> config. Apps can be configured to use one of &lt;code>system&lt;/code> or &lt;code>none&lt;/code> or a valid auth config name as the &lt;code>auth&lt;/code>. For example, app 1 can use &lt;code>system&lt;/code> and app 2 can use &lt;code>github_test&lt;/code>.&lt;/p>
 &lt;h2>Callback Url&lt;span class="hx:absolute hx:-mt-20" id="callback-url">&lt;/span>
-&lt;a href="#callback-url" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To enable any Oauth provider, the callback url domain has to be specified in the server config. Add&lt;/p>
+&lt;a href="#callback-url" class="subheading-anchor" aria-label="Permalink for this section">&lt;/a>&lt;/h2>&lt;p>To enable any OAuth provider, the callback url domain has to be specified in the server config. Add&lt;/p>
 &lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 &lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">security&lt;/span>&lt;span class="p">]&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">callback_url&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;https://example.com:25223&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
@@ -4389,7 +4389,7 @@ title="Copy code"
 &lt;div class="hextra-code-block hx:relative hx:mt-6 hx:first:mt-0 hx:group/code">
 &lt;div class="hextra-code-filename not-prose" dir="auto">openrun.toml&lt;/div>&lt;div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">auth&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">google_prod&lt;/span>&lt;span class="p">]&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">key&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;mykey.apps.googleusercontent.com&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">secret&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s1">&amp;#39;{{secret_from &amp;#34;PROVIDER_NAME&amp;#34; &amp;#34;GOOGLE_OAUTH_SECRET&amp;#34;}}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">secret&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s1">&amp;#39;{{secret_from &amp;#34;PROVIDER_NAME&amp;#34; &amp;#34;GOOGLE_OAuth_SECRET&amp;#34;}}&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">hosted_domain&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s2">&amp;#34;example.com&amp;#34;&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/div>&lt;div class="hextra-code-copy-btn-container hx:opacity-0 hx:transition hx:group-hover/code:opacity-100 hx:flex hx:gap-1 hx:absolute hx:m-[11px] hx:right-0 hx:top-8">
 &lt;button
 class="hextra-code-copy-btn hx:group/copybtn hx:cursor-pointer hx:transition-all hx:active:opacity-50 hx:bg-primary-700/5 hx:border hx:border-black/5 hx:text-gray-600 hx:hover:text-gray-900 hx:rounded-md hx:p-1.5 hx:dark:bg-primary-300/10 hx:dark:border-white/10 hx:dark:text-gray-400 hx:dark:hover:text-gray-50"
