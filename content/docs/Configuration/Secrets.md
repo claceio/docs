@@ -81,7 +81,7 @@ For git_auth config, an example secret usage is
 ```toml {filename="openrun.toml"}
 [auth.google_prod]
 key = "mykey.apps.googleusercontent.com"
-secret = '{{secret_from "PROVIDER_NAME" "GOOGLE_OAUTH_SECRET"}}'
+secret = '{{secret_from "PROVIDER_NAME" "GOOGLE_OAuth_SECRET"}}'
 hosted_domain = "example.com"
 ```
 

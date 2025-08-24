@@ -17,7 +17,7 @@ Any app when created uses the default auth type configured for the server. `none
 app_default_auth_type = "github_prod"
 ```
 
-assuming there is a `github_prod` oauth config.
+assuming there is a `github_prod` OAuth config.
 
 Any new app created will use this as the auth unless overridden in the `app create` call or using `app update`.
 
@@ -76,7 +76,7 @@ The server `openrun.toml` can have multiple auth configs defined. One of them ca
 
 ## Callback Url
 
-To enable any Oauth provider, the callback url domain has to be specified in the server config. Add
+To enable any OAuth provider, the callback url domain has to be specified in the server config. Add
 
 ```toml {filename="openrun.toml"}
 [security]
